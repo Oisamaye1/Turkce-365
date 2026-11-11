@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+.env*.local
+# Local learner data — never commit
+data/*.db
+data/*.db-*
+data/backups/
+logs/*.log
+.DS_Store

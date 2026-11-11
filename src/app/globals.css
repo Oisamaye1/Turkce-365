@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #f7f5f0;
+  --fg: #1d1b18;
+  --card: #ffffff;
+  --card-2: #f1eee7;
+  --muted: #6b665d;
+  --border: #e4dfd4;
+  --accent: #c8102e; /* Turkish red */
+  --accent-fg: #ffffff;
+  --accent-soft: #fbe7ea;
+  --sea: #0e7490;
+  --sea-soft: #e0f2f6;
+  --good: #15803d;
+  --good-soft: #dcfce7;
+  --warn: #b45309;
+  --warn-soft: #fef3c7;
+  --bad: #b91c1c;
+  --bad-soft: #fee2e2;
+  --series-1: #2a78d6; /* validated categorical pair (dataviz) */
+  --series-2: #eb6834;
+}
+
+.dark {
+  --bg: #121212;
+  --fg: #ece8e1;
+  --card: #1c1c1c;
+  --card-2: #262523;
+  --muted: #a39d92;
+  --border: #33312d;
+  --accent: #ef4458;
+  --accent-fg: #ffffff;
+  --accent-soft: #3a1a20;
+  --sea: #38bdf8;
+  --sea-soft: #0f2a36;
+  --good: #4ade80;
+  --good-soft: #143222;
+  --warn: #fbbf24;
+  --warn-soft: #3a2c0b;
+  --bad: #f87171;
+  --bad-soft: #3d1717;
+  --series-1: #3987e5;
+  --series-2: #d95926;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-card: var(--card);
+  --color-card-2: var(--card-2);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --color-sea: var(--sea);
+  --color-sea-soft: var(--sea-soft);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Component classes (Tailwind v4 @utility so they can be @applied and used with variants). */
+@utility card {
+  @apply rounded-2xl border border-border bg-card p-4 sm:p-5;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-accent text-accent-fg hover:brightness-110;
+}
+@utility btn-ghost {
+  @apply btn border border-border bg-card hover:bg-card-2;
+}
+@utility input {
+  @apply w-full rounded-xl border border-border bg-card px-4 py-3 text-lg outline-none focus:border-sea focus:ring-2 focus:ring-sea/30;
+}
+@utility chip {
+  @apply inline-flex items-center gap-1 rounded-full border border-border bg-card-2 px-2.5 py-0.5 text-xs font-medium text-muted;
+}
+@utility label-tr {
+  @apply font-normal text-muted;
+}

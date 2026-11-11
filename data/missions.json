@@ -1,0 +1,290 @@
+[
+  {
+    "week": 1, "title": "Say hello and thank you", "titleTr": "Merhaba ve teşekkürler",
+    "goal": "At any shop or café, greet the person in Turkish and thank them when you leave. No English at all for these two moments.",
+    "place": "Any shop or café",
+    "phrases": [
+      { "tr": "Merhaba!", "en": "Hello!" },
+      { "tr": "Günaydın!", "en": "Good morning!" },
+      { "tr": "Teşekkür ederim.", "en": "Thank you." },
+      { "tr": "İyi günler!", "en": "Have a nice day!" }
+    ],
+    "tips": "Smile and say it first — people in Cyprus love it when foreigners try."
+  },
+  {
+    "week": 2, "title": "Greet a shopkeeper and say thank you", "titleTr": "Esnafı selamla",
+    "goal": "Greet a shopkeeper, buy one thing, say thank you and goodbye — all in Turkish.",
+    "place": "A local market or bakkal",
+    "phrases": [
+      { "tr": "Merhaba! Kolay gelsin.", "en": "Hello! Take it easy." },
+      { "tr": "Bu, lütfen.", "en": "This one, please." },
+      { "tr": "Teşekkür ederim.", "en": "Thank you." },
+      { "tr": "Hoşça kalın!", "en": "Goodbye!" }
+    ],
+    "tips": "'Kolay gelsin' is what locals say to anyone working — it always gets a warm reaction."
+  },
+  {
+    "week": 3, "title": "Introduce yourself", "titleTr": "Kendini tanıt",
+    "goal": "Tell a neighbour or colleague your name, where you're from and that you're learning Turkish.",
+    "place": "Your building, office or department",
+    "phrases": [
+      { "tr": "Benim adım …", "en": "My name is …" },
+      { "tr": "İngiltereliyim.", "en": "I'm from England." },
+      { "tr": "Türkçe öğreniyorum.", "en": "I'm learning Turkish." },
+      { "tr": "Memnun oldum.", "en": "Nice to meet you." }
+    ],
+    "tips": "Swap in your own country: -li / -lı / -lu / -lü + -yim (Amerikalıyım, Almanyalıyım)."
+  },
+  {
+    "week": 4, "title": "Order a coffee fully in Turkish", "titleTr": "Türkçe kahve siparişi",
+    "goal": "Order a Turkish coffee with your sugar preference and pay — fully in Turkish.",
+    "place": "A café in Lefkoşa or Girne",
+    "phrases": [
+      { "tr": "Bir Türk kahvesi, lütfen.", "en": "A Turkish coffee, please." },
+      { "tr": "Orta şekerli.", "en": "Medium-sweet." },
+      { "tr": "Sade olsun.", "en": "Make it plain." },
+      { "tr": "Hesap lütfen.", "en": "The bill, please." }
+    ],
+    "tips": "Sade = no sugar, az şekerli = a little, orta = medium, şekerli = sweet."
+  },
+  {
+    "week": 5, "title": "Buy bread at the bakery", "titleTr": "Fırından ekmek al",
+    "goal": "Ask for a specific number of items at a bakery (e.g. 'iki tane pilavuna').",
+    "place": "A neighbourhood fırın",
+    "phrases": [
+      { "tr": "Bir ekmek, lütfen.", "en": "A loaf of bread, please." },
+      { "tr": "İki tane pilavuna.", "en": "Two pilavunas." },
+      { "tr": "Bu ne?", "en": "What's this?" },
+      { "tr": "Ne kadar?", "en": "How much?" }
+    ],
+    "tips": "'Tane' is the counter word — use it with numbers when buying pieces."
+  },
+  {
+    "week": 6, "title": "Ask for directions", "titleTr": "Yol sor",
+    "goal": "Ask a passer-by where a place is, and understand at least 'sağ', 'sol' or 'düz'.",
+    "place": "In town",
+    "phrases": [
+      { "tr": "Pardon, eczane nerede?", "en": "Excuse me, where is the pharmacy?" },
+      { "tr": "Uzak mı?", "en": "Is it far?" },
+      { "tr": "Sağda mı, solda mı?", "en": "On the right or the left?" },
+      { "tr": "Tekrar eder misiniz?", "en": "Could you repeat that?" }
+    ],
+    "tips": "Ask about somewhere you already know — then you can check your understanding."
+  },
+  {
+    "week": 7, "title": "Take a dolmuş", "titleTr": "Dolmuşa bin",
+    "goal": "Ask the driver if the dolmuş goes to your destination and ask to get off.",
+    "place": "A dolmuş in Lefkoşa or to Girne",
+    "phrases": [
+      { "tr": "Girne'ye gidiyor mu?", "en": "Does it go to Kyrenia?" },
+      { "tr": "Ne kadar?", "en": "How much?" },
+      { "tr": "Müsait bir yerde inebilir miyim?", "en": "Can I get off somewhere convenient?" },
+      { "tr": "Burada, lütfen.", "en": "Here, please." }
+    ],
+    "tips": "'Müsait bir yerde' is the standard way to ask a driver to stop."
+  },
+  {
+    "week": 8, "title": "Ask the price at the market", "titleTr": "Pazarda fiyat sor",
+    "goal": "Ask the price of three different things and buy one of them by the kilo.",
+    "place": "The Wednesday market (Lefkoşa) or any pazar",
+    "phrases": [
+      { "tr": "Bu ne kadar?", "en": "How much is this?" },
+      { "tr": "Kilosu kaç lira?", "en": "How many lira per kilo?" },
+      { "tr": "Bir kilo, lütfen.", "en": "One kilo, please." },
+      { "tr": "Yarım kilo yeter.", "en": "Half a kilo is enough." }
+    ],
+    "tips": "Prepare your numbers before you go: kırk, elli, altmış, yüz."
+  },
+  {
+    "week": 9, "title": "Eat at a lokanta", "titleTr": "Lokantada ye",
+    "goal": "Order a main dish and a drink, ask for the bill — in Turkish.",
+    "place": "A local lokanta (esnaf lokantası)",
+    "phrases": [
+      { "tr": "Bugün ne var?", "en": "What's on today?" },
+      { "tr": "Bundan bir porsiyon, lütfen.", "en": "One portion of this, please." },
+      { "tr": "İçecek olarak ayran.", "en": "An ayran to drink." },
+      { "tr": "Hesabı alabilir miyim?", "en": "Can I have the bill?" }
+    ],
+    "tips": "In a lokanta you can point at the dishes — 'bundan' (of this) is your friend."
+  },
+  {
+    "week": 10, "title": "Buy fruit by weight", "titleTr": "Kiloyla meyve al",
+    "goal": "Buy two kinds of fruit, specifying weight or number, and ask if they are fresh.",
+    "place": "A manav (greengrocer)",
+    "phrases": [
+      { "tr": "Bunlar taze mi?", "en": "Are these fresh?" },
+      { "tr": "Yarım kilo kiraz, lütfen.", "en": "Half a kilo of cherries, please." },
+      { "tr": "Üç tane limon.", "en": "Three lemons." },
+      { "tr": "Hepsi ne kadar?", "en": "How much is it altogether?" }
+    ],
+    "tips": "Use what's in season — Güzelyurt oranges in winter, karpuz in summer."
+  },
+  {
+    "week": 11, "title": "Weather small talk", "titleTr": "Hava sohbeti",
+    "goal": "Start a 3-line conversation about the weather with a colleague or neighbour.",
+    "place": "Office, corridor or your building",
+    "phrases": [
+      { "tr": "Bugün hava çok sıcak, değil mi?", "en": "It's very hot today, isn't it?" },
+      { "tr": "Yarın yağmur var mı?", "en": "Is there rain tomorrow?" },
+      { "tr": "Kışın burada hava nasıl?", "en": "What's the weather like here in winter?" },
+      { "tr": "Ben sıcağı seviyorum.", "en": "I like the heat." }
+    ],
+    "tips": "'değil mi?' turns any statement into 'isn't it?' — very useful."
+  },
+  {
+    "week": 12, "title": "Ask a colleague about their weekend", "titleTr": "Hafta sonunu sor",
+    "goal": "Ask a colleague 3 questions about their weekend and react to the answers.",
+    "place": "University / office on Monday",
+    "phrases": [
+      { "tr": "Hafta sonun nasıl geçti?", "en": "How was your weekend?" },
+      { "tr": "Ne yaptın?", "en": "What did you do?" },
+      { "tr": "Nereye gittin?", "en": "Where did you go?" },
+      { "tr": "Ne güzel!", "en": "How nice!" }
+    ],
+    "tips": "You'll hear past tense (-dı/-di) — listen for gittim, yaptım, gezdim."
+  },
+  {
+    "week": 13, "title": "Make an appointment", "titleTr": "Randevu al",
+    "goal": "Book an appointment (barber, hairdresser, doctor) in Turkish, including a day and time.",
+    "place": "Phone or in person",
+    "phrases": [
+      { "tr": "Randevu almak istiyorum.", "en": "I'd like to make an appointment." },
+      { "tr": "Yarın müsait misiniz?", "en": "Are you available tomorrow?" },
+      { "tr": "Saat üçte olur mu?", "en": "Is three o'clock okay?" },
+      { "tr": "Adım …", "en": "My name is …" }
+    ],
+    "tips": "Write the days and times you can do on paper first."
+  },
+  {
+    "week": 14, "title": "Describe your daily routine", "titleTr": "Günlük rutinini anlat",
+    "goal": "Tell someone 4 things you do every day (present tense).",
+    "place": "Coffee break with a colleague",
+    "phrases": [
+      { "tr": "Her sabah altıda kalkıyorum.", "en": "I get up at six every morning." },
+      { "tr": "Otobüsle işe gidiyorum.", "en": "I go to work by bus." },
+      { "tr": "Öğleden sonra tezimi yazıyorum.", "en": "In the afternoon I write my thesis." },
+      { "tr": "Akşam Türkçe çalışıyorum.", "en": "In the evening I study Turkish." }
+    ],
+    "tips": "Practise saying it aloud in the morning while making coffee."
+  },
+  {
+    "week": 15, "title": "Tell what you did yesterday", "titleTr": "Dün ne yaptığını anlat",
+    "goal": "Tell a colleague 3 things you did yesterday (past tense).",
+    "place": "Office / department",
+    "phrases": [
+      { "tr": "Dün Girne'ye gittim.", "en": "Yesterday I went to Kyrenia." },
+      { "tr": "Arkadaşımla yemek yedik.", "en": "I had a meal with my friend." },
+      { "tr": "Akşam film izledim.", "en": "In the evening I watched a film." },
+      { "tr": "Çok yoruldum.", "en": "I got very tired." }
+    ],
+    "tips": "Fıstıkçı şahap: after p, ç, t, k, s, ş, h, f the past is -tı/-ti: gittim, yaptım."
+  },
+  {
+    "week": 16, "title": "Ask for help at the pharmacy", "titleTr": "Eczanede yardım iste",
+    "goal": "Describe a small symptom and ask for something for it.",
+    "place": "A pharmacy",
+    "phrases": [
+      { "tr": "Başım ağrıyor.", "en": "I have a headache." },
+      { "tr": "Boğazım ağrıyor.", "en": "My throat hurts." },
+      { "tr": "Bunun için bir şey var mı?", "en": "Is there something for this?" },
+      { "tr": "Günde kaç kere?", "en": "How many times a day?" }
+    ],
+    "tips": "Even if you're well, you can ask about sunscreen: 'Güneş kremi var mı?'"
+  },
+  {
+    "week": 17, "title": "Make weekend plans", "titleTr": "Hafta sonu planı yap",
+    "goal": "Invite someone to do something this weekend and agree a time and place (future tense).",
+    "place": "With a friend or colleague",
+    "phrases": [
+      { "tr": "Cumartesi ne yapacaksın?", "en": "What will you do on Saturday?" },
+      { "tr": "Birlikte kahvaltı yapalım mı?", "en": "Shall we have breakfast together?" },
+      { "tr": "Saat onda buluşalım.", "en": "Let's meet at ten." },
+      { "tr": "Ben arabayla geleceğim.", "en": "I'll come by car." }
+    ],
+    "tips": "-acağım / -eceğim: remember k → ğ before a vowel."
+  },
+  {
+    "week": 18, "title": "Describe your home", "titleTr": "Evini anlat",
+    "goal": "Describe where you live: neighbourhood, rooms, what you like.",
+    "place": "Conversation with anyone",
+    "phrases": [
+      { "tr": "Lefkoşa'da oturuyorum.", "en": "I live in Nicosia." },
+      { "tr": "Evim iki odalı.", "en": "My home has two rooms." },
+      { "tr": "Büyük bir balkonum var.", "en": "I have a big balcony." },
+      { "tr": "Mahallem çok sessiz.", "en": "My neighbourhood is very quiet." }
+    ],
+    "tips": "Possessive + var = 'I have': balkonum var, bahçemiz var."
+  },
+  {
+    "week": 19, "title": "Ask for another size or colour", "titleTr": "Başka beden iste",
+    "goal": "In a clothes or shoe shop, ask for a different size or colour.",
+    "place": "A clothes shop",
+    "phrases": [
+      { "tr": "Bunun daha büyüğü var mı?", "en": "Is there a bigger one?" },
+      { "tr": "Mavisi var mı?", "en": "Is there a blue one?" },
+      { "tr": "Deneyebilir miyim?", "en": "Can I try it on?" },
+      { "tr": "Biraz dar.", "en": "It's a bit tight." }
+    ],
+    "tips": "Colour + -(s)I = 'the X one': mavisi, siyahı, kırmızısı."
+  },
+  {
+    "week": 20, "title": "Recommend a place", "titleTr": "Bir yer tavsiye et",
+    "goal": "Recommend one place in Northern Cyprus to someone and say what they can do there.",
+    "place": "Talking to a visitor or colleague",
+    "phrases": [
+      { "tr": "Karpaz'a gitmelisin.", "en": "You should go to Karpas." },
+      { "tr": "Orada yüzebilirsin.", "en": "You can swim there." },
+      { "tr": "Bence çok güzel.", "en": "I think it's very beautiful." },
+      { "tr": "Mutlaka dene!", "en": "Definitely try it!" }
+    ],
+    "tips": "-(y)Abil = can: gidebilirsin, görebilirsin, yiyebilirsin."
+  },
+  {
+    "week": 21, "title": "Ask permission politely", "titleTr": "Kibarca izin iste",
+    "goal": "Use '-abilir miyim?' three times this week in real situations.",
+    "place": "Anywhere",
+    "phrases": [
+      { "tr": "Oturabilir miyim?", "en": "May I sit down?" },
+      { "tr": "Menüyü alabilir miyim?", "en": "May I have the menu?" },
+      { "tr": "Bir soru sorabilir miyim?", "en": "May I ask a question?" },
+      { "tr": "Pencereyi açabilir miyim?", "en": "May I open the window?" }
+    ],
+    "tips": "This is the most useful polite structure in Turkish — use it everywhere."
+  },
+  {
+    "week": 22, "title": "Explain your research", "titleTr": "Araştırmanı anlat",
+    "goal": "Explain your PhD topic in 3 simple Turkish sentences to a Turkish-speaking colleague.",
+    "place": "Department / seminar",
+    "phrases": [
+      { "tr": "Doktoramın konusu …", "en": "The topic of my PhD is …" },
+      { "tr": "… hakkında araştırma yapıyorum.", "en": "I'm doing research on …" },
+      { "tr": "Verileri analiz ediyorum.", "en": "I'm analysing the data." },
+      { "tr": "Gelecek yıl bitireceğim.", "en": "I'll finish next year." }
+    ],
+    "tips": "Prepare the sentences in the Write tab first and get them corrected."
+  },
+  {
+    "week": 23, "title": "Report a problem", "titleTr": "Bir sorunu bildir",
+    "goal": "Tell your landlord, a repairman or reception that something is broken, and ask when it can be fixed.",
+    "place": "Phone or in person",
+    "phrases": [
+      { "tr": "Klima bozuldu.", "en": "The air conditioner broke down." },
+      { "tr": "Musluk damlıyor.", "en": "The tap is dripping." },
+      { "tr": "Ne zaman gelebilirsiniz?", "en": "When can you come?" },
+      { "tr": "Acil, lütfen.", "en": "It's urgent, please." }
+    ],
+    "tips": "bozuldu = broke down (past). Combine with 'Ne zaman …?'."
+  },
+  {
+    "week": 24, "title": "A 10-minute conversation", "titleTr": "On dakikalık sohbet",
+    "goal": "Have a 10-minute conversation in Turkish with a neighbour, colleague or shopkeeper. Switch to English only if completely stuck.",
+    "place": "Anywhere",
+    "phrases": [
+      { "tr": "Yavaş konuşur musunuz?", "en": "Could you speak slowly?" },
+      { "tr": "Bu ne demek?", "en": "What does this mean?" },
+      { "tr": "Sizce …?", "en": "In your opinion …?" },
+      { "tr": "Çok güzel sohbet ettik!", "en": "We had a lovely chat!" }
+    ],
+    "tips": "Ask questions — then the other person does most of the talking."
+  }
+]

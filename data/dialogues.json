@@ -1,0 +1,623 @@
+[
+  {
+    "id": "kafe-lefkosa",
+    "minStep": 1,
+    "title": "Coffee in Nicosia",
+    "titleTr": "Lefkoşa'da kahve",
+    "setting": "A café near the Selimiye Mosque in Lefkoşa (Nicosia). You order a Turkish coffee.",
+    "settingTr": "Lefkoşa'da, Selimiye Camii'nin yanında bir kafe.",
+    "lines": [
+      { "speaker": "Garson", "tr": "Merhaba, hoş geldiniz!", "en": "Hello, welcome!" },
+      { "speaker": "Sen", "tr": "Merhaba! Bir Türk kahvesi, lütfen.", "en": "Hello! A Turkish coffee, please." },
+      { "speaker": "Garson", "tr": "Nasıl olsun? Şekerli mi, sade mi?", "en": "How would you like it? With sugar or plain?" },
+      { "speaker": "Sen", "tr": "Orta şekerli, lütfen.", "en": "Medium-sweet, please." },
+      { "speaker": "Garson", "tr": "Başka bir şey ister misiniz?", "en": "Would you like anything else?" },
+      { "speaker": "Sen", "tr": "Bir de su, lütfen. Hesap ne kadar?", "en": "And a water, please. How much is the bill?" },
+      { "speaker": "Garson", "tr": "Toplam yüz lira.", "en": "One hundred lira in total." },
+      { "speaker": "Sen", "tr": "Buyurun. Teşekkür ederim!", "en": "Here you are. Thank you!" },
+      { "speaker": "Garson", "tr": "Rica ederim, afiyet olsun!", "en": "You're welcome, enjoy!" }
+    ],
+    "glossary": [
+      { "word": "kahvesi", "meaning": "coffee (in the compound 'Türk kahvesi')", "breakdown": ["kahve", "si"] },
+      { "word": "olsun", "meaning": "let it be / make it", "breakdown": ["ol", "sun"] },
+      { "word": "şekerli", "meaning": "with sugar", "breakdown": ["şeker", "li"] },
+      { "word": "ister", "meaning": "would like (aorist of istemek)", "breakdown": ["iste", "r"] },
+      { "word": "misiniz", "meaning": "question particle + 'you (formal)'", "breakdown": ["mi", "siniz"] },
+      { "word": "başka", "meaning": "other / else", "breakdown": ["başka"] },
+      { "word": "toplam", "meaning": "total", "breakdown": ["toplam"] },
+      { "word": "buyurun", "meaning": "here you are", "breakdown": ["buyur", "un"] }
+    ],
+    "phrases": [
+      { "tr": "Bir Türk kahvesi, lütfen.", "en": "A Turkish coffee, please." },
+      { "tr": "Orta şekerli, lütfen.", "en": "Medium-sweet, please." },
+      { "tr": "Başka bir şey ister misiniz?", "en": "Would you like anything else?" },
+      { "tr": "Hesap ne kadar?", "en": "How much is the bill?" },
+      { "tr": "Afiyet olsun!", "en": "Enjoy your meal!" }
+    ],
+    "writing": {
+      "prompt": "You're at a café. Write 3–5 sentences you would say to the waiter: greet them, order two things and ask for the bill.",
+      "promptTr": "Kafedesin. Garsona ne söylersin? 3–5 cümle yaz.",
+      "hints": ["Merhaba!", "Bir …, lütfen.", "Bir de …", "Hesap ne kadar?"]
+    }
+  },
+  {
+    "id": "otobus-girne",
+    "minStep": 1,
+    "title": "The bus to Kyrenia",
+    "titleTr": "Girne otobüsü",
+    "setting": "At the main bus station in Lefkoşa. You want to catch a bus to Girne (Kyrenia).",
+    "settingTr": "Lefkoşa otogarında. Girne'ye gitmek istiyorsun.",
+    "lines": [
+      { "speaker": "Sen", "tr": "Pardon, Girne otobüsü nereden kalkıyor?", "en": "Excuse me, where does the Kyrenia bus leave from?" },
+      { "speaker": "Görevli", "tr": "Şuradan, üç numaralı perondan.", "en": "From over there, platform three." },
+      { "speaker": "Sen", "tr": "Saat kaçta kalkıyor?", "en": "What time does it leave?" },
+      { "speaker": "Görevli", "tr": "Her yarım saatte bir. Sonraki otobüs on dakika sonra.", "en": "Every half hour. The next bus is in ten minutes." },
+      { "speaker": "Sen", "tr": "Bilet ne kadar?", "en": "How much is the ticket?" },
+      { "speaker": "Görevli", "tr": "Altmış lira. Şoföre ödeyebilirsiniz.", "en": "Sixty lira. You can pay the driver." },
+      { "speaker": "Sen", "tr": "Girne'ye ne kadar sürüyor?", "en": "How long does it take to Kyrenia?" },
+      { "speaker": "Görevli", "tr": "Yaklaşık yarım saat sürüyor.", "en": "It takes about half an hour." },
+      { "speaker": "Sen", "tr": "Çok teşekkürler!", "en": "Thanks a lot!" },
+      { "speaker": "Görevli", "tr": "Rica ederim, iyi yolculuklar!", "en": "You're welcome, have a good trip!" }
+    ],
+    "glossary": [
+      { "word": "otobüsü", "meaning": "the bus (in 'Girne otobüsü' = the Kyrenia bus)", "breakdown": ["otobüs", "ü"] },
+      { "word": "kalkıyor", "meaning": "is leaving / departs", "breakdown": ["kalk", "ıyor"] },
+      { "word": "perondan", "meaning": "from the platform", "breakdown": ["peron", "dan"] },
+      { "word": "şoföre", "meaning": "to the driver", "breakdown": ["şoför", "e"] },
+      { "word": "ödeyebilirsiniz", "meaning": "you can pay", "breakdown": ["öde", "y", "ebil", "ir", "siniz"] },
+      { "word": "sürüyor", "meaning": "it takes (time)", "breakdown": ["sür", "üyor"] },
+      { "word": "yaklaşık", "meaning": "about / approximately", "breakdown": ["yaklaşık"] },
+      { "word": "yolculuklar", "meaning": "journeys (iyi yolculuklar = have a good trip)", "breakdown": ["yolcu", "luk", "lar"] }
+    ],
+    "phrases": [
+      { "tr": "Otobüs nereden kalkıyor?", "en": "Where does the bus leave from?" },
+      { "tr": "Saat kaçta kalkıyor?", "en": "What time does it leave?" },
+      { "tr": "Bilet ne kadar?", "en": "How much is the ticket?" },
+      { "tr": "Ne kadar sürüyor?", "en": "How long does it take?" },
+      { "tr": "İyi yolculuklar!", "en": "Have a good trip!" }
+    ],
+    "writing": {
+      "prompt": "You need to get to Gazimağusa (Famagusta). Write 3–5 questions you would ask at the bus station.",
+      "promptTr": "Gazimağusa'ya gitmek istiyorsun. Otogarda ne sorarsın?",
+      "hints": ["… nereden kalkıyor?", "Saat kaçta …?", "… ne kadar?"]
+    }
+  },
+  {
+    "id": "pazar",
+    "minStep": 1,
+    "title": "At the market",
+    "titleTr": "Pazarda",
+    "setting": "The Wednesday market in Lefkoşa. You buy vegetables and halloumi.",
+    "settingTr": "Lefkoşa'da çarşamba pazarı.",
+    "lines": [
+      { "speaker": "Satıcı", "tr": "Buyurun, taze domates var!", "en": "Come on in, there are fresh tomatoes!" },
+      { "speaker": "Sen", "tr": "Domatesin kilosu ne kadar?", "en": "How much is a kilo of tomatoes?" },
+      { "speaker": "Satıcı", "tr": "Kilosu kırk lira.", "en": "Forty lira a kilo." },
+      { "speaker": "Sen", "tr": "İki kilo domates, lütfen. Bu salatalıklar taze mi?", "en": "Two kilos of tomatoes, please. Are these cucumbers fresh?" },
+      { "speaker": "Satıcı", "tr": "Tabii, bu sabah geldi. Kaç tane istiyorsunuz?", "en": "Of course, they came this morning. How many would you like?" },
+      { "speaker": "Sen", "tr": "Üç tane. Bir de yarım kilo hellim alabilir miyim?", "en": "Three. Can I also have half a kilo of halloumi?" },
+      { "speaker": "Satıcı", "tr": "Tabii. Hepsi iki yüz elli lira.", "en": "Sure. That's two hundred and fifty lira altogether." },
+      { "speaker": "Sen", "tr": "Buyurun. Kolay gelsin!", "en": "Here you are. Take it easy!" },
+      { "speaker": "Satıcı", "tr": "Sağ olun, yine bekleriz!", "en": "Thank you, come again!" }
+    ],
+    "glossary": [
+      { "word": "domatesin", "meaning": "of the tomatoes", "breakdown": ["domates", "in"] },
+      { "word": "kilosu", "meaning": "its kilo (= per kilo)", "breakdown": ["kilo", "su"] },
+      { "word": "salatalıklar", "meaning": "cucumbers", "breakdown": ["salatalık", "lar"] },
+      { "word": "geldi", "meaning": "came / arrived", "breakdown": ["gel", "di"] },
+      { "word": "istiyorsunuz", "meaning": "you (formal) want", "breakdown": ["ist", "iyor", "sunuz"] },
+      { "word": "alabilir", "meaning": "can take / can buy", "breakdown": ["al", "abil", "ir"] },
+      { "word": "hepsi", "meaning": "all of it", "breakdown": ["hep", "si"] },
+      { "word": "bekleriz", "meaning": "we (always) wait — 'come again'", "breakdown": ["bekle", "r", "iz"] }
+    ],
+    "phrases": [
+      { "tr": "Kilosu ne kadar?", "en": "How much per kilo?" },
+      { "tr": "Bunlar taze mi?", "en": "Are these fresh?" },
+      { "tr": "Kaç tane istiyorsunuz?", "en": "How many would you like?" },
+      { "tr": "Hepsi ne kadar?", "en": "How much is it altogether?" },
+      { "tr": "Yine bekleriz!", "en": "Come again!" }
+    ],
+    "writing": {
+      "prompt": "Write a short shopping list in Turkish (4–5 items with amounts), then one sentence asking the price.",
+      "promptTr": "Türkçe bir alışveriş listesi yaz ve fiyat sor.",
+      "hints": ["iki kilo …", "yarım kilo …", "üç tane …", "Hepsi ne kadar?"]
+    }
+  },
+  {
+    "id": "universite",
+    "minStep": 2,
+    "title": "A new colleague at the university",
+    "titleTr": "Üniversitede yeni bir meslektaş",
+    "setting": "In the corridor of your faculty. A colleague, Ayşe, introduces herself.",
+    "settingTr": "Fakültenin koridorunda. Ayşe kendini tanıtıyor.",
+    "lines": [
+      { "speaker": "Ayşe", "tr": "Merhaba, sen yeni misin?", "en": "Hi, are you new?" },
+      { "speaker": "Sen", "tr": "Evet, bu dönem başladım.", "en": "Yes, I started this semester." },
+      { "speaker": "Ayşe", "tr": "Memnun oldum! Ben Ayşe. Hangi bölümdesin?", "en": "Nice to meet you! I'm Ayşe. Which department are you in?" },
+      { "speaker": "Sen", "tr": "Eğitim bölümündeyim. Doktora yapıyorum.", "en": "I'm in the education department. I'm doing a PhD." },
+      { "speaker": "Ayşe", "tr": "Harika! Nerelisin?", "en": "Great! Where are you from?" },
+      { "speaker": "Sen", "tr": "İngiltereliyim ama iki yıldır Kıbrıs'ta yaşıyorum.", "en": "I'm from England but I've been living in Cyprus for two years." },
+      { "speaker": "Ayşe", "tr": "Türkçen çok iyi!", "en": "Your Turkish is very good!" },
+      { "speaker": "Sen", "tr": "Teşekkürler, ama hâlâ öğreniyorum.", "en": "Thanks, but I'm still learning." },
+      { "speaker": "Ayşe", "tr": "Öğle yemeğinde kafede buluşalım mı?", "en": "Shall we meet at the café at lunchtime?" },
+      { "speaker": "Sen", "tr": "Olur, görüşürüz!", "en": "Sure, see you!" }
+    ],
+    "glossary": [
+      { "word": "dönem", "meaning": "semester / term", "breakdown": ["dönem"] },
+      { "word": "başladım", "meaning": "I started", "breakdown": ["başla", "dı", "m"] },
+      { "word": "bölümdesin", "meaning": "you are in the department", "breakdown": ["bölüm", "de", "sin"] },
+      { "word": "bölümündeyim", "meaning": "I am in the department of …", "breakdown": ["bölüm", "ü", "n", "de", "y", "im"] },
+      { "word": "İngiltereliyim", "meaning": "I'm from England", "breakdown": ["İngiltere", "li", "y", "im"] },
+      { "word": "yıldır", "meaning": "for … years", "breakdown": ["yıl", "dır"] },
+      { "word": "Türkçen", "meaning": "your Turkish", "breakdown": ["Türkçe", "n"] },
+      { "word": "buluşalım", "meaning": "let's meet", "breakdown": ["buluş", "alım"] }
+    ],
+    "phrases": [
+      { "tr": "Hangi bölümdesin?", "en": "Which department are you in?" },
+      { "tr": "Doktora yapıyorum.", "en": "I'm doing a PhD." },
+      { "tr": "İki yıldır Kıbrıs'ta yaşıyorum.", "en": "I've been living in Cyprus for two years." },
+      { "tr": "Hâlâ öğreniyorum.", "en": "I'm still learning." },
+      { "tr": "Kafede buluşalım mı?", "en": "Shall we meet at the café?" }
+    ],
+    "writing": {
+      "prompt": "Introduce yourself: name, country, job, where you live. Write 3–5 sentences.",
+      "promptTr": "Kendini tanıt: adın, ülken, işin, nerede yaşadığın.",
+      "hints": ["Benim adım …", "…liyim / …lıyım", "… olarak çalışıyorum", "…'da yaşıyorum"]
+    }
+  },
+  {
+    "id": "eczane",
+    "minStep": 3,
+    "title": "At the pharmacy",
+    "titleTr": "Eczanede",
+    "setting": "A pharmacy in Girne. You have a headache.",
+    "settingTr": "Girne'de bir eczane. Başın ağrıyor.",
+    "lines": [
+      { "speaker": "Eczacı", "tr": "Merhaba, buyurun.", "en": "Hello, how can I help?" },
+      { "speaker": "Sen", "tr": "Merhaba. Başım çok ağrıyor. Bir ilaç alabilir miyim?", "en": "Hello. I have a bad headache. Can I get some medicine?" },
+      { "speaker": "Eczacı", "tr": "Tabii. Ateşiniz var mı?", "en": "Of course. Do you have a fever?" },
+      { "speaker": "Sen", "tr": "Hayır, ateşim yok ama biraz yorgunum.", "en": "No, I don't have a fever but I'm a bit tired." },
+      { "speaker": "Eczacı", "tr": "Bu ilacı günde iki kere alın. Yemekten sonra.", "en": "Take this medicine twice a day. After meals." },
+      { "speaker": "Sen", "tr": "Tamam. Ne kadar?", "en": "Okay. How much is it?" },
+      { "speaker": "Eczacı", "tr": "Seksen beş lira.", "en": "Eighty-five lira." },
+      { "speaker": "Sen", "tr": "Kartla ödeyebilir miyim?", "en": "Can I pay by card?" },
+      { "speaker": "Eczacı", "tr": "Tabii. Geçmiş olsun!", "en": "Sure. Get well soon!" }
+    ],
+    "glossary": [
+      { "word": "başım", "meaning": "my head", "breakdown": ["baş", "ım"] },
+      { "word": "ağrıyor", "meaning": "is aching", "breakdown": ["ağr", "ıyor"] },
+      { "word": "ateşiniz", "meaning": "your (formal) fever", "breakdown": ["ateş", "iniz"] },
+      { "word": "yorgunum", "meaning": "I'm tired", "breakdown": ["yorgun", "um"] },
+      { "word": "ilacı", "meaning": "the medicine (object)", "breakdown": ["ilac", "ı"] },
+      { "word": "kere", "meaning": "times (frequency)", "breakdown": ["kere"] },
+      { "word": "yemekten", "meaning": "from / after the meal", "breakdown": ["yemek", "ten"] },
+      { "word": "kartla", "meaning": "by card", "breakdown": ["kart", "la"] }
+    ],
+    "phrases": [
+      { "tr": "Başım ağrıyor.", "en": "I have a headache." },
+      { "tr": "Ateşiniz var mı?", "en": "Do you have a fever?" },
+      { "tr": "Günde iki kere.", "en": "Twice a day." },
+      { "tr": "Kartla ödeyebilir miyim?", "en": "Can I pay by card?" },
+      { "tr": "Geçmiş olsun!", "en": "Get well soon!" }
+    ],
+    "writing": {
+      "prompt": "You feel ill. Write 3–5 sentences to a pharmacist describing how you feel and asking for help.",
+      "promptTr": "Hastasın. Eczacıya nasıl olduğunu anlat.",
+      "hints": ["…m ağrıyor", "Ateşim var / yok", "… alabilir miyim?"]
+    }
+  },
+  {
+    "id": "firin",
+    "minStep": 2,
+    "title": "Breakfast from the bakery",
+    "titleTr": "Fırında kahvaltılık",
+    "setting": "A neighbourhood bakery early in the morning.",
+    "settingTr": "Sabah erken saatte mahalle fırını.",
+    "lines": [
+      { "speaker": "Fırıncı", "tr": "Günaydın! Ne istersiniz?", "en": "Good morning! What would you like?" },
+      { "speaker": "Sen", "tr": "Günaydın! İki tane pilavuna ve bir ekmek, lütfen.", "en": "Good morning! Two pilavunas and a loaf of bread, please." },
+      { "speaker": "Fırıncı", "tr": "Pilavunalar sıcak, fırından yeni çıktı.", "en": "The pilavunas are hot, they've just come out of the oven." },
+      { "speaker": "Sen", "tr": "Harika! Hellimli poğaça var mı?", "en": "Great! Are there halloumi pastries?" },
+      { "speaker": "Fırıncı", "tr": "Maalesef bitti. Zeytinli var.", "en": "Unfortunately they're finished. There are olive ones." },
+      { "speaker": "Sen", "tr": "Tamam, bir tane zeytinli de alayım.", "en": "Okay, I'll take an olive one too." },
+      { "speaker": "Fırıncı", "tr": "Hepsi doksan lira.", "en": "That's ninety lira altogether." },
+      { "speaker": "Sen", "tr": "Buyurun. İyi günler!", "en": "Here you are. Have a nice day!" },
+      { "speaker": "Fırıncı", "tr": "Size de iyi günler!", "en": "Have a nice day too!" }
+    ],
+    "glossary": [
+      { "word": "istersiniz", "meaning": "would you like (formal)", "breakdown": ["iste", "r", "siniz"] },
+      { "word": "fırından", "meaning": "from the oven", "breakdown": ["fırın", "dan"] },
+      { "word": "çıktı", "meaning": "came out", "breakdown": ["çık", "tı"] },
+      { "word": "hellimli", "meaning": "with halloumi", "breakdown": ["hellim", "li"] },
+      { "word": "poğaça", "meaning": "soft savoury bun", "breakdown": ["poğaça"] },
+      { "word": "bitti", "meaning": "it's finished / sold out", "breakdown": ["bit", "ti"] },
+      { "word": "zeytinli", "meaning": "with olives", "breakdown": ["zeytin", "li"] },
+      { "word": "alayım", "meaning": "let me take / I'll have", "breakdown": ["al", "ayım"] }
+    ],
+    "phrases": [
+      { "tr": "Ne istersiniz?", "en": "What would you like?" },
+      { "tr": "İki tane, lütfen.", "en": "Two, please." },
+      { "tr": "Maalesef bitti.", "en": "Unfortunately it's sold out." },
+      { "tr": "Bir tane de alayım.", "en": "I'll take one too." },
+      { "tr": "Size de iyi günler!", "en": "Have a nice day too!" }
+    ],
+    "writing": {
+      "prompt": "Describe your ideal breakfast in 3–5 Turkish sentences.",
+      "promptTr": "İdeal kahvaltını 3–5 cümleyle anlat.",
+      "hints": ["Kahvaltıda … yiyorum.", "… içiyorum.", "… seviyorum."]
+    }
+  },
+  {
+    "id": "taksi",
+    "minStep": 4,
+    "title": "Taxi to Ercan Airport",
+    "titleTr": "Taksiyle havalimanına",
+    "setting": "You take a taxi from Lefkoşa to Ercan Airport.",
+    "settingTr": "Lefkoşa'dan Ercan Havalimanı'na taksiyle gidiyorsun.",
+    "lines": [
+      { "speaker": "Şoför", "tr": "Merhaba, nereye gidiyoruz?", "en": "Hello, where are we going?" },
+      { "speaker": "Sen", "tr": "Ercan Havalimanı'na, lütfen.", "en": "To Ercan Airport, please." },
+      { "speaker": "Şoför", "tr": "Tamam. Uçağınız kaçta?", "en": "Okay. What time is your flight?" },
+      { "speaker": "Sen", "tr": "Saat on ikide. Yetişir miyiz?", "en": "At twelve. Will we make it?" },
+      { "speaker": "Şoför", "tr": "Merak etmeyin, trafik yok. Kırk dakikada varırız.", "en": "Don't worry, there's no traffic. We'll arrive in forty minutes." },
+      { "speaker": "Sen", "tr": "Klimayı biraz açabilir misiniz? Çok sıcak.", "en": "Could you turn on the air conditioning a bit? It's very hot." },
+      { "speaker": "Şoför", "tr": "Tabii, hemen açıyorum.", "en": "Of course, I'm turning it on right away." },
+      { "speaker": "Sen", "tr": "Ne kadar tutar?", "en": "How much will it cost?" },
+      { "speaker": "Şoför", "tr": "Bin iki yüz lira.", "en": "One thousand two hundred lira." },
+      { "speaker": "Sen", "tr": "Tamam, teşekkür ederim.", "en": "Okay, thank you." }
+    ],
+    "glossary": [
+      { "word": "Havalimanı'na", "meaning": "to the airport", "breakdown": ["Havalimanı", "n", "a"] },
+      { "word": "uçağınız", "meaning": "your (formal) plane", "breakdown": ["uçağ", "ınız"] },
+      { "word": "yetişir", "meaning": "(will) make it in time", "breakdown": ["yetiş", "ir"] },
+      { "word": "etmeyin", "meaning": "don't (formal imperative)", "breakdown": ["et", "me", "yin"] },
+      { "word": "varırız", "meaning": "we (will) arrive", "breakdown": ["var", "ır", "ız"] },
+      { "word": "klimayı", "meaning": "the air conditioning (object)", "breakdown": ["klima", "y", "ı"] },
+      { "word": "açabilir", "meaning": "can open / turn on", "breakdown": ["aç", "abil", "ir"] },
+      { "word": "tutar", "meaning": "comes to (cost)", "breakdown": ["tut", "ar"] }
+    ],
+    "phrases": [
+      { "tr": "Nereye gidiyoruz?", "en": "Where are we going?" },
+      { "tr": "Havalimanına, lütfen.", "en": "To the airport, please." },
+      { "tr": "Merak etmeyin.", "en": "Don't worry." },
+      { "tr": "Klimayı açabilir misiniz?", "en": "Could you turn on the air conditioning?" },
+      { "tr": "Ne kadar tutar?", "en": "How much will it cost?" }
+    ],
+    "writing": {
+      "prompt": "You're in a taxi. Write 3–5 sentences: tell the driver where to go, ask how long it takes and how much it costs.",
+      "promptTr": "Taksidesin. Şoföre nereye gittiğini söyle ve soru sor.",
+      "hints": ["…'ya / …'ye, lütfen.", "Ne kadar sürer?", "Ne kadar tutar?"]
+    }
+  },
+  {
+    "id": "komsu",
+    "minStep": 4,
+    "title": "Chatting with a neighbour",
+    "titleTr": "Komşuyla sohbet",
+    "setting": "On the stairs of your apartment building on a hot summer morning.",
+    "settingTr": "Sıcak bir yaz sabahı, apartmanın merdivenlerinde.",
+    "lines": [
+      { "speaker": "Komşu", "tr": "Günaydın! Nasılsınız?", "en": "Good morning! How are you?" },
+      { "speaker": "Sen", "tr": "Günaydın! İyiyim, teşekkürler. Siz nasılsınız?", "en": "Good morning! I'm fine, thanks. How are you?" },
+      { "speaker": "Komşu", "tr": "Ben de iyiyim. Bugün hava çok sıcak, değil mi?", "en": "I'm fine too. It's very hot today, isn't it?" },
+      { "speaker": "Sen", "tr": "Evet, çok sıcak. Denize gidiyorum.", "en": "Yes, very hot. I'm going to the sea." },
+      { "speaker": "Komşu", "tr": "Ne güzel! Hangi plaja gidiyorsunuz?", "en": "How nice! Which beach are you going to?" },
+      { "speaker": "Sen", "tr": "Alagadi'ye gidiyorum. Kaplumbağaları görmek istiyorum.", "en": "I'm going to Alagadi. I want to see the turtles." },
+      { "speaker": "Komşu", "tr": "Çok güzel bir yer. Şapkanızı unutmayın!", "en": "It's a lovely place. Don't forget your hat!" },
+      { "speaker": "Sen", "tr": "Unutmam. İyi günler!", "en": "I won't. Have a nice day!" },
+      { "speaker": "Komşu", "tr": "İyi eğlenceler!", "en": "Have fun!" }
+    ],
+    "glossary": [
+      { "word": "denize", "meaning": "to the sea", "breakdown": ["deniz", "e"] },
+      { "word": "plaja", "meaning": "to the beach", "breakdown": ["plaj", "a"] },
+      { "word": "gidiyorsunuz", "meaning": "you (formal) are going", "breakdown": ["gid", "iyor", "sunuz"] },
+      { "word": "kaplumbağaları", "meaning": "the turtles (object)", "breakdown": ["kaplumbağa", "lar", "ı"] },
+      { "word": "görmek", "meaning": "to see", "breakdown": ["gör", "mek"] },
+      { "word": "şapkanızı", "meaning": "your (formal) hat (object)", "breakdown": ["şapka", "nız", "ı"] },
+      { "word": "unutmayın", "meaning": "don't forget (formal)", "breakdown": ["unut", "ma", "yın"] },
+      { "word": "unutmam", "meaning": "I won't forget", "breakdown": ["unut", "ma", "m"] }
+    ],
+    "phrases": [
+      { "tr": "Siz nasılsınız?", "en": "How are you? (formal)" },
+      { "tr": "Hava çok sıcak, değil mi?", "en": "It's very hot, isn't it?" },
+      { "tr": "Denize gidiyorum.", "en": "I'm going to the sea." },
+      { "tr": "Şapkanızı unutmayın!", "en": "Don't forget your hat!" },
+      { "tr": "İyi eğlenceler!", "en": "Have fun!" }
+    ],
+    "writing": {
+      "prompt": "Write 3–5 sentences of small talk about today's weather and your plans for today.",
+      "promptTr": "Bugünkü hava ve planların hakkında 3–5 cümle yaz.",
+      "hints": ["Bugün hava …", "Ben …'ya / …'ye gidiyorum.", "… istiyorum."]
+    }
+  },
+  {
+    "id": "lokanta-girne",
+    "minStep": 5,
+    "title": "Dinner at Kyrenia harbour",
+    "titleTr": "Girne Limanı'nda akşam yemeği",
+    "setting": "A fish restaurant at Kyrenia's old harbour.",
+    "settingTr": "Girne'nin eski limanında bir balık lokantası.",
+    "lines": [
+      { "speaker": "Garson", "tr": "Hoş geldiniz! Kaç kişisiniz?", "en": "Welcome! How many of you are there?" },
+      { "speaker": "Sen", "tr": "İki kişiyiz. Deniz manzaralı bir masa var mı?", "en": "We're two. Is there a table with a sea view?" },
+      { "speaker": "Garson", "tr": "Var, buyurun. İşte menü.", "en": "Yes, here you go. Here's the menu." },
+      { "speaker": "Sen", "tr": "Teşekkürler. Bugün taze balık var mı?", "en": "Thanks. Is there fresh fish today?" },
+      { "speaker": "Garson", "tr": "Var. Levrek ve çipura çok taze.", "en": "Yes. The sea bass and sea bream are very fresh." },
+      { "speaker": "Sen", "tr": "Bir ızgara levrek ve bir meze tabağı alalım.", "en": "Let's have a grilled sea bass and a meze platter." },
+      { "speaker": "Garson", "tr": "İçecek olarak ne alırsınız?", "en": "What would you like to drink?" },
+      { "speaker": "Sen", "tr": "Bir şişe su ve iki ayran, lütfen.", "en": "A bottle of water and two ayrans, please." },
+      { "speaker": "Garson", "tr": "Hemen getiriyorum.", "en": "I'll bring them right away." }
+    ],
+    "glossary": [
+      { "word": "kişisiniz", "meaning": "you are … people", "breakdown": ["kişi", "siniz"] },
+      { "word": "kişiyiz", "meaning": "we are … people", "breakdown": ["kişi", "y", "iz"] },
+      { "word": "manzaralı", "meaning": "with a view", "breakdown": ["manzara", "lı"] },
+      { "word": "levrek", "meaning": "sea bass", "breakdown": ["levrek"] },
+      { "word": "çipura", "meaning": "sea bream", "breakdown": ["çipura"] },
+      { "word": "tabağı", "meaning": "plate (in 'meze tabağı')", "breakdown": ["tabağ", "ı"] },
+      { "word": "alalım", "meaning": "let's have / take", "breakdown": ["al", "alım"] },
+      { "word": "getiriyorum", "meaning": "I'm bringing", "breakdown": ["getir", "iyor", "um"] }
+    ],
+    "phrases": [
+      { "tr": "Kaç kişisiniz?", "en": "How many people are you?" },
+      { "tr": "İki kişiyiz.", "en": "We are two." },
+      { "tr": "Deniz manzaralı bir masa var mı?", "en": "Is there a table with a sea view?" },
+      { "tr": "İçecek olarak ne alırsınız?", "en": "What would you like to drink?" },
+      { "tr": "Hemen getiriyorum.", "en": "I'll bring it right away." }
+    ],
+    "writing": {
+      "prompt": "Write 3–5 sentences ordering a meal for two people at a restaurant, including drinks.",
+      "promptTr": "Bir lokantada iki kişilik yemek siparişi ver.",
+      "hints": ["İki kişiyiz.", "… alalım.", "İçecek olarak …"]
+    }
+  },
+  {
+    "id": "ev-arama",
+    "minStep": 6,
+    "title": "Looking for a flat",
+    "titleTr": "Ev arıyorum",
+    "setting": "An estate agent shows you a flat in Gazimağusa (Famagusta).",
+    "settingTr": "Gazimağusa'da bir emlakçı sana bir daire gösteriyor.",
+    "lines": [
+      { "speaker": "Emlakçı", "tr": "Merhaba, nasıl bir ev arıyorsunuz?", "en": "Hello, what kind of home are you looking for?" },
+      { "speaker": "Sen", "tr": "İki odalı bir daire arıyorum. Üniversiteye yakın olsun.", "en": "I'm looking for a two-room flat. Close to the university, please." },
+      { "speaker": "Emlakçı", "tr": "Bu dairenin iki yatak odası ve büyük bir balkonu var.", "en": "This flat has two bedrooms and a big balcony." },
+      { "speaker": "Sen", "tr": "Kirası ne kadar?", "en": "How much is the rent?" },
+      { "speaker": "Emlakçı", "tr": "Aylık dört yüz sterlin.", "en": "Four hundred pounds a month." },
+      { "speaker": "Sen", "tr": "Faturalar dahil mi?", "en": "Are bills included?" },
+      { "speaker": "Emlakçı", "tr": "Hayır, faturalar dahil değil. Ama ev eşyalı.", "en": "No, bills aren't included. But it's furnished." },
+      { "speaker": "Sen", "tr": "Klima var mı?", "en": "Is there air conditioning?" },
+      { "speaker": "Emlakçı", "tr": "Evet, her odada klima var.", "en": "Yes, there's air conditioning in every room." },
+      { "speaker": "Sen", "tr": "Güzel. Yarın tekrar bakabilir miyim?", "en": "Nice. Can I look again tomorrow?" }
+    ],
+    "glossary": [
+      { "word": "arıyorsunuz", "meaning": "you (formal) are looking for", "breakdown": ["ar", "ıyor", "sunuz"] },
+      { "word": "odalı", "meaning": "with … rooms", "breakdown": ["oda", "lı"] },
+      { "word": "dairenin", "meaning": "of the flat", "breakdown": ["daire", "n", "in"] },
+      { "word": "balkonu", "meaning": "its balcony", "breakdown": ["balkon", "u"] },
+      { "word": "kirası", "meaning": "its rent", "breakdown": ["kira", "s", "ı"] },
+      { "word": "aylık", "meaning": "monthly", "breakdown": ["ay", "lık"] },
+      { "word": "dahil", "meaning": "included", "breakdown": ["dahil"] },
+      { "word": "eşyalı", "meaning": "furnished", "breakdown": ["eşya", "lı"] }
+    ],
+    "phrases": [
+      { "tr": "Nasıl bir ev arıyorsunuz?", "en": "What kind of home are you looking for?" },
+      { "tr": "Kirası ne kadar?", "en": "How much is the rent?" },
+      { "tr": "Faturalar dahil mi?", "en": "Are bills included?" },
+      { "tr": "Ev eşyalı.", "en": "The house is furnished." },
+      { "tr": "Tekrar bakabilir miyim?", "en": "Can I look again?" }
+    ],
+    "writing": {
+      "prompt": "Describe your home in 3–5 sentences: how many rooms, what it has, what you like about it.",
+      "promptTr": "Evini anlat: kaç oda, neler var, neyi seviyorsun?",
+      "hints": ["Evim … odalı.", "…m var.", "En çok …ı seviyorum."]
+    }
+  },
+  {
+    "id": "doktor",
+    "minStep": 8,
+    "title": "At the doctor's",
+    "titleTr": "Doktorda",
+    "setting": "A clinic in Lefkoşa. You have a sore throat and a cough.",
+    "settingTr": "Lefkoşa'da bir klinik. Boğazın ağrıyor ve öksürüyorsun.",
+    "lines": [
+      { "speaker": "Doktor", "tr": "Buyurun, oturun. Şikayetiniz ne?", "en": "Come in, sit down. What's the problem?" },
+      { "speaker": "Sen", "tr": "Üç gündür boğazım ağrıyor ve öksürüyorum.", "en": "My throat has been hurting for three days and I'm coughing." },
+      { "speaker": "Doktor", "tr": "Ateşiniz var mı?", "en": "Do you have a fever?" },
+      { "speaker": "Sen", "tr": "Dün akşam biraz ateşim vardı.", "en": "I had a slight fever last night." },
+      { "speaker": "Doktor", "tr": "Ağzınızı açın, lütfen. Boğazınız kırmızı.", "en": "Open your mouth, please. Your throat is red." },
+      { "speaker": "Sen", "tr": "Ciddi bir şey mi?", "en": "Is it something serious?" },
+      { "speaker": "Doktor", "tr": "Hayır, ciddi değil. Size bir şurup yazıyorum.", "en": "No, it's not serious. I'm prescribing you a syrup." },
+      { "speaker": "Sen", "tr": "Ne zaman iyileşirim?", "en": "When will I get better?" },
+      { "speaker": "Doktor", "tr": "Bol su için ve dinlenin. Bir haftada iyileşirsiniz.", "en": "Drink plenty of water and rest. You'll get better in a week." },
+      { "speaker": "Sen", "tr": "Teşekkür ederim, doktor bey.", "en": "Thank you, doctor." }
+    ],
+    "glossary": [
+      { "word": "şikayetiniz", "meaning": "your (formal) complaint", "breakdown": ["şikayet", "iniz"] },
+      { "word": "gündür", "meaning": "for … days", "breakdown": ["gün", "dür"] },
+      { "word": "boğazım", "meaning": "my throat", "breakdown": ["boğaz", "ım"] },
+      { "word": "öksürüyorum", "meaning": "I'm coughing", "breakdown": ["öksür", "üyor", "um"] },
+      { "word": "vardı", "meaning": "there was / I had", "breakdown": ["var", "dı"] },
+      { "word": "ağzınızı", "meaning": "your (formal) mouth (object)", "breakdown": ["ağz", "ınız", "ı"] },
+      { "word": "yazıyorum", "meaning": "I'm writing (prescribing)", "breakdown": ["yaz", "ıyor", "um"] },
+      { "word": "iyileşirsiniz", "meaning": "you'll get better", "breakdown": ["iyileş", "ir", "siniz"] }
+    ],
+    "phrases": [
+      { "tr": "Şikayetiniz ne?", "en": "What's the problem?" },
+      { "tr": "Boğazım ağrıyor.", "en": "My throat hurts." },
+      { "tr": "Dün ateşim vardı.", "en": "I had a fever yesterday." },
+      { "tr": "Ciddi bir şey mi?", "en": "Is it something serious?" },
+      { "tr": "Bol su için ve dinlenin.", "en": "Drink plenty of water and rest." }
+    ],
+    "writing": {
+      "prompt": "Write 3–5 sentences to a doctor: what hurts, since when, and one question.",
+      "promptTr": "Doktora nereni ağrıdığını ve ne zamandan beri olduğunu anlat.",
+      "hints": ["…m ağrıyor.", "… gündür …", "Ciddi bir şey mi?"]
+    }
+  },
+  {
+    "id": "kutuphane",
+    "minStep": 10,
+    "title": "At the university library",
+    "titleTr": "Kütüphanede",
+    "setting": "The university library. You're looking for a book for your thesis.",
+    "settingTr": "Üniversite kütüphanesi. Tezin için bir kitap arıyorsun.",
+    "lines": [
+      { "speaker": "Görevli", "tr": "Merhaba, yardımcı olabilir miyim?", "en": "Hello, can I help you?" },
+      { "speaker": "Sen", "tr": "Merhaba. Bu kitabı arıyorum ama rafta bulamıyorum.", "en": "Hello. I'm looking for this book but I can't find it on the shelf." },
+      { "speaker": "Görevli", "tr": "Bakayım. Bu kitap şu anda başka bir öğrencide.", "en": "Let me look. This book is with another student at the moment." },
+      { "speaker": "Sen", "tr": "Ne zaman geri gelir?", "en": "When will it come back?" },
+      { "speaker": "Görevli", "tr": "Gelecek hafta. Sizin için ayırabilirim.", "en": "Next week. I can reserve it for you." },
+      { "speaker": "Sen", "tr": "Çok iyi olur. Sessiz bir çalışma odası da var mı?", "en": "That would be great. Is there also a quiet study room?" },
+      { "speaker": "Görevli", "tr": "Var, ikinci katta. Öğrenci kartınızla girebilirsiniz.", "en": "Yes, on the second floor. You can get in with your student card." },
+      { "speaker": "Sen", "tr": "Kütüphane kaçta kapanıyor?", "en": "What time does the library close?" },
+      { "speaker": "Görevli", "tr": "Hafta içi gece yarısı kapanıyor.", "en": "On weekdays it closes at midnight." },
+      { "speaker": "Sen", "tr": "Teşekkürler, kolay gelsin!", "en": "Thanks, take it easy!" }
+    ],
+    "glossary": [
+      { "word": "yardımcı", "meaning": "helpful / assistant", "breakdown": ["yardım", "cı"] },
+      { "word": "rafta", "meaning": "on the shelf", "breakdown": ["raf", "ta"] },
+      { "word": "bulamıyorum", "meaning": "I can't find", "breakdown": ["bul", "a", "mı", "yor", "um"] },
+      { "word": "bakayım", "meaning": "let me look", "breakdown": ["bak", "ayım"] },
+      { "word": "öğrencide", "meaning": "with / at a student", "breakdown": ["öğrenci", "de"] },
+      { "word": "ayırabilirim", "meaning": "I can reserve", "breakdown": ["ayır", "abil", "ir", "im"] },
+      { "word": "kartınızla", "meaning": "with your (formal) card", "breakdown": ["kart", "ınız", "la"] },
+      { "word": "kapanıyor", "meaning": "closes / is closing", "breakdown": ["kapan", "ıyor"] }
+    ],
+    "phrases": [
+      { "tr": "Yardımcı olabilir miyim?", "en": "Can I help you?" },
+      { "tr": "Rafta bulamıyorum.", "en": "I can't find it on the shelf." },
+      { "tr": "Ne zaman geri gelir?", "en": "When will it come back?" },
+      { "tr": "Sizin için ayırabilirim.", "en": "I can reserve it for you." },
+      { "tr": "Kaçta kapanıyor?", "en": "What time does it close?" }
+    ],
+    "writing": {
+      "prompt": "Describe a normal day of your PhD work in 3–5 sentences (present continuous).",
+      "promptTr": "Doktora çalışmalarında normal bir günü anlat.",
+      "hints": ["Sabah …'da çalışıyorum.", "Makale okuyorum.", "Akşam …"]
+    }
+  },
+  {
+    "id": "dun",
+    "minStep": 12,
+    "title": "What did you do yesterday?",
+    "titleTr": "Dün ne yaptın?",
+    "setting": "Your friend Can calls you; you spent the day in Gazimağusa.",
+    "settingTr": "Arkadaşın Can arıyor; sen dün Gazimağusa'daydın.",
+    "lines": [
+      { "speaker": "Can", "tr": "Dün seni aradım ama açmadın.", "en": "I called you yesterday but you didn't answer." },
+      { "speaker": "Sen", "tr": "Özür dilerim, telefonum evde kaldı.", "en": "Sorry, my phone was left at home." },
+      { "speaker": "Can", "tr": "Nereye gittin?", "en": "Where did you go?" },
+      { "speaker": "Sen", "tr": "Gazimağusa'ya gittim. Salamis'i gezdim.", "en": "I went to Famagusta. I visited Salamis." },
+      { "speaker": "Can", "tr": "Nasıldı? Beğendin mi?", "en": "How was it? Did you like it?" },
+      { "speaker": "Sen", "tr": "Çok beğendim! Çok fotoğraf çektim.", "en": "I loved it! I took lots of photos." },
+      { "speaker": "Can", "tr": "Öğle yemeğini nerede yedin?", "en": "Where did you have lunch?" },
+      { "speaker": "Sen", "tr": "Eski şehirde küçük bir lokantada yedim. Molehiya denedim.", "en": "I ate at a small restaurant in the old town. I tried molokhia." },
+      { "speaker": "Can", "tr": "Harika! Bir dahaki sefere beni de çağır.", "en": "Great! Invite me too next time." }
+    ],
+    "glossary": [
+      { "word": "aradım", "meaning": "I called", "breakdown": ["ara", "dı", "m"] },
+      { "word": "açmadın", "meaning": "you didn't answer (open)", "breakdown": ["aç", "ma", "dı", "n"] },
+      { "word": "kaldı", "meaning": "stayed / was left", "breakdown": ["kal", "dı"] },
+      { "word": "gezdim", "meaning": "I toured / visited", "breakdown": ["gez", "di", "m"] },
+      { "word": "nasıldı", "meaning": "how was it", "breakdown": ["nasıl", "dı"] },
+      { "word": "çektim", "meaning": "I took (photos)", "breakdown": ["çek", "ti", "m"] },
+      { "word": "yemeğini", "meaning": "the meal (object, 'öğle yemeği')", "breakdown": ["yemeğ", "i", "n", "i"] },
+      { "word": "denedim", "meaning": "I tried", "breakdown": ["dene", "di", "m"] }
+    ],
+    "phrases": [
+      { "tr": "Seni aradım.", "en": "I called you." },
+      { "tr": "Nereye gittin?", "en": "Where did you go?" },
+      { "tr": "Beğendin mi?", "en": "Did you like it?" },
+      { "tr": "Çok fotoğraf çektim.", "en": "I took lots of photos." },
+      { "tr": "Bir dahaki sefere beni de çağır.", "en": "Invite me too next time." }
+    ],
+    "writing": {
+      "prompt": "What did you do last weekend? Write 3–5 sentences in the past tense.",
+      "promptTr": "Geçen hafta sonu ne yaptın? Geçmiş zamanla 3–5 cümle yaz.",
+      "hints": ["Cumartesi … gittim.", "… yedim / içtim.", "Çok …"]
+    }
+  },
+  {
+    "id": "hafta-sonu",
+    "minStep": 13,
+    "title": "Weekend plans",
+    "titleTr": "Hafta sonu planı",
+    "setting": "Making weekend plans with your colleague Elif.",
+    "settingTr": "İş arkadaşın Elif'le hafta sonu planı yapıyorsunuz.",
+    "lines": [
+      { "speaker": "Elif", "tr": "Hafta sonu ne yapacaksın?", "en": "What will you do at the weekend?" },
+      { "speaker": "Sen", "tr": "Cumartesi Karpaz'a gideceğim. Sen?", "en": "On Saturday I'll go to Karpas. You?" },
+      { "speaker": "Elif", "tr": "Ben evde kalacağım. Tezimi yazacağım.", "en": "I'll stay at home. I'll write my thesis." },
+      { "speaker": "Sen", "tr": "Pazar günü boş musun? Birlikte kahvaltı yapalım mı?", "en": "Are you free on Sunday? Shall we have breakfast together?" },
+      { "speaker": "Elif", "tr": "Olur! Nerede buluşalım?", "en": "Sure! Where shall we meet?" },
+      { "speaker": "Sen", "tr": "Bellapais'te güzel bir kafe var. Saat onda orada olacağım.", "en": "There's a nice café in Bellapais. I'll be there at ten." },
+      { "speaker": "Elif", "tr": "Tamam, ben de geleceğim. Arabayla mı gideceksin?", "en": "Okay, I'll come too. Will you go by car?" },
+      { "speaker": "Sen", "tr": "Hayır, dolmuşla gideceğim.", "en": "No, I'll go by minibus." },
+      { "speaker": "Elif", "tr": "O zaman pazar günü görüşürüz!", "en": "Then see you on Sunday!" }
+    ],
+    "glossary": [
+      { "word": "yapacaksın", "meaning": "you will do", "breakdown": ["yap", "acak", "sın"] },
+      { "word": "gideceğim", "meaning": "I will go", "breakdown": ["gid", "eceğ", "im"] },
+      { "word": "kalacağım", "meaning": "I will stay", "breakdown": ["kal", "acağ", "ım"] },
+      { "word": "tezimi", "meaning": "my thesis (object)", "breakdown": ["tez", "im", "i"] },
+      { "word": "yapalım", "meaning": "let's do / have", "breakdown": ["yap", "alım"] },
+      { "word": "olacağım", "meaning": "I will be", "breakdown": ["ol", "acağ", "ım"] },
+      { "word": "arabayla", "meaning": "by car", "breakdown": ["araba", "y", "la"] },
+      { "word": "dolmuşla", "meaning": "by minibus", "breakdown": ["dolmuş", "la"] }
+    ],
+    "phrases": [
+      { "tr": "Hafta sonu ne yapacaksın?", "en": "What will you do at the weekend?" },
+      { "tr": "Evde kalacağım.", "en": "I'll stay at home." },
+      { "tr": "Birlikte kahvaltı yapalım mı?", "en": "Shall we have breakfast together?" },
+      { "tr": "Nerede buluşalım?", "en": "Where shall we meet?" },
+      { "tr": "Orada olacağım.", "en": "I'll be there." }
+    ],
+    "writing": {
+      "prompt": "What will you do next weekend? Write 3–5 sentences in the future tense.",
+      "promptTr": "Gelecek hafta sonu ne yapacaksın? Gelecek zamanla yaz.",
+      "hints": ["Cumartesi … gideceğim.", "… yapacağım.", "Pazar günü …"]
+    }
+  },
+  {
+    "id": "tavsiye",
+    "minStep": 15,
+    "title": "Recommending places",
+    "titleTr": "Yer tavsiyesi",
+    "setting": "A visiting friend from Istanbul asks you what to see in Northern Cyprus.",
+    "settingTr": "İstanbul'dan gelen bir arkadaşın Kuzey Kıbrıs'ta ne görebileceğini soruyor.",
+    "lines": [
+      { "speaker": "Deniz", "tr": "Üç günüm var. Ne yapabilirim?", "en": "I have three days. What can I do?" },
+      { "speaker": "Sen", "tr": "İlk gün Lefkoşa'yı gezebilirsin. Büyük Han çok güzel.", "en": "On the first day you can explore Nicosia. The Great Inn is lovely." },
+      { "speaker": "Deniz", "tr": "Denize girebilir miyim?", "en": "Can I swim in the sea?" },
+      { "speaker": "Sen", "tr": "Tabii! Karpaz'da altın kumsallar var. Orada eşekleri de görebilirsin.", "en": "Of course! There are golden beaches in Karpas. You can also see the donkeys there." },
+      { "speaker": "Deniz", "tr": "Araba kiralamam gerekir mi?", "en": "Do I need to rent a car?" },
+      { "speaker": "Sen", "tr": "Bence evet. Otobüsle Karpaz'a gitmek zor.", "en": "I think so. Getting to Karpas by bus is hard." },
+      { "speaker": "Deniz", "tr": "Ne yemeliyim?", "en": "What should I eat?" },
+      { "speaker": "Sen", "tr": "Şeftali kebabı ve hellimli tost mutlaka dene!", "en": "Definitely try şeftali kebab and a halloumi toastie!" },
+      { "speaker": "Deniz", "tr": "Harika, çok teşekkürler!", "en": "Great, thanks a lot!" }
+    ],
+    "glossary": [
+      { "word": "günüm", "meaning": "my days (I have … days)", "breakdown": ["gün", "üm"] },
+      { "word": "yapabilirim", "meaning": "I can do", "breakdown": ["yap", "abil", "ir", "im"] },
+      { "word": "gezebilirsin", "meaning": "you can explore", "breakdown": ["gez", "ebil", "ir", "sin"] },
+      { "word": "girebilir", "meaning": "can enter (denize girmek = to swim in the sea)", "breakdown": ["gir", "ebil", "ir"] },
+      { "word": "kumsallar", "meaning": "sandy beaches", "breakdown": ["kum", "sal", "lar"] },
+      { "word": "eşekleri", "meaning": "the donkeys (object)", "breakdown": ["eşek", "ler", "i"] },
+      { "word": "kiralamam", "meaning": "my renting", "breakdown": ["kirala", "ma", "m"] },
+      { "word": "yemeliyim", "meaning": "I should eat", "breakdown": ["ye", "meli", "y", "im"] }
+    ],
+    "phrases": [
+      { "tr": "Ne yapabilirim?", "en": "What can I do?" },
+      { "tr": "Denize girebilir miyim?", "en": "Can I swim in the sea?" },
+      { "tr": "Bence evet.", "en": "I think so." },
+      { "tr": "Mutlaka dene!", "en": "Definitely try it!" },
+      { "tr": "Orada eşekleri de görebilirsin.", "en": "You can also see the donkeys there." }
+    ],
+    "writing": {
+      "prompt": "A friend is visiting Northern Cyprus. Recommend 3 things they can do, using -(y)Abil.",
+      "promptTr": "Bir arkadaşın Kuzey Kıbrıs'a geliyor. Ne yapabileceğini yaz.",
+      "hints": ["…'yı gezebilirsin.", "…'da yüzebilirsin.", "… yiyebilirsin."]
+    }
+  }
+]

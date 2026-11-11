@@ -1,0 +1,302 @@
+[
+ {
+  "unit": 1,
+  "title": "Greetings & courtesy",
+  "titleTr": "Selamlaşma ve nezaket"
+ },
+ {
+  "unit": 2,
+  "title": "Survival phrases",
+  "titleTr": "Temel ifadeler"
+ },
+ {
+  "unit": 3,
+  "title": "Pronouns & core words",
+  "titleTr": "Zamirler ve temel kelimeler"
+ },
+ {
+  "unit": 4,
+  "title": "Numbers",
+  "titleTr": "Sayılar"
+ },
+ {
+  "unit": 5,
+  "title": "Questions & time adverbs",
+  "titleTr": "Soru kelimeleri"
+ },
+ {
+  "unit": 6,
+  "title": "At the café",
+  "titleTr": "Kafede"
+ },
+ {
+  "unit": 7,
+  "title": "Food basics",
+  "titleTr": "Temel yiyecekler"
+ },
+ {
+  "unit": 8,
+  "title": "Family & people",
+  "titleTr": "Aile ve insanlar"
+ },
+ {
+  "unit": 9,
+  "title": "Core verbs 1",
+  "titleTr": "Temel fiiller 1"
+ },
+ {
+  "unit": 10,
+  "title": "Days & time of day",
+  "titleTr": "Günler ve zaman"
+ },
+ {
+  "unit": 11,
+  "title": "Places in town",
+  "titleTr": "Şehirde yerler"
+ },
+ {
+  "unit": 12,
+  "title": "Adjectives 1",
+  "titleTr": "Sıfatlar 1"
+ },
+ {
+  "unit": 13,
+  "title": "At the market: fruit & veg",
+  "titleTr": "Pazarda meyve ve sebze"
+ },
+ {
+  "unit": 14,
+  "title": "Core verbs 2",
+  "titleTr": "Temel fiiller 2"
+ },
+ {
+  "unit": 15,
+  "title": "Directions & transport",
+  "titleTr": "Yol tarifi ve ulaşım"
+ },
+ {
+  "unit": 16,
+  "title": "Shopping & money",
+  "titleTr": "Alışveriş ve para"
+ },
+ {
+  "unit": 17,
+  "title": "Work & office",
+  "titleTr": "İş ve ofis"
+ },
+ {
+  "unit": 18,
+  "title": "University & study",
+  "titleTr": "Üniversite ve eğitim"
+ },
+ {
+  "unit": 19,
+  "title": "Months, seasons & dates",
+  "titleTr": "Aylar ve mevsimler"
+ },
+ {
+  "unit": 20,
+  "title": "Body & health",
+  "titleTr": "Vücut ve sağlık"
+ },
+ {
+  "unit": 21,
+  "title": "Weather & nature",
+  "titleTr": "Hava ve doğa"
+ },
+ {
+  "unit": 22,
+  "title": "Clothes & colours",
+  "titleTr": "Kıyafetler ve renkler"
+ },
+ {
+  "unit": 23,
+  "title": "Daily routine",
+  "titleTr": "Günlük rutin"
+ },
+ {
+  "unit": 24,
+  "title": "Feelings & states",
+  "titleTr": "Duygular ve durumlar"
+ },
+ {
+  "unit": 25,
+  "title": "Restaurant & cooking",
+  "titleTr": "Restoranda ve mutfakta"
+ },
+ {
+  "unit": 26,
+  "title": "Jobs & people",
+  "titleTr": "Meslekler ve insanlar"
+ },
+ {
+  "unit": 27,
+  "title": "Adverbs & connectors",
+  "titleTr": "Zarflar ve bağlaçlar"
+ },
+ {
+  "unit": 28,
+  "title": "Core verbs 3",
+  "titleTr": "Temel fiiller 3"
+ },
+ {
+  "unit": 29,
+  "title": "Home: rooms & furniture",
+  "titleTr": "Ev: odalar ve eşyalar"
+ },
+ {
+  "unit": 30,
+  "title": "Travel & holidays",
+  "titleTr": "Seyahat ve tatil"
+ },
+ {
+  "unit": 31,
+  "title": "Communication & technology",
+  "titleTr": "İletişim ve teknoloji"
+ },
+ {
+  "unit": 32,
+  "title": "City services & paperwork",
+  "titleTr": "Şehir hizmetleri ve resmi işler"
+ },
+ {
+  "unit": 33,
+  "title": "Thinking & communicating",
+  "titleTr": "Düşünme ve iletişim"
+ },
+ {
+  "unit": 34,
+  "title": "Adjectives 2",
+  "titleTr": "Sıfatlar 2"
+ },
+ {
+  "unit": 35,
+  "title": "Animals & nature",
+  "titleTr": "Hayvanlar ve doğa"
+ },
+ {
+  "unit": 36,
+  "title": "Sports & hobbies",
+  "titleTr": "Spor ve hobiler"
+ },
+ {
+  "unit": 37,
+  "title": "Relationships & celebrations",
+  "titleTr": "İlişkiler ve kutlamalar"
+ },
+ {
+  "unit": 38,
+  "title": "Movement & position",
+  "titleTr": "Hareket ve konum"
+ },
+ {
+  "unit": 39,
+  "title": "Abstract nouns 1",
+  "titleTr": "Soyut isimler 1"
+ },
+ {
+  "unit": 40,
+  "title": "Position & postpositions",
+  "titleTr": "Konum ve edatlar"
+ },
+ {
+  "unit": 41,
+  "title": "Health 2",
+  "titleTr": "Sağlık 2"
+ },
+ {
+  "unit": 42,
+  "title": "Business & career",
+  "titleTr": "İş dünyası ve kariyer"
+ },
+ {
+  "unit": 43,
+  "title": "Household verbs",
+  "titleTr": "Evdeki işler"
+ },
+ {
+  "unit": 44,
+  "title": "Academic life & research",
+  "titleTr": "Akademik hayat ve araştırma"
+ },
+ {
+  "unit": 45,
+  "title": "Society & culture",
+  "titleTr": "Toplum ve kültür"
+ },
+ {
+  "unit": 46,
+  "title": "Kitchen & ingredients",
+  "titleTr": "Mutfak ve malzemeler"
+ },
+ {
+  "unit": 47,
+  "title": "Character & quality",
+  "titleTr": "Karakter ve nitelik"
+ },
+ {
+  "unit": 48,
+  "title": "Life events & social verbs",
+  "titleTr": "Hayat ve sosyal fiiller"
+ },
+ {
+  "unit": 49,
+  "title": "Abstract nouns 2",
+  "titleTr": "Soyut isimler 2"
+ },
+ {
+  "unit": 50,
+  "title": "Everyday expressions",
+  "titleTr": "Günlük ifadeler"
+ },
+ {
+  "unit": 51,
+  "title": "Media & news",
+  "titleTr": "Medya ve haberler"
+ },
+ {
+  "unit": 52,
+  "title": "Money & banking",
+  "titleTr": "Para ve bankacılık"
+ },
+ {
+  "unit": 53,
+  "title": "Work & study verbs",
+  "titleTr": "İş ve eğitim fiilleri"
+ },
+ {
+  "unit": 54,
+  "title": "Time expressions",
+  "titleTr": "Zaman ifadeleri"
+ },
+ {
+  "unit": 55,
+  "title": "Home & neighbourhood",
+  "titleTr": "Ev ve mahalle"
+ },
+ {
+  "unit": 56,
+  "title": "Language & learning",
+  "titleTr": "Dil ve öğrenme"
+ },
+ {
+  "unit": 57,
+  "title": "Adjectives 3",
+  "titleTr": "Sıfatlar 3"
+ },
+ {
+  "unit": 58,
+  "title": "Senses & change",
+  "titleTr": "Duyular ve değişim"
+ },
+ {
+  "unit": 59,
+  "title": "Discourse & connectors",
+  "titleTr": "Bağlaçlar ve söylem"
+ },
+ {
+  "unit": 60,
+  "title": "Northern Cyprus & local life",
+  "titleTr": "Kuzey Kıbrıs ve yerel hayat"
+ }
+]

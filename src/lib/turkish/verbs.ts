@@ -309,7 +309,9 @@ export function regularAorist(stem: string, softens = false): string {
   if (endsWithVowel(w)) return prefix + w + "r";
   const syllables = [...w].filter((c) => "aeıioöuü".includes(c)).length;
   const base = softens ? soften(w) : w;
-  if (syllables === 1 && !AORIST_IR_MONOSYLLABLES.includes(w)) return prefix + base + harmonyA(w) + "r";
+  // Softening verbs are git/et/tat… and compounds of et written as one word (kaybet, hisset):
+  // they behave like the monosyllable they end in → -Ar (kaybeder, hisseder).
+  if (softens || (syllables === 1 && !AORIST_IR_MONOSYLLABLES.includes(w))) return prefix + base + harmonyA(w) + "r";
   return prefix + base + harmonyI(w) + "r";
 }
 

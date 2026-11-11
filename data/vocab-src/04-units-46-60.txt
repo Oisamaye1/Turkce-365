@@ -1,0 +1,406 @@
+# Türkçe 365 — vocabulary source, units 46–60 (Phase 3–4: real conversations)
+
+@ 46 | Kitchen & ingredients | Mutfak ve malzemeler
+un | flour | n | Bir kilo un aldım. | I bought a kilo of flour.
+pirinç | rice (uncooked) | n s | Pirinci yıka. | Wash the rice.
+mercimek | lentils | n s | Mercimek çorbası yapıyorum. | I'm making lentil soup.
+nohut | chickpeas | n s | Nohudu akşamdan ıslatın. | Soak the chickpeas overnight.
+zeytinyağı | olive oil | n cmp | Salataya zeytinyağı ekle. | Add olive oil to the salad.
+sirke | vinegar | n | Biraz sirke koy. | Put a little vinegar.
+baharat | spices | n ns | Baharat çarşısı çok güzel kokuyor. | The spice bazaar smells lovely.
+nane | mint | n | Nane çayı içer misin? | Would you like mint tea?
+maydanoz | parsley | n | Maydanozu doğra. | Chop the parsley.
+sucuk | spicy sausage | n s | Sucuklu yumurta yaptım. | I made eggs with sucuk.
+kıyma | minced meat | n | Yarım kilo kıyma, lütfen. | Half a kilo of mince, please.
+kuzu | lamb | n | Kuzu eti çok lezzetli. | Lamb is very tasty.
+dana | veal / beef | n | Dana eti pahalı. | Beef is expensive.
+molehiya | molokhia (Cypriot stew) | n | Anneannem molehiya pişirdi. | My grandma cooked molokhia.
+hamur | dough | n | Hamuru açıyorum. | I'm rolling out the dough.
+kek | cake (sponge) | n ns | Portakallı kek yaptım. | I made an orange cake.
+pasta | cake (gateau) | n | Doğum günü pastası. | Birthday cake.
+kurabiye | cookie / biscuit | n | Kurabiyeler fırında. | The cookies are in the oven.
+çikolata | chocolate | n | Çikolata sever misin? | Do you like chocolate?
+fındık | hazelnut | n s | Fındıklı çikolata. | Hazelnut chocolate.
+ceviz | walnut | n | Cevizli baklava. | Walnut baklava.
+badem | almond | n | Badem sütü var mı? | Is there almond milk?
+yoğurt | yogurt | n s | Yoğurdu buzdolabına koy. | Put the yogurt in the fridge.
+kaymak | clotted cream | n s | Bal kaymak harika! | Honey and clotted cream is amazing!
+tarçın | cinnamon | n | Sütlaca tarçın koy. | Put cinnamon on the rice pudding.
+
+@ 47 | Character & quality | Karakter ve nitelik
+dürüst | honest | adj ns | Dürüst bir insan. | An honest person.
+cömert | generous | adj ns | Kıbrıslılar çok cömert. | Cypriots are very generous.
+kıskanç | jealous | adj s | Kıskanç olma! | Don't be jealous!
+sabırlı | patient | adj | Sabırlı ol, öğreneceksin. | Be patient, you'll learn.
+sabırsız | impatient | adj | Çok sabırsızım. | I'm very impatient.
+dikkatli | careful | adj | Dikkatli sür! | Drive carefully!
+dikkatsiz | careless | adj | Dikkatsiz bir hata. | A careless mistake.
+ciddi | serious | adj | Ciddi misin? | Are you serious?
+sorumlu | responsible | adj | Proje sorumlusu kim? | Who is responsible for the project?
+arkadaş canlısı | friendly | adj | Çok arkadaş canlısı biri. | A very friendly person.
+kaba | rude | adj | Garson biraz kabaydı. | The waiter was a bit rude.
+sakar | clumsy | adj | Çok sakarım, yine bardak kırdım. | I'm so clumsy, I broke a glass again.
+inatçı | stubborn | adj | Keçi gibi inatçı! | Stubborn as a goat!
+meraklı | curious | adj | Çocuklar çok meraklı. | Children are very curious.
+yetenekli | talented | adj | Çok yetenekli bir müzisyen. | A very talented musician.
+başarılı | successful | adj | Başarılı bir sunum. | A successful presentation.
+mükemmel | perfect / excellent | adj | Türkçen mükemmel! | Your Turkish is excellent!
+harika | wonderful | adj | Harika bir fikir! | A wonderful idea!
+berbat | terrible | adj ns | Hava berbat. | The weather is terrible.
+normal | normal | adj f x | Bu çok normal. | This is very normal.
+garip | strange | adj s | Garip bir ses duydum. | I heard a strange noise.
+tuhaf | weird / odd | adj | Tuhaf bir adam. | A weird man.
+basit | simple | adj ns | Basit bir soru. | A simple question.
+karışık | complicated / mixed | adj s | Bu kural çok karışık. | This rule is very complicated.
+sıradan | ordinary | adj | Sıradan bir gün. | An ordinary day.
+
+@ 48 | Life events & social verbs | Hayat ve sosyal fiiller
+doğmak | to be born | v doğar | Londra'da doğdum. | I was born in London.
+büyümek | to grow (up) | v büyür | Köyde büyüdüm. | I grew up in a village.
+ölmek | to die | v ölür | Dedem geçen yıl öldü. | My grandfather died last year.
+evlenmek | to get married | v evlenir | Haziranda evleniyoruz. | We're getting married in June.
+boşanmak | to get divorced | v boşanır | Boşandılar. | They got divorced.
+yaşlanmak | to get old | v yaşlanır | Hepimiz yaşlanıyoruz. | We're all getting older.
+kutlamak | to celebrate / to congratulate | v kutlar | Doğum gününü kutladık. | We celebrated her birthday.
+ziyaret etmek | to visit | v eder s | Ailemi ziyaret edeceğim. | I'll visit my family.
+misafir olmak | to be a guest | v olur | Bu akşam komşulara misafir olduk. | We were guests at the neighbours' tonight.
+eğlenmek | to have fun | v eğlenir | Partide çok eğlendik. | We had a lot of fun at the party.
+dans etmek | to dance | v eder s | Düğünde dans ettik. | We danced at the wedding.
+şarkı söylemek | to sing | v söyler | Şarkı söylemeyi seviyorum. | I love singing.
+gülümsemek | to smile | v gülümser | Bana gülümsedi. | She smiled at me.
+sarılmak | to hug | v sarılır | Annem bana sarıldı. | My mother hugged me.
+öpmek | to kiss | v öper | Bebeği öptü. | He kissed the baby.
+selamlaşmak | to greet each other | v selamlaşır | Komşularla selamlaşıyoruz. | We greet the neighbours.
+tebrik etmek | to congratulate | v eder s | Seni tebrik ederim! | I congratulate you!
+hediye etmek | to give as a gift | v eder s | Bana bir kitap hediye etti. | She gave me a book as a gift.
+ikram etmek | to offer (food / drink) | v eder s | Bize kahve ikram ettiler. | They offered us coffee.
+ödünç almak | to borrow | v alır | Kalemini ödünç alabilir miyim? | Can I borrow your pen?
+ödünç vermek | to lend | v verir | Ona kitabımı ödünç verdim. | I lent him my book.
+güvenmek | to trust | v güvenir | Sana güveniyorum. | I trust you.
+saygı duymak | to respect | v duyar | Fikrine saygı duyuyorum. | I respect your opinion.
+anlaşmak | to get along / to agree | v anlaşır | Ev arkadaşımla iyi anlaşıyoruz. | I get along well with my flatmate.
+kavga etmek | to fight / to quarrel | v eder s | Kardeşimle kavga ettim. | I quarrelled with my brother.
+
+@ 49 | Abstract nouns 2 | Soyut isimler 2
+güç | power / strength | n s | Gücün yetiyor mu? | Are you strong enough?
+enerji | energy | n | Bugün hiç enerjim yok. | I have no energy today.
+hız | speed | n | Hız sınırı elli. | The speed limit is fifty.
+ses | sound / voice | n | Sesin çok güzel. | Your voice is very beautiful.
+ışık | light | n s | Işığı kapat. | Turn off the light.
+şekil | shape | n dv | Bu ne şekil? | What shape is this?
+boyut | size / dimension | n ns | Dosyanın boyutu çok büyük. | The file size is very big.
+miktar | amount | n | Az miktarda tuz. | A small amount of salt.
+sayı | number | n | Sayıları öğreniyorum. | I'm learning the numbers.
+yüzde | percent | n | Yüzde elli indirim! | Fifty percent off!
+parça | piece / part | n | Bir parça ekmek. | A piece of bread.
+kısım | part / section | n dv | İlk kısmı okudum. | I read the first part.
+tür | type / kind | n | Ne tür müzik seversin? | What kind of music do you like?
+çeşit | variety / kind | n s | Çok çeşit meze var. | There's a wide variety of meze.
+sistem | system | n | Sistem çalışmıyor. | The system isn't working.
+yapı | structure / building | n | Cümle yapısı farklı. | The sentence structure is different.
+süreç | process | n s | Başvuru süreci uzun. | The application process is long.
+ilişki | relationship / relation | n | İyi bir ilişkimiz var. | We have a good relationship.
+etki | effect / influence | n | Havanın etkisi büyük. | The weather has a big effect.
+sebep | reason / cause | n s | Sebebini bilmiyorum. | I don't know the reason.
+olay | event / incident | n | Dün akşam ilginç bir olay oldu. | Something interesting happened last night.
+konu | topic / subject | n | Tezinin konusu ne? | What's the topic of your thesis?
+seviye | level | n | Türkçe seviyem başlangıç. | My Turkish level is beginner.
+ihtiyaç | need | n s | Yardıma ihtiyacım var. | I need help.
+dikkat | attention / caution | n ns f | Dikkat, köpek var! | Caution, dog!
+
+@ 50 | Everyday expressions | Günlük ifadeler
+ne haber | what's up | phrase | Selam, ne haber? | Hi, what's up?
+iyi şanslar | good luck | phrase | Sınavda iyi şanslar! | Good luck in the exam!
+başın sağ olsun | my condolences | phrase | Başın sağ olsun, çok üzüldüm. | My condolences, I'm very sorry.
+eline sağlık | well done (said for cooking or work) | phrase | Yemek harika, eline sağlık! | The food is wonderful, well done!
+hayırlı olsun | congratulations (on something new) | phrase | Yeni evin hayırlı olsun! | Congratulations on your new house!
+gözün aydın | congratulations (on good news) | phrase | Oğlun gelmiş, gözün aydın! | Your son has arrived, how wonderful!
+çok yaşa | bless you (after a sneeze) | phrase | Hapşu! Çok yaşa! | Atchoo! Bless you!
+sen de gör | you too (reply to çok yaşa) | phrase | Çok yaşa! Sen de gör! | Bless you! You too!
+kusura bakma | sorry / don't take it badly | phrase | Kusura bakma, geç kaldım. | Sorry, I'm late.
+önemli değil | it's not important / never mind | phrase | Önemli değil, olur öyle. | Never mind, it happens.
+boş ver | forget it / never mind | phrase | Boş ver, sorun değil. | Forget it, it's no problem.
+aynen | exactly | adv | Aynen öyle! | Exactly so!
+tabii ki | of course | adv | Tabii ki gelirim! | Of course I'll come!
+olur | okay / sure | phrase | Yarın? Olur! | Tomorrow? Sure!
+olmaz | no way / not possible | phrase | Olmaz, çok pahalı. | No way, it's too expensive.
+yazık | what a pity | interj | Yazık, kaçırdık! | What a pity, we missed it!
+maşallah | wonderful (praise) | interj | Maşallah, çok büyümüşsün! | Wow, you've grown so much!
+hadi | come on / let's go | interj | Hadi, geç kalıyoruz! | Come on, we're running late!
+aman | oh! / be careful | interj | Aman dikkat et! | Oh, be careful!
+şaka yapıyorum | I'm joking | phrase | Merak etme, şaka yapıyorum. | Don't worry, I'm joking.
+ciddi misin | are you serious | phrase | Ciddi misin? İnanamıyorum! | Are you serious? I can't believe it!
+ne güzel | how nice | phrase | Ne güzel bir manzara! | What a lovely view!
+fark etmez | it doesn't matter | phrase | Çay ya da kahve, fark etmez. | Tea or coffee, it doesn't matter.
+bence | in my opinion | adv | Bence çok güzel. | I think it's very nice.
+sence | in your opinion | adv | Sence hangisi daha iyi? | Which one is better in your opinion?
+
+@ 51 | Media & news | Medya ve haberler
+gazete | newspaper | n | Sabah gazete okuyorum. | I read the newspaper in the morning.
+manşet | headline | n ns | Bugünün manşeti ne? | What's today's headline?
+röportaj | interview (media) | n | Röportaj televizyonda yayınlandı. | The interview was broadcast on TV.
+yorum | comment / interpretation | n | Yorumun için teşekkürler. | Thanks for your comment.
+reklam | advertisement | n | Çok fazla reklam var. | There are too many ads.
+program | programme / schedule | n | Bu programı izliyor musun? | Do you watch this programme?
+kanal | channel | n | Kanalı değiştir. | Change the channel.
+sunucu | presenter / host | n | Sunucu çok komik. | The presenter is very funny.
+izleyici | viewer / audience | n | İzleyiciler alkışladı. | The audience applauded.
+dinleyici | listener | n | Sevgili dinleyiciler! | Dear listeners!
+okur | reader | n | Okurlarımızdan mektuplar. | Letters from our readers.
+muhabir | reporter | n | Muhabir olay yerinde. | The reporter is at the scene.
+açıklama | statement / explanation | n | Bakan bir açıklama yaptı. | The minister made a statement.
+duyuru | announcement | n | Önemli bir duyuru var. | There's an important announcement.
+gündem | agenda / current affairs | n | Gündemde ne var? | What's on the agenda?
+son dakika | breaking news | phrase | Son dakika haberi! | Breaking news!
+hava durumu | weather forecast | n cmp | Hava durumuna baktın mı? | Did you check the weather forecast?
+belgesel | documentary | n | Kıbrıs hakkında bir belgesel izledim. | I watched a documentary about Cyprus.
+takipçi | follower | n | Çok takipçisi var. | She has a lot of followers.
+paylaşım | post (social media) / sharing | n | Son paylaşımını gördüm. | I saw your latest post.
+yorum yapmak | to comment | v yapar | Fotoğrafıma yorum yaptı. | He commented on my photo.
+abone olmak | to subscribe | v olur | Kanala abone oldum. | I subscribed to the channel.
+beğeni | like (social media) / taste | n | Fotoğraf çok beğeni aldı. | The photo got a lot of likes.
+eleştiri | criticism / review | n | Film iyi eleştiriler aldı. | The film got good reviews.
+tartışma | discussion / debate / argument | n | Uzun bir tartışma oldu. | There was a long debate.
+
+@ 52 | Money & banking | Para ve bankacılık
+kredi | loan / credit | n | Bankadan kredi aldım. | I took a loan from the bank.
+borç | debt | n s | Borcum yok. | I have no debt.
+faiz | interest (rate) | n | Faiz çok yüksek. | Interest is very high.
+döviz | foreign currency | n | Döviz bürosu nerede? | Where's the exchange office?
+kur | exchange rate | n | Sterlin kuru ne kadar? | What's the pound exchange rate?
+bozdurmak | to change (money) | v bozdurur | Sterlin bozdurmak istiyorum. | I'd like to change pounds.
+yatırmak | to deposit / to invest | v yatırır | Hesaba para yatırdım. | I deposited money into the account.
+para çekmek | to withdraw money | v çeker | Bankamatikten para çektim. | I withdrew money from the ATM.
+bankamatik | cash machine / ATM | n s | En yakın bankamatik nerede? | Where's the nearest ATM?
+kart | card | n ns | Kartla ödeyebilir miyim? | Can I pay by card?
+ödeme | payment | n | Ödeme yaptım. | I made the payment.
+havale | bank transfer | n | Havale ile gönderdim. | I sent it by bank transfer.
+makbuz | receipt (official) | n | Makbuzu saklayın. | Keep the receipt.
+tasarruf | saving(s) | n | Tasarruf yapmalıyım. | I need to save.
+harcama | spending / expense | n | Bu ay harcamalarım çok fazla. | My spending this month is too high.
+zam | price rise / pay rise | n dbl | Ekmeğe zam geldi. | The price of bread went up.
+enflasyon | inflation | n | Enflasyon çok yüksek. | Inflation is very high.
+pahalılık | high cost of living | n s | Pahalılıktan herkes şikayet ediyor. | Everyone complains about prices.
+sterlin | pound sterling | n | On sterlin bozdurdum. | I changed ten pounds.
+avro | euro | n | Avro ile ödeyebilir miyim? | Can I pay in euros?
+dolar | dollar | n | Dolar yükseldi. | The dollar rose.
+kuruş | kuruş (cent) | n | On lira elli kuruş. | Ten lira fifty kuruş.
+kazanç | earnings / gain | n s | Kazancım az. | My earnings are low.
+yatırım | investment | n | Ev iyi bir yatırım. | A house is a good investment.
+cüzdan | wallet | n | Cüzdanımı evde unuttum. | I left my wallet at home.
+
+@ 53 | Work & study verbs | İş ve eğitim fiilleri
+araştırmak | to research / to investigate | v araştırır | Bu konuyu araştırıyorum. | I'm researching this topic.
+incelemek | to examine / to study | v inceler | Verileri inceledik. | We examined the data.
+yayınlamak | to publish | v yayınlar | Makaleyi yayınladılar. | They published the article.
+sunmak | to present / to offer | v sunar | Bulgularımı sunacağım. | I'll present my findings.
+savunmak | to defend | v savunur | Tezimi savundum! | I defended my thesis!
+düzeltmek | to correct / to fix | v düzeltir | Hatalarımı düzeltir misin? | Can you correct my mistakes?
+teslim etmek | to submit / to deliver | v eder s | Ödevi teslim ettim. | I submitted the assignment.
+hesaplamak | to calculate | v hesaplar | Ortalamayı hesapladım. | I calculated the average.
+karşılaştırmak | to compare | v karşılaştırır | İki yöntemi karşılaştırdık. | We compared two methods.
+çevirmek | to translate / to turn | v çevirir | Bu cümleyi çevirir misin? | Can you translate this sentence?
+tekrar etmek | to repeat / to revise | v eder s | Kelimeleri tekrar ediyorum. | I'm revising the words.
+ezberlemek | to memorise | v ezberler | Şiiri ezberledim. | I memorised the poem.
+not almak | to take notes | v alır | Derste not alıyorum. | I take notes in class.
+özetlemek | to summarise | v özetler | Makaleyi özetledim. | I summarised the article.
+planlamak | to plan | v planlar | Tatili planlıyoruz. | We're planning the holiday.
+organize etmek | to organise | v eder s | Bir konferans organize ediyoruz. | We're organising a conference.
+yönetmek | to manage / to direct | v yönetir | Projeyi o yönetiyor. | She's managing the project.
+kontrol etmek | to check | v eder s | E-postalarımı kontrol ettim. | I checked my emails.
+imzalamak | to sign | v imzalar | Formu imzaladım. | I signed the form.
+başvurmak | to apply | v başvurur | Burs için başvurdum. | I applied for a scholarship.
+geliştirmek | to develop / to improve | v geliştirir | Türkçemi geliştirmek istiyorum. | I want to improve my Turkish.
+tamamlamak | to complete | v tamamlar | Anketi tamamladım. | I completed the survey.
+ertelemek | to postpone | v erteler | Toplantıyı erteledik. | We postponed the meeting.
+iptal etmek | to cancel | v eder s | Uçuşu iptal ettiler. | They cancelled the flight.
+toplantı yapmak | to hold a meeting | v yapar | Pazartesi toplantı yapacağız. | We'll have a meeting on Monday.
+
+@ 54 | Time expressions | Zaman ifadeleri
+şu an | right now | adv | Şu an müsait değilim. | I'm not available right now.
+şimdiye kadar | until now / so far | adv | Şimdiye kadar her şey yolunda. | So far everything is fine.
+yakında | soon | adv | Yakında görüşürüz! | See you soon!
+az önce | just now | adv | Az önce geldim. | I just arrived.
+demin | a moment ago | adv | Demin seni aradım. | I called you a moment ago.
+bu sabah | this morning | adv | Bu sabah erken kalktım. | I got up early this morning.
+bu akşam | this evening | adv | Bu akşam ne yapıyoruz? | What are we doing this evening?
+bu gece | tonight | adv | Bu gece dışarı çıkalım. | Let's go out tonight.
+dün gece | last night | adv | Dün gece iyi uyudum. | I slept well last night.
+yarın sabah | tomorrow morning | adv | Yarın sabah görüşelim. | Let's meet tomorrow morning.
+öbür gün | the day after tomorrow | adv | Öbür gün tatile çıkıyoruz. | We're going on holiday the day after tomorrow.
+evvelsi gün | the day before yesterday | adv | Evvelsi gün Girne'deydik. | We were in Kyrenia the day before yesterday.
+geçen hafta | last week | adv | Geçen hafta çok yağmur yağdı. | It rained a lot last week.
+gelecek ay | next month | adv | Gelecek ay taşınıyoruz. | We're moving next month.
+her sabah | every morning | adv | Her sabah koşuyorum. | I run every morning.
+hafta içi | weekdays | n cmp | Hafta içi çok meşgulüm. | I'm very busy on weekdays.
+gece yarısı | midnight | n cmp | Gece yarısı eve döndük. | We got home at midnight.
+öğle arası | lunch break | n cmp | Öğle arasında buluşalım. | Let's meet at lunch break.
+sabahleyin | in the morning | adv | Sabahleyin hava serin. | It's cool in the morning.
+çeyrek | quarter | n s | Saat beşi çeyrek geçiyor. | It's a quarter past five.
+buçuk | half (past the hour) | n s | Saat üç buçuk. | It's half past three.
+yüzyıl | century | n | Bu kale on altıncı yüzyıldan. | This castle is from the sixteenth century.
+takvim | calendar | n | Takvime yazdım. | I wrote it on the calendar.
+süre | duration / period | n | Ne kadar süre kalacaksın? | How long will you stay?
+uzun zamandır | for a long time | adv | Uzun zamandır görüşmedik. | We haven't seen each other for a long time.
+
+@ 55 | Home & neighbourhood | Ev ve mahalle
+mahalle | neighbourhood | n | Mahallemiz çok sessiz. | Our neighbourhood is very quiet.
+apartman | apartment block | n | Apartmanımızda asansör yok. | There's no lift in our building.
+site | housing complex | n | Denize yakın bir sitede oturuyoruz. | We live in a complex near the sea.
+bina | building | n | Bina çok eski. | The building is very old.
+ev sahibi | landlord / host | n cmp | Ev sahibim çok iyi biri. | My landlord is a very nice person.
+kiracı | tenant | n | Yeni kiracılar geldi. | The new tenants arrived.
+emlakçı | estate agent | n | Emlakçı bize üç ev gösterdi. | The estate agent showed us three houses.
+eşya | furniture / belongings | n | Eşyalarımızı taşıdık. | We moved our things.
+çöp | rubbish / garbage | n ns | Çöpü dışarı çıkar. | Take out the rubbish.
+çöp kutusu | bin | n cmp | Çöp kutusu dolu. | The bin is full.
+musluk | tap | n s | Musluk damlıyor. | The tap is dripping.
+lavabo | sink / washbasin | n | Lavabo tıkandı. | The sink is blocked.
+duş | shower | n | Duşta sıcak su yok. | There's no hot water in the shower.
+küvet | bathtub | n ns | Küvette yıkandı. | She bathed in the tub.
+klima | air conditioner | n | Klimayı açar mısın? | Can you turn on the air conditioning?
+ısıtıcı | heater | n | Kışın ısıtıcı kullanıyoruz. | We use a heater in winter.
+priz | socket | n | Priz nerede? | Where's the socket?
+ampul | light bulb | n f x | Ampul yandı. | The bulb has blown.
+perde | curtain | n | Perdeyi kapat. | Close the curtain.
+yastık | pillow | n s | Yastığım çok yumuşak. | My pillow is very soft.
+battaniye | blanket | n | Bir battaniye daha lazım. | We need another blanket.
+havlu | towel | n | Havlunu unutma! | Don't forget your towel!
+ayna | mirror | n | Aynaya bak. | Look in the mirror.
+çatı | roof | n | Çatıda güneş paneli var. | There are solar panels on the roof.
+zemin | floor / ground | n | Zemin kat. | Ground floor.
+
+@ 56 | Language & learning | Dil ve öğrenme
+görüş | opinion / view | n | Görüşün nedir? | What's your view?
+bakış açısı | point of view | n cmp | Farklı bir bakış açısı. | A different point of view.
+tavsiye | advice / recommendation | n | Bana bir tavsiye verir misin? | Can you give me some advice?
+öneri | suggestion | n | Bir önerim var. | I have a suggestion.
+tanım | definition | n | Bu kelimenin tanımı ne? | What's the definition of this word?
+dilbilgisi | grammar | n cmp | Türkçe dilbilgisi mantıklı. | Turkish grammar is logical.
+ek | suffix / addition | n ns | Türkçede çok ek var. | Turkish has a lot of suffixes.
+kök | root | n ns | Kelimenin kökü ne? | What's the root of the word?
+fiil | verb | n | Bu fiil düzensiz. | This verb is irregular.
+isim | noun / name | n dv | İsminiz nedir? | What is your name?
+sıfat | adjective | n ns | Sıfat isimden önce gelir. | The adjective comes before the noun.
+zamir | pronoun | n | Kişi zamirleri. | Personal pronouns.
+ünlü uyumu | vowel harmony | n cmp | Ünlü uyumu çok önemli. | Vowel harmony is very important.
+telaffuz | pronunciation | n | Telaffuzun çok iyi. | Your pronunciation is very good.
+aksan | accent | n | Hafif bir aksanın var. | You have a slight accent.
+hece | syllable | n | Bu kelime üç heceli. | This word has three syllables.
+harf | letter (of the alphabet) | n f | Türk alfabesinde yirmi dokuz harf var. | There are 29 letters in the Turkish alphabet.
+alfabe | alphabet | n | Alfabeyi öğrendim. | I learned the alphabet.
+yazım | spelling | n | Yazım hatası yaptım. | I made a spelling mistake.
+çeviri | translation | n | Çeviri doğru mu? | Is the translation correct?
+sözcük | word | n s | Bu sözcüğü bilmiyorum. | I don't know this word.
+deyim | idiom | n | Türkçede çok güzel deyimler var. | Turkish has lovely idioms.
+atasözü | proverb | n cmp | Bir atasözü öğrendim. | I learned a proverb.
+konuşma | speech / conversation / speaking | n | Konuşma pratiği yapmalıyım. | I need to practise speaking.
+diyalog | dialogue | n s | Diyaloğu dinleyin. | Listen to the dialogue.
+
+@ 57 | Adjectives 3 | Sıfatlar 3
+rahatsız | uncomfortable / disturbed | adj | Rahatsız ettiğim için özür dilerim. | Sorry to disturb you.
+hazır | ready | adj | Hazır mısın? | Are you ready?
+emin | sure | adj | Emin değilim. | I'm not sure.
+serbest | free (not restricted) | adj ns | Giriş serbest. | Admission is free.
+müsait | available / free | adj ns | Yarın müsait misin? | Are you free tomorrow?
+geçerli | valid | adj | Bu bilet geçerli değil. | This ticket isn't valid.
+resmi | official / formal | adj | Resmi tatil. | Public holiday.
+doğal | natural | adj | Doğal bir yoğurt. | A natural yogurt.
+yapay | artificial | adj | Yapay zeka. | Artificial intelligence.
+modern | modern | adj | Modern bir bina. | A modern building.
+geleneksel | traditional | adj | Geleneksel Kıbrıs yemekleri. | Traditional Cypriot dishes.
+uluslararası | international | adj | Uluslararası bir konferans. | An international conference.
+kişisel | personal | adj | Kişisel bir soru. | A personal question.
+ortak | common / shared / partner | adj s | Ortak bir arkadaşımız var. | We have a mutual friend.
+toplam | total | adj | Toplam ne kadar? | How much in total?
+eksik | missing / incomplete | adj s | Bir şey eksik. | Something is missing.
+tam | complete / exact / full | adj | Tam saat beşte. | At exactly five o'clock.
+son | last / end | adj | Son otobüs kaçta? | What time is the last bus?
+ilk | first | adj ns | İlk defa Kıbrıs'tayım. | It's my first time in Cyprus.
+sonraki | next / following | adj | Sonraki durak Girne. | The next stop is Kyrenia.
+önceki | previous | adj | Önceki dersi kaçırdım. | I missed the previous lesson.
+ana | main | adj | Ana cadde kapalı. | The main road is closed.
+asıl | actual / main | adj dv | Asıl sorun bu. | This is the real problem.
+canlı | live / lively | adj | Canlı müzik var. | There's live music.
+ölü | dead | adj | Ölü bir dil. | A dead language.
+
+@ 58 | Senses & change | Duyular ve değişim
+duymak | to hear | v duyar | Beni duyuyor musun? | Can you hear me?
+dokunmak | to touch | v dokunur | Lütfen dokunmayın. | Please don't touch.
+koklamak | to smell (something) | v koklar | Çiçekleri kokladım. | I smelled the flowers.
+tatmak | to taste | v tadar s | Hellimi tattın mı? | Did you taste the halloumi?
+fark etmek | to notice | v eder s | Hatayı fark ettim. | I noticed the mistake.
+izin vermek | to allow | v verir | Bana izin verir misiniz? | Would you excuse me?
+yasaklamak | to ban / to forbid | v yasaklar | Sigara içmeyi yasakladılar. | They banned smoking.
+gerekmek | to be necessary | v gerekir | Erken gitmemiz gerekiyor. | We need to leave early.
+yetmek | to be enough | v yeter | Bu para yeter mi? | Will this money be enough?
+benzemek | to resemble / to look like | v benzer | Annene benziyorsun. | You look like your mother.
+ait olmak | to belong | v olur | Bu çanta kime ait? | Who does this bag belong to?
+içermek | to contain / to include | v içerir | Fiyat vergiyi içeriyor mu? | Does the price include tax?
+artmak | to increase | v artar | Fiyatlar arttı. | Prices increased.
+azalmak | to decrease | v azalır | Turist sayısı azaldı. | The number of tourists fell.
+değerlendirmek | to evaluate / to make use of | v değerlendirir | Fırsatı değerlendirdim. | I made the most of the opportunity.
+korumak | to protect | v korur | Kaplumbağaları korumalıyız. | We must protect the turtles.
+kırılmak | to break / to be offended | v kırılır | Bardak kırıldı. | The glass broke.
+bağırmak | to shout | v bağırır | Bağırma, lütfen! | Don't shout, please!
+fısıldamak | to whisper | v fısıldar | Kulağıma fısıldadı. | She whispered in my ear.
+susmak | to be quiet | v susar | Lütfen susun! | Please be quiet!
+şaşırmak | to be surprised / to be confused | v şaşırır | Çok şaşırdım! | I was very surprised!
+utanmak | to be embarrassed / to be shy | v utanır | Türkçe konuşmaya utanıyorum. | I'm shy about speaking Turkish.
+sıkılmak | to be bored | v sıkılır | Evde sıkıldım. | I got bored at home.
+acıkmak | to get hungry | v acıkır | Acıktım, yemek yiyelim. | I'm hungry, let's eat.
+susamak | to get thirsty | v susar | Çok susadım. | I'm very thirsty.
+
+@ 59 | Discourse & connectors | Bağlaçlar ve söylem
+bu arada | by the way | adv | Bu arada, yarın boş musun? | By the way, are you free tomorrow?
+aslında | actually | adv | Aslında haklısın. | Actually, you're right.
+galiba | I guess / probably | adv | Galiba yağmur yağacak. | I guess it's going to rain.
+herhalde | probably / surely | adv | Herhalde trafikte. | He's probably in traffic.
+mesela | for example | adv | Mesela, hellim çok popüler. | For example, halloumi is very popular.
+örneğin | for example (formal) | adv | Örneğin, ev kelimesine bakalım. | For example, let's look at the word ev.
+kısacası | in short | adv | Kısacası, çok güzel bir tatildi. | In short, it was a lovely holiday.
+sonuçta | after all / in the end | adv | Sonuçta hepimiz insanız. | After all, we're all human.
+yine de | still / nevertheless | adv | Yorgunum ama yine de geleceğim. | I'm tired but I'll still come.
+ancak | however / only | conj | Ancak bu kolay değil. | However, this isn't easy.
+oysa | whereas / yet | conj | Oysa ben seni bekliyordum. | Yet I was waiting for you.
+hem de | and what's more | conj | Ucuz, hem de çok lezzetli. | Cheap, and delicious too.
+ne yazık ki | unfortunately | adv | Ne yazık ki gelemiyorum. | Unfortunately I can't come.
+neyse | anyway | interj | Neyse, sonra konuşuruz. | Anyway, we'll talk later.
+işte | here it is / there you go / well | interj | İşte otobüs geldi! | Here's the bus!
+acaba | I wonder | adv | Acaba yarın yağmur yağar mı? | I wonder if it'll rain tomorrow.
+keşke | I wish / if only | interj | Keşke daha erken gelseydim. | I wish I had come earlier.
+madem | since (as) | conj | Madem yorgunsun, dinlen. | Since you're tired, rest.
+hatta | even / in fact | adv | Hatta Kıbrıs Türkçesi de öğreniyorum. | I'm even learning Cypriot Turkish.
+özellikle | especially | adv | Özellikle yazın çok sıcak. | It's very hot, especially in summer.
+genelde | generally | adv | Genelde evde yemek yiyoruz. | We generally eat at home.
+kesinlikle | definitely / absolutely | adv | Kesinlikle katılıyorum. | I absolutely agree.
+tamamen | completely | adv | Tamamen unuttum! | I completely forgot!
+neredeyse | almost | adv | Neredeyse bitti. | It's almost finished.
+sanki | as if | conj | Sanki yaz gelmiş gibi. | It's as if summer has come.
+
+@ 60 | Northern Cyprus & local life | Kuzey Kıbrıs ve yerel hayat
+Kıbrıs | Cyprus | proper | Kıbrıs'ta yaşıyorum. | I live in Cyprus.
+Lefkoşa | Nicosia | proper | Lefkoşa'da çalışıyorum. | I work in Nicosia.
+Girne | Kyrenia | proper | Hafta sonu Girne'ye gidiyoruz. | We're going to Kyrenia at the weekend.
+Gazimağusa | Famagusta | proper | Gazimağusa'da üniversite var. | There's a university in Famagusta.
+Güzelyurt | Morphou | proper | Güzelyurt portakalıyla ünlü. | Morphou is famous for its oranges.
+İskele | Iskele (Trikomo) | proper | İskele'de güzel plajlar var. | There are lovely beaches in Iskele.
+Karpaz | Karpas peninsula | proper | Karpaz'da altın kumsallar var. | There are golden beaches in Karpas.
+Beşparmak Dağları | Kyrenia (Five Finger) Mountains | proper | Beşparmak Dağları'nda yürüyüş yaptık. | We hiked in the Five Finger Mountains.
+Kıbrıslı | Cypriot | adj | Eşim Kıbrıslı. | My spouse is Cypriot.
+Türk | Turk / Turkish (nationality) | adj ns | Türk müsün? | Are you Turkish?
+Kıbrıs Türkçesi | Cypriot Turkish | n cmp | Kıbrıs Türkçesi biraz farklı. | Cypriot Turkish is a bit different.
+sınır kapısı | border crossing | n cmp | Sınır kapısında kuyruk var. | There's a queue at the border crossing.
+pirohu | pirohu (Cypriot ravioli) | n | Annem pirohu yaptı. | My mother made pirohu.
+şeftali kebabı | Cypriot sausage kebab | n cmp | Şeftali kebabı denedin mi? | Have you tried şeftali kebab?
+bulgur köftesi | bulgur kofta | n cmp | Bulgur köftesi çok lezzetli. | Bulgur kofta is delicious.
+pilavuna | pilavuna (cheese pastry) | n | Fırından sıcak pilavuna aldım. | I bought warm pilavuna from the bakery.
+kolokas | kolokas (taro root) | n | Kolokas yemeği Kıbrıs'a özgü. | The kolokas dish is unique to Cyprus.
+harup | carob | n ns x | Harup pekmezi çok sağlıklı. | Carob syrup is very healthy.
+hellimli | with halloumi | adj | Hellimli tost, lütfen. | A halloumi toastie, please.
+yayla | mountain pasture / plateau | n | Yazın yaylaya çıkıyoruz. | In summer we go up to the highlands.
+Bellapais | Bellapais (Beylerbeyi village) | proper | Bellapais Manastırı çok etkileyici. | Bellapais Abbey is very impressive.
+Salamis | Salamis (ancient city) | proper | Salamis antik kentini gezdik. | We visited the ancient city of Salamis.
+Arasta | Arasta (old bazaar, Nicosia) | proper | Arasta'da alışveriş yaptık. | We shopped at the Arasta.
+Büyük Han | the Great Inn (Nicosia) | proper | Büyük Han'da kahve içtik. | We had coffee at the Great Inn.
+Selimiye Camii | Selimiye Mosque | proper | Selimiye Camii Lefkoşa'nın simgesi. | The Selimiye Mosque is the symbol of Nicosia.

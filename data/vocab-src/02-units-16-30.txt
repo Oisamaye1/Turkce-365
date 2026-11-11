@@ -1,0 +1,406 @@
+# Türkçe 365 — vocabulary source, units 16–30 (Phase 1–2: survival → daily life)
+
+@ 16 | Shopping & money | Alışveriş ve para
+para | money | n | Yanımda para yok. | I have no money on me.
+lira | lira | n | Bu kaç lira? | How many lira is this?
+bozuk para | change (coins) | n cmp | Bozuk paranız var mı? | Do you have change?
+kredi kartı | credit card | n cmp | Kredi kartı geçiyor mu? | Do you take credit cards?
+nakit | cash | n ns | Nakit ödeyeceğim. | I'll pay in cash.
+fiyat | price | n ns | Fiyatı çok yüksek. | Its price is very high.
+indirim | discount | n | İndirim var mı? | Is there a discount?
+fiş | receipt | n | Fiş alabilir miyim? | Can I have the receipt?
+çanta | bag | n | Çantam çok ağır. | My bag is very heavy.
+poşet | plastic bag | n ns | Poşet ister misiniz? | Would you like a bag?
+mağaza | store | n | Mağaza saat onda açılıyor. | The store opens at ten.
+alışveriş | shopping | n | Alışverişe çıkıyorum. | I'm going shopping.
+alışveriş merkezi | shopping mall | n cmp | Alışveriş merkezinde buluşalım. | Let's meet at the mall.
+kasa | till / checkout | n | Kasa nerede? | Where is the checkout?
+beden | size (clothes) | n | Kaç beden giyiyorsunuz? | What size do you wear?
+numara | number / shoe size | n | Telefon numaranız ne? | What's your phone number?
+hesap | bill / account | n s | Hesabı ben ödüyorum. | I'm paying the bill.
+ücret | fee / charge | n ns | Giriş ücreti ne kadar? | How much is the entrance fee?
+bedava | free (of charge) | adj | Su bedava mı? | Is the water free?
+kaç para | how much (money) | phrase | Bu ayakkabı kaç para? | How much are these shoes?
+denemek | to try / to try on | v dener | Bunu deneyebilir miyim? | Can I try this on?
+beğenmek | to like | v beğenir | Bu elbiseyi çok beğendim. | I really liked this dress.
+satıcı | seller | n | Satıcı çok kibar. | The seller is very polite.
+müşteri | customer | n | Müşteriler sırada bekliyor. | The customers are waiting in line.
+pazarlık | bargaining | n s | Pazarda pazarlık yapabilirsin. | You can bargain at the market.
+
+@ 17 | Work & office | İş ve ofis
+iş | work / job | n | İşim çok yoğun. | My work is very busy.
+işyeri | workplace | n cmp | İşyerim evime yakın. | My workplace is close to my home.
+ofis | office | n | Ofiste kimse yok. | There's nobody in the office.
+toplantı | meeting | n | Saat üçte toplantım var. | I have a meeting at three.
+proje | project | n | Yeni bir proje başlıyor. | A new project is starting.
+rapor | report | n | Raporu yarın göndereceğim. | I'll send the report tomorrow.
+bilgisayar | computer | n | Bilgisayarım çok yavaş. | My computer is very slow.
+telefon | phone | n | Telefonum çalıyor. | My phone is ringing.
+e-posta | email | n | E-postanı aldım. | I got your email.
+kalem | pen | n | Kalemin var mı? | Do you have a pen?
+defter | notebook | n | Yeni kelimeleri deftere yazıyorum. | I write new words in a notebook.
+kağıt | paper | n s | Bir kağıt verir misin? | Can you give me a piece of paper?
+dosya | file | n | Dosyayı masaya koydum. | I put the file on the table.
+şirket | company | n ns | Büyük bir şirkette çalışıyor. | She works at a big company.
+patron | boss | n | Patronum bugün izinli. | My boss is off today.
+müdür | manager / director | n | Müdür bey toplantıda. | The manager is in a meeting.
+meslektaş | colleague | n | Meslektaşlarımla öğle yemeği yedim. | I had lunch with my colleagues.
+çalışan | employee | n | Şirkette elli çalışan var. | There are fifty employees in the company.
+maaş | salary | n | Maaşlar ayın sonunda yatıyor. | Salaries are paid at the end of the month.
+izin | leave / permission | n | Yarın izinliyim. | I'm off tomorrow.
+tatil | holiday / vacation | n | Tatile ne zaman çıkıyorsun? | When are you going on holiday?
+mesai | working hours | n | Mesai saat beşte bitiyor. | Work ends at five.
+görev | task / duty | n | Bugün çok görevim var. | I have a lot of tasks today.
+meşgul | busy | adj f | Şu an meşgulüm. | I'm busy right now.
+iş arkadaşı | coworker | n cmp | İş arkadaşım çok yardımsever. | My coworker is very helpful.
+
+@ 18 | University & study | Üniversite ve eğitim
+öğrenci | student | n | Ben doktora öğrencisiyim. | I'm a PhD student.
+öğretmen | teacher | n | Öğretmenimiz çok sabırlı. | Our teacher is very patient.
+hoca | teacher / professor (colloquial) | n | Hocam, bir sorum var. | Professor, I have a question.
+profesör | professor | n | Profesörle görüştüm. | I met with the professor.
+ders | lesson / class | n | Dersim saat ikide. | My class is at two.
+sınıf | classroom / class | n | Sınıfta yirmi öğrenci var. | There are twenty students in the class.
+sınav | exam | n | Yarın sınavım var. | I have an exam tomorrow.
+ödev | homework / assignment | n | Ödevimi bitirdim. | I finished my homework.
+soru | question | n | Bir sorum var. | I have a question.
+cevap | answer | n s | Cevabı biliyor musun? | Do you know the answer?
+not | grade / note | n ns | Notlarım iyi. | My grades are good.
+kütüphane | library | n | Kütüphanede çalışıyorum. | I'm studying in the library.
+kitap | book | n s | Bu kitabı okudun mu? | Have you read this book?
+sözlük | dictionary | n s | Sözlüğe bakalım. | Let's look in the dictionary.
+dil | language / tongue | n | Kaç dil biliyorsun? | How many languages do you know?
+Türkçe | Turkish (language) | n | Türkçe öğreniyorum. | I'm learning Turkish.
+İngilizce | English (language) | n | İngilizce biliyor musunuz? | Do you speak English?
+kelime | word | n | Bugün beş yeni kelime öğrendim. | I learned five new words today.
+cümle | sentence | n | Bu cümle doğru mu? | Is this sentence correct?
+tez | thesis | n | Tezimi yazıyorum. | I'm writing my thesis.
+doktora | PhD / doctorate | n | Doktoramın ikinci yılındayım. | I'm in the second year of my PhD.
+araştırma | research | n | Araştırmam dil öğrenme üzerine. | My research is on language learning.
+bölüm | department / chapter | n | Hangi bölümdesin? | Which department are you in?
+fakülte | faculty | n | Fakülte binası nerede? | Where is the faculty building?
+kampüs | campus | n | Kampüs çok büyük. | The campus is very big.
+
+@ 19 | Months, seasons & dates | Aylar ve mevsimler
+ocak | January / stove | n s | Ocakta hava soğuk. | It's cold in January.
+şubat | February | n ns | Şubat kısa bir ay. | February is a short month.
+mart | March | n ns | Martta bahar geliyor. | Spring comes in March.
+nisan | April | n | Nisanda çiçekler açıyor. | Flowers bloom in April.
+mayıs | May | n | Mayısta tatile çıkıyoruz. | We go on holiday in May.
+haziran | June | n | Haziranda okul bitiyor. | School ends in June.
+temmuz | July | n | Temmuzda çok sıcak. | It's very hot in July.
+ağustos | August | n | Ağustosta denize giriyoruz. | We swim in the sea in August.
+eylül | September | n | Eylülde dersler başlıyor. | Classes start in September.
+ekim | October | n | Ekimde doğdum. | I was born in October.
+kasım | November | n | Kasımda yağmur yağıyor. | It rains in November.
+aralık | December / gap | n s | Aralıkta İngiltere'ye gidiyorum. | I'm going to England in December.
+mevsim | season | n | En sevdiğin mevsim hangisi? | Which is your favourite season?
+ilkbahar | spring | n | İlkbaharda hava çok güzel. | The weather is lovely in spring.
+yaz | summer | n | Kıbrıs'ta yaz çok uzun. | Summer is very long in Cyprus.
+sonbahar | autumn | n | Sonbaharda okul başlıyor. | School starts in autumn.
+kış | winter | n | Kışın yağmur yağıyor. | It rains in winter.
+tarih | date / history | n | Bugünün tarihi ne? | What's today's date?
+doğum günü | birthday | n cmp | Doğum günün ne zaman? | When is your birthday?
+yaş | age | n | Kaç yaşındasın? | How old are you?
+geçen | last (week / year) | adj | Geçen hafta Girne'deydim. | I was in Kyrenia last week.
+gelecek | next / future | adj s | Gelecek hafta sınavım var. | I have an exam next week.
+bazen | sometimes | adv | Bazen dolmuşla gidiyorum. | Sometimes I go by minibus.
+genellikle | usually | adv | Genellikle erken kalkarım. | I usually get up early.
+her gün | every day | adv | Her gün yirmi dakika çalışıyorum. | I study twenty minutes every day.
+
+@ 20 | Body & health | Vücut ve sağlık
+baş | head | n | Başım ağrıyor. | I have a headache.
+kafa | head (colloquial) | n | Kafam çok karışık. | I'm very confused.
+göz | eye | n | Gözlerin çok güzel. | Your eyes are very beautiful.
+kulak | ear | n s | Kulağım ağrıyor. | My ear hurts.
+burun | nose | n dv | Burnum akıyor. | My nose is running.
+ağız | mouth | n dv | Ağzını aç, lütfen. | Open your mouth, please.
+diş | tooth | n | Dişim ağrıyor. | My tooth hurts.
+el | hand | n | Ellerini yıka! | Wash your hands!
+kol | arm | n | Kolum kırıldı. | My arm is broken.
+parmak | finger | n s | Parmağımı kestim. | I cut my finger.
+bacak | leg | n s | Bacağım yorgun. | My leg is tired.
+ayak | foot | n s | Ayağım ağrıyor. | My foot hurts.
+mide | stomach | n | Midem bulanıyor. | I feel sick.
+sırt | back (body) | n ns | Sırtım ağrıyor. | My back hurts.
+boyun | neck | n dv | Boynum tutuldu. | I have a stiff neck.
+kalp | heart | n s f | Kalbim hızlı atıyor. | My heart is beating fast.
+yüz | face | n | Yüzünü yıka. | Wash your face.
+saç | hair | n ns | Saçın çok uzun. | Your hair is very long.
+hasta | ill / sick / patient | adj | Bugün hastayım. | I'm ill today.
+ağrı | pain / ache | n | Ağrım geçti. | My pain has gone.
+ateş | fever / fire | n | Ateşim var. | I have a fever.
+doktor | doctor | n | Doktora gitmem lazım. | I need to go to the doctor.
+ilaç | medicine | n s | İlacımı aldım. | I took my medicine.
+baş ağrısı | headache | n cmp | Baş ağrısı için ilaç var mı? | Is there medicine for a headache?
+sağlık | health | n s | Sağlığın her şeyden önemli. | Your health matters more than anything.
+
+@ 21 | Weather & nature | Hava ve doğa
+hava | weather / air | n | Hava bugün nasıl? | How's the weather today?
+güneş | sun | n | Güneş çok sıcak. | The sun is very hot.
+güneşli | sunny | adj | Bugün hava güneşli. | It's sunny today.
+yağmur | rain | n | Yağmur yağıyor. | It's raining.
+yağmurlu | rainy | adj | Yağmurlu bir gün. | A rainy day.
+rüzgar | wind | n | Rüzgar çok sert. | The wind is very strong.
+rüzgarlı | windy | adj | Girne'de hava rüzgarlı. | It's windy in Kyrenia.
+bulut | cloud | n ns | Gökyüzünde hiç bulut yok. | There are no clouds in the sky.
+bulutlu | cloudy | adj | Hava bulutlu ama sıcak. | It's cloudy but warm.
+kar | snow | n | Kıbrıs'ta kar yağmıyor. | It doesn't snow in Cyprus.
+sıcaklık | temperature / heat | n s | Sıcaklık otuz beş derece. | The temperature is thirty-five degrees.
+derece | degree | n | Bugün kaç derece? | How many degrees is it today?
+nem | humidity | n | Mağusa'da nem çok yüksek. | Humidity is very high in Famagusta.
+nemli | humid | adj | Hava çok nemli. | The air is very humid.
+serin | cool | adj | Akşamları hava serin. | It's cool in the evenings.
+ılık | mild / lukewarm | adj s | Deniz suyu ılık. | The sea water is warm.
+fırtına | storm | n | Fırtına geliyor. | A storm is coming.
+gökyüzü | sky | n cmp | Gökyüzü çok mavi. | The sky is very blue.
+yıldız | star | n | Gece yıldızlar çok parlak. | The stars are very bright at night.
+dağ | mountain | n | Dağlara bakıyorum. | I'm looking at the mountains.
+orman | forest | n | Ormanda yürüyüş yaptık. | We hiked in the forest.
+çiçek | flower | n s | Çiçekler çok güzel kokuyor. | The flowers smell lovely.
+ağaç | tree | n s | Bahçede bir limon ağacı var. | There's a lemon tree in the garden.
+kum | sand | n | Kum çok sıcak. | The sand is very hot.
+taş | stone | n | Eski taş evler. | Old stone houses.
+
+@ 22 | Clothes & colours | Kıyafetler ve renkler
+kıyafet | clothes / outfit | n ns | Yeni kıyafetler aldım. | I bought new clothes.
+gömlek | shirt | n s | Beyaz bir gömlek giydim. | I put on a white shirt.
+tişört | T-shirt | n ns | Bu tişört çok güzel. | This T-shirt is very nice.
+pantolon | trousers | n | Pantolonum kirli. | My trousers are dirty.
+etek | skirt | n s | Mavi bir etek arıyorum. | I'm looking for a blue skirt.
+elbise | dress | n | Elbisen çok şık. | Your dress is very stylish.
+ceket | jacket | n ns | Ceketini al, hava serin. | Take your jacket, it's cool.
+mont | coat | n ns | Kışın mont giyiyorum. | I wear a coat in winter.
+ayakkabı | shoes | n | Yeni ayakkabılarım rahat. | My new shoes are comfortable.
+çorap | sock | n s | Çoraplarım nerede? | Where are my socks?
+şapka | hat | n | Güneşte şapka tak! | Wear a hat in the sun!
+gözlük | glasses | n s | Gözlüğümü unuttum. | I forgot my glasses.
+renk | colour | n s | En sevdiğin renk ne? | What's your favourite colour?
+beyaz | white | adj | Beyaz evler. | White houses.
+siyah | black | adj | Siyah kahve, lütfen. | Black coffee, please.
+kırmızı | red | adj | Kırmızı bir araba. | A red car.
+mavi | blue | adj | Deniz masmavi. | The sea is deep blue.
+yeşil | green | adj | Yeşil zeytin mi, siyah zeytin mi? | Green olives or black olives?
+sarı | yellow | adj | Sarı limonlar. | Yellow lemons.
+turuncu | orange (colour) | adj | Turuncu bir tişört. | An orange T-shirt.
+mor | purple | adj | Mor çiçekler. | Purple flowers.
+pembe | pink | adj | Pembe bir çanta. | A pink bag.
+kahverengi | brown | adj | Kahverengi ayakkabılar. | Brown shoes.
+gri | grey | adj | Gökyüzü gri. | The sky is grey.
+lacivert | navy blue | adj ns | Lacivert bir ceket. | A navy jacket.
+
+@ 23 | Daily routine | Günlük rutin
+kahvaltı etmek | to have breakfast | v eder s | Saat yedide kahvaltı ediyorum. | I have breakfast at seven.
+duş almak | to take a shower | v alır | Sabah duş alıyorum. | I take a shower in the morning.
+giyinmek | to get dressed | v giyinir | Hızlıca giyindim. | I got dressed quickly.
+giymek | to wear / to put on | v giyer | Ne giyeceğim? | What will I wear?
+yıkamak | to wash | v yıkar | Ellerimi yıkıyorum. | I'm washing my hands.
+diş fırçalamak | to brush one's teeth | v fırçalar | Dişlerimi fırçaladım. | I brushed my teeth.
+hazırlamak | to prepare | v hazırlar | Kahvaltı hazırlıyorum. | I'm preparing breakfast.
+pişirmek | to cook | v pişirir | Annem yemek pişiriyor. | My mother is cooking.
+temizlemek | to clean | v temizler | Evi temizledim. | I cleaned the house.
+dinlenmek | to rest | v dinlenir | Biraz dinlenmem lazım. | I need to rest a bit.
+yatmak | to go to bed / to lie down | v yatar | Saat on birde yatıyorum. | I go to bed at eleven.
+ders çalışmak | to study | v çalışır | Kütüphanede ders çalışıyorum. | I study in the library.
+alışveriş yapmak | to do shopping | v yapar | Cumartesi alışveriş yaparız. | We do the shopping on Saturday.
+yemek yapmak | to cook (a meal) | v yapar | Bu akşam ben yemek yapıyorum. | I'm cooking tonight.
+işe gitmek | to go to work | v gider s | Otobüsle işe gidiyorum. | I go to work by bus.
+geç kalmak | to be late | v kalır | Yine geç kaldım! | I'm late again!
+acele etmek | to hurry | v eder s | Acele et, otobüs geliyor! | Hurry, the bus is coming!
+spor yapmak | to exercise | v yapar | Haftada üç gün spor yapıyorum. | I exercise three days a week.
+televizyon izlemek | to watch TV | v izler | Akşam televizyon izledik. | We watched TV in the evening.
+müzik dinlemek | to listen to music | v dinler | Yolda müzik dinliyorum. | I listen to music on the way.
+telefon etmek | to phone | v eder s | Anneme telefon ettim. | I phoned my mother.
+mesaj atmak | to text / to send a message | v atar | Sana mesaj atarım. | I'll text you.
+yürüyüş yapmak | to go for a walk | v yapar | Akşam sahilde yürüyüş yaptık. | We walked by the seaside in the evening.
+bulaşık yıkamak | to wash the dishes | v yıkar | Bulaşıkları ben yıkarım. | I'll wash the dishes.
+çamaşır yıkamak | to do the laundry | v yıkar | Pazar günü çamaşır yıkıyorum. | I do the laundry on Sunday.
+
+@ 24 | Feelings & states | Duygular ve durumlar
+mutlu | happy | adj | Bugün çok mutluyum. | I'm very happy today.
+üzgün | sad | adj | Neden üzgünsün? | Why are you sad?
+yorgun | tired | adj | Çok yorgunum. | I'm very tired.
+aç | hungry | adj ns | Açım, yemek yiyelim. | I'm hungry, let's eat.
+tok | full (not hungry) | adj ns | Teşekkürler, tokum. | Thanks, I'm full.
+susamış | thirsty | adj | Çok susamışım. | I'm really thirsty.
+heyecanlı | excited | adj | Yarın için çok heyecanlıyım. | I'm very excited about tomorrow.
+sinirli | angry / irritable | adj | Patron bugün sinirli. | The boss is irritable today.
+kızgın | angry | adj | Bana kızgın mısın? | Are you angry with me?
+endişeli | worried | adj | Sınav için endişeliyim. | I'm worried about the exam.
+rahat | comfortable / relaxed | adj ns | Burada çok rahatım. | I'm very comfortable here.
+sakin | calm | adj | Sakin ol! | Calm down!
+şaşkın | surprised / confused | adj | Herkes çok şaşkın. | Everyone is very surprised.
+memnun | pleased / satisfied | adj | Yeni evimden memnunum. | I'm pleased with my new home.
+sıkıcı | boring | adj | Film çok sıkıcı. | The film is very boring.
+ilginç | interesting | adj s x | Ne ilginç! | How interesting!
+eğlenceli | fun | adj | Parti çok eğlenceliydi. | The party was a lot of fun.
+sevimli | cute / likeable | adj | Kedin çok sevimli. | Your cat is very cute.
+kibar | polite | adj | Garson çok kibar. | The waiter is very polite.
+cesur | brave | adj | Çok cesursun! | You're very brave!
+utangaç | shy | adj s | Biraz utangacım. | I'm a bit shy.
+çalışkan | hardworking | adj | Çok çalışkan bir öğrenci. | A very hardworking student.
+tembel | lazy | adj | Bugün çok tembelim. | I'm very lazy today.
+akıllı | clever | adj | Akıllı bir çocuk. | A clever child.
+komik | funny | adj s x | Çok komiksin! | You're very funny!
+
+@ 25 | Restaurant & cooking | Restoranda ve mutfakta
+sipariş | order (food) | n | Sipariş vermek istiyoruz. | We'd like to order.
+rezervasyon | reservation | n | Rezervasyonum var. | I have a reservation.
+tabak | plate | n s | Bir tabak daha alabilir miyim? | Can I have another plate?
+çatal | fork | n | Çatalım yere düştü. | My fork fell on the floor.
+bıçak | knife | n s | Bıçak keskin, dikkat et! | The knife is sharp, be careful!
+kaşık | spoon | n s | Bir kaşık şeker. | A spoonful of sugar.
+peçete | napkin | n | Peçete var mı? | Are there napkins?
+tatlı | dessert / sweet | n | Tatlı olarak ne var? | What is there for dessert?
+içecek | drink | n s | İçecek olarak ne alırsınız? | What would you like to drink?
+meze | meze (starters) | n | Kıbrıs mezeleri çok zengin. | Cypriot mezes are very rich.
+kebap | kebab | n s | Kebabı çok sevdim. | I loved the kebab.
+köfte | meatballs | n | Izgara köfte, lütfen. | Grilled meatballs, please.
+döner | doner | n | Bir döner dürüm, lütfen. | A doner wrap, please.
+lahmacun | lahmacun (Turkish flatbread) | n | İki lahmacun ve bir ayran. | Two lahmacuns and an ayran.
+pide | pide (Turkish flatbread) | n | Peynirli pide çok lezzetli. | Cheese pide is delicious.
+börek | börek (savoury pastry) | n s | Sabah börek yedim. | I ate börek in the morning.
+baklava | baklava | n | Baklava çok tatlı. | Baklava is very sweet.
+dondurma | ice cream | n | Dondurma ister misin? | Would you like ice cream?
+lezzetli | delicious | adj | Yemek çok lezzetli! | The food is delicious!
+acı | spicy / bitter / pain | adj | Bu biber çok acı. | This pepper is very hot.
+ekşi | sour | adj | Limon ekşi. | Lemon is sour.
+tuzlu | salty | adj | Çorba biraz tuzlu. | The soup is a bit salty.
+fırın | oven / bakery | n | Fırından taze ekmek aldım. | I bought fresh bread from the bakery.
+tencere | pot | n | Tencere ocakta. | The pot is on the stove.
+ızgara | grill / grilled | n | Izgara balık, lütfen. | Grilled fish, please.
+
+@ 26 | Jobs & people | Meslekler ve insanlar
+mühendis | engineer | n | Eşim mühendis. | My spouse is an engineer.
+hemşire | nurse | n | Hemşire çok yardımcı oldu. | The nurse was very helpful.
+avukat | lawyer | n ns | Avukatım yarın arayacak. | My lawyer will call tomorrow.
+polis | police / police officer | n | Polisi aradık. | We called the police.
+aşçı | cook / chef | n | Bu lokantanın aşçısı çok iyi. | This restaurant's cook is very good.
+şoför | driver | n | Şoför bey, Girne'ye gidiyor mu? | Driver, does it go to Kyrenia?
+işçi | worker | n | İşçiler sabah erken geliyor. | The workers come early in the morning.
+memur | civil servant | n | Babam memur. | My father is a civil servant.
+çiftçi | farmer | n | Çiftçiler pazarda sebze satıyor. | Farmers sell vegetables at the market.
+berber | barber | n | Berbere gitmem lazım. | I need to go to the barber.
+kuaför | hairdresser | n | Kuaföre randevum var. | I have an appointment at the hairdresser.
+mimar | architect | n | Mimar olmak istiyordum. | I wanted to be an architect.
+yazar | writer | n | En sevdiğin yazar kim? | Who is your favourite writer?
+gazeteci | journalist | n | Gazeteci soru soruyor. | The journalist is asking questions.
+müzisyen | musician | n | Sokakta bir müzisyen çalıyor. | A musician is playing in the street.
+asker | soldier | n | Asker sınırda bekliyor. | The soldier is waiting at the border.
+pilot | pilot | n ns | Pilot anons yapıyor. | The pilot is making an announcement.
+esnaf | shopkeepers / tradespeople | n | Çarşıdaki esnaf çok samimi. | The shopkeepers in town are very friendly.
+usta | master / craftsman | n | Usta, arabam bozuldu. | Mate, my car broke down.
+kasap | butcher | n s | Kasaptan kıyma aldım. | I bought mince from the butcher.
+manav | greengrocer | n | Manavda taze meyve var. | There's fresh fruit at the greengrocer's.
+komşu | neighbour | n | Komşum çok yardımsever. | My neighbour is very helpful.
+misafir | guest | n | Bu akşam misafirimiz var. | We have guests tonight.
+turist | tourist | n ns | Yazın çok turist geliyor. | Lots of tourists come in summer.
+yabancı | foreigner / stranger / foreign | n | Ben yabancıyım, Türkçe öğreniyorum. | I'm a foreigner, I'm learning Turkish.
+
+@ 27 | Adverbs & connectors | Zarflar ve bağlaçlar
+her zaman | always | adv | Her zaman Türk kahvesi içerim. | I always drink Turkish coffee.
+asla | never | adv | Asla geç kalmam. | I'm never late.
+sık sık | often | adv | Sık sık Girne'ye gidiyoruz. | We often go to Kyrenia.
+hâlâ | still | adv | Hâlâ bekliyorum. | I'm still waiting.
+artık | now (from now on) / anymore | adv | Artık sigara içmiyorum. | I don't smoke anymore.
+zaten | already / anyway | adv | Zaten biliyordum. | I already knew.
+henüz | yet / just | adv | Henüz bitmedi. | It isn't finished yet.
+yine | again | adv | Yine mi geç kaldın? | Are you late again?
+birlikte | together | adv | Birlikte çalışalım. | Let's work together.
+yalnız | alone / only | adv | Yalnız yaşıyorum. | I live alone.
+daha | more / yet | adv | Daha yavaş, lütfen. | Slower, please.
+en | most | adv | En güzel plaj hangisi? | Which is the most beautiful beach?
+fazla | too much / extra | adv | Çok fazla şeker koyma. | Don't put too much sugar.
+az | little / few | adv | Az şekerli olsun. | With a little sugar.
+yeter | enough | phrase | Yeter, teşekkürler! | That's enough, thanks!
+ayrıca | also / moreover | adv | Ayrıca yarın toplantı var. | Also, there's a meeting tomorrow.
+yani | I mean / so | conj | Yani, gelmiyor musun? | So, you're not coming?
+o zaman | then / in that case | adv | O zaman yarın görüşürüz. | Then see you tomorrow.
+bu yüzden | so / therefore | conj | Yorgundum, bu yüzden erken yattım. | I was tired, so I went to bed early.
+eğer | if | conj | Eğer zamanın varsa gel. | Come if you have time.
+gibi | like / as | postp | Kıbrıslı gibi konuşuyorsun! | You speak like a Cypriot!
+kadar | as … as / until | postp | Saat beşe kadar çalışıyorum. | I work until five.
+ile | with / and | postp | Arkadaşım ile sinemaya gittim. | I went to the cinema with my friend.
+ya da | or | conj | Çay ya da kahve? | Tea or coffee?
+fakat | but | conj | Gelmek istiyorum fakat çok meşgulüm. | I want to come but I'm very busy.
+
+@ 28 | Core verbs 3 | Temel fiiller 3
+unutmak | to forget | v unutur | Anahtarımı unuttum. | I forgot my key.
+hatırlamak | to remember | v hatırlar | Adını hatırlamıyorum. | I don't remember his name.
+tanımak | to know (a person) / to recognise | v tanır | Onu tanıyor musun? | Do you know her?
+tanışmak | to meet (for the first time) | v tanışır | Tanıştığımıza memnun oldum. | Nice to have met you.
+buluşmak | to meet up | v buluşur | Kafede buluşalım. | Let's meet at the café.
+göstermek | to show | v gösterir | Bana yolu gösterir misiniz? | Could you show me the way?
+anlatmak | to tell / to explain | v anlatır | Bana her şeyi anlat. | Tell me everything.
+öğretmek | to teach | v öğretir | Bana Türkçe öğretiyor. | She's teaching me Turkish.
+göndermek | to send | v gönderir | E-postayı gönderdim. | I sent the email.
+götürmek | to take (somewhere) | v götürür | Seni havalimanına götürürüm. | I'll take you to the airport.
+koymak | to put | v koyar | Çantayı masaya koy. | Put the bag on the table.
+tutmak | to hold / to catch | v tutar | Elimi tut. | Hold my hand.
+durmak | to stop / to stand | v durur | Otobüs burada duruyor mu? | Does the bus stop here?
+geçmek | to pass / to cross | v geçer | Karşıya geçelim. | Let's cross to the other side.
+gülmek | to laugh | v güler | Neden gülüyorsun? | Why are you laughing?
+ağlamak | to cry | v ağlar | Bebek ağlıyor. | The baby is crying.
+kullanmak | to use | v kullanır | Bilgisayarını kullanabilir miyim? | Can I use your computer?
+değiştirmek | to change | v değiştirir | Planı değiştirdik. | We changed the plan.
+seçmek | to choose | v seçer | Hangisini seçtin? | Which one did you choose?
+kazanmak | to win / to earn | v kazanır | Maçı kazandık! | We won the match!
+kaybetmek | to lose | v kaybeder s | Telefonumu kaybettim. | I lost my phone.
+harcamak | to spend (money) | v harcar | Çok para harcadım. | I spent a lot of money.
+yardım etmek | to help | v eder s | Sana yardım edebilir miyim? | Can I help you?
+bitirmek | to finish (something) | v bitirir | Ödevimi bitirdim. | I finished my homework.
+bitmek | to end / to run out | v biter | Süt bitti. | The milk has run out.
+
+@ 29 | Home: rooms & furniture | Ev: odalar ve eşyalar
+oda | room | n | Odam çok küçük. | My room is very small.
+salon | living room | n | Misafirler salonda oturuyor. | The guests are sitting in the living room.
+mutfak | kitchen | n s | Mutfakta kahve yapıyorum. | I'm making coffee in the kitchen.
+banyo | bathroom | n | Banyo nerede? | Where is the bathroom?
+tuvalet | toilet | n ns | Tuvalet koridorun sonunda. | The toilet is at the end of the corridor.
+yatak odası | bedroom | n cmp | Yatak odası çok aydınlık. | The bedroom is very bright.
+yatak | bed | n s | Yatağım çok rahat. | My bed is very comfortable.
+kapı | door | n | Kapıyı kapat, lütfen. | Close the door, please.
+pencere | window | n | Pencereden deniz görünüyor. | You can see the sea from the window.
+duvar | wall | n | Duvarda bir harita var. | There's a map on the wall.
+kat | floor (storey) | n ns | Üçüncü katta oturuyorum. | I live on the third floor.
+merdiven | stairs | n | Asansör yok, merdivenden çıkın. | There's no lift, take the stairs.
+asansör | lift / elevator | n | Asansör bozuk. | The lift is broken.
+balkon | balcony | n | Balkonda kahve içiyoruz. | We drink coffee on the balcony.
+bahçe | garden | n | Bahçemizde limon ağacı var. | There's a lemon tree in our garden.
+koltuk | armchair / seat | n s | Bu koltuk boş mu? | Is this seat free?
+kanepe | sofa | n | Kanepede uyudum. | I slept on the sofa.
+sandalye | chair | n | Bir sandalye daha getir. | Bring another chair.
+dolap | cupboard / wardrobe | n s | Bardaklar dolapta. | The glasses are in the cupboard.
+buzdolabı | fridge | n cmp | Süt buzdolabında. | The milk is in the fridge.
+halı | carpet | n | Halı çok eski. | The carpet is very old.
+lamba | lamp | n | Lambayı açar mısın? | Can you turn on the lamp?
+anahtar | key | n | Anahtarım nerede? | Where is my key?
+daire | flat / apartment | n | İki odalı bir daire arıyorum. | I'm looking for a two-room flat.
+kira | rent | n | Kira ne kadar? | How much is the rent?
+
+@ 30 | Travel & holidays | Seyahat ve tatil
+seyahat | travel / trip | n ns f | İyi seyahatler! | Have a good trip!
+pasaport | passport | n ns | Pasaportunuz, lütfen. | Your passport, please.
+vize | visa | n | Vizeye ihtiyacım var mı? | Do I need a visa?
+bavul | suitcase | n | Bavulum çok ağır. | My suitcase is very heavy.
+valiz | suitcase / luggage | n | Valizimi kaybettim. | I lost my suitcase.
+havalimanı | airport | n cmp | Ercan Havalimanı'na nasıl gidebilirim? | How can I get to Ercan Airport?
+uçuş | flight | n | Uçuşum iptal oldu. | My flight was cancelled.
+gidiş | departure / one way | n | Sadece gidiş, lütfen. | One way only, please.
+dönüş | return | n | Dönüş biletiniz var mı? | Do you have a return ticket?
+gidiş-dönüş | return ticket / round trip | n | Gidiş-dönüş kaç lira? | How much is a return ticket?
+harita | map | n | Haritada gösterir misiniz? | Could you show me on the map?
+rehber | guide | n | Rehberimiz çok bilgili. | Our guide is very knowledgeable.
+manzara | view / scenery | n | Manzara harika! | The view is wonderful!
+tarihi | historic | adj | Tarihi bir şehir. | A historic city.
+kale | castle | n | Girne Kalesi'ni gezdik. | We visited Kyrenia Castle.
+ada | island | n | Kıbrıs güzel bir ada. | Cyprus is a beautiful island.
+kıyı | coast / shore | n | Kıyıda yürüyelim. | Let's walk along the shore.
+tekne | boat | n | Tekne turuna çıktık. | We went on a boat trip.
+fotoğraf | photo | n ns | Fotoğrafımızı çeker misiniz? | Could you take our photo?
+hatıra | souvenir / memory | n | Bu benim için güzel bir hatıra. | This is a lovely memory for me.
+konaklama | accommodation | n | Konaklama dahil mi? | Is accommodation included?
+pansiyon | guesthouse | n | Küçük bir pansiyonda kaldık. | We stayed at a small guesthouse.
+kamp | camping / camp | n ns | Karpaz'da kamp yaptık. | We camped in Karpas.
+yüzmek | to swim | v yüzer | Denizde yüzüyoruz. | We're swimming in the sea.
+gezmek | to go around / to sightsee | v gezer | Eski şehri gezdik. | We toured the old town.

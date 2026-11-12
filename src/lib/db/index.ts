@@ -1,6 +1,6 @@
 /**
  * Database access — Postgres everywhere, two drivers:
- *   - DATABASE_URL set  → hosted Postgres (Supabase) via postgres-js (used on Vercel and by the
+ *   - DATABASE_URL set  → hosted Postgres (Supabase) via node-postgres (used on Vercel and by the
  *                          worker on your computer).
  *   - otherwise         → embedded PGlite stored in data/pglite (local-first, no server needed).
  * Same SQL in both. Server-only.
@@ -33,33 +33,56 @@ export function localDbDir(): string {
 
 // ---------------------------------------------------------------- drivers
 
-type Queryable = { unsafe: (q: string, p?: unknown[]) => Promise<unknown[]> };
+type PgQueryable = { query: (q: string, p?: unknown[]) => Promise<{ rows: unknown[] }> };
 
+/**
+ * Hosted Postgres via node-postgres. On Vercel the pool is registered with attachDatabasePool so
+ * idle connections are released before a function instance is suspended (no half-finished
+ * transactions left holding locks on the pooler).
+ */
 async function postgresDriver(url: string): Promise<DB> {
-  const { default: postgres } = await import("postgres");
-  const sql = postgres(url, {
-    prepare: false, // required for the Supabase transaction pooler
-    max: process.env.VERCEL ? 1 : 3,
-    idle_timeout: 20,
-    connect_timeout: 15,
-    onnotice: () => {},
+  const { Pool } = await import("pg");
+  const pool = new Pool({
+    connectionString: url,
+    max: process.env.VERCEL ? 2 : 4,
+    idleTimeoutMillis: 5_000,
+    connectionTimeoutMillis: 15_000,
+    ssl: /supabase\.(co|com)/.test(url) ? { rejectUnauthorized: false } : undefined,
   });
-  const wrap = (q: Queryable): Omit<DB, "tx" | "close" | "kind"> => ({
-    all: async <T,>(s: string, p: unknown[] = []) => (await q.unsafe(numbered(s), p as never[])) as T[],
-    one: async <T,>(s: string, p: unknown[] = []) => ((await q.unsafe(numbered(s), p as never[])) as T[])[0],
+  pool.on("error", () => {}); // a dropped idle client must not crash the process
+  if (process.env.VERCEL) {
+    const { attachDatabasePool } = await import("@vercel/functions");
+    attachDatabasePool(pool);
+  }
+  const wrap = (q: PgQueryable): Omit<DB, "tx" | "close" | "kind"> => ({
+    all: async <T,>(s: string, p: unknown[] = []) => (await q.query(numbered(s), p)).rows as T[],
+    one: async <T,>(s: string, p: unknown[] = []) => (await q.query(numbered(s), p)).rows[0] as T | undefined,
     run: async (s: string, p: unknown[] = []) => {
-      await q.unsafe(numbered(s), p as never[]);
+      await q.query(numbered(s), p);
     },
     exec: async (s: string) => {
-      await q.unsafe(s);
+      await q.query(s);
     },
   });
-  const base = wrap(sql as unknown as Queryable);
   const db: DB = {
-    ...base,
+    ...wrap(pool as unknown as PgQueryable),
     kind: "postgres",
-    tx: (fn) => sql.begin((t) => fn({ ...wrap(t as unknown as Queryable), kind: "postgres", tx: (f) => f(db), close: async () => {} })) as Promise<never>,
-    close: () => sql.end(),
+    tx: async (fn) => {
+      const client = await pool.connect();
+      try {
+        await client.query("BEGIN");
+        const inner: DB = { ...wrap(client as unknown as PgQueryable), kind: "postgres", tx: (f) => f(inner), close: async () => {} };
+        const out = await fn(inner);
+        await client.query("COMMIT");
+        return out;
+      } catch (e) {
+        await client.query("ROLLBACK").catch(() => {});
+        throw e;
+      } finally {
+        client.release();
+      }
+    },
+    close: () => pool.end(),
   };
   return db;
 }
@@ -88,7 +111,11 @@ async function pgliteDriver(dir: string | null): Promise<DB> {
   const db: DB = {
     ...wrap(pg),
     kind: "pglite",
-    tx: (fn) => pg.transaction((t) => fn({ ...wrap(t), kind: "pglite", tx: (f) => f(db), close: async () => {} })),
+    tx: (fn) =>
+      pg.transaction((t) => {
+        const inner: DB = { ...wrap(t), kind: "pglite", tx: (f) => f(inner), close: async () => {} };
+        return fn(inner);
+      }),
     close: async () => {
       await pg.close?.();
     },
@@ -147,10 +174,11 @@ async function migrate(db: DB) {
       const again = await t.one<{ ok: boolean }>(
         "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = current_schema() AND table_name = 'job_runs') AS ok",
       );
-      if (!again?.ok) for (const stmt of SCHEMA_SQL.split(";").map((x) => x.trim()).filter(Boolean)) await t.run(stmt);
+      if (again?.ok) return;
+      for (const stmt of SCHEMA_SQL.split(";").map((x) => x.trim()).filter(Boolean)) await t.run(stmt);
+      await t.run("INSERT INTO settings (key, value) VALUES ('schema_version', ?) ON CONFLICT (key) DO NOTHING", [String(SCHEMA_VERSION)]);
     });
   }
-  await db.run("INSERT INTO settings (key, value) VALUES ('schema_version', ?) ON CONFLICT (key) DO NOTHING", [String(SCHEMA_VERSION)]);
 }
 
 /** SQL expression for "now" as an ISO-8601 UTC string (matches new Date().toISOString()). */

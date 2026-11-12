@@ -3,39 +3,65 @@
 A local-first web app that takes you from **absolute beginner (A0) to about A2–B1 in 12 months, at 20–25 minutes a day**.
 You type and write Turkish all the time; there is no multiple choice. Mistakes keep coming back until you stop making them.
 
-- **Next.js 15 (App Router) + TypeScript + Tailwind 4**, with **SQLite** (`better-sqlite3`, single file `data/turkce.db`)
+- **Next.js 15 (App Router) + TypeScript + Tailwind 4** with **Postgres**: Supabase online, or embedded PGlite (`data/pglite/`) locally. Both use the same SQL.
 - **AI through the Claude Code CLI** (`claude -p`), so it runs on your **Claude Pro** login. No API key is needed.
 - **Works offline.** Only lesson writing, writing correction and the weekly notes use Claude. If Claude is unreachable, a local fallback takes over.
 - **Daily lesson at 05:30 Europe/Istanbul.** North Cyprus uses Turkey time (UTC+3 all year), so the app does **not** use Europe/Nicosia.
 
 ---
 
-## Quick start
+## Online (Vercel) — how it is wired
+
+```
+ phone / laptop browser ──► Vercel (Next.js)  ──► Supabase Postgres (schema "turkce")
+                               ▲  password gate          ▲
+                               │  06:00 backup cron      │ DATABASE_URL (.env.local)
+                               │  (offline lesson)       │
+                     your computer: npm run worker  every 15 min (claude -p, Pro login)
+                       • 05:30 Istanbul → today's Claude lesson (+ desktop notification)
+                       • upgrades an offline lesson to Claude if you haven't started it
+                       • corrects writing you submitted online → error cards in today's reviews
+                       • rewrites weekly-report notes with Claude
+```
+
+- **Vercel can't run `claude -p`**, because your Pro login lives on your computer. The online app therefore never calls Claude.
+  - If no lesson exists by **06:00**, a Vercel Cron job creates the **offline lesson**.
+  - Writing you submit online is **queued**. The worker on your computer corrects it within ~15 minutes while the computer is on.
+- **Password gate.** On your first visit you choose a password, stored as a scrypt hash in the database. The session cookie lasts a year. The gate is active when `AUTH_SECRET` is set.
+- **Vercel environment variables:**
+
+  | Variable | Purpose |
+  |---|---|
+  | `DATABASE_URL` | Supabase pooler; role `turkce_app` can only use schema `turkce` |
+  | `AUTH_SECRET` | signs the login cookie |
+  | `CRON_SECRET` | authorises the cron call |
+  | `TURKCE_DISABLE_CLAUDE=1` | the server never calls Claude |
+- **Deploys:** every push to the production branch redeploys.
+
+### Set up the worker on your computer (once)
+
+```bash
+git clone https://github.com/oisamaye1/turkce-365 && cd turkce-365 && git checkout claude/admiring-einstein-fgzx23
+npm install
+npx vercel link            # pick the "turkce-365" project
+npx vercel env pull .env.local   # writes DATABASE_URL for the worker
+npm run check:claude       # verifies claude -p works with your Pro login
+npm run worker             # run once by hand
+npm run scheduler:setup    # every 15 min (cron / Task Scheduler)
+```
+
+Settings → *Daily lesson job* shows when the worker last checked in.
+
+## Local-only mode
+
+Without `DATABASE_URL`, the app keeps everything in an embedded Postgres (PGlite) at `data/pglite/`. Claude runs in-process, and there is no password.
 
 ```bash
 npm install
-npm run check:claude      # finds the claude CLI, lists the flags it supports and makes one tiny test call
-npm run scheduler:setup   # installs the 05:30 job (cron on macOS/Linux, Task Scheduler on Windows)
-npm run build && npm start
+npm run check:claude
+npm run build && npm start      # http://localhost:3000 (and your phone on the same Wi-Fi)
+npm run scheduler:setup         # worker every 15 min; it hands work to the running app
 ```
-
-Then open **http://localhost:3000**. The database is created and loaded with the 1,500-word deck on first open.
-
-**On your phone:** `npm start` listens on all network interfaces. Open `http://<your-computer's-LAN-IP>:3000` on the same Wi-Fi. For development use `npm run dev`; it also listens on `0.0.0.0`.
-
-**Requirements:** Node ≥ 20, and Claude Code installed and logged in (run `claude` once). Before calling `claude`, the app removes `ANTHROPIC_API_KEY` from the child process environment, so the CLI uses your subscription. Set `TURKCE_KEEP_API_KEY=1` to turn that off.
-
-### Verified `claude` CLI usage
-
-Tested with Claude Code 2.1:
-
-```
-claude -p --output-format json --tools "" --no-session-persistence --json-schema '<schema>'   (prompt on stdin)
-```
-
-The app runs `claude --help` first and only uses the flags your installed version has. Every reply is checked with **Zod**. If the JSON is invalid, the app sends one retry that includes the validation errors.
-
----
 
 ## A day with the app (≈ 20–25 min)
 
@@ -104,25 +130,24 @@ Manual runs: `npm run lesson -- --now` (before 05:30), `npm run lesson:force` (r
 
 ## Data model
 
-All tables are in SQLite: `cards`, `reviews`, `review_log`, `grammar_progress`, `gym_log`, `lessons`, `writings`, `mistakes`, `missions`, `weekly_reports`, `settings`, `job_runs`. See `src/lib/db/schema.ts`.
+Postgres tables (in schema `turkce`): `cards`, `reviews`, `review_log`, `grammar_progress`, `gym_log`, `lessons`, `writings`, `mistakes`, `missions`, `weekly_reports`, `settings`, `job_runs`. See `src/lib/db/schema.ts`.
 
 **Backups:**
-- **Settings → Download database / Export JSON**
+- **Settings → Export everything (.json)**
 - or run `npm run backup`, which writes to `data/backups/`.
-
-`data/*.db` is git-ignored.
+- Supabase also keeps its own daily backups of the database.
 
 ## Development
 
 ```bash
-npm test            # Vitest: suffix engine, answer checking, SM-2, vocab validation, drills, DB integration
+npm test            # Vitest: suffix engine, answer checking, SM-2, vocab validation, drills, DB integration (in-memory PGlite)
 npm run typecheck
 npm run dev
 ```
 
 | Variable | Purpose |
 |---|---|
-| `TURKCE_DB` | path to the database (default `data/turkce.db`) |
+| `DATABASE_URL` | hosted Postgres; when unset, the local PGlite at `data/pglite/` (or `TURKCE_PGLITE_DIR`) is used |
 | `CLAUDE_BIN` | path to the claude binary |
 | `TURKCE_DISABLE_CLAUDE=1` | force offline mode |
 | `TURKCE_KEEP_API_KEY=1` | let the CLI see `ANTHROPIC_API_KEY` |

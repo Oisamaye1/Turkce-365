@@ -46,49 +46,49 @@ export function SettingsForm({
   const save = async () => {
     setBusy("save");
     const r = await saveSettingsAction({ ...form, voiceURI: voice?.voiceURI });
-    setMsg(r.ok ? "Saved ✓ · Kaydedildi" : r.error ?? "Error");
+    setMsg(r.ok ? "Saved" : r.error ?? "Error");
     setBusy(null);
     router.refresh();
   };
 
   return (
     <div className="space-y-5">
-      <section className="card space-y-4">
-        <h2 className="font-semibold">
-          Learning <span className="label-tr">· Öğrenme</span>
+      <section className="card space-y-5">
+        <h2 className="font-display text-xl font-extrabold">
+          Learning <span className="ml-1 text-base font-normal text-muted" lang="tr">Öğrenme</span>
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block space-y-1">
-            <span className="text-sm">New cards per day · Günlük yeni kart</span>
+            <span className="font-medium">New words per day</span>
             <input type="number" min={0} max={100} className="input" value={form.newCardsPerDay} onChange={(e) => setForm({ ...form, newCardsPerDay: Number(e.target.value) })} />
           </label>
           <label className="block space-y-1">
-            <span className="text-sm">Lesson time · Ders saati</span>
+            <span className="font-medium">Lesson time</span>
             <input type="time" className="input" value={form.lessonTime} onChange={(e) => setForm({ ...form, lessonTime: e.target.value })} />
           </label>
           <label className="block space-y-1">
-            <span className="text-sm">Timezone · Saat dilimi</span>
+            <span className="font-medium">Time zone</span>
             <input className="input" value={form.timezone} onChange={(e) => setForm({ ...form, timezone: e.target.value })} />
             <span className="text-xs text-muted">Northern Cyprus = Europe/Istanbul (UTC+3, no DST). Not Europe/Nicosia.</span>
           </label>
           <label className="block space-y-1">
-            <span className="text-sm">Claude model (optional)</span>
+            <span className="font-medium">Claude model (optional)</span>
             <input className="input" placeholder="default — e.g. sonnet" value={form.claudeModel} onChange={(e) => setForm({ ...form, claudeModel: e.target.value })} />
             <span className="text-xs text-muted">Passed to claude -p --model. Leave empty for your CLI default.</span>
           </label>
         </div>
         <div className="flex items-center gap-3">
           <button className="btn-primary" onClick={save} disabled={busy === "save"}>
-            Save · Kaydet
+            Save settings
           </button>
-          {msg ? <span className="text-sm">{msg}</span> : null}
+          {msg ? <span className="font-medium">{msg}</span> : null}
         </div>
         <p className="text-xs text-muted">After changing the lesson time, run <code>npm run scheduler:setup</code> again.</p>
       </section>
 
       <section className="card space-y-3">
-        <h2 className="font-semibold">
-          Audio voice <span className="label-tr">· Ses</span>
+        <h2 className="font-display text-xl font-extrabold">
+          Voice <span className="ml-1 text-base font-normal text-muted" lang="tr">Ses</span>
         </h2>
         {voices.length ? (
           <div className="flex flex-wrap items-center gap-2">
@@ -111,8 +111,8 @@ export function SettingsForm({
       </section>
 
       <section className="card space-y-3">
-        <h2 className="font-semibold">
-          Claude (lesson generation &amp; corrections) <span className="label-tr">· Yapay zeka</span>
+        <h2 className="font-display text-xl font-extrabold">
+          Claude <span className="ml-1 text-base font-normal text-muted" lang="tr">Yapay zeka</span>
         </h2>
         <p className="text-sm text-muted">AI features run through the Claude Code CLI (<code>claude -p</code>) with your Pro login — no API key. Everything else works offline.</p>
         <div className="flex flex-wrap gap-2">
@@ -144,13 +144,13 @@ export function SettingsForm({
             {check.caps.available ? (
               <>
                 <div>
-                  <Badge tone="good">found</Badge> {check.caps.version} · <code>{check.caps.bin}</code>
+                  <Badge tone="good">found</Badge> {check.caps.version} at <code>{check.caps.bin}</code>
                 </div>
                 <div className="mt-1 text-xs text-muted">
                   flags:{" "}
                   {Object.entries(check.caps.flags)
                     .map(([k, v]) => `${k} ${v ? "✓" : "✗"}`)
-                    .join(" · ")}
+                    .join(", ")}
                 </div>
               </>
             ) : (
@@ -168,8 +168,8 @@ export function SettingsForm({
       </section>
 
       <section className="card space-y-3">
-        <h2 className="font-semibold">
-          Daily lesson job <span className="label-tr">· Günlük ders</span>
+        <h2 className="font-display text-xl font-extrabold">
+          Daily lesson <span className="ml-1 text-base font-normal text-muted" lang="tr">Günlük ders</span>
         </h2>
         {online ? (
           <div className="space-y-2 text-sm">
@@ -251,8 +251,8 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
       </section>
 
       <section className="card space-y-3">
-        <h2 className="font-semibold">
-          Grammar placement <span className="label-tr">· Seviye</span>
+        <h2 className="font-display text-xl font-extrabold">
+          Grammar level <span className="ml-1 text-base font-normal text-muted" lang="tr">Seviye</span>
         </h2>
         <p className="text-sm text-muted">Already know some grammar? Unlock steps up to:</p>
         <div className="flex flex-wrap gap-2">
@@ -277,8 +277,8 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
       </section>
 
       <section className="card space-y-3">
-        <h2 className="font-semibold">
-          Backup &amp; export <span className="label-tr">· Yedekleme</span>
+        <h2 className="font-display text-xl font-extrabold">
+          Backup <span className="ml-1 text-base font-normal text-muted" lang="tr">Yedekleme</span>
         </h2>
         <p className="text-sm text-muted">
           Database: <code className="break-all">{dbFile}</code>
@@ -294,11 +294,11 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
       </section>
       {online ? (
         <section className="card flex items-center justify-between gap-3">
-          <h2 className="font-semibold">
-            Account <span className="label-tr">· Hesap</span>
+          <h2 className="font-display text-xl font-extrabold">
+            Account <span className="ml-1 text-base font-normal text-muted" lang="tr">Hesap</span>
           </h2>
           <form action={logoutAction}>
-            <button className="btn-ghost">Log out · Çıkış</button>
+            <button className="btn-ghost">Log out</button>
           </form>
         </section>
       ) : null}

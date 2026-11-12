@@ -17,33 +17,24 @@ export function insertAtCursor(el: HTMLInputElement | HTMLTextAreaElement, text:
   el.setSelectionRange(pos, pos);
 }
 
-/**
- * On-screen buttons for the Turkish letters (for English keyboards).
- * Types into the focused field, or into `target` when given.
- */
+/** Chunky letter keys for ç ğ ı İ ö ş ü (for English keyboards). */
 export function TurkishKeyboard({ target, className = "" }: { target?: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>; className?: string }) {
   const [shift, setShift] = useState(false);
   const keys = shift ? UPPER : LOWER;
   const press = (k: string) => {
     const active = document.activeElement;
-    const el =
-      target?.current ??
-      (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement ? active : null);
+    const el = target?.current ?? (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement ? active : null);
     if (!el) return;
     el.focus();
     insertAtCursor(el, k);
     if (shift) setShift(false);
   };
+  const key =
+    "font-display grid h-11 min-w-11 place-items-center rounded-xl border-2 border-line bg-paper px-2 text-xl font-bold text-ink shadow-[0_3px_0_var(--line)] active:translate-y-[3px] active:shadow-none";
   return (
-    <div className={`flex flex-wrap items-center gap-1.5 ${className}`} aria-label="Turkish letters">
+    <div className={`flex flex-wrap items-center gap-2 ${className}`} aria-label="Turkish letters">
       {keys.map((k) => (
-        <button
-          key={k}
-          type="button"
-          onMouseDown={(e) => e.preventDefault()}
-          onClick={() => press(k)}
-          className="min-w-10 rounded-lg border border-border bg-card px-2.5 py-2 text-lg font-semibold hover:bg-sea-soft active:scale-95"
-        >
+        <button key={k} type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => press(k)} className={key}>
           {k}
         </button>
       ))}
@@ -51,9 +42,9 @@ export function TurkishKeyboard({ target, className = "" }: { target?: React.Ref
         type="button"
         onMouseDown={(e) => e.preventDefault()}
         onClick={() => setShift((s) => !s)}
-        className={`rounded-lg border px-2.5 py-2 text-sm ${shift ? "border-sea bg-sea-soft" : "border-border bg-card"}`}
+        className={`${key} ${shift ? "!border-kobalt !text-kobalt" : "text-muted"}`}
         aria-pressed={shift}
-        title="Capital letters"
+        aria-label="Capital letters"
       >
         ⇧
       </button>

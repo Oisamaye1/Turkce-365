@@ -10,7 +10,7 @@ export default async function GymPage({ searchParams }: { searchParams: Promise<
   const initial = statuses.find((s) => s.stepId === requested && s.unlocked) ? requested : await currentGrammarStep();
   return (
     <div>
-      <PageTitle en="Suffix Gym" tr="Ek Antrenmanı" />
+      <PageTitle en="Suffix gym" tr="Ek antrenmanı — build words one suffix at a time" />
       <Gym steps={GRAMMAR_STEPS} statuses={statuses} initialStep={initial} />
     </div>
   );

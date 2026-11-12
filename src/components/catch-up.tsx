@@ -6,9 +6,9 @@ import { generateTodayAction } from "@/app/actions";
 
 /**
  * Catch-up: if the computer was asleep at 05:30, today's lesson is generated
- * the first time the app is opened. Also used for the manual "Generate now" button.
+ * the first time the app is opened. Also used for the manual button.
  */
-export function GenerateLesson({ auto, label = "Generate now · Şimdi oluştur" }: { auto: boolean; label?: string }) {
+export function GenerateLesson({ auto, label = "Make today's lesson" }: { auto: boolean; label?: string }) {
   const router = useRouter();
   const [state, setState] = useState<"idle" | "working" | "error">(auto ? "working" : "idle");
   const [msg, setMsg] = useState<string>("");
@@ -23,7 +23,6 @@ export function GenerateLesson({ auto, label = "Generate now · Şimdi oluştur"
       return;
     }
     if (res.status === "busy") {
-      // Another run (e.g. the scheduler) is working — poll.
       setTimeout(() => router.refresh(), 8000);
       return;
     }
@@ -41,9 +40,9 @@ export function GenerateLesson({ auto, label = "Generate now · Şimdi oluştur"
 
   if (state === "working")
     return (
-      <div className="flex items-center gap-3 rounded-xl bg-sea-soft px-4 py-3 text-sm text-sea">
-        <span className="h-4 w-4 animate-spin rounded-full border-2 border-sea border-t-transparent" />
-        Preparing today&apos;s lesson… Claude usually needs about a minute (offline lessons are instant).
+      <div className="flex items-center gap-3 text-ink-soft" role="status">
+        <span className="h-5 w-5 shrink-0 animate-spin rounded-full border-[3px] border-kobalt border-t-transparent" />
+        Preparing today&apos;s lesson…
       </div>
     );
   return (
@@ -51,7 +50,7 @@ export function GenerateLesson({ auto, label = "Generate now · Şimdi oluştur"
       <button className="btn-primary self-start" onClick={() => run(true)}>
         {label}
       </button>
-      {state === "error" ? <p className="text-sm text-bad">{msg}</p> : msg ? <p className="text-sm text-muted">{msg}</p> : null}
+      {state === "error" ? <p className="text-sm text-nar-depth">{msg}</p> : msg ? <p className="text-sm text-muted">{msg}</p> : null}
     </div>
   );
 }

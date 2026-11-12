@@ -1,11 +1,11 @@
-import Link from "next/link";
 import vocabJson from "../../../data/vocab.json";
 import { GenerateLesson } from "@/components/catch-up";
 import { LessonPlayer } from "@/components/lesson/lesson-player";
 import { WeeklyQuiz } from "@/components/lesson/weekly-quiz";
-import { PageTitle } from "@/components/ui";
+import { FocusShell } from "@/components/focus";
+import { Simit } from "@/components/simit";
 import { getCardsByIds, knownWords } from "@/lib/db/cards";
-import { getLesson, listLessons } from "@/lib/db/lessons";
+import { getLesson } from "@/lib/db/lessons";
 import { today } from "@/lib/db/settings";
 import { buildLexicon, generateDrills, generateMixedDrills, seededRng } from "@/lib/grammar/drills";
 import { analyzeText } from "@/lib/lesson/analyze";
@@ -14,23 +14,22 @@ import { listReports } from "@/lib/lesson/weekly";
 import { trLower } from "@/lib/turkish";
 import type { VocabEntry } from "@/lib/vocab/types";
 
-export default async function LessonPage({ searchParams }: { searchParams: Promise<{ date?: string }> }) {
+export default async function LessonPage({ searchParams }: { searchParams: Promise<{ date?: string; s?: string }> }) {
   const sp = await searchParams;
   const todayDate = await today();
   const date = sp.date && /^\d{4}-\d{2}-\d{2}$/.test(sp.date) ? sp.date : todayDate;
   const row = await getLesson(date);
-  const past = (await listLessons(14)).filter((l) => l.date !== date);
 
   if (!row) {
     return (
-      <div className="space-y-4">
-        <PageTitle en="Lesson" tr="Ders" />
-        <div className="card space-y-3">
-          <p>No lesson for {date} yet. It is generated automatically at 05:30 — or create it now.</p>
-          {date === todayDate ? <GenerateLesson auto={false} /> : null}
+      <FocusShell progress={0} max={1}>
+        <div className="flex flex-col items-center pt-8 text-center">
+          <Simit size={140} mood="calm" />
+          <h1 className="font-display mt-4 text-3xl font-extrabold">No lesson yet for {date}</h1>
+          <p className="mt-2 max-w-sm text-ink-soft">Lessons are written every morning at 05:30. You can also make today&apos;s lesson right now.</p>
+          <div className="mt-6">{date === todayDate ? <GenerateLesson auto={false} /> : null}</div>
         </div>
-        <PastLessons lessons={past} />
-      </div>
+      </FocusShell>
     );
   }
 
@@ -58,7 +57,7 @@ export default async function LessonPage({ searchParams }: { searchParams: Promi
   }
 
   return (
-    <div className="space-y-6">
+    <>
       <LessonPlayer
         lesson={lesson}
         progress={row.progress}
@@ -66,31 +65,8 @@ export default async function LessonPage({ searchParams }: { searchParams: Promi
         warmupCards={warmupCards}
         drills={drills}
         analysis={analysis}
+        initialSection={sp.s !== undefined && /^[0-4]$/.test(sp.s) ? Number(sp.s) : undefined}
       />
-      <PastLessons lessons={past} />
-    </div>
-  );
-}
-
-function PastLessons({ lessons }: { lessons: Awaited<ReturnType<typeof listLessons>> }) {
-  if (!lessons.length) return null;
-  return (
-    <section className="card">
-      <h2 className="mb-2 font-semibold">
-        Past lessons <span className="label-tr">· Geçmiş dersler</span>
-      </h2>
-      <ul className="divide-y divide-border text-sm">
-        {lessons.map((l) => (
-          <li key={l.date}>
-            <Link href={`/lesson?date=${l.date}`} className="flex items-center justify-between gap-2 py-2 hover:text-sea">
-              <span>
-                <span className="text-muted">{l.date}</span> · {"title" in l.lesson ? l.lesson.title : ""}
-              </span>
-              <span>{l.completedAt ? "✓" : ""}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </section>
+    </>
   );
 }

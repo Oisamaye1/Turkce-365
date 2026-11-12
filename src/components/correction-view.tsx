@@ -2,21 +2,21 @@
 
 import { diffWords } from "diff";
 import type { Correction } from "@/lib/lesson/schema";
+import { Simit } from "./simit";
 import { Speak } from "./speech";
-import { Badge } from "./ui";
 
 /** Word-level diff between the learner's text and the corrected text. */
 export function TextDiff({ mine, corrected }: { mine: string; corrected: string }) {
   const parts = diffWords(mine, corrected);
   return (
-    <p className="leading-loose">
+    <p className="text-lg leading-loose" lang="tr">
       {parts.map((p, i) =>
         p.added ? (
-          <ins key={i} className="rounded bg-good-soft px-0.5 text-good no-underline">
+          <ins key={i} className="rounded-md bg-zeytin-tint px-1 font-semibold text-zeytin-depth no-underline">
             {p.value}
           </ins>
         ) : p.removed ? (
-          <del key={i} className="rounded bg-bad-soft px-0.5 text-bad">
+          <del key={i} className="rounded-md bg-nar-tint px-1 text-nar-depth">
             {p.value}
           </del>
         ) : (
@@ -28,50 +28,60 @@ export function TextDiff({ mine, corrected }: { mine: string; corrected: string 
 }
 
 export function CorrectionView({ mine, correction, cardsAdded }: { mine: string; correction: Correction; cardsAdded?: number }) {
-  const tone = correction.score >= 8 ? "good" : correction.score >= 5 ? "warn" : "bad";
+  const s = correction.score;
+  const tone = s >= 8 ? "text-zeytin-depth border-zeytin" : s >= 5 ? "text-cay-depth border-cay" : "text-nar-depth border-nar";
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <div className={`rounded-2xl px-4 py-2 text-2xl font-bold ${tone === "good" ? "bg-good-soft text-good" : tone === "warn" ? "bg-warn-soft text-warn" : "bg-bad-soft text-bad"}`}>
-          {correction.score}/10
+    <div className="space-y-5">
+      <div className="flex items-center gap-4">
+        <Simit size={84} mood={s >= 8 ? "proud" : s >= 5 ? "happy" : "oops"} className="shrink-0" />
+        <div className={`font-display grid h-20 w-20 shrink-0 place-items-center rounded-full border-4 text-3xl font-extrabold ${tone}`} aria-label={`Score ${s} out of 10`}>
+          {s}
         </div>
-        <p className="min-w-0 flex-1">{correction.comment}</p>
+        <p className="min-w-0 text-ink">{correction.comment}</p>
       </div>
-      <div className="rounded-xl border border-border p-3">
-        <div className="mb-1 text-xs text-muted">Your text vs corrected · Senin metnin ve düzeltilmiş hali</div>
+
+      <section className="card">
+        <h3 className="font-display text-lg font-extrabold">What changed</h3>
+        <p className="mb-2 text-sm text-muted">Red was removed, green was added.</p>
         <TextDiff mine={mine} corrected={correction.corrected} />
-      </div>
-      <div className="flex items-start gap-2 rounded-xl bg-card-2 p-3">
-        <div className="min-w-0 flex-1">
-          <div className="text-xs text-muted">Corrected · Düzeltilmiş</div>
-          <div className="font-medium">{correction.corrected}</div>
-        </div>
+      </section>
+
+      <section className="flex items-start gap-3 rounded-3xl bg-wash p-4">
         <Speak text={correction.corrected} />
-      </div>
+        <div className="min-w-0">
+          <p className="text-sm text-muted">Corrected version</p>
+          <p className="text-lg font-medium" lang="tr">
+            {correction.corrected}
+          </p>
+        </div>
+      </section>
+
       {correction.errors.length ? (
-        <div className="space-y-2">
-          <h3 className="font-semibold">
-            Errors · Hatalar ({correction.errors.length})
+        <section className="space-y-3">
+          <h3 className="font-display text-lg font-extrabold">
+            {correction.errors.length} thing{correction.errors.length > 1 ? "s" : ""} to fix
           </h3>
           {correction.errors.map((e, i) => (
-            <div key={i} className="rounded-xl border border-border p-3 text-sm">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-bad line-through">{e.original}</span>
-                <span>→</span>
-                <span className="font-semibold text-good">{e.correction}</span>
-                <Badge tone="sea">{e.rule}</Badge>
+            <div key={i} className="rounded-3xl border-2 border-line p-4">
+              <div className="flex flex-wrap items-center gap-2" lang="tr">
+                <span className="font-display rounded-xl bg-nar-tint px-2.5 py-1 font-bold text-nar-depth line-through">{e.original}</span>
+                <span className="text-muted" aria-hidden="true">
+                  becomes
+                </span>
+                <span className="font-display rounded-xl bg-zeytin-tint px-2.5 py-1 font-bold text-zeytin-depth">{e.correction}</span>
+                <span className="rounded-full bg-turkuaz-tint px-2.5 py-0.5 text-xs font-semibold text-turkuaz-depth">{e.rule}</span>
               </div>
-              <p className="mt-1 text-muted">{e.explanationEN}</p>
+              <p className="mt-2 text-ink-soft">{e.explanationEN}</p>
             </div>
           ))}
           {cardsAdded ? (
-            <p className="text-sm text-sea">
-              ✓ {cardsAdded} correction card{cardsAdded > 1 ? "s" : ""} added to today&apos;s reviews.
+            <p className="font-medium text-turkuaz-depth">
+              {cardsAdded} correction card{cardsAdded > 1 ? "s" : ""} added to today&apos;s reviews.
             </p>
           ) : null}
-        </div>
+        </section>
       ) : (
-        <p className="text-good">No errors — mükemmel! 🎉</p>
+        <p className="font-display text-xl font-extrabold text-zeytin-depth">No mistakes — mükemmel!</p>
       )}
     </div>
   );

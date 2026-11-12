@@ -310,3 +310,12 @@ export async function weakestCardIds(limit = 10): Promise<number[]> {
   );
   return rows.map((r) => Number(r.card_id));
 }
+
+/** Highest vocabulary unit the learner has started (1 when nothing yet). */
+export async function currentUnit(): Promise<number> {
+  const db = await getDb();
+  const r = await db.one<{ u: number | null }>(
+    "SELECT MAX(c.unit) AS u FROM cards c JOIN reviews r ON r.card_id = c.id WHERE c.source = 'seed'",
+  );
+  return Math.max(1, Number(r?.u ?? 1));
+}

@@ -6,11 +6,11 @@ import { listWritings } from "@/lib/db/writing";
 import type { DailyLesson } from "@/lib/lesson/schema";
 
 const FREE_PROMPTS = [
-  { prompt: "Introduce yourself: name, country, job, where you live.", promptTr: "Kendini tanıt.", hints: ["Benim adım …", "…'da yaşıyorum.", "… olarak çalışıyorum."] },
-  { prompt: "Describe your morning routine in 3–5 sentences.", promptTr: "Sabah rutinini anlat.", hints: ["Saat … kalkıyorum.", "Kahvaltıda …", "Sonra …"] },
+  { prompt: "Introduce yourself: your name, country, job and where you live.", promptTr: "Kendini tanıt.", hints: ["Benim adım …", "…'da yaşıyorum.", "… olarak çalışıyorum."] },
+  { prompt: "Describe your morning routine in three to five sentences.", promptTr: "Sabah rutinini anlat.", hints: ["Saat … kalkıyorum.", "Kahvaltıda …", "Sonra …"] },
   { prompt: "Describe your favourite place in Northern Cyprus and why you like it.", promptTr: "Kuzey Kıbrıs'ta en sevdiğin yer.", hints: ["En sevdiğim yer …", "Orada …", "Çünkü …"] },
-  { prompt: "Write a short message to a colleague inviting them for coffee.", promptTr: "Bir iş arkadaşını kahveye davet et.", hints: ["Merhaba …,", "… kahve içelim mi?", "Saat … müsait misin?"] },
-  { prompt: "What did you do last weekend? (past tense)", promptTr: "Geçen hafta sonu ne yaptın?", hints: ["Cumartesi …", "… gittim.", "… yedim."] },
+  { prompt: "Write a short message inviting a colleague for coffee.", promptTr: "Bir iş arkadaşını kahveye davet et.", hints: ["Merhaba …,", "… kahve içelim mi?", "Saat … müsait misin?"] },
+  { prompt: "What did you do last weekend? Use the past tense.", promptTr: "Geçen hafta sonu ne yaptın?", hints: ["Cumartesi …", "… gittim.", "… yedim."] },
 ];
 
 export default async function Write() {

@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { BottomTabs, Nav } from "@/components/nav";
+import { AppShell } from "@/components/nav";
 import { VoiceProvider } from "@/components/speech";
 import { THEME_SCRIPT } from "@/components/theme";
+import { countDue } from "@/lib/db/cards";
 import { getSettings } from "@/lib/db/settings";
+import { streak } from "@/lib/db/stats";
 
 export const metadata: Metadata = {
   title: "Türkçe 365",
@@ -14,15 +16,15 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f5f0" },
-    { media: "(prefers-color-scheme: dark)", color: "#121212" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#141c2f" },
   ],
 };
 
 export const dynamic = "force-dynamic";
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const settings = await getSettings();
+  const [settings, st, due] = await Promise.all([getSettings(), streak(), countDue()]);
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -30,9 +32,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body className="min-h-dvh font-sans antialiased">
         <VoiceProvider initialVoiceURI={settings.voiceURI}>
-          <Nav />
-          <main className="mx-auto max-w-5xl px-4 pt-5 pb-28 sm:pb-16">{children}</main>
-          <BottomTabs />
+          <AppShell streak={st.current} due={due.due + due.fresh}>
+            {children}
+          </AppShell>
         </VoiceProvider>
       </body>
     </html>

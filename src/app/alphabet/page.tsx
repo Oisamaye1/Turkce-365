@@ -1,10 +1,12 @@
 import { AlphabetModule } from "@/components/alphabet";
+import { MoreTabs } from "@/components/nav";
 import { PageTitle } from "@/components/ui";
 
 export default function AlphabetPage() {
   return (
     <div>
-      <PageTitle en="Alphabet & Pronunciation" tr="Alfabe ve telaffuz" />
+      <MoreTabs />
+      <PageTitle en="Sounds and letters" tr="Alfabe ve telaffuz" />
       <AlphabetModule />
     </div>
   );

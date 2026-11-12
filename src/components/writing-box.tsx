@@ -1,9 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { submitWritingAction, retryCorrectionAction, type WritingResult } from "@/app/actions";
+import { retryCorrectionAction, submitWritingAction, type WritingResult } from "@/app/actions";
 import { CorrectionView } from "./correction-view";
 import { TurkishKeyboard } from "./keyboard";
+import { Simit } from "./simit";
+import { SpeechBubble } from "./ui";
 
 export function WritingBox({
   prompt,
@@ -40,60 +42,82 @@ export function WritingBox({
     onCorrected?.(r);
   };
 
+  if (res?.correction) return <CorrectionView mine={text} correction={res.correction} cardsAdded={res.cardsAdded} />;
+
   return (
-    <div className="space-y-3">
-      <div className="rounded-xl bg-sea-soft p-3">
-        <div className="font-semibold">{prompt}</div>
-        {promptTr ? <div className="text-sm text-muted">{promptTr}</div> : null}
-        {hints.length ? (
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {hints.map((h) => (
-              <span key={h} className="chip !bg-card">
-                {h}
-              </span>
-            ))}
-          </div>
+    <div className="space-y-4">
+      <div className="flex items-start gap-3">
+        <Simit size={84} className="shrink-0" mood={res?.queued ? "happy" : "calm"} />
+        <SpeechBubble className="flex-1">
+          <p className="font-medium">{prompt}</p>
+          {promptTr ? (
+            <p className="mt-1 text-sm text-muted" lang="tr">
+              {promptTr}
+            </p>
+          ) : null}
+        </SpeechBubble>
+      </div>
+      {hints.length ? (
+        <div className="flex flex-wrap gap-2">
+          <span className="self-center text-sm text-muted">Start with:</span>
+          {hints.map((h) => (
+            <button
+              key={h}
+              type="button"
+              disabled={!!res}
+              onClick={() => setText((t) => (t ? `${t} ${h}` : h))}
+              className="font-display rounded-xl border-2 border-b-4 border-line px-3 py-1 font-bold text-ink-soft hover:bg-wash"
+              lang="tr"
+            >
+              {h}
+            </button>
+          ))}
+        </div>
+      ) : null}
+      <textarea
+        ref={area}
+        className="input min-h-40 !text-lg"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Türkçe yaz… three to five sentences"
+        lang="tr"
+        spellCheck={false}
+        disabled={busy || !!res}
+        aria-label="Your Turkish text"
+      />
+      {!res ? <TurkishKeyboard target={area} /> : null}
+
+      {res?.queued ? (
+        <div className="rounded-3xl bg-turkuaz-tint p-4" role="status">
+          <p className="font-display text-xl font-extrabold text-turkuaz-depth">Saved — queued for correction</p>
+          <p className="mt-1 text-ink">
+            Claude runs on your computer, which picks this up within about 15 minutes while it&apos;s on. The corrected text appears under Write, and every
+            error becomes a card in today&apos;s reviews.
+          </p>
+        </div>
+      ) : null}
+      {res?.error ? (
+        <div className="rounded-3xl bg-cay-tint p-4 text-ink" role="alert">
+          {res.error}
+        </div>
+      ) : null}
+
+      <div className="flex flex-wrap items-center gap-3">
+        {!res ? (
+          <button className="btn-primary" disabled={busy || text.trim().length < 3} onClick={submit}>
+            {busy ? "Checking your Turkish…" : "Check my writing"}
+          </button>
+        ) : res.error ? (
+          <button className="btn-primary" disabled={busy} onClick={retry}>
+            {busy ? "Checking…" : "Try the correction again"}
+          </button>
+        ) : null}
+        {!res ? (
+          <span className="text-sm text-muted">
+            {sentences} sentence{sentences === 1 ? "" : "s"}
+          </span>
         ) : null}
       </div>
-      {!res?.correction ? (
-        <>
-          <textarea
-            ref={area}
-            className="input min-h-36 !text-base"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Türkçe yaz… (3–5 sentences)"
-            lang="tr"
-            spellCheck={false}
-            disabled={busy || !!res}
-          />
-          {!res ? <TurkishKeyboard target={area} /> : null}
-          <div className="flex flex-wrap items-center gap-3">
-            {res?.queued ? null : !res ? (
-              <button className="btn-primary" disabled={busy || text.trim().length < 3} onClick={submit}>
-                {busy ? "Correcting… (≈ 30–60 s)" : "Submit · Gönder"}
-              </button>
-            ) : (
-              <button className="btn-primary" disabled={busy} onClick={retry}>
-                {busy ? "Correcting…" : "Retry correction · Tekrar dene"}
-              </button>
-            )}
-            <span className="text-xs text-muted">{sentences} sentence{sentences === 1 ? "" : "s"}</span>
-          </div>
-          {res?.error ? <p className="rounded-xl bg-warn-soft p-3 text-sm text-warn">{res.error}</p> : null}
-          {res?.queued ? (
-            <div className="rounded-xl border border-sea bg-sea-soft p-3 text-sm">
-              <div className="font-semibold text-sea">✓ Saved — correction queued · Sıraya alındı</div>
-              <p className="mt-1">
-                Claude runs on your computer: the worker picks this up within ~15 minutes while the computer is on. The corrected text appears in{" "}
-                <b>Write → Past writing</b>, and every error becomes a card in today&apos;s reviews.
-              </p>
-            </div>
-          ) : null}
-        </>
-      ) : (
-        <CorrectionView mine={text || ""} correction={res.correction} cardsAdded={res.cardsAdded} />
-      )}
     </div>
   );
 }

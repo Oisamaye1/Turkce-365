@@ -1,4 +1,5 @@
 import { SettingsForm } from "@/components/settings-form";
+import { MoreTabs } from "@/components/nav";
 import { PageTitle } from "@/components/ui";
 import { currentGrammarStep } from "@/lib/db/grammar";
 import { lastWorkerSeen, recentJobs } from "@/lib/db/jobs";
@@ -11,7 +12,8 @@ export default async function SettingsPage() {
   const jobs = await recentJobs(8);
   const workerSeen = await lastWorkerSeen();
   return (
-    <div className="space-y-5">
+    <div>
+      <MoreTabs />
       <PageTitle en="Settings" tr="Ayarlar" />
       <SettingsForm
         settings={s}

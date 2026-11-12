@@ -1,88 +1,105 @@
 import type { WeeklyReport } from "@/lib/lesson/weekly";
-import { Badge, ProgressBar, Stat } from "../ui";
+import { IconFlame } from "../icons";
+import { ProgressBar } from "../ui";
 
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 
 export function ReportView({ report }: { report: WeeklyReport }) {
+  const tiles = [
+    { label: "words in total", value: report.wordsTotal, cls: "border-kobalt text-kobalt" },
+    { label: "new this week", value: `+${report.wordsThisWeek}`, cls: "border-turkuaz text-turkuaz-depth" },
+    { label: `recall, ${report.reviewsThisWeek} reviews`, value: report.reviewsThisWeek ? pct(report.retention) : "—", cls: "border-zeytin text-zeytin-depth" },
+    { label: `day streak, best ${report.streak.best}`, value: report.streak.current, cls: "border-cay text-cay-depth", flame: true },
+  ];
   return (
-    <div className="card space-y-5">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="text-xl font-bold">
-          Week of {report.week} <span className="label-tr">· Haftalık rapor</span>
-        </h2>
-        <Badge tone={report.narrativeSource === "claude" ? "sea" : "neutral"}>{report.narrativeSource === "claude" ? "✨ Notes by Claude" : "📦 Local notes"}</Badge>
-      </div>
+    <div className="space-y-6">
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <Stat label="Words total" labelTr="Toplam" value={report.wordsTotal} />
-        <Stat label="This week" labelTr="Bu hafta" value={`+${report.wordsThisWeek}`} />
-        <Stat label="Retention" labelTr="Hatırlama" value={report.reviewsThisWeek ? pct(report.retention) : "—"} hint={`${report.reviewsThisWeek} reviews`} />
-        <Stat label="Streak" labelTr="Seri" value={`🔥 ${report.streak.current}`} hint={`best ${report.streak.best}`} />
+        {tiles.map((t) => (
+          <div key={t.label} className={`rounded-2xl border-2 p-3 ${t.cls}`}>
+            <div className="font-display flex items-center gap-1 text-3xl font-extrabold">
+              {t.flame ? <IconFlame size={26} /> : null}
+              {t.value}
+            </div>
+            <div className="text-sm text-ink-soft">{t.label}</div>
+          </div>
+        ))}
       </div>
 
       {report.quiz ? (
-        <div className="grid gap-2 text-sm sm:grid-cols-3">
-          <div className="rounded-xl bg-card-2 p-3">
-            Quiz words: <b>{report.quiz.vocab.correct}/{report.quiz.vocab.total}</b>
-          </div>
-          <div className="rounded-xl bg-card-2 p-3">
-            Quiz drills: <b>{report.quiz.drills.correct}/{report.quiz.drills.total}</b>
-          </div>
-          <div className="rounded-xl bg-card-2 p-3">
-            Translation: <b>{report.quiz.translation.result}</b>
-          </div>
+        <div className="card">
+          <h3 className="font-display text-lg font-extrabold">Sunday quiz</h3>
+          <dl className="mt-2 grid grid-cols-3 gap-2 text-center">
+            <div>
+              <dt className="text-sm text-muted">Words</dt>
+              <dd className="font-display text-2xl font-extrabold">
+                {report.quiz.vocab.correct}/{report.quiz.vocab.total}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-sm text-muted">Suffixes</dt>
+              <dd className="font-display text-2xl font-extrabold">
+                {report.quiz.drills.correct}/{report.quiz.drills.total}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-sm text-muted">Translation</dt>
+              <dd className="font-display text-2xl font-extrabold capitalize">{report.quiz.translation.result}</dd>
+            </div>
+          </dl>
         </div>
       ) : null}
 
-      <div>
-        <h3 className="mb-2 font-semibold">
-          Suffix accuracy per rule <span className="label-tr">· Kurallara göre doğruluk</span>
-        </h3>
+      <div className="card">
+        <h3 className="font-display text-lg font-extrabold">Suffix accuracy by rule</h3>
         {report.suffixAccuracy.length ? (
-          <div className="space-y-2">
+          <div className="mt-3 space-y-3">
             {report.suffixAccuracy.map((s) => (
-              <div key={s.stepId} className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1 text-sm">
-                <span className="truncate">
-                  {s.stepId}. {s.title}
-                </span>
-                <span className="text-xs text-muted">
-                  {pct(s.accuracy)} · {s.attempts}
-                </span>
-                <ProgressBar value={s.accuracy} className="col-span-2" />
+              <div key={s.stepId}>
+                <div className="mb-1 flex justify-between gap-2 text-sm">
+                  <span className="truncate">
+                    {s.stepId}. {s.title}
+                  </span>
+                  <span className="shrink-0 text-muted">
+                    {pct(s.accuracy)} of {s.attempts}
+                  </span>
+                </div>
+                <ProgressBar value={s.accuracy} thin tone={s.accuracy >= 0.9 ? "zeytin" : s.accuracy >= 0.7 ? "cay" : "kobalt"} />
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-sm text-muted">No suffix drills this week.</p>
+          <p className="mt-2 text-sm text-muted">No suffix drills this week.</p>
         )}
       </div>
 
-      <div>
-        <h3 className="mb-2 font-semibold">
-          Top recurring mistakes <span className="label-tr">· En sık hatalar</span>
-        </h3>
+      <div className="card">
+        <h3 className="font-display text-lg font-extrabold">Mistakes that keep coming back</h3>
         {report.topMistakes.length ? (
-          <ol className="list-inside list-decimal space-y-1 text-sm">
-            {report.topMistakes.map((m) => (
-              <li key={m.label}>
-                <b>{m.label}</b> <span className="text-muted">× {m.count}</span> {m.kind === "word" ? <Badge>word</Badge> : <Badge tone="sea">rule</Badge>}
+          <ol className="mt-2 space-y-2">
+            {report.topMistakes.map((m, i) => (
+              <li key={m.label} className="flex items-center gap-3">
+                <span className="font-display grid h-8 w-8 shrink-0 place-items-center rounded-full bg-nar-tint font-extrabold text-nar-depth">{i + 1}</span>
+                <span className="min-w-0 flex-1">
+                  <b>{m.label}</b> <span className="text-sm text-muted">{m.kind === "word" ? "word" : "grammar rule"}</span>
+                </span>
+                <span className="text-sm text-muted">{m.count}×</span>
               </li>
             ))}
           </ol>
         ) : (
-          <p className="text-sm text-muted">No recurring mistakes — harika!</p>
+          <p className="mt-2 text-sm text-muted">Nothing recurring this week — harika!</p>
         )}
       </div>
 
-      <div className="rounded-xl border border-sea bg-sea-soft p-3">
-        <h3 className="mb-1 font-semibold">
-          Focus next week <span className="label-tr">· Gelecek hafta</span>
-        </h3>
-        <ul className="list-inside list-disc space-y-1 text-sm">
+      <div className="rounded-3xl bg-banner p-5 text-white">
+        <h3 className="font-display text-lg font-extrabold">Focus for next week</h3>
+        <ul className="mt-2 list-disc space-y-1.5 pl-5">
           {report.focusAreas.map((f) => (
             <li key={f}>{f}</li>
           ))}
         </ul>
-        <p className="mt-2 text-sm italic">{report.encouragement}</p>
+        <p className="mt-3 text-white/85">{report.encouragement}</p>
+        <p className="mt-2 text-xs text-white/60">{report.narrativeSource === "claude" ? "Notes written by Claude" : "Notes written offline"}</p>
       </div>
     </div>
   );

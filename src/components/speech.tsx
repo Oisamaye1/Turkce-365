@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { IconSpeaker, IconTurtle } from "./icons";
 
 interface SpeechCtx {
   voices: SpeechSynthesisVoice[];
@@ -57,23 +58,36 @@ export function VoiceProvider({ initialVoiceURI, children }: { initialVoiceURI?:
 
 export const useSpeech = () => useContext(Ctx);
 
-/** Speaker button — hidden when no Turkish voice is installed. */
-export function Speak({ text, slow = false, className = "", label }: { text: string; slow?: boolean; className?: string; label?: string }) {
+/** Round speaker button (Duolingo-style) — hidden when no Turkish voice is installed. */
+export function Speak({
+  text,
+  slow = false,
+  className = "",
+  size = "md",
+}: {
+  text: string;
+  slow?: boolean;
+  className?: string;
+  label?: string;
+  size?: "sm" | "md" | "lg";
+}) {
   const { speak, available } = useSpeech();
   if (!available) return null;
+  const dim = size === "lg" ? "h-16 w-16" : size === "sm" ? "h-8 w-8" : "h-11 w-11";
+  const icon = size === "lg" ? 34 : size === "sm" ? 18 : 24;
   return (
     <button
       type="button"
       onClick={(e) => {
         e.stopPropagation();
-        speak(text, slow ? 0.65 : 0.9);
+        speak(text, slow ? 0.6 : 0.9);
       }}
-      className={`inline-flex shrink-0 items-center justify-center rounded-full border border-border bg-card px-2.5 py-1.5 text-sm hover:bg-sea-soft ${className}`}
-      aria-label={`Play pronunciation: ${text}`}
-      title={slow ? "Play slowly" : "Play"}
+      className={`grid shrink-0 place-items-center rounded-2xl ${dim} ${
+        slow ? "bg-turkuaz-tint text-turkuaz-depth" : "bg-turkuaz text-white shadow-[0_4px_0_var(--turkuaz-depth)] active:translate-y-1 active:shadow-none"
+      } ${className}`}
+      aria-label={slow ? `Play slowly: ${text}` : `Play: ${text}`}
     >
-      {slow ? "🐢" : "🔊"}
-      {label ? <span className="ml-1 text-xs">{label}</span> : null}
+      {slow ? <IconTurtle size={icon} /> : <IconSpeaker size={icon} />}
     </button>
   );
 }

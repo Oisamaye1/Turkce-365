@@ -20,11 +20,20 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="shrink-0 rounded-full border border-border bg-card px-2.5 py-1.5 text-sm"
-      aria-label="Toggle dark mode"
-      title="Dark mode · Karanlık mod"
+      className="flex items-center gap-2 rounded-xl px-2 py-1.5 text-sm text-muted hover:bg-wash"
+      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
     >
-      {dark ? "☀️" : "🌙"}
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+        {dark ? (
+          <g fill="var(--cay)">
+            <circle cx="12" cy="12" r="5" />
+            <path d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="var(--cay)" strokeWidth="2" strokeLinecap="round" />
+          </g>
+        ) : (
+          <path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z" fill="var(--kobalt)" />
+        )}
+      </svg>
+      <span className="hidden lg:inline">{dark ? "Light mode" : "Dark mode"}</span>
     </button>
   );
 }

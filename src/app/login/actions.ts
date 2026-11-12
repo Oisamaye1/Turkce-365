@@ -32,7 +32,7 @@ export async function loginAction(_: string | null, form: FormData): Promise<str
     await setPassword(pw);
   } else if (!(await checkPassword(pw))) {
     await new Promise((r) => setTimeout(r, 800));
-    return "Wrong password · Yanlış şifre";
+    return "That password is not right. Try again.";
   }
   await startSession();
   redirect(safeNext(form.get("next")));

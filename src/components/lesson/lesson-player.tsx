@@ -10,17 +10,19 @@ import type { WordAnalysis } from "@/lib/lesson/analyze";
 import type { DailyLesson } from "@/lib/lesson/schema";
 import { suggestGrade } from "@/lib/srs/sm2";
 import { DrillSet } from "../drill-runner";
+import { FocusShell, FooterBar } from "../focus";
+import { Simit } from "../simit";
 import { Speak, useSpeech } from "../speech";
 import { TypeAnswer, type AnswerResult } from "../type-answer";
-import { Badge, ProgressBar } from "../ui";
+import { SpeechBubble } from "../ui";
 import { WritingBox } from "../writing-box";
 
 const SECTIONS = [
-  { en: "Warm-up", tr: "Isınma", min: 3 },
-  { en: "Dialogue", tr: "Diyalog", min: 5 },
-  { en: "New phrases", tr: "Yeni ifadeler", min: 3 },
-  { en: "Grammar", tr: "Dilbilgisi", min: 4 },
-  { en: "Writing", tr: "Yazma", min: 5 },
+  { en: "Warm-up", tr: "Isınma" },
+  { en: "Dialogue", tr: "Diyalog" },
+  { en: "New phrases", tr: "Yeni ifadeler" },
+  { en: "Grammar", tr: "Dilbilgisi" },
+  { en: "Writing", tr: "Yazma" },
 ];
 
 export function LessonPlayer({
@@ -30,6 +32,7 @@ export function LessonPlayer({
   warmupCards,
   drills,
   analysis,
+  initialSection,
 }: {
   lesson: DailyLesson;
   progress: LessonProgress;
@@ -37,100 +40,101 @@ export function LessonPlayer({
   warmupCards: Card[];
   drills: Drill[];
   analysis: Record<string, WordAnalysis>;
+  initialSection?: number;
 }) {
-  const [section, setSection] = useState(Math.min(progress.section ?? 0, SECTIONS.length));
+  const [section, setSection] = useState(Math.min(initialSection ?? progress.section ?? 0, SECTIONS.length));
   const [prog, setProg] = useState<LessonProgress>(progress);
+  const [sub, setSub] = useState(0); // fine-grained progress inside a section (0–1)
 
   const go = (n: number, patch: Partial<LessonProgress> = {}) => {
-    const next = { ...prog, ...patch, section: n };
+    const next = { ...prog, ...patch, section: Math.max(n, prog.section ?? 0) };
     setProg(next);
     setSection(n);
+    setSub(0);
     saveLessonProgressAction(lesson.date, next);
     if (n >= SECTIONS.length) completeLessonAction(lesson.date);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0 });
   };
 
-  return (
-    <div className="space-y-4">
-      <div className="card space-y-3">
-        <div className="flex flex-wrap items-start justify-between gap-2">
-          <div>
-            <div className="text-xs text-muted">{lesson.date}</div>
-            <h1 className="text-2xl font-bold">{lesson.title}</h1>
-            <div className="text-muted">{lesson.titleTr}</div>
-          </div>
-          <div className="flex gap-1.5">
-            {lesson.source === "claude" ? <Badge tone="sea">✨ Claude</Badge> : <Badge>📦 Offline</Badge>}
-            {completed ? <Badge tone="good">Done ✓</Badge> : null}
-          </div>
-        </div>
-        <ProgressBar value={section} max={SECTIONS.length} />
-        <div className="flex gap-1 overflow-x-auto text-xs [scrollbar-width:none]">
-          {SECTIONS.map((s, i) => (
-            <button
-              key={s.en}
-              onClick={() => go(i)}
-              className={`shrink-0 rounded-full px-2.5 py-1 ${i === section ? "bg-fg text-bg" : i < section ? "bg-good-soft text-good" : "bg-card-2 text-muted"}`}
-            >
-              {i + 1}. {s.en} · {s.tr}
-            </button>
-          ))}
-        </div>
-      </div>
+  const label =
+    section < SECTIONS.length ? (
+      <span className="font-display hidden text-[15px] font-bold text-muted sm:inline">
+        {section + 1} of {SECTIONS.length}
+      </span>
+    ) : null;
 
-      {section === 0 ? <Warmup cards={warmupCards} lesson={lesson} onDone={(w) => go(1, { warmup: w })} /> : null}
-      {section === 1 ? <DialogueSection lesson={lesson} analysis={analysis} onDone={() => go(2)} /> : null}
-      {section === 2 ? <PhrasesSection lesson={lesson} added={!!prog.phrasesAdded} onDone={() => go(3, { phrasesAdded: true })} /> : null}
-      {section === 3 ? <GrammarSection lesson={lesson} drills={drills} onDone={(d) => go(4, { drills: d })} /> : null}
-      {section === 4 ? (
-        <div className="card space-y-3">
-          <SectionTitle i={4} />
-          <WritingBox prompt={lesson.writing.prompt} promptTr={lesson.writing.promptTr} hints={lesson.writing.hints} lessonDate={lesson.date} />
-          <div className="flex justify-end">
-            <button className="btn-primary" onClick={() => go(5)}>
-              Finish lesson · Dersi bitir →
-            </button>
-          </div>
+  return (
+    <FocusShell progress={Math.min(section + sub, SECTIONS.length)} max={SECTIONS.length} right={label}>
+      {section < SECTIONS.length ? (
+        <div className="mb-5">
+          <p className="font-display font-bold text-kobalt">{SECTIONS[section].en}</p>
+          <p className="text-sm text-muted" lang="tr">
+            {SECTIONS[section].tr}
+          </p>
         </div>
       ) : null}
+
+      {section === 0 ? <Warmup cards={warmupCards} lesson={lesson} onStep={setSub} onDone={(w) => go(1, { warmup: w })} /> : null}
+      {section === 1 ? <DialogueSection lesson={lesson} analysis={analysis} onDone={() => go(2)} /> : null}
+      {section === 2 ? <PhrasesSection lesson={lesson} added={!!prog.phrasesAdded} onDone={() => go(3, { phrasesAdded: true })} /> : null}
+      {section === 3 ? <GrammarSection lesson={lesson} drills={drills} onStep={setSub} onDone={(d) => go(4, { drills: d })} /> : null}
+      {section === 4 ? (
+        <>
+          <h1 className="font-display mb-4 text-2xl font-extrabold">Write a few sentences</h1>
+          <WritingBox prompt={lesson.writing.prompt} promptTr={lesson.writing.promptTr} hints={lesson.writing.hints} lessonDate={lesson.date} />
+          <FooterBar note="Your writing is saved and corrected even if you finish now.">
+            <button className="btn-primary sm:w-48" onClick={() => go(5)}>
+              Finish lesson
+            </button>
+          </FooterBar>
+        </>
+      ) : null}
       {section >= SECTIONS.length ? (
-        <div className="card space-y-3 text-center">
-          <div className="text-5xl">🎉</div>
-          <h2 className="text-2xl font-bold">Ders bitti — aferin!</h2>
-          <p className="text-muted">Lesson complete. The 5 new phrases are in your deck, and any writing corrections are in today&apos;s reviews.</p>
-          <div className="flex flex-wrap justify-center gap-2 text-sm">
-            {prog.warmup ? <span className="chip">Warm-up {prog.warmup.correct}/{prog.warmup.total}</span> : null}
-            {prog.drills ? <span className="chip">Drills {prog.drills.correct}/{prog.drills.total}</span> : null}
+        <div className="flex flex-col items-center pt-6 text-center">
+          <Simit size={160} mood="proud" />
+          <h1 className="font-display mt-4 text-4xl font-extrabold text-cay-depth">Ders bitti!</h1>
+          <p className="mt-1 max-w-sm text-ink-soft">
+            Lesson complete{completed ? " (again)" : ""}. Your five new phrases are in the deck, and any writing corrections land in today&apos;s reviews.
+          </p>
+          <div className="mt-8 grid w-full max-w-md grid-cols-2 gap-3">
+            <div className="rounded-2xl border-2 border-cay p-3">
+              <div className="font-display text-3xl font-extrabold text-cay-depth">
+                {prog.warmup ? `${prog.warmup.correct}/${prog.warmup.total}` : "—"}
+              </div>
+              <div className="text-sm text-ink-soft">Warm-up</div>
+            </div>
+            <div className="rounded-2xl border-2 border-zeytin p-3">
+              <div className="font-display text-3xl font-extrabold text-zeytin-depth">{prog.drills ? `${prog.drills.correct}/${prog.drills.total}` : "—"}</div>
+              <div className="text-sm text-ink-soft">Suffix drills</div>
+            </div>
           </div>
-          <div className="flex justify-center gap-2">
+          <FooterBar>
             <Link href="/review" className="btn-ghost">
               Reviews
             </Link>
             <Link href="/" className="btn-primary">
-              Back to Today
+              Back to the path
             </Link>
-          </div>
+          </FooterBar>
         </div>
       ) : null}
-    </div>
-  );
-}
-
-function SectionTitle({ i }: { i: number }) {
-  const s = SECTIONS[i];
-  return (
-    <div className="flex items-center justify-between">
-      <h2 className="text-lg font-bold">
-        {i + 1}. {s.en} <span className="label-tr">· {s.tr}</span>
-      </h2>
-      <span className="text-xs text-muted">≈ {s.min} min</span>
-    </div>
+    </FocusShell>
   );
 }
 
 // ---------------------------------------------------------------- 1. warm-up
 
-function Warmup({ cards, lesson, onDone }: { cards: Card[]; lesson: DailyLesson; onDone: (w: { correct: number; total: number }) => void }) {
+function Warmup({
+  cards,
+  lesson,
+  onStep,
+  onDone,
+}: {
+  cards: Card[];
+  lesson: DailyLesson;
+  onStep: (x: number) => void;
+  onDone: (w: { correct: number; total: number }) => void;
+}) {
   const [i, setI] = useState(0);
   const [ans, setAns] = useState<AnswerResult | null>(null);
   const [correct, setCorrect] = useState(0);
@@ -151,127 +155,161 @@ function Warmup({ cards, lesson, onDone }: { cards: Card[]; lesson: DailyLesson;
     });
   };
 
+  if (!finished) {
+    return (
+      <>
+        <h1 className="font-display text-2xl font-extrabold">Recycle a recent mistake</h1>
+        <div className="my-6 flex items-center gap-3">
+          <Simit size={96} mood={ans ? (ans.result === "wrong" ? "oops" : "happy") : "calm"} className="shrink-0" />
+          <SpeechBubble>
+            <span className="text-xl font-medium">{card.en}</span>
+          </SpeechBubble>
+        </div>
+        <TypeAnswer
+          key={card.id}
+          resetKey={card.id}
+          expected={card.tr}
+          onChecked={checked}
+          sheet="fixed"
+          details={card.exTr ? <span className="text-sm" lang="tr">{card.exTr}</span> : null}
+        >
+          <button
+            className={ans?.result === "correct" ? "btn-success sm:w-44" : ans?.result === "almost" ? "btn-cay sm:w-44" : "btn-danger sm:w-44"}
+            autoFocus
+            onClick={() => {
+              setAns(null);
+              setI(i + 1);
+              onStep((i + 1) / Math.max(1, cards.length));
+            }}
+          >
+            Continue
+          </button>
+        </TypeAnswer>
+      </>
+    );
+  }
+
   return (
-    <div className="card space-y-4">
-      <SectionTitle i={0} />
+    <>
       {cards.length === 0 ? (
-        <p className="text-muted">No recent mistakes to recycle yet — great start! Let&apos;s go straight to the dialogue.</p>
-      ) : !finished ? (
-        <>
-          <p className="text-sm text-muted">
-            Recent mistakes, recycled · Son hatalar ({i + 1}/{cards.length})
-          </p>
-          <div className="text-2xl font-bold">{card.en}</div>
-          <TypeAnswer key={card.id} resetKey={card.id} expected={card.tr} onChecked={checked}>
-            <div className="flex items-center gap-3">
-              <Speak text={card.tr} />
-              <button
-                className="btn-primary"
-                autoFocus
-                onClick={() => {
-                  setAns(null);
-                  setI(i + 1);
-                }}
-              >
-                Next →
-              </button>
-            </div>
-          </TypeAnswer>
-        </>
+        <div className="flex items-center gap-3">
+          <Simit size={96} mood="happy" className="shrink-0" />
+          <SpeechBubble>No recent mistakes to recycle — great start. Straight on to the dialogue.</SpeechBubble>
+        </div>
       ) : (
-        <p className="text-good">
-          Warm-up done: {correct}/{cards.length} ✓
-        </p>
+        <div className="flex items-center gap-3">
+          <Simit size={96} mood="happy" className="shrink-0" />
+          <SpeechBubble>
+            Warm-up done: <b>{correct}</b> of {cards.length} right.
+          </SpeechBubble>
+        </div>
       )}
 
-      {lesson.leeches.length && (finished || cards.length === 0) ? (
-        <div className="space-y-3 rounded-xl border border-warn bg-warn-soft p-3">
-          <h3 className="font-semibold text-warn">Tricky words · Zor kelimeler</h3>
+      {lesson.leeches.length ? (
+        <section className="mt-8 space-y-3">
+          <h2 className="font-display text-xl font-extrabold">Words that keep slipping away</h2>
           {lesson.leeches.map((l) => (
-            <div key={l.tr} className="space-y-1.5 rounded-lg bg-card p-3">
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-bold">{l.tr}</span> <Speak text={l.tr} /> <span className="text-muted">= {l.en}</span>
+            <div key={l.tr} className="rounded-3xl border-2 border-cay bg-cay-tint/40 p-4">
+              <div className="flex items-center gap-3">
+                <Speak text={l.tr} />
+                <span className="tr-word text-3xl" lang="tr">
+                  {l.tr}
+                </span>
+                <span className="text-ink-soft">{l.en}</span>
               </div>
-              <p className="text-sm">🧠 {l.mnemonic}</p>
-              <ul className="space-y-1 text-sm">
+              <p className="mt-3">{l.mnemonic}</p>
+              <ul className="mt-3 space-y-2">
                 {l.examples.map((e) => (
                   <li key={e.tr} className="flex items-start gap-2">
-                    <Speak text={e.tr} className="!px-1.5 !py-0.5" />
+                    <Speak text={e.tr} size="sm" />
                     <span>
-                      {e.tr} <span className="text-muted">— {e.en}</span>
+                      <span lang="tr" className="font-medium">
+                        {e.tr}
+                      </span>
+                      <span className="block text-sm text-ink-soft">{e.en}</span>
                     </span>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
-        </div>
+        </section>
       ) : null}
 
-      {finished || cards.length === 0 ? (
-        <button className="btn-primary" onClick={() => onDone({ correct, total: cards.length })} disabled={!!ans && !finished}>
-          Continue to the dialogue →
+      <FooterBar>
+        <button className="btn-primary sm:w-44" autoFocus onClick={() => onDone({ correct, total: cards.length })}>
+          Continue
         </button>
-      ) : null}
-    </div>
+      </FooterBar>
+    </>
   );
 }
 
 // ---------------------------------------------------------------- 2. dialogue
 
+const AVATAR_TONES = ["bg-cay text-[#4a2c00]", "bg-turkuaz text-white", "bg-nar text-white"];
+
 function DialogueSection({ lesson, analysis, onDone }: { lesson: DailyLesson; analysis: Record<string, WordAnalysis>; onDone: () => void }) {
   const { speak, available } = useSpeech();
   const [showEn, setShowEn] = useState(false);
   const [selected, setSelected] = useState<{ line: number; key: string } | null>(null);
-  const speakers = [...new Set(lesson.dialogue.lines.map((l) => l.speaker))];
+  const others = [...new Set(lesson.dialogue.lines.map((l) => l.speaker))].filter((s) => s.toLocaleLowerCase("tr-TR") !== "sen");
 
   return (
-    <div className="card space-y-4">
-      <SectionTitle i={1} />
-      <div className="rounded-xl bg-card-2 p-3 text-sm">
-        📍 {lesson.dialogue.setting}
-        {lesson.dialogue.settingTr ? <div className="text-muted">{lesson.dialogue.settingTr}</div> : null}
-      </div>
-      <div className="flex flex-wrap gap-2">
+    <>
+      <h1 className="font-display text-2xl font-extrabold">{lesson.title}</h1>
+      <p className="mt-1 text-ink-soft">{lesson.dialogue.setting}</p>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2">
         {available ? (
-          <button className="btn-ghost" onClick={() => speak(lesson.dialogue.lines.map((l) => l.tr).join(" … "), 0.85)}>
-            ▶ Play all · Hepsini dinle
+          <button className="btn-ghost !min-h-10 !px-4 !text-[15px]" onClick={() => speak(lesson.dialogue.lines.map((l) => l.tr).join(" … "), 0.85)}>
+            Play the whole dialogue
           </button>
-        ) : (
-          <span className="text-xs text-muted">No Turkish voice installed — audio hidden (see Settings).</span>
-        )}
-        <button className="btn-ghost" onClick={() => setShowEn((v) => !v)}>
-          {showEn ? "Hide English" : "Show English"}
+        ) : null}
+        <button className="btn-quiet" onClick={() => setShowEn((v) => !v)} aria-pressed={showEn}>
+          {showEn ? "Hide translations" : "Show translations"}
         </button>
       </div>
-      <p className="text-xs text-muted">Tap any word for its meaning and suffix breakdown · Kelimeye dokun.</p>
-      <ol className="space-y-3">
+      <p className="mt-3 text-sm text-muted">Tap any word to see what it means and how it&apos;s built.</p>
+
+      <ol className="mt-6 space-y-4">
         {lesson.dialogue.lines.map((l, i) => {
           const isMe = l.speaker.toLocaleLowerCase("tr-TR") === "sen";
+          const tone = AVATAR_TONES[Math.max(0, others.indexOf(l.speaker)) % AVATAR_TONES.length];
           return (
-            <li key={i} className={`flex ${isMe ? "justify-end" : ""}`}>
-              <div className={`max-w-[90%] rounded-2xl px-4 py-2.5 ${isMe ? "bg-sea-soft" : "bg-card-2"}`}>
-                <div className="mb-0.5 flex items-center justify-between gap-3 text-xs text-muted">
-                  <span className={speakers.indexOf(l.speaker) % 2 ? "text-accent" : ""}>{l.speaker}</span>
-                  <Speak text={l.tr} className="!px-1.5 !py-0.5" />
+            <li key={i} className={`flex items-end gap-2.5 ${isMe ? "flex-row-reverse" : ""}`}>
+              <span
+                className={`font-display grid h-10 w-10 shrink-0 place-items-center rounded-full text-lg font-extrabold ${isMe ? "bg-kobalt text-white" : tone}`}
+                aria-hidden="true"
+              >
+                {isMe ? "S" : l.speaker[0]}
+              </span>
+              <div
+                className={`max-w-[85%] rounded-3xl border-2 px-4 py-3 ${
+                  isMe ? "rounded-br-md border-kobalt/30 bg-kobalt-tint" : "rounded-bl-md border-line bg-paper"
+                }`}
+              >
+                <div className="mb-1 flex items-center justify-between gap-3">
+                  <span className="text-xs font-semibold text-muted">{isMe ? "You (Sen)" : l.speaker}</span>
+                  <Speak text={l.tr} size="sm" />
                 </div>
-                <div className="text-lg leading-relaxed">
+                <p className="text-lg leading-relaxed" lang="tr">
                   <Tokens text={l.tr} line={i} analysis={analysis} selected={selected} onSelect={setSelected} />
-                </div>
-                {showEn ? <div className="text-sm text-muted">{l.en}</div> : null}
-                {selected?.line === i && analysis[selected.key] ? <WordInfo a={analysis[selected.key]} /> : null}
-                {selected?.line === i && !analysis[selected.key] ? (
-                  <div className="mt-2 rounded-lg bg-card p-2 text-xs text-muted">No breakdown available for this word — see the English line.</div>
-                ) : null}
+                </p>
+                {showEn ? <p className="mt-1 text-sm text-ink-soft">{l.en}</p> : null}
+                {selected?.line === i ? <WordInfo a={analysis[selected.key]} /> : null}
               </div>
             </li>
           );
         })}
       </ol>
-      <button className="btn-primary" onClick={onDone}>
-        Continue to new phrases →
-      </button>
-    </div>
+
+      <FooterBar>
+        <button className="btn-primary sm:w-44" onClick={onDone}>
+          Continue
+        </button>
+      </FooterBar>
+    </>
   );
 }
 
@@ -301,7 +339,9 @@ function Tokens({
             key={i}
             type="button"
             onClick={() => onSelect(isSel ? null : { line, key })}
-            className={`rounded px-px ${isSel ? "bg-accent text-accent-fg" : known ? "underline decoration-sea/40 decoration-dotted underline-offset-4 hover:bg-card" : "hover:bg-card"}`}
+            className={`rounded-md ${
+              isSel ? "bg-kobalt text-white" : known ? "underline decoration-kobalt/40 decoration-dashed decoration-2 underline-offset-[5px] hover:bg-kobalt-tint" : "hover:bg-wash"
+            }`}
           >
             {p}
           </button>
@@ -311,19 +351,23 @@ function Tokens({
   );
 }
 
-function WordInfo({ a }: { a: WordAnalysis }) {
+function WordInfo({ a }: { a?: WordAnalysis }) {
+  if (!a) return <p className="mt-2 rounded-2xl bg-wash p-2.5 text-sm text-ink-soft">No breakdown for this word — see the translation.</p>;
   return (
-    <div className="mt-2 space-y-1 rounded-lg bg-card p-2 text-sm">
-      <div>
-        <b>{a.word}</b> = {a.meaning}
-        {a.description ? <span className="text-muted"> · {a.description}</span> : null}
-      </div>
+    <div className="mt-2 rounded-2xl bg-paper p-3 text-sm" style={{ animation: "pop 160ms ease-out" }}>
+      <p>
+        <b className="font-display text-base" lang="tr">
+          {a.word}
+        </b>{" "}
+        means <b>{a.meaning}</b>
+        {a.description ? <span className="text-ink-soft"> ({a.description})</span> : null}
+      </p>
       {a.parts.length > 1 ? (
-        <div className="flex flex-wrap items-center gap-1 font-mono text-xs">
+        <div className="mt-2 flex flex-wrap items-center gap-1">
           {a.parts.map((p, i) => (
             <span key={i} className="flex items-center gap-1">
               {i > 0 ? <span className="text-muted">+</span> : null}
-              <span className={`rounded px-1 ${i === 0 ? "bg-card-2 font-bold" : "bg-sea-soft text-sea"}`}>{p}</span>
+              <span className={`font-display rounded-lg px-2 py-0.5 font-bold ${i === 0 ? "bg-wash text-ink" : "bg-turkuaz-tint text-turkuaz-depth"}`}>{p}</span>
             </span>
           ))}
         </div>
@@ -337,77 +381,92 @@ function WordInfo({ a }: { a: WordAnalysis }) {
 function PhrasesSection({ lesson, added, onDone }: { lesson: DailyLesson; added: boolean; onDone: () => void }) {
   const [busy, setBusy] = useState(false);
   return (
-    <div className="card space-y-4">
-      <SectionTitle i={2} />
-      <ul className="space-y-3">
+    <>
+      <h1 className="font-display text-2xl font-extrabold">Five phrases from the dialogue</h1>
+      <p className="mt-1 text-ink-soft">They go into your review deck, so you&apos;ll see them again tomorrow.</p>
+      <ul className="mt-6 space-y-3">
         {lesson.newPhrases.map((p) => (
-          <li key={p.tr} className="rounded-xl border border-border p-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-lg font-bold">{p.tr}</span>
-              <Speak text={p.tr} />
-              <Speak text={p.tr} slow />
+          <li key={p.tr} className="flex items-start gap-3 rounded-3xl border-2 border-line p-4">
+            <Speak text={p.tr} />
+            <div className="min-w-0">
+              <p className="tr-word text-2xl leading-tight" lang="tr">
+                {p.tr}
+              </p>
+              <p className="text-ink-soft">{p.en}</p>
+              {p.exTr ? (
+                <p className="mt-2 text-sm">
+                  <span lang="tr">{p.exTr}</span> <span className="text-muted">{p.exEn}</span>
+                </p>
+              ) : null}
+              {p.note ? <p className="mt-1 text-sm text-muted">{p.note}</p> : null}
             </div>
-            <div>{p.en}</div>
-            {p.exTr ? (
-              <div className="mt-1 text-sm">
-                {p.exTr} <span className="text-muted">— {p.exEn}</span>
-              </div>
-            ) : null}
-            {p.note ? <div className="mt-1 text-xs text-muted">💡 {p.note}</div> : null}
           </li>
         ))}
       </ul>
-      <button
-        className="btn-primary"
-        disabled={busy}
-        onClick={async () => {
-          setBusy(true);
-          if (!added) await addLessonPhrasesAction(lesson.date);
-          onDone();
-        }}
-      >
-        {added ? "Continue →" : "Add to my deck & continue · Desteme ekle →"}
-      </button>
-    </div>
+      <FooterBar>
+        <button
+          className="btn-primary sm:w-56"
+          disabled={busy}
+          onClick={async () => {
+            setBusy(true);
+            if (!added) await addLessonPhrasesAction(lesson.date);
+            onDone();
+          }}
+        >
+          {added ? "Continue" : "Add to my deck"}
+        </button>
+      </FooterBar>
+    </>
   );
 }
 
 // ---------------------------------------------------------------- 4. grammar
 
-function GrammarSection({ lesson, drills, onDone }: { lesson: DailyLesson; drills: Drill[]; onDone: (d: { correct: number; total: number }) => void }) {
+function GrammarSection({
+  lesson,
+  drills,
+  onStep,
+  onDone,
+}: {
+  lesson: DailyLesson;
+  drills: Drill[];
+  onStep: (x: number) => void;
+  onDone: (d: { correct: number; total: number }) => void;
+}) {
   const [practice, setPractice] = useState(false);
+  if (practice) {
+    return (
+      <DrillSet
+        drills={drills}
+        context="lesson"
+        onProgress={(i) => onStep(i / Math.max(1, drills.length))}
+        onFinish={(o) => onDone({ correct: o.filter((x) => x.result === "correct").length, total: o.length })}
+      />
+    );
+  }
   return (
-    <div className="card space-y-4">
-      <SectionTitle i={3} />
-      <div>
-        <h3 className="text-xl font-bold">{lesson.grammar.title}</h3>
-        <p className="mt-2 leading-relaxed">{lesson.grammar.explanation}</p>
-      </div>
-      <div className="grid gap-2 sm:grid-cols-2">
+    <>
+      <h1 className="font-display text-2xl font-extrabold">{lesson.grammar.title}</h1>
+      <p className="mt-3 max-w-[65ch] text-lg leading-relaxed">{lesson.grammar.explanation}</p>
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
         {lesson.grammar.examples.map((e) => (
-          <div key={e.tr} className="flex items-center justify-between gap-2 rounded-xl bg-card-2 px-3 py-2">
+          <div key={e.tr} className="flex items-start gap-3 rounded-3xl border-2 border-line p-4">
+            <Speak text={e.tr} size="sm" />
             <div>
-              <div className="font-semibold">{e.tr}</div>
-              <div className="text-xs text-muted">
-                {e.en}
-                {e.breakdown ? ` · ${e.breakdown}` : ""}
-              </div>
+              <p className="tr-word text-xl leading-tight" lang="tr">
+                {e.tr}
+              </p>
+              <p className="text-sm text-ink-soft">{e.en}</p>
+              {e.breakdown ? <p className="font-display mt-1 text-sm font-bold text-turkuaz-depth">{e.breakdown}</p> : null}
             </div>
-            <Speak text={e.tr} />
           </div>
         ))}
       </div>
-      {!practice ? (
-        <button className="btn-primary" onClick={() => setPractice(true)}>
-          Practise: {drills.length} suffix drills →
+      <FooterBar note={`${drills.length} suffix drills come next.`}>
+        <button className="btn-primary sm:w-44" onClick={() => setPractice(true)}>
+          Practise
         </button>
-      ) : (
-        <DrillSet
-          drills={drills}
-          context="lesson"
-          onFinish={(o) => onDone({ correct: o.filter((x) => x.result === "correct").length, total: o.length })}
-        />
-      )}
-    </div>
+      </FooterBar>
+    </>
   );
 }

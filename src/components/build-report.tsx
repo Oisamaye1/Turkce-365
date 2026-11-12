@@ -9,7 +9,7 @@ export function BuildReportButton() {
   const router = useRouter();
   return (
     <button
-      className="btn-ghost text-xs"
+      className="btn-ghost !min-h-10 !text-[15px]"
       disabled={busy}
       onClick={async () => {
         setBusy(true);
@@ -18,7 +18,7 @@ export function BuildReportButton() {
         router.refresh();
       }}
     >
-      {busy ? "Building…" : "Build this week's report now"}
+      {busy ? "Building…" : "Make this week's report"}
     </button>
   );
 }

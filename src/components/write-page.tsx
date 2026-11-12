@@ -49,7 +49,7 @@ export function WritePage({ prompts, lessonDate, history }: { prompts: Prompt[];
                   <span className="min-w-0 truncate">
                     <span className="text-muted">{w.date}</span> · {w.prompt}
                   </span>
-                  <span className="shrink-0">{w.score !== null ? `${w.score}/10` : "not corrected"}</span>
+                  <span className="shrink-0">{w.score !== null ? `${w.score}/10` : w.attempts >= 3 ? "correction failed" : "⏳ waiting for correction"}</span>
                 </button>
                 {open === w.id ? (
                   <div className="mt-3">

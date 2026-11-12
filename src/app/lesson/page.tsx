@@ -16,9 +16,10 @@ import type { VocabEntry } from "@/lib/vocab/types";
 
 export default async function LessonPage({ searchParams }: { searchParams: Promise<{ date?: string }> }) {
   const sp = await searchParams;
-  const date = sp.date && /^\d{4}-\d{2}-\d{2}$/.test(sp.date) ? sp.date : today();
-  const row = getLesson(date);
-  const past = listLessons(14).filter((l) => l.date !== date);
+  const todayDate = await today();
+  const date = sp.date && /^\d{4}-\d{2}-\d{2}$/.test(sp.date) ? sp.date : todayDate;
+  const row = await getLesson(date);
+  const past = (await listLessons(14)).filter((l) => l.date !== date);
 
   if (!row) {
     return (
@@ -26,7 +27,7 @@ export default async function LessonPage({ searchParams }: { searchParams: Promi
         <PageTitle en="Lesson" tr="Ders" />
         <div className="card space-y-3">
           <p>No lesson for {date} yet. It is generated automatically at 05:30 — or create it now.</p>
-          {date === today() ? <GenerateLesson auto={false} /> : null}
+          {date === todayDate ? <GenerateLesson auto={false} /> : null}
         </div>
         <PastLessons lessons={past} />
       </div>
@@ -34,19 +35,19 @@ export default async function LessonPage({ searchParams }: { searchParams: Promi
   }
 
   const vocab = vocabJson as VocabEntry[];
-  const known = new Set(knownWords(3000).map((c) => c.tr));
+  const known = new Set((await knownWords(3000)).map((c) => c.tr));
   const lex = buildLexicon(vocab, known);
 
   if (row.lesson.kind === "weekly") {
     const quiz = row.lesson;
-    const cards = getCardsByIds(quiz.vocabCardIds);
+    const cards = await getCardsByIds(quiz.vocabCardIds);
     const drills = generateMixedDrills(quiz.maxStep, 10, lex, seededRng(quiz.drillSeed));
-    const report = listReports().find((r) => r.week === quiz.weekStart) ?? null;
+    const report = (await listReports()).find((r) => r.week === quiz.weekStart) ?? null;
     return <WeeklyQuiz quiz={quiz} cards={cards} drills={drills} existingReport={row.completedAt ? report : null} />;
   }
 
   const lesson = row.lesson as DailyLesson;
-  const warmupCards = getCardsByIds(lesson.warmupCardIds);
+  const warmupCards = await getCardsByIds(lesson.warmupCardIds);
   const drills = generateDrills(lesson.grammarStepId, 8, lex, seededRng(lesson.drillSeed));
   const analysis = analyzeText(lesson.dialogue.lines.map((l) => l.tr).join(" "));
   // Claude's glossary (context-aware) takes precedence over the offline analyzer.
@@ -71,7 +72,7 @@ export default async function LessonPage({ searchParams }: { searchParams: Promi
   );
 }
 
-function PastLessons({ lessons }: { lessons: ReturnType<typeof listLessons> }) {
+function PastLessons({ lessons }: { lessons: Awaited<ReturnType<typeof listLessons>> }) {
   if (!lessons.length) return null;
   return (
     <section className="card">

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { checkClaudeAction, regenerateTodayAction, saveSettingsAction, unlockStepAction } from "@/app/actions";
+import { logoutAction } from "@/app/login/actions";
 import type { JobRun } from "@/lib/db/jobs";
 import type { Settings } from "@/lib/db/settings";
 import { useSpeech } from "./speech";
@@ -14,6 +15,8 @@ export function SettingsForm({
   settings,
   jobs,
   dbFile,
+  online,
+  workerSeen,
   platform,
   currentStep,
   steps,
@@ -21,6 +24,8 @@ export function SettingsForm({
   settings: Settings;
   jobs: JobRun[];
   dbFile: string;
+  online: boolean;
+  workerSeen: string | null;
   platform: string;
   currentStep: number;
   steps: { id: number; title: string }[];
@@ -166,12 +171,35 @@ export function SettingsForm({
         <h2 className="font-semibold">
           Daily lesson job <span className="label-tr">· Günlük ders</span>
         </h2>
-        <p className="text-sm">
-          Scheduled at <b>{settings.lessonTime}</b> {settings.timezone}. Install the scheduler on this computer ({platform}):
-        </p>
-        <pre className="overflow-x-auto rounded-xl bg-card-2 p-3 text-sm">npm run scheduler:setup</pre>
+        {online ? (
+          <div className="space-y-2 text-sm">
+            <p>
+              Lessons are written by the <b>worker on your computer</b> at {settings.lessonTime} {settings.timezone} (it runs every 15 min and also
+              corrects writing you submit here). If the computer is off, a backup cron creates an offline lesson at 06:00 and the worker upgrades it
+              later if you haven&apos;t started it.
+            </p>
+            <p>
+              Worker last seen:{" "}
+              {workerSeen ? (
+                <b>{new Date(workerSeen).toLocaleString("en-GB", { timeZone: settings.timezone })}</b>
+              ) : (
+                <Badge tone="warn">never — set it up on your computer</Badge>
+              )}
+            </p>
+            <pre className="overflow-x-auto rounded-xl bg-card-2 p-3 text-xs">{`npx vercel env pull .env.local   # gets DATABASE_URL
+npm run worker                   # test once
+npm run scheduler:setup          # every 15 minutes`}</pre>
+          </div>
+        ) : (
+          <>
+            <p className="text-sm">
+              Scheduled at <b>{settings.lessonTime}</b> {settings.timezone}. Install the scheduler on this computer ({platform}):
+            </p>
+            <pre className="overflow-x-auto rounded-xl bg-card-2 p-3 text-sm">npm run scheduler:setup</pre>
+          </>
+        )}
         <div className="flex flex-wrap gap-2">
-          {(["claude", "offline"] as const).map((k) => (
+          {(online ? (["offline"] as const) : (["claude", "offline"] as const)).map((k) => (
             <button
               key={k}
               className="btn-ghost"
@@ -256,17 +284,24 @@ export function SettingsForm({
           Database: <code className="break-all">{dbFile}</code>
         </p>
         <div className="flex flex-wrap gap-2">
-          <a className="btn-ghost" href="/api/export/db">
-            ⬇ Download database (.db)
-          </a>
           <a className="btn-ghost" href="/api/export/json">
             ⬇ Export everything (.json)
           </a>
         </div>
         <p className="text-xs text-muted">
-          Or from a terminal: <code>npm run backup</code> (writes to data/backups/).
+          Or from a terminal: <code>npm run backup</code> (writes a JSON export to data/backups/).
         </p>
       </section>
+      {online ? (
+        <section className="card flex items-center justify-between gap-3">
+          <h2 className="font-semibold">
+            Account <span className="label-tr">· Hesap</span>
+          </h2>
+          <form action={logoutAction}>
+            <button className="btn-ghost">Log out · Çıkış</button>
+          </form>
+        </section>
+      ) : null}
     </div>
   );
 }

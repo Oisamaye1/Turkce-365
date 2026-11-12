@@ -16,16 +16,18 @@
     "lesson:force": "tsx scripts/generate-lesson.ts --force",
     "scheduler:setup": "tsx scripts/setup-scheduler.ts",
     "check:claude": "tsx scripts/check-claude.ts",
-    "backup": "tsx scripts/backup.ts"
+    "backup": "tsx scripts/backup.ts",
+    "worker": "tsx scripts/worker.ts"
   },
   "engines": {
     "node": ">=20"
   },
   "dependencies": {
-    "better-sqlite3": "^12.11.1",
+    "@electric-sql/pglite": "^0.5.16",
     "diff": "^9.0.0",
     "next": "15.5",
     "node-notifier": "^10.0.1",
+    "postgres": "^4.1.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "recharts": "^3.10.1",
@@ -33,7 +35,6 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.5",
-    "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^22.20.5",
     "@types/node-notifier": "^8.0.5",
     "@types/react": "^19.3.0",

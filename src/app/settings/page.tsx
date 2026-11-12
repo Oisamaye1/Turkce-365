@@ -1,23 +1,26 @@
 import { SettingsForm } from "@/components/settings-form";
 import { PageTitle } from "@/components/ui";
 import { currentGrammarStep } from "@/lib/db/grammar";
-import { recentJobs } from "@/lib/db/jobs";
-import { dbPath } from "@/lib/db";
+import { lastWorkerSeen, recentJobs } from "@/lib/db/jobs";
+import { dbLabel } from "@/lib/db";
 import { getSettings } from "@/lib/db/settings";
 import { GRAMMAR_STEPS } from "@/lib/grammar/steps";
 
-export default function SettingsPage() {
-  const s = getSettings();
-  const jobs = recentJobs(8);
+export default async function SettingsPage() {
+  const s = await getSettings();
+  const jobs = await recentJobs(8);
+  const workerSeen = await lastWorkerSeen();
   return (
     <div className="space-y-5">
       <PageTitle en="Settings" tr="Ayarlar" />
       <SettingsForm
         settings={s}
         jobs={jobs}
-        dbFile={dbPath()}
+        dbFile={dbLabel()}
+        online={process.env.TURKCE_DISABLE_CLAUDE === "1"}
+        workerSeen={workerSeen}
         platform={process.platform}
-        currentStep={currentGrammarStep()}
+        currentStep={await currentGrammarStep()}
         steps={GRAMMAR_STEPS.map((x) => ({ id: x.id, title: x.title }))}
       />
     </div>

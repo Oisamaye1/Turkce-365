@@ -25,6 +25,11 @@ export type ClaudeJsonResult<T> =
 
 const isWin = process.platform === "win32";
 
+/** False on the hosted app (Vercel) — there AI work is done by the worker on your computer. */
+export function claudeEnabled(): boolean {
+  return process.env.TURKCE_DISABLE_CLAUDE !== "1";
+}
+
 export function claudeBin(): string {
   return process.env.CLAUDE_BIN || "claude";
 }
@@ -121,7 +126,7 @@ export interface RunJsonOptions {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function runClaudeJson<T>(prompt: string, schema: ZodType<T, ZodTypeDef, any>, opts: RunJsonOptions = {}): Promise<ClaudeJsonResult<T>> {
   const started = Date.now();
-  if (process.env.TURKCE_DISABLE_CLAUDE === "1") return { ok: false, error: "Claude features disabled (TURKCE_DISABLE_CLAUDE=1)", ms: 0 };
+  if (!claudeEnabled()) return { ok: false, error: "Claude is not available on this server (TURKCE_DISABLE_CLAUDE=1)", ms: 0 };
   const caps = await detectClaude();
   if (!caps.available) return { ok: false, error: `Claude CLI unavailable: ${caps.error ?? "not found"}`, ms: Date.now() - started };
 

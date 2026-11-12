@@ -9,31 +9,63 @@ export interface WritingRow {
   myText: string;
   corrected: Correction | null;
   score: number | null;
+  attempts: number;
+  lastError: string | null;
   createdAt: string;
 }
 
-type Row = { id: number; date: string; prompt: string; my_text: string; corrected_json: string | null; score: number | null; created_at: string };
+type Row = {
+  id: number;
+  date: string;
+  prompt: string;
+  my_text: string;
+  corrected_json: string | null;
+  score: number | null;
+  attempts: number;
+  last_error: string | null;
+  created_at: string;
+};
 const toRow = (r: Row): WritingRow => ({
-  id: r.id,
+  id: Number(r.id),
   date: r.date,
   prompt: r.prompt,
   myText: r.my_text,
   corrected: r.corrected_json ? JSON.parse(r.corrected_json) : null,
-  score: r.score,
+  score: r.score === null ? null : Number(r.score),
+  attempts: Number(r.attempts ?? 0),
+  lastError: r.last_error,
   createdAt: r.created_at,
 });
 
-export function saveWriting(date: string, prompt: string, text: string): number {
-  return Number(getDb().prepare("INSERT INTO writings (date, prompt, my_text) VALUES (?, ?, ?)").run(date, prompt, text).lastInsertRowid);
+export async function saveWriting(date: string, prompt: string, text: string): Promise<number> {
+  const db = await getDb();
+  const r = await db.one<{ id: number }>("INSERT INTO writings (date, prompt, my_text) VALUES (?, ?, ?) RETURNING id", [date, prompt, text]);
+  return Number(r!.id);
 }
 
-export function getWriting(id: number): WritingRow | null {
-  const r = getDb().prepare("SELECT * FROM writings WHERE id = ?").get(id) as Row | undefined;
+export async function getWriting(id: number): Promise<WritingRow | null> {
+  const db = await getDb();
+  const r = await db.one<Row>("SELECT * FROM writings WHERE id = ?", [id]);
   return r ? toRow(r) : null;
 }
 
-export function listWritings(limit = 20): WritingRow[] {
-  return (getDb().prepare("SELECT * FROM writings ORDER BY id DESC LIMIT ?").all(limit) as Row[]).map(toRow);
+export async function listWritings(limit = 20): Promise<WritingRow[]> {
+  const db = await getDb();
+  return (await db.all<Row>("SELECT * FROM writings ORDER BY id DESC LIMIT ?", [limit])).map(toRow);
+}
+
+/** Writings waiting for a correction (queued from the online app for the worker). */
+export async function pendingWritings(maxAttempts = 3, limit = 10): Promise<WritingRow[]> {
+  const db = await getDb();
+  const since = new Date(Date.now() - 14 * 86_400_000).toISOString();
+  return (
+    await db.all<Row>("SELECT * FROM writings WHERE corrected_json IS NULL AND attempts < ? AND created_at >= ? ORDER BY id LIMIT ?", [maxAttempts, since, limit])
+  ).map(toRow);
+}
+
+export async function markWritingAttempt(id: number, error: string) {
+  const db = await getDb();
+  await db.run("UPDATE writings SET attempts = attempts + 1, last_error = ? WHERE id = ?", [error.slice(0, 500), id]);
 }
 
 /** Normalise free-form rule names from the model into stable tags ("Past tense" → "past-tense"). */
@@ -70,10 +102,10 @@ export function normalizeRuleTag(rule: string): string {
  * Store a correction: every error becomes a mistake row AND a review card due today
  * ("Fix: Ben okula gidiyorum dün" → "Dün okula gittim").
  */
-export function applyCorrection(writingId: number, date: string, correction: Correction): number[] {
-  const db = getDb();
-  db.prepare("UPDATE writings SET corrected_json = ?, score = ? WHERE id = ?").run(JSON.stringify(correction), correction.score, writingId);
-  const cardIds = addCardsToDeck(
+export async function applyCorrection(writingId: number, date: string, correction: Correction): Promise<number[]> {
+  const db = await getDb();
+  await db.run("UPDATE writings SET corrected_json = ?, score = ?, last_error = NULL WHERE id = ?", [JSON.stringify(correction), correction.score, writingId]);
+  const cardIds = await addCardsToDeck(
     correction.errors.map((e) => ({
       tr: e.correction,
       en: `Fix: ${e.original}`,
@@ -82,10 +114,16 @@ export function applyCorrection(writingId: number, date: string, correction: Cor
     })),
     "correction",
   );
-  const ins = db.prepare(
-    "INSERT INTO mistakes (date, rule_tag, original, correction, explanation, source, card_id) VALUES (?, ?, ?, ?, ?, 'writing', ?)",
-  );
-  correction.errors.forEach((e, i) => ins.run(date, normalizeRuleTag(e.rule), e.original, e.correction, e.explanationEN, cardIds[i] ?? null));
+  for (const [i, e] of correction.errors.entries()) {
+    await db.run("INSERT INTO mistakes (date, rule_tag, original, correction, explanation, source, card_id) VALUES (?, ?, ?, ?, ?, 'writing', ?)", [
+      date,
+      normalizeRuleTag(e.rule),
+      e.original,
+      e.correction,
+      e.explanationEN,
+      cardIds[i] ?? null,
+    ]);
+  }
   return cardIds;
 }
 
@@ -100,12 +138,14 @@ export interface MistakeRow {
   resolved: boolean;
 }
 
-export function recentMistakes(sinceDate: string, limit = 30): MistakeRow[] {
-  const rows = getDb()
-    .prepare("SELECT * FROM mistakes WHERE date >= ? ORDER BY id DESC LIMIT ?")
-    .all(sinceDate, limit) as { id: number; date: string; rule_tag: string; original: string; correction: string; explanation: string | null; source: string; resolved: number }[];
+export async function recentMistakes(sinceDate: string, limit = 30): Promise<MistakeRow[]> {
+  const db = await getDb();
+  const rows = await db.all<{ id: number; date: string; rule_tag: string; original: string; correction: string; explanation: string | null; source: string; resolved: number }>(
+    "SELECT * FROM mistakes WHERE date >= ? ORDER BY id DESC LIMIT ?",
+    [sinceDate, limit],
+  );
   return rows.map((r) => ({
-    id: r.id,
+    id: Number(r.id),
     date: r.date,
     ruleTag: r.rule_tag,
     original: r.original,

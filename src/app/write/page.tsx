@@ -13,15 +13,15 @@ const FREE_PROMPTS = [
   { prompt: "What did you do last weekend? (past tense)", promptTr: "Geçen hafta sonu ne yaptın?", hints: ["Cumartesi …", "… gittim.", "… yedim."] },
 ];
 
-export default function Write() {
-  const date = today();
-  const row = getLesson(date);
+export default async function Write() {
+  const date = await today();
+  const row = await getLesson(date);
   const lesson = row?.lesson.kind === "daily" ? (row.lesson as DailyLesson) : null;
   const prompts = [...(lesson ? [{ prompt: lesson.writing.prompt, promptTr: lesson.writing.promptTr, hints: lesson.writing.hints, fromLesson: true }] : []), ...FREE_PROMPTS];
   return (
     <div>
       <PageTitle en="Write" tr="Yaz" />
-      <WritePage prompts={prompts} lessonDate={lesson ? date : undefined} history={listWritings(20)} />
+      <WritePage prompts={prompts} lessonDate={lesson ? date : undefined} history={await listWritings(20)} />
     </div>
   );
 }

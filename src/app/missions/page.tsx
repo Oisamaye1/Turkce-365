@@ -3,9 +3,9 @@ import { PageTitle } from "@/components/ui";
 import { ensureMission, listMissions } from "@/lib/db/missions";
 import { today } from "@/lib/db/settings";
 
-export default function MissionsPage() {
-  const current = ensureMission(today());
-  const past = listMissions().filter((m) => m.week !== current.week);
+export default async function MissionsPage() {
+  const current = await ensureMission(await today());
+  const past = (await listMissions()).filter((m) => m.week !== current.week);
   return (
     <div className="space-y-5">
       <PageTitle en="Missions" tr="Görevler">

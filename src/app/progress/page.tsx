@@ -9,16 +9,16 @@ import { GRAMMAR_STEPS } from "@/lib/grammar/steps";
 import { listReports } from "@/lib/lesson/weekly";
 import { addDays, startOfLocalDayIso } from "@/lib/time";
 
-export default function ProgressPage() {
-  const { timezone } = getSettings();
-  const activity = dailyActivity(28);
+export default async function ProgressPage() {
+  const { timezone } = await getSettings();
+  const activity = await dailyActivity(28);
   const since = startOfLocalDayIso(activity[0].date, timezone);
-  const before = wordsLearned("", since);
-  const t = totals();
-  const st = streak();
-  const ret = retention(startOfLocalDayIso(addDays(activity[activity.length - 1].date, -6), timezone));
-  const steps = getStepStatuses();
-  const reports = listReports();
+  const before = await wordsLearned("", since);
+  const t = await totals();
+  const st = await streak();
+  const ret = await retention(startOfLocalDayIso(addDays(activity[activity.length - 1].date, -6), timezone));
+  const steps = await getStepStatuses();
+  const reports = await listReports();
 
   return (
     <div className="space-y-5">

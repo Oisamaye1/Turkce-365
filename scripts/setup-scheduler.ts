@@ -5,6 +5,8 @@
  *   npm run scheduler:setup -- --dry-run # just print what would be installed
  *   npm run scheduler:setup -- --remove  # uninstall
  *
+ * Installs the WORKER (scripts/worker.ts) every 15 minutes — it creates the lesson after 05:30
+ * and processes corrections queued from the online app.
  * macOS / Linux → user crontab. The time is converted from Europe/Istanbul to the
  *   system timezone (cron on macOS ignores CRON_TZ). If the system zone has DST, both
  *   possible times are scheduled; the script itself refuses to run before 05:30
@@ -27,12 +29,14 @@ const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
 const remove = args.has("--remove");
 
-function readSetting(key: string, fallback: string): string {
+async function readSetting(key: string, fallback: string): Promise<string> {
   try {
-    // Lazy import so --dry-run works even before the DB exists.
+    // Lazy import so --dry-run works even when the database is unreachable.
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require("./env").loadEnv();
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { getSetting } = require("../src/lib/db/settings");
-    return getSetting(key) ?? fallback;
+    return (await Promise.race([getSetting(key), new Promise((r) => setTimeout(() => r(null), 20_000))])) ?? fallback;
   } catch {
     return fallback;
   }
@@ -70,7 +74,7 @@ function commandLine(): string {
   const tsx = path.join(ROOT, "node_modules", "tsx", "dist", "cli.mjs");
   const claude = which("claude");
   const env = claude ? `CLAUDE_BIN='${claude}' PATH='${path.dirname(claude)}:${path.dirname(node)}:/usr/local/bin:/usr/bin:/bin' ` : "";
-  return `cd '${ROOT}' && ${env}'${node}' '${tsx}' scripts/generate-lesson.ts >> '${path.join(ROOT, "logs", "lesson.log")}' 2>&1`;
+  return `cd '${ROOT}' && ${env}'${node}' '${tsx}' scripts/worker.ts >> '${path.join(ROOT, "logs", "worker.log")}' 2>&1`;
 }
 
 function setupCron(lessonTime: string) {
@@ -79,11 +83,10 @@ function setupCron(lessonTime: string) {
   const cmd = commandLine();
   const lines = [
     MARK_BEGIN,
-    `# Türkçe 365 — daily lesson at ${lessonTime} ${TARGET_TZ} (system timezone: ${sysTz})`,
-    `# (Equivalent with cronie: CRON_TZ=${TARGET_TZ} + "${lessonTime.split(":")[1]} ${Number(lessonTime.split(":")[0])} * * *")`,
-    ...times.map((t) => `${t.m} ${t.h} * * * ${cmd}`),
-    `# Catch-up if the machine was asleep at ${lessonTime}: harmless no-op when the lesson exists.`,
-    `17 * * * * ${cmd}`,
+    `# Türkçe 365 worker — every 15 min: lesson at ${lessonTime} ${TARGET_TZ} (system timezone: ${sysTz}),`,
+    `# writing corrections queued from the online app, weekly-report notes. Idempotent.`,
+    ...times.filter((t) => t.m % 15 !== 0).map((t) => `${t.m} ${t.h} * * * ${cmd}`),
+    `*/15 * * * * ${cmd}`,
     `@reboot sleep 90 && ${cmd}`,
     MARK_END,
   ];
@@ -126,6 +129,7 @@ function setupWindows(lessonTime: string) {
       <StartBoundary>2024-01-01T${hh}:${mm}:00</StartBoundary>
       <Enabled>true</Enabled>
       <ScheduleByDay><DaysInterval>1</DaysInterval></ScheduleByDay>
+      <Repetition><Interval>PT15M</Interval><Duration>P1D</Duration><StopAtDurationEnd>false</StopAtDurationEnd></Repetition>
     </CalendarTrigger>
     <LogonTrigger><Enabled>true</Enabled><Delay>PT2M</Delay></LogonTrigger>
   </Triggers>
@@ -140,7 +144,7 @@ function setupWindows(lessonTime: string) {
   <Actions Context="Author">
     <Exec>
       <Command>cmd.exe</Command>
-      <Arguments>/c cd /d "${ROOT}" &amp;&amp; "${node}" "${tsx}" scripts\\generate-lesson.ts &gt;&gt; logs\\lesson.log 2&gt;&amp;1</Arguments>
+      <Arguments>/c cd /d "${ROOT}" &amp;&amp; "${node}" "${tsx}" scripts\\worker.ts &gt;&gt; logs\\worker.log 2&gt;&amp;1</Arguments>
       <WorkingDirectory>${ROOT}</WorkingDirectory>
     </Exec>
   </Actions>
@@ -161,17 +165,17 @@ function setupWindows(lessonTime: string) {
     console.error("schtasks failed:", r.stderr || r.error);
     process.exit(1);
   }
-  console.log(`✓ Registered Task Scheduler task "${TASK_NAME}" daily at ${hh}:${mm} local time (= ${lessonTime} ${TARGET_TZ}),`);
+  console.log(`✓ Registered Task Scheduler task "${TASK_NAME}": every 15 min from ${hh}:${mm} local time (= ${lessonTime} ${TARGET_TZ}),`);
   console.log("  with 'run as soon as possible after a missed start' and a run at logon.");
   if (t.h !== 5 || t.m !== 30) console.log("  Tip: set Windows to the 'Istanbul' time zone (UTC+03:00) so the clock matches North Cyprus time.");
 }
 
-function main() {
+async function main() {
   fs.mkdirSync(path.join(ROOT, "logs"), { recursive: true });
-  const lessonTime = readSetting("lesson_time", "05:30");
+  const lessonTime = await readSetting("lesson_time", "05:30");
   console.log(`Platform: ${process.platform} · system timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone} · lesson time: ${lessonTime} ${TARGET_TZ}`);
   if (process.platform === "win32") setupWindows(lessonTime);
   else setupCron(lessonTime);
 }
 
-if (process.argv[1] && process.argv[1].endsWith("setup-scheduler.ts")) main();
+if (process.argv[1] && process.argv[1].endsWith("setup-scheduler.ts")) main().then(() => process.exit(0));

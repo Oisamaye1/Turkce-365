@@ -11,19 +11,19 @@ import { streak, totals } from "@/lib/db/stats";
 import { getStep } from "@/lib/grammar/steps";
 import { isAfterLessonTime, isSunday, learnerWeek, weekdayLabel } from "@/lib/time";
 
-export default function TodayPage() {
-  const s = getSettings();
-  const date = today();
-  const lesson = getLesson(date);
+export default async function TodayPage() {
+  const s = await getSettings();
+  const date = await today();
+  const lesson = await getLesson(date);
   const afterTime = isAfterLessonTime(new Date(), s.lessonTime, s.timezone);
-  const { due, fresh } = countDue();
-  const st = streak();
-  const mission = ensureMission(date);
-  const step = getStep(currentGrammarStep());
-  const stepStatus = getStepStatuses().find((x) => x.stepId === step.id);
+  const { due, fresh } = await countDue();
+  const st = await streak();
+  const mission = await ensureMission(date);
+  const step = getStep(await currentGrammarStep());
+  const stepStatus = (await getStepStatuses()).find((x) => x.stepId === step.id);
   const week = learnerWeek(s.startDate, date);
-  const t = totals();
-  const job = recentJobs(1)[0];
+  const t = await totals();
+  const job = (await recentJobs(1))[0];
   const day = weekdayLabel(date);
   const reviewMinutes = Math.round(((due + fresh) * 9) / 60);
   const sunday = isSunday(date);

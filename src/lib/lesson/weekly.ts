@@ -11,28 +11,28 @@ import { addDays, mondayOf, startOfLocalDayIso } from "@/lib/time";
 import { REPORT_JSON_SCHEMA, ReportNarrativeSchema, type DailyLesson, type WeeklyQuiz } from "./schema";
 import { buildReportPrompt } from "./prompt";
 
-export function buildWeeklyQuiz(date: string): WeeklyQuiz {
-  const { timezone } = getSettings();
+export async function buildWeeklyQuiz(date: string): Promise<WeeklyQuiz> {
+  const { timezone } = await getSettings();
   const weekStart = mondayOf(date);
   const sinceIso = startOfLocalDayIso(weekStart, timezone);
-  const rows = getDb()
-    .prepare(
-      `SELECT l.card_id AS id, SUM(l.result != 'correct') AS misses, COUNT(*) AS n
-       FROM review_log l JOIN cards c ON c.id = l.card_id
-       WHERE l.timestamp >= ? AND c.source != 'correction'
-       GROUP BY l.card_id ORDER BY misses DESC, n DESC LIMIT 40`,
-    )
-    .all(sinceIso) as { id: number }[];
-  let ids = rows.map((r) => r.id);
+  const db = await getDb();
+  const rows = await db.all<{ id: number }>(
+    `SELECT l.card_id AS id, COUNT(*) FILTER (WHERE l.result <> 'correct') AS misses, COUNT(*) AS n
+     FROM review_log l JOIN cards c ON c.id = l.card_id
+     WHERE l.timestamp >= ? AND c.source <> 'correction'
+     GROUP BY l.card_id ORDER BY misses DESC, n DESC LIMIT 40`,
+    [sinceIso],
+  );
+  let ids = rows.map((r) => Number(r.id));
   // Keep the most-missed half, then shuffle in the rest for variety.
   ids = [...ids.slice(0, 8), ...shuffle(ids.slice(8))].slice(0, 15);
   if (ids.length < 15) {
-    for (const c of knownWords(200)) {
+    for (const c of await knownWords(200)) {
       if (ids.length >= 15) break;
       if (!ids.includes(c.id)) ids.push(c.id);
     }
   }
-  const translation = pickTranslation(weekStart, date, getCardsByIds(ids));
+  const translation = await pickTranslation(weekStart, date, await getCardsByIds(ids));
   return {
     kind: "weekly",
     date,
@@ -40,7 +40,7 @@ export function buildWeeklyQuiz(date: string): WeeklyQuiz {
     weekStart,
     vocabCardIds: ids,
     drillSeed: `weekly-${date}`,
-    maxStep: currentGrammarStep(),
+    maxStep: await currentGrammarStep(),
     translation,
     title: "Weekly check-in",
     titleTr: "Haftalık değerlendirme",
@@ -56,8 +56,8 @@ function shuffle<T>(xs: T[]): T[] {
   return a;
 }
 
-function pickTranslation(from: string, to: string, cards: Card[]): { en: string; tr: string } {
-  const lines = lessonsBetween(from, to)
+async function pickTranslation(from: string, to: string, cards: Card[]): Promise<{ en: string; tr: string }> {
+  const lines = (await lessonsBetween(from, to))
     .filter((l) => l.lesson.kind === "daily")
     .flatMap((l) => (l.lesson as DailyLesson).dialogue.lines)
     .filter((l) => l.tr.split(/\s+/).length >= 3 && l.tr.split(/\s+/).length <= 9);
@@ -116,28 +116,34 @@ function localNarrative(r: Omit<WeeklyReport, "focusAreas" | "encouragement" | "
 
 /** Build the report for the week ending on `date` (a Sunday) and store it. */
 export async function generateWeeklyReport(date: string, quiz: QuizResults | null, opts: { useClaude?: boolean } = {}): Promise<WeeklyReport> {
-  const { timezone } = getSettings();
+  const { timezone } = await getSettings();
   const week = mondayOf(date);
   const sinceIso = startOfLocalDayIso(week, timezone);
   const untilIso = startOfLocalDayIso(addDays(week, 7), timezone);
-  const ret = retention(sinceIso, untilIso);
-  const s = streak();
+  const ret = await retention(sinceIso, untilIso);
+  const s = await streak();
   const base = {
     week,
     generatedAt: new Date().toISOString(),
-    wordsTotal: wordsLearned(),
-    wordsThisWeek: wordsLearned(sinceIso, untilIso),
+    wordsTotal: await wordsLearned(),
+    wordsThisWeek: await wordsLearned(sinceIso, untilIso),
     retention: ret.rate,
     reviewsThisWeek: ret.reviews,
-    suffixAccuracy: stepAccuracySince(sinceIso, untilIso).map((x) => ({ ...x, title: getStep(x.stepId).title })),
-    topMistakes: topMistakes(sinceIso, week, 3),
+    suffixAccuracy: (await stepAccuracySince(sinceIso, untilIso)).map((x) => ({ ...x, title: getStep(x.stepId).title })),
+    topMistakes: await topMistakes(sinceIso, week, 3),
     streak: { current: s.current, best: s.best },
     quiz,
-    activity: dailyActivity(7),
+    activity: await dailyActivity(7),
   };
+  return saveReport(base, opts.useClaude !== false);
+}
+
+type ReportBase = Omit<WeeklyReport, "focusAreas" | "encouragement" | "narrativeSource">;
+
+async function saveReport(base: ReportBase, useClaude: boolean): Promise<WeeklyReport> {
   let narrative = localNarrative(base);
   let narrativeSource: "claude" | "local" = "local";
-  if (opts.useClaude !== false) {
+  if (useClaude) {
     const summary = JSON.stringify(
       { ...base, activity: undefined, retention: Math.round(base.retention * 100) + "%" },
       null,
@@ -146,7 +152,7 @@ export async function generateWeeklyReport(date: string, quiz: QuizResults | nul
     const res = await runClaudeJson(buildReportPrompt(summary), ReportNarrativeSchema, {
       jsonSchema: REPORT_JSON_SCHEMA,
       timeoutMs: 120_000,
-      model: getSettingsModel(),
+      model: (await getSettings()).claudeModel,
     });
     if (res.ok) {
       narrative = res.data;
@@ -154,16 +160,27 @@ export async function generateWeeklyReport(date: string, quiz: QuizResults | nul
     }
   }
   const report: WeeklyReport = { ...base, ...narrative, narrativeSource };
-  getDb()
-    .prepare("INSERT INTO weekly_reports (week, json) VALUES (?, ?) ON CONFLICT(week) DO UPDATE SET json = excluded.json, created_at = datetime('now')")
-    .run(week, JSON.stringify(report));
+  const db = await getDb();
+  await db.run("INSERT INTO weekly_reports (week, json) VALUES (?, ?) ON CONFLICT (week) DO UPDATE SET json = excluded.json, created_at = excluded.created_at", [
+    base.week,
+    JSON.stringify(report),
+  ]);
   return report;
 }
 
-function getSettingsModel(): string | null {
-  return getSettings().claudeModel;
+export async function listReports(): Promise<WeeklyReport[]> {
+  const db = await getDb();
+  return (await db.all<{ json: string }>("SELECT json FROM weekly_reports ORDER BY week DESC")).map((r) => JSON.parse(r.json));
 }
 
-export function listReports(): WeeklyReport[] {
-  return (getDb().prepare("SELECT json FROM weekly_reports ORDER BY week DESC").all() as { json: string }[]).map((r) => JSON.parse(r.json));
+/** Worker: replace locally-written report notes (made while Claude was unreachable) with Claude's. */
+export async function upgradeReportNarratives(): Promise<number> {
+  let n = 0;
+  for (const r of (await listReports()).slice(0, 2)) {
+    if (r.narrativeSource === "claude") continue;
+    const { focusAreas: _f, encouragement: _e, narrativeSource: _n, ...base } = r;
+    const next = await saveReport(base, true);
+    if (next.narrativeSource === "claude") n++;
+  }
+  return n;
 }

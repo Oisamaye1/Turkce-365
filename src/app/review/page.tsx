@@ -2,8 +2,8 @@ import { ReviewSession } from "@/components/review-session";
 import { PageTitle } from "@/components/ui";
 import { getReviewSession } from "@/lib/db/cards";
 
-export default function ReviewPage() {
-  const { due, fresh } = getReviewSession();
+export default async function ReviewPage() {
+  const { due, fresh } = await getReviewSession();
   return (
     <div>
       <PageTitle en="Review" tr="Tekrar">

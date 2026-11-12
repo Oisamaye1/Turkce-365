@@ -4,8 +4,7 @@
  *   ↳ on any failure: build a lesson from local content so a day is never lost.
  * Sunday → weekly check-in instead.  Monday → also creates the week's mission.
  */
-import { getDb } from "@/lib/db";
-import { getLeeches, knownWords, nextUnseenSeedCards, recentMistakeCards } from "@/lib/db/cards";
+import { getLeeches, knownWords, nextUnseenSeedCards, recentMistakeCards, weakestCardIds } from "@/lib/db/cards";
 import { currentGrammarStep } from "@/lib/db/grammar";
 import { finishJob, isJobRunning, startJob, type JobTrigger } from "@/lib/db/jobs";
 import { getLesson, listLessons, saveLesson, usedDialogueIds, type LessonRow } from "@/lib/db/lessons";
@@ -42,46 +41,41 @@ export interface GenerateResult {
 const inflight = new Map<string, Promise<GenerateResult>>();
 
 export async function ensureTodayLesson(opts: GenerateOptions): Promise<GenerateResult> {
-  const settings = getSettings();
+  const settings = await getSettings();
   const now = opts.now ?? new Date();
   const date = localDate(now, settings.timezone);
-  if (!opts.force && getLesson(date)) return { status: "exists", date, message: "Today's lesson already exists." };
+  if (!opts.force && (await getLesson(date))) return { status: "exists", date, message: "Today's lesson already exists." };
   if (!opts.force && !opts.ignoreTime && !isAfterLessonTime(now, settings.lessonTime, settings.timezone)) {
     return { status: "skipped", date, message: `Too early — lessons are generated at ${settings.lessonTime} (${settings.timezone}).` };
   }
   const pending = inflight.get(date);
   if (pending) return pending;
-  if (isJobRunning("lesson")) return { status: "busy", date, message: "A lesson is already being generated." };
+  if (await isJobRunning("lesson")) return { status: "busy", date, message: "A lesson is already being generated." };
   const p = generate(date, opts).finally(() => inflight.delete(date));
   inflight.set(date, p);
   return p;
 }
 
 async function generate(date: string, opts: GenerateOptions): Promise<GenerateResult> {
-  const job = startJob("lesson", opts.trigger);
+  const job = await startJob("lesson", opts.trigger);
   try {
     // A mission for this week (created on Monday — or on first use mid-week).
-    ensureMission(date);
+    await ensureMission(date);
 
     if (isSunday(date)) {
-      saveLesson(buildWeeklyQuiz(date));
-      finishJob(job, "ok", `Weekly check-in for ${date}`);
+      await saveLesson(await buildWeeklyQuiz(date));
+      await finishJob(job, "ok", `Weekly check-in for ${date}`);
       return { status: "created", date, kind: "weekly", source: "fallback", message: "Weekly check-in ready." };
     }
 
-    const step = getStep(currentGrammarStep());
-    const known = knownWords(1500);
-    const warmup = recentMistakeCards(7, 5).map((c) => c.id);
+    const step = getStep(await currentGrammarStep());
+    const known = await knownWords(1500);
+    const warmup = (await recentMistakeCards(7, 5)).map((c) => c.id);
     if (warmup.length < 5) {
-      // Top up with weakest known cards.
-      const weak = getDb()
-        .prepare(
-          `SELECT card_id FROM reviews WHERE direction = 'en-tr' ORDER BY ease ASC, lapses DESC, due_date ASC LIMIT 10`,
-        )
-        .all() as { card_id: number }[];
-      for (const w of weak) if (warmup.length < 5 && !warmup.includes(w.card_id)) warmup.push(w.card_id);
+      // Top up with the weakest known cards.
+      for (const id of await weakestCardIds(10)) if (warmup.length < 5 && !warmup.includes(id)) warmup.push(id);
     }
-    const leeches = getLeeches(3);
+    const leeches = await getLeeches(3);
     const base = {
       kind: "daily" as const,
       date,
@@ -95,8 +89,8 @@ async function generate(date: string, opts: GenerateOptions): Promise<GenerateRe
     let note = "";
     if (opts.useClaude !== false) {
       const sevenDaysAgo = addDays(date, -7);
-      const vocabMisses = recentMistakeCards(7, 10).map((c) => `${c.tr} (${c.en})`);
-      const writingMisses = recentMistakes(sevenDaysAgo, 10).map((m) => `[${m.ruleTag}] "${m.original}" → "${m.correction}"`);
+      const vocabMisses = (await recentMistakeCards(7, 10)).map((c) => `${c.tr} (${c.en})`);
+      const writingMisses = (await recentMistakes(sevenDaysAgo, 10)).map((m) => `[${m.ruleTag}] "${m.original}" → "${m.correction}"`);
       const prompt = buildLessonPrompt({
         date,
         level: learnerLevel(known.length, step.id),
@@ -104,13 +98,13 @@ async function generate(date: string, opts: GenerateOptions): Promise<GenerateRe
         knownWords: sample(known.filter((c) => c.source !== "correction").map((c) => c.tr), 150),
         mistakes: [...writingMisses, ...vocabMisses],
         leeches: leeches.map((l) => ({ tr: l.tr, en: l.en })),
-        missionStruggles: recentStruggles(),
-        recentTitles: listLessons(7).map((l) => ("title" in l.lesson ? l.lesson.title : "")).filter(Boolean),
+        missionStruggles: await recentStruggles(),
+        recentTitles: (await listLessons(7)).map((l) => ("title" in l.lesson ? l.lesson.title : "")).filter(Boolean),
       });
       const res = await runClaudeJson(prompt, LessonContentSchema, {
         jsonSchema: LESSON_JSON_SCHEMA,
         timeoutMs: 300_000,
-        model: getSettings().claudeModel,
+        model: (await getSettings()).claudeModel,
       });
       if (res.ok) {
         content = res.data;
@@ -128,8 +122,8 @@ async function generate(date: string, opts: GenerateOptions): Promise<GenerateRe
       const inDeck = new Set(known.map((c) => c.tr));
       const fb = buildFallbackContent({
         step,
-        usedDialogueIds: usedDialogueIds(),
-        nextWords: nextUnseenSeedCards(5),
+        usedDialogueIds: await usedDialogueIds(),
+        nextWords: await nextUnseenSeedCards(5),
         inDeck,
         leeches,
       });
@@ -138,8 +132,8 @@ async function generate(date: string, opts: GenerateOptions): Promise<GenerateRe
     }
 
     const lesson: DailyLesson & { dialogueId?: string } = { ...content, ...base, source, ...(dialogueId ? { dialogueId } : {}) };
-    saveLesson(lesson);
-    finishJob(job, source === "claude" ? "ok" : "fallback", source === "claude" ? note : `Used local fallback: ${note}`);
+    await saveLesson(lesson);
+    await finishJob(job, source === "claude" ? "ok" : "fallback", source === "claude" ? note : `Used local fallback: ${note}`);
     return {
       status: "created",
       date,
@@ -149,7 +143,7 @@ async function generate(date: string, opts: GenerateOptions): Promise<GenerateRe
     };
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
-    finishJob(job, "error", msg);
+    await finishJob(job, "error", msg);
     return { status: "error", date, message: msg };
   }
 }

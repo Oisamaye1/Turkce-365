@@ -69,7 +69,7 @@ export function WritingBox({
           />
           {!res ? <TurkishKeyboard target={area} /> : null}
           <div className="flex flex-wrap items-center gap-3">
-            {!res ? (
+            {res?.queued ? null : !res ? (
               <button className="btn-primary" disabled={busy || text.trim().length < 3} onClick={submit}>
                 {busy ? "Correcting… (≈ 30–60 s)" : "Submit · Gönder"}
               </button>
@@ -81,6 +81,15 @@ export function WritingBox({
             <span className="text-xs text-muted">{sentences} sentence{sentences === 1 ? "" : "s"}</span>
           </div>
           {res?.error ? <p className="rounded-xl bg-warn-soft p-3 text-sm text-warn">{res.error}</p> : null}
+          {res?.queued ? (
+            <div className="rounded-xl border border-sea bg-sea-soft p-3 text-sm">
+              <div className="font-semibold text-sea">✓ Saved — correction queued · Sıraya alındı</div>
+              <p className="mt-1">
+                Claude runs on your computer: the worker picks this up within ~15 minutes while the computer is on. The corrected text appears in{" "}
+                <b>Write → Past writing</b>, and every error becomes a card in today&apos;s reviews.
+              </p>
+            </div>
+          ) : null}
         </>
       ) : (
         <CorrectionView mine={text || ""} correction={res.correction} cardsAdded={res.cardsAdded} />

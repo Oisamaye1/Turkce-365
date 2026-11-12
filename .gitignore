@@ -10,3 +10,6 @@ data/*.db-*
 data/backups/
 logs/*.log
 .DS_Store
+data/pglite/
+.env
+.vercel

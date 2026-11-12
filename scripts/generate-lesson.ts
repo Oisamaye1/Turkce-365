@@ -7,10 +7,12 @@
  *   npx tsx scripts/generate-lesson.ts --offline  # skip Claude, use local content
  */
 import path from "node:path";
+import { loadEnv } from "./env";
 import { ensureTodayLesson } from "../src/lib/lesson/generate";
 import { notifyDesktop } from "../src/lib/notify";
 
 process.chdir(path.resolve(__dirname, ".."));
+loadEnv();
 
 async function main() {
   const args = new Set(process.argv.slice(2));

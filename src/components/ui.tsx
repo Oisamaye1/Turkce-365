@@ -34,7 +34,7 @@ export function ProgressBar({
   const fill = { accent: "bg-accent", brand: "bg-brand", ok: "bg-ok" }[tone];
   return (
     <div className={`h-1.5 w-full overflow-hidden rounded-full bg-line ${className}`} role="progressbar" aria-valuenow={Math.round(pct)} aria-valuemin={0} aria-valuemax={100}>
-      <div className={`h-full rounded-full ${fill} transition-[width] duration-500 ease-out`} style={{ width: `${pct}%` }} />
+      <div className={`h-full origin-left animate-grow rounded-full ${fill} transition-[width] duration-500 ease-out`} style={{ width: `${pct}%` }} />
     </div>
   );
 }

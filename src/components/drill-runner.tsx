@@ -67,7 +67,7 @@ export function DrillCard({
   return (
     <div>
       <p className="text-[15px] text-muted">Build the Turkish for</p>
-      <p className="font-display mt-1 text-[33px] leading-tight font-medium sm:text-[42px]">“{drill.prompt}”</p>
+      <p key={drill.id} className="font-display mt-1 animate-slide-in text-[33px] leading-tight font-medium sm:text-[42px]">“{drill.prompt}”</p>
       <div className="mt-5 mb-8 flex flex-wrap items-center gap-x-2 gap-y-2 text-[15px]" aria-label="Start from">
         <span className="tr-word rounded-md border-b-2 border-ink bg-haze px-2 py-0.5 text-[19px]" lang="tr">
           {drill.root}

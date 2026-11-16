@@ -8,6 +8,9 @@ import { addCardsToDeck, countDue, getReviewSession, recordReview } from "@/lib/
 import { currentGrammarStep, getStepStatuses, recordDrill } from "@/lib/db/grammar";
 import { getLesson } from "@/lib/db/lessons";
 import { getMission } from "@/lib/db/missions";
+import { completeDay, currentPlanDay, getPlan, savePlan, setTick } from "@/lib/db/plan";
+import { getPlanDayView } from "@/lib/plan/status";
+import { wordsThrough } from "@/lib/plan/build";
 import { setSetting } from "@/lib/db/settings";
 import { applyCorrection, saveWriting } from "@/lib/db/writing";
 import { ensureTodayLesson } from "@/lib/lesson/generate";
@@ -137,15 +140,16 @@ describe("writing corrections", () => {
 });
 
 describe("grammar progression", () => {
-  it("unlocks the next step at 90 % over 20 drills", async () => {
+  it("unlocks the next step in teaching order at 90 % over 20 drills", async () => {
     expect(await currentGrammarStep()).toBe(1);
     let unlocked: number | null = null;
     for (let i = 0; i < 20; i++) {
       const r = await recordDrill({ stepId: 1, result: i === 0 ? "wrong" : "correct", answer: "evler", expected: "evler", prompt: "houses", rules: [] });
       if (r.unlocked) unlocked = r.unlocked;
     }
-    expect(unlocked).toBe(2);
-    expect(await currentGrammarStep()).toBe(2);
+    // Teaching order: plural (1) → "to be" endings (8).
+    expect(unlocked).toBe(8);
+    expect(await currentGrammarStep()).toBe(8);
     expect((await getStepStatuses())[0].mastered).toBe(true);
   });
   it("does not unlock below 90 %", async () => {
@@ -165,5 +169,36 @@ describe("weekly report", () => {
     expect(report.focusAreas.length).toBeGreaterThanOrEqual(2);
     expect(report.narrativeSource).toBe("local");
     expect(report.activity.length).toBe(7);
+  });
+});
+
+describe("learning plan", () => {
+  it("creates a plan, ticks tasks and finishes days in order", async () => {
+    expect(await getPlan()).toBeNull();
+    await savePlan({ startDay: 1, startedOn: "2026-11-16", daysPerWeek: 6 });
+    expect(await currentPlanDay()).toBe(1);
+
+    // New words follow the plan, not the old 15-a-day setting.
+    const { fresh } = await getReviewSession();
+    expect(fresh.length).toBe(wordsThrough(1));
+    expect(fresh[0].card.tr).toBe("merhaba");
+
+    const view = await getPlanDayView();
+    expect(view?.day.day).toBe(1);
+    expect(view?.canFinish).toBe(false);
+    for (const t of view!.day.tasks) if (!t.optional) await setTick(1, t.key, "done");
+    expect((await getPlanDayView(1))?.canFinish).toBe(true);
+    await completeDay(1, "2026-11-16");
+    expect(await currentPlanDay()).toBe(2);
+    // A future day can be previewed but not finished.
+    expect((await getPlanDayView(5))?.canFinish).toBe(false);
+  });
+
+  it("starting later skips ahead and opens the suffix steps taught before", async () => {
+    await savePlan({ startDay: 85, startedOn: "2026-11-16", daysPerWeek: 5 }); // stage 3
+    expect(await currentPlanDay()).toBe(85);
+    const open = (await getStepStatuses()).filter((s) => s.unlocked).map((s) => s.stepId);
+    for (const s of [1, 8, 9, 2, 4, 3, 10, 11, 5]) expect(open).toContain(s);
+    expect(open).not.toContain(12);
   });
 });

@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { CountUp } from "@/components/count-up";
+import { STEP_ORDER } from "@/lib/plan/build";
 import { BuildReportButton } from "@/components/build-report";
 import { IconFlame } from "@/components/icons";
 import { ReportView } from "@/components/lesson/report-view";
@@ -41,12 +43,12 @@ export default async function ProgressPage() {
         <PageTitle en="Progress" tr="İlerleme">
           <BuildReportButton />
         </PageTitle>
-        <dl className="grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-6 lg:grid-cols-4">
-          {figures.map((x) => (
-            <div key={x.label}>
+        <dl className="stagger grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-6 lg:grid-cols-4">
+          {figures.map((x, i) => (
+            <div key={x.label} style={{ "--i": i } as React.CSSProperties}>
               <dd className="font-display flex items-center gap-2 text-[48px] leading-none font-semibold tabular">
                 {x.label === "day streak" ? <IconFlame size={30} className={st.current ? "text-accent" : "text-muted"} /> : null}
-                {x.value}
+                {typeof x.value === "number" ? <CountUp value={x.value} /> : x.value}
               </dd>
               <dt className="mt-2 text-[15px]">{x.label}</dt>
               <p className="text-[14px] text-muted">{x.hint}</p>
@@ -99,7 +101,8 @@ export default async function ProgressPage() {
         <h2 className="font-display text-[26px] font-semibold">Suffix mastery</h2>
         <p className="mb-6 text-ink-soft">Accuracy over your last 20 drills in each grammar step.</p>
         <div className="grid gap-x-10 sm:grid-cols-2">
-          {GRAMMAR_STEPS.map((s) => {
+          {STEP_ORDER.map((id, pos) => {
+            const s = GRAMMAR_STEPS.find((g) => g.id === id)!;
             const x = steps.find((y) => y.stepId === s.id)!;
             return (
               <Link
@@ -109,7 +112,7 @@ export default async function ProgressPage() {
               >
                 <div className="mb-2 flex justify-between gap-3 text-[15px]">
                   <span className="truncate">
-                    <span className="mr-2 text-muted tabular">{s.id}</span>
+                    <span className="mr-2 text-muted tabular">{pos + 1}</span>
                     {s.title}
                   </span>
                   <span className="shrink-0 text-[14px] text-muted tabular">{x.unlocked ? `${Math.round(x.mastery * 100)}%` : "locked"}</span>

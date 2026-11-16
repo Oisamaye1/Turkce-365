@@ -1,4 +1,6 @@
 import { getDb, type DB } from "./index";
+import { currentPlanDay, getPlan } from "./plan";
+import { wordsThrough } from "@/lib/plan/build";
 import { getSettings, today } from "./settings";
 import { LEARNED_REPETITIONS, NEW_CARD_STATE, dueAt, schedule, type Grade, type SrsState } from "@/lib/srs/sm2";
 import type { CheckResult } from "@/lib/turkish/answer";
@@ -94,8 +96,22 @@ export async function introducedToday(): Promise<number> {
   return Number(row?.n ?? 0);
 }
 
+/** Cap on new words per day while catching up with the plan. */
+const PLAN_DAILY_CAP = 30;
+
 export async function newCardsRemainingToday(): Promise<number> {
   const s = await getSettings();
+  const plan = await getPlan();
+  if (plan) {
+    // With a plan, new words follow the plan: everything up to the current plan day.
+    const day = (await currentPlanDay(plan)) ?? plan.startDay;
+    const db = await getDb();
+    const r = await db.one<{ n: number }>(
+      `SELECT COUNT(*)::int AS n FROM reviews r JOIN cards c ON c.id = r.card_id WHERE r.direction = 'en-tr' AND c.source = 'seed'`,
+    );
+    const behind = wordsThrough(day) - Number(r?.n ?? 0);
+    return Math.max(0, Math.min(behind, PLAN_DAILY_CAP - (await introducedToday())));
+  }
   return Math.max(0, s.newCardsPerDay - (await introducedToday()));
 }
 

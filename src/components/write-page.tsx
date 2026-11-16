@@ -10,6 +10,7 @@ interface Prompt {
   promptTr?: string;
   hints?: string[];
   fromLesson?: boolean;
+  fromPlan?: boolean;
 }
 
 const SHORT = ["Introduce yourself", "Your morning", "A favourite place", "Invite a colleague", "Last weekend"];
@@ -19,7 +20,7 @@ export function WritePage({ prompts, lessonDate, history }: { prompts: Prompt[];
   const [custom, setCustom] = useState("");
   const [open, setOpen] = useState<number | null>(null);
   const p = i === -1 ? { prompt: custom || "Write about anything you like", hints: [] } : prompts[i];
-  const offset = prompts[0]?.fromLesson ? 1 : 0;
+  const offset = prompts.filter((x) => x.fromLesson || x.fromPlan).length;
 
   return (
     <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px]">
@@ -33,7 +34,7 @@ export function WritePage({ prompts, lessonDate, history }: { prompts: Prompt[];
               onClick={() => setI(k)}
               className={`-mb-px border-b-2 px-3 py-2.5 text-[15px] ${k === i ? "border-accent font-medium text-ink" : "border-transparent text-ink-soft hover:text-ink"}`}
             >
-              {x.fromLesson ? "Today's task" : SHORT[k - offset] ?? `Topic ${k}`}
+              {x.fromPlan ? "Plan task" : x.fromLesson ? "Today's lesson" : (SHORT[k - offset] ?? `Topic ${k}`)}
             </button>
           ))}
           <button

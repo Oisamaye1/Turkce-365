@@ -7,7 +7,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { SCHEMA_SQL, SCHEMA_VERSION } from "./schema";
+import { SCHEMA_MARKER, SCHEMA_SQL, SCHEMA_VERSION } from "./schema";
 import { seedIfEmpty } from "./seed";
 
 export interface DB {
@@ -165,18 +165,20 @@ export function dbLabel(): string {
 
 async function migrate(db: DB) {
   const done = await db.one<{ ok: boolean }>(
-    "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = current_schema() AND table_name = 'job_runs') AS ok",
+    "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = current_schema() AND table_name = ?) AS ok",
+    [SCHEMA_MARKER],
   );
   if (!done?.ok) {
     // Serverless cold starts can race: create the schema under a lock, inside one transaction.
     await db.tx(async (t) => {
       await t.run("SELECT pg_advisory_xact_lock(365364)");
       const again = await t.one<{ ok: boolean }>(
-        "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = current_schema() AND table_name = 'job_runs') AS ok",
+        "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = current_schema() AND table_name = ?) AS ok",
+        [SCHEMA_MARKER],
       );
       if (again?.ok) return;
       for (const stmt of SCHEMA_SQL.split(";").map((x) => x.trim()).filter(Boolean)) await t.run(stmt);
-      await t.run("INSERT INTO settings (key, value) VALUES ('schema_version', ?) ON CONFLICT (key) DO NOTHING", [String(SCHEMA_VERSION)]);
+      await t.run("INSERT INTO settings (key, value) VALUES ('schema_version', ?) ON CONFLICT (key) DO UPDATE SET value = excluded.value", [String(SCHEMA_VERSION)]);
     });
   }
 }

@@ -10,6 +10,10 @@ import { finishJob, isJobRunning, startJob, type JobTrigger } from "@/lib/db/job
 import { getLesson, listLessons, saveLesson, usedDialogueIds, type LessonRow } from "@/lib/db/lessons";
 import { ensureMission, recentStruggles } from "@/lib/db/missions";
 import { getSettings } from "@/lib/db/settings";
+import { currentPlanDay, getPlan, unlockPlanSteps } from "@/lib/db/plan";
+import { PLAN_DAYS, planDay } from "@/lib/plan/build";
+import type { VocabEntry } from "@/lib/vocab/types";
+import vocabJson from "../../../data/vocab.json";
 import { recentMistakes } from "@/lib/db/writing";
 import { getStep } from "@/lib/grammar/steps";
 import { runClaudeJson } from "@/lib/claude/cli";
@@ -38,6 +42,7 @@ export interface GenerateResult {
   message: string;
 }
 
+const VOCAB = vocabJson as VocabEntry[];
 const inflight = new Map<string, Promise<GenerateResult>>();
 
 export async function ensureTodayLesson(opts: GenerateOptions): Promise<GenerateResult> {
@@ -68,7 +73,26 @@ async function generate(date: string, opts: GenerateOptions): Promise<GenerateRe
       return { status: "created", date, kind: "weekly", source: "fallback", message: "Weekly check-in ready." };
     }
 
-    const step = getStep(await currentGrammarStep());
+    // With a learning plan, the plan decides today's grammar step and focus.
+    let stepId = await currentGrammarStep();
+    let planFocus: string | undefined;
+    const plan = await getPlan();
+    const planDayNo = plan ? await currentPlanDay(plan) : null;
+    if (plan && planDayNo && planDayNo <= PLAN_DAYS) {
+      const pd = planDay(planDayNo);
+      await unlockPlanSteps(planDayNo);
+      stepId = pd.step;
+      const words = VOCAB.slice(pd.words.from, pd.words.to).map((v) => `${v.tr} (${v.en})`);
+      planFocus = [
+        `This lesson is day ${pd.day} of the learner's 365-day plan, week ${pd.week} "${pd.weekInfo.title}" (stage: ${pd.stage.title}, ${pd.stage.level}). Week goal: ${pd.weekInfo.goal}`,
+        pd.concept ? `Today's idea: ${pd.concept.title}. ${pd.concept.body}` : `Today is a ${pd.kind} day.`,
+        words.length ? `New words today (use them in the dialogue and phrases): ${words.join(", ")}.` : "",
+        "Build the dialogue, phrases and grammar spot around this so the lesson matches the plan.",
+      ]
+        .filter(Boolean)
+        .join("\n");
+    }
+    const step = getStep(stepId);
     const known = await knownWords(1500);
     const warmup = (await recentMistakeCards(7, 5)).map((c) => c.id);
     if (warmup.length < 5) {
@@ -100,6 +124,7 @@ async function generate(date: string, opts: GenerateOptions): Promise<GenerateRe
         leeches: leeches.map((l) => ({ tr: l.tr, en: l.en })),
         missionStruggles: await recentStruggles(),
         recentTitles: (await listLessons(7)).map((l) => ("title" in l.lesson ? l.lesson.title : "")).filter(Boolean),
+        planFocus,
       });
       const res = await runClaudeJson(prompt, LessonContentSchema, {
         jsonSchema: LESSON_JSON_SCHEMA,

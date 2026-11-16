@@ -2,7 +2,11 @@ import Link from "next/link";
 import unitsJson from "../../data/units.json";
 import { WordAnatomy } from "@/components/anatomy";
 import { GenerateLesson } from "@/components/catch-up";
-import { IconArrow, IconFlame } from "@/components/icons";
+import { PlanDayChecklist } from "@/components/plan/plan-day";
+import { DAY_KIND_LABEL, firstDayOfWeek, grammarStarted, planDay } from "@/lib/plan/build";
+import { planDayProps } from "@/lib/plan/props";
+import { getPlanRows } from "@/lib/db/plan";
+import { IconArrow, IconCheck, IconFlame, IconRoute } from "@/components/icons";
 import { SessionSteps, type SessionStep, type StepState } from "@/components/session";
 import { ProgressBar } from "@/components/ui";
 import { countDue, currentUnit } from "@/lib/db/cards";
@@ -30,7 +34,7 @@ function greeting(hhmm: string): { tr: string; en: string } {
 export default async function TodayPage() {
   const s = await getSettings();
   const date = await today();
-  const [lesson, due, st, mission, stepId, statuses, unitNo, active] = await Promise.all([
+  const [lesson, due, st, mission, gStep, statuses, unitNo, active, planData] = await Promise.all([
     getLesson(date),
     countDue(),
     streak(),
@@ -39,8 +43,10 @@ export default async function TodayPage() {
     getStepStatuses(),
     currentUnit(),
     activeDates(),
+    planDayProps(),
   ]);
-  const step = getStep(stepId);
+  const pd = planData?.props.day;
+  const step = getStep(pd ? pd.step : gStep);
   const stepStatus = statuses.find((x) => x.stepId === step.id);
   const unit = UNITS.find((u) => u.unit === unitNo) ?? UNITS[0];
   const week = learnerWeek(s.startDate, date);
@@ -80,15 +86,26 @@ export default async function TodayPage() {
   ];
   const firstOpen = steps.find((x) => x.state === "next");
   if (firstOpen) firstOpen.state = "current";
-  const total = steps.reduce((a, x) => a + (x.state === "done" ? 0 : (x.minutes ?? 0)), 0);
-  const allDone = steps.every((x) => x.state === "done");
+  let total = steps.reduce((a, x) => a + (x.state === "done" ? 0 : (x.minutes ?? 0)), 0);
+  let allDone = steps.every((x) => x.state === "done");
+
+  // ---- learning plan
+  const planRows = planData ? await getPlanRows() : null;
+  const finishedToday = planData?.props.finishedToday ?? 0;
+  if (planData && pd) {
+    const open = pd.tasks.filter((t, i) => !t.optional && !planData.view.tasks[i]?.done);
+    total = open.reduce((a, t) => a + t.minutes, 0);
+    allDone = finishedToday > 0;
+  }
+  const weekDays = pd ? Array.from({ length: 7 }, (_, i) => firstDayOfWeek(pd.week) + i) : [];
 
   return (
     <div>
       {/* Greeting hero */}
       <section className="mb-10 lg:mb-14">
         <p className="text-[15px] text-muted">
-          {day.en} {Number(dd)} {monthName}, week {week}
+          {day.en} {Number(dd)} {monthName}
+          {pd ? `, day ${pd.day} of your plan` : `, week ${week}`}
         </p>
         <h1 className="display-xl mt-2 text-[56px] text-ink sm:text-[80px]" lang="tr">
           {hello.tr}
@@ -96,7 +113,9 @@ export default async function TodayPage() {
         <p className="mt-3 text-[17px] text-ink-soft">
           {hello.en}{" "}
           {allDone
-            ? "Everything for today is done. Aferin."
+            ? pd
+              ? `You finished ${finishedToday > 1 ? `${finishedToday} days` : "today's day"} of your plan. Aferin.`
+              : "Everything for today is done. Aferin."
             : total
               ? `About ${total} minutes left today.`
               : "Your lesson arrives soon."}
@@ -111,15 +130,74 @@ export default async function TodayPage() {
           <span>
             <b className="font-semibold text-ink">{reviewsLeft}</b> reviews waiting
           </span>
-          <span>
-            Unit <b className="font-semibold text-ink">{unit.unit}</b>, {unit.title}
-          </span>
+          {pd ? (
+            <Link href="/plan" className="hover:text-ink">
+              Week <b className="font-semibold text-ink">{pd.week}</b>, {pd.weekInfo.title}
+            </Link>
+          ) : (
+            <span>
+              Unit <b className="font-semibold text-ink">{unit.unit}</b>, {unit.title}
+            </span>
+          )}
         </div>
       </section>
 
       <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_340px]">
-        {/* Today's session */}
+        {/* Today's plan day, or the plain session without a plan */}
+        {planData && pd ? (
+          <section aria-labelledby="plan-h" className="min-w-0">
+            {finishedToday > 0 ? (
+              <div className="mb-8 flex animate-rise items-start gap-4 rounded-[14px] bg-ok-tint p-5">
+                <span className="grid h-9 w-9 shrink-0 animate-pop place-items-center rounded-full bg-ok text-white">
+                  <IconCheck size={18} />
+                </span>
+                <div>
+                  <p className="font-display text-[19px] font-semibold text-ok-text">Today&apos;s plan is done.</p>
+                  <p className="text-[15px] text-ink-soft">
+                    Day {pd.day} is below if you want to keep going. Otherwise it&apos;ll be here tomorrow.
+                  </p>
+                </div>
+              </div>
+            ) : null}
+            <div className="mb-2 flex items-baseline justify-between gap-3">
+              <h2 id="plan-h" className="font-display text-[26px] leading-tight font-semibold">
+                <span className="text-muted">Day {pd.day}.</span> {pd.title}
+              </h2>
+              <span className="shrink-0 text-[14px] text-muted">{DAY_KIND_LABEL[pd.kind].en} day</span>
+            </div>
+            <PlanDayChecklist {...planData.props} />
+            {!lesson && pd.tasks.some((t) => t.key === "lesson") ? (
+              <div className="mt-6 rounded-[14px] bg-haze p-5">
+                {afterTime ? (
+                  <GenerateLesson auto />
+                ) : (
+                  <div className="space-y-3">
+                    <p className="text-ink-soft">
+                      Today&apos;s lesson is written at <b className="text-ink">{s.lessonTime}</b>. Start with the other tasks, or make it now.
+                    </p>
+                    <GenerateLesson auto={false} />
+                  </div>
+                )}
+              </div>
+            ) : null}
+          </section>
+        ) : (
         <section aria-labelledby="session-h">
+          <Link
+            href="/plan"
+            className="group mb-10 flex animate-rise items-center gap-5 rounded-[16px] border border-line bg-brand-tint/40 p-5 transition-colors hover:border-brand sm:p-6"
+          >
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-brand text-white">
+              <IconRoute size={24} />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="font-display block text-[21px] leading-snug font-semibold">Build your year of Turkish</span>
+              <span className="mt-0.5 block text-[15px] text-ink-soft">
+                A day-by-day plan from zero to real conversations, with a tiny challenge every day.
+              </span>
+            </span>
+            <IconArrow size={20} className="shrink-0 text-brand-text transition-transform group-hover:translate-x-1" />
+          </Link>
           <div className="mb-2 flex items-baseline justify-between gap-3">
             <h2 id="session-h" className="font-display text-[26px] font-semibold">
               {sunday ? "Sunday check-in" : "Today's session"}
@@ -144,13 +222,46 @@ export default async function TodayPage() {
             </div>
           ) : null}
         </section>
+        )}
 
         {/* Side column */}
         <aside className="space-y-10">
-          {anatomy ? (
-            <section aria-labelledby="anatomy-h">
+          {pd && planRows ? (
+            <section aria-labelledby="pweek-h">
+              <h2 id="pweek-h" className="text-[15px] text-muted">
+                Week {pd.week} of 52, {pd.stage.title}
+              </h2>
+              <p className="font-display mt-2 text-[21px] leading-snug font-semibold">{pd.weekInfo.goal}</p>
+              <ol className="mt-4 grid grid-cols-7 gap-1.5">
+                {weekDays.map((x, i) => {
+                  const done = x < planData!.view.plan.startDay || !!planRows.get(x)?.completedAt;
+                  const cur = x === pd.day;
+                  return (
+                    <li key={x}>
+                      <Link
+                        href={`/plan/${x}`}
+                        title={`Day ${x}: ${planDay(x).title}`}
+                        className={`grid h-9 place-items-center rounded-lg text-[13px] tabular transition-colors ${
+                          done ? "bg-ok text-white" : cur ? "animate-here bg-accent text-white" : "bg-haze text-muted hover:bg-line"
+                        }`}
+                        style={{ animationDelay: `${i * 40}ms` }}
+                      >
+                        {done ? <IconCheck size={14} /> : x}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ol>
+              <Link href="/plan" className="btn-quiet mt-3 -ml-2">
+                See the whole plan <IconArrow size={16} />
+              </Link>
+            </section>
+          ) : null}
+
+          {anatomy && (!pd || grammarStarted(pd.day)) ? (
+            <section aria-labelledby="anatomy-h" className={pd ? "border-t border-line pt-8" : ""}>
               <h2 id="anatomy-h" className="text-[15px] text-muted">
-                Step {step.id} of 16: {step.title}
+                Suffix focus: {step.title}
               </h2>
               <div className="mt-4">
                 <WordAnatomy parts={anatomy.parts} labels={anatomy.labels} size="lg" />
@@ -207,7 +318,7 @@ export default async function TodayPage() {
             <p className="mt-3 text-[14px] text-muted">Best streak so far: {st.best} day{st.best === 1 ? "" : "s"}</p>
           </section>
 
-          {week <= 2 ? (
+          {week <= 2 && !pd ? (
             <Link href="/alphabet" className="block rounded-[14px] border border-line p-5 hover:bg-haze">
               <p className="font-display text-[19px] font-semibold">Start with the sounds</p>
               <p className="mt-1 text-[15px] text-ink-soft">The 29 letters, and the seven that differ from English: c ç ğ ı ö ş ü.</p>

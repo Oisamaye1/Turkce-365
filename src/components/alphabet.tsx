@@ -36,7 +36,7 @@ export function AlphabetModule() {
                   }}
                   aria-pressed={on}
                   aria-label={`${l.upper}: ${l.sound}`}
-                  className={`relative grid aspect-square place-items-center border-r border-b border-line transition-colors ${on ? "bg-ink text-paper" : "hover:bg-haze"}`}
+                  className={`relative grid aspect-square place-items-center border-r border-b border-line transition-[background-color,color,transform] duration-150 active:scale-95 ${on ? "bg-ink text-paper" : "hover:bg-haze"}`}
                 >
                   <span className="font-display text-[26px] font-medium tracking-tight">
                     {l.upper}
@@ -54,7 +54,7 @@ export function AlphabetModule() {
         </div>
 
         <aside className="self-start lg:sticky lg:top-12">
-          <p className="display-xl text-[120px] leading-[0.85] text-ink">
+          <p key={letter.upper} className="display-xl origin-left animate-pop text-[120px] leading-[0.85] text-ink">
             {letter.upper}
             <span className="text-muted">{letter.lower}</span>
           </p>

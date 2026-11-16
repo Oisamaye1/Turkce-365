@@ -1,4 +1,7 @@
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
+
+/** Newest table: if it exists the schema is current (every statement below is idempotent). */
+export const SCHEMA_MARKER = "plan_days";
 
 const NOW = `(to_char(now() AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"'))`;
 
@@ -141,5 +144,12 @@ CREATE TABLE IF NOT EXISTS job_runs (
   finished_at  TEXT,
   status       TEXT NOT NULL DEFAULT 'running',
   message      TEXT
+);
+
+CREATE TABLE IF NOT EXISTS plan_days (
+  day           INTEGER PRIMARY KEY,
+  ticks         TEXT NOT NULL DEFAULT '{}',
+  completed_at  TEXT,
+  completed_on  TEXT
 );
 `;

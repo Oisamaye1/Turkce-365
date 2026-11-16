@@ -1,3 +1,4 @@
+import { STEP_ORDER } from "@/lib/plan/build";
 import { SettingsForm } from "@/components/settings-form";
 import { MoreTabs } from "@/components/nav";
 import { PageTitle } from "@/components/ui";
@@ -23,7 +24,7 @@ export default async function SettingsPage() {
         workerSeen={workerSeen}
         platform={process.platform}
         currentStep={await currentGrammarStep()}
-        steps={GRAMMAR_STEPS.map((x) => ({ id: x.id, title: x.title }))}
+        steps={STEP_ORDER.map((id) => GRAMMAR_STEPS.find((x) => x.id === id)!).map((x) => ({ id: x.id, title: x.title }))}
       />
     </div>
   );

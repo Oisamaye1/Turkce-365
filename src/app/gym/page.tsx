@@ -1,7 +1,8 @@
 import { Gym } from "@/components/gym";
 import { PageTitle } from "@/components/ui";
 import { currentGrammarStep, getStepStatuses } from "@/lib/db/grammar";
-import { GRAMMAR_STEPS } from "@/lib/grammar/steps";
+import { getStep } from "@/lib/grammar/steps";
+import { STEP_ORDER } from "@/lib/plan/build";
 
 export default async function GymPage({ searchParams }: { searchParams: Promise<{ step?: string }> }) {
   const sp = await searchParams;
@@ -11,7 +12,7 @@ export default async function GymPage({ searchParams }: { searchParams: Promise<
   return (
     <div>
       <PageTitle en="Suffixes" tr="Ekler" lede="Turkish builds meaning by adding endings. Practise one ending at a time." />
-      <Gym steps={GRAMMAR_STEPS} statuses={statuses} initialStep={initial} />
+      <Gym steps={STEP_ORDER.map(getStep)} statuses={statuses} initialStep={initial} />
     </div>
   );
 }

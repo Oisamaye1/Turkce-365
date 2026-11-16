@@ -14,6 +14,8 @@ export interface LessonPromptContext {
   leeches: { tr: string; en: string }[];
   missionStruggles: string[];
   recentTitles: string[];
+  /** The learning plan's focus for today, if the learner has a plan. */
+  planFocus?: string;
 }
 
 export function learnerLevel(wordsKnown: number, step: number): string {
@@ -30,7 +32,7 @@ export function buildLessonPrompt(ctx: LessonPromptContext): string {
   return `You are a Turkish tutor for an adult English-speaking beginner living in Northern Cyprus.
 Learner level: ${ctx.level}. Current grammar step: ${ctx.grammarStep.id} — ${ctx.grammarStep.title}. Known words (sample): ${known}.
 Recent mistakes: ${mistakes}. Leech words: ${leeches}.
-Create today's lesson. Use ONLY known words plus exactly 5 new phrases.
+${ctx.planFocus ? `${ctx.planFocus}\n` : ""}Create today's lesson. Use ONLY known words plus exactly 5 new phrases.
 Set the dialogue in a realistic Northern Cyprus situation.
 Return ONLY valid JSON matching this schema: ${JSON.stringify(LESSON_JSON_SCHEMA)}
 Turkish must be natural, correct, standard Istanbul Turkish. Double-check every suffix.

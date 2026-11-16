@@ -88,7 +88,7 @@ export function TypeAnswer({
   const feedback =
     result && copy ? (
       <div className="flex min-w-0 items-start gap-3" role="status" aria-live="polite">
-        <span className={`mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full ${copy.dot} text-white`}>
+        <span className={`mt-0.5 grid h-7 w-7 shrink-0 animate-pop place-items-center rounded-full ${copy.dot} text-white`}>
           {result.result === "wrong" ? <IconX size={16} /> : <IconCheck size={16} />}
         </span>
         <div className="min-w-0">
@@ -151,7 +151,7 @@ export function TypeAnswer({
         <input
           ref={input}
           className={`input font-display !py-3.5 !text-[24px] font-medium tracking-tight ${
-            result ? (result.result === "correct" ? "!border-ok" : result.result === "almost" ? "!border-warn" : "!border-bad") : ""
+            result ? (result.result === "correct" ? "!border-ok" : result.result === "almost" ? "!border-warn" : "animate-shake !border-bad") : ""
           }`}
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -172,7 +172,7 @@ export function TypeAnswer({
           <div className="h-44" aria-hidden="true" />
           <div
             className={`fixed inset-x-0 bottom-0 z-40 border-t pb-[env(safe-area-inset-bottom)] ${result ? `${copy!.tint} border-transparent` : "border-line bg-paper/95 backdrop-blur"}`}
-            style={result ? { animation: "sheet-up 200ms ease-out" } : undefined}
+            style={result ? { animation: "sheet-up 260ms cubic-bezier(0.22, 1, 0.36, 1)" } : undefined}
           >
             <div className="mx-auto flex max-w-[720px] flex-col gap-4 px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
               {feedback ?? <span className="hidden sm:block" />}
@@ -181,7 +181,7 @@ export function TypeAnswer({
           </div>
         </>
       ) : (
-        <div className={`flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between ${result ? `rounded-[14px] p-4 ${copy!.tint}` : ""}`}>
+        <div className={`flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between ${result ? `animate-rise rounded-[14px] p-4 ${copy!.tint}` : ""}`}>
           {feedback ?? <span className="hidden sm:block" />}
           {actions}
         </div>

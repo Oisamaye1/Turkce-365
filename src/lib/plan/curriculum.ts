@@ -1,0 +1,1107 @@
+/**
+ * The year-long learning plan: 6 stages, 52 weeks, 365 days.
+ *
+ * Each week has a goal ("can-do"), up to one drillable grammar step (from the 16-step
+ * suffix engine), two short concepts ("learn cards") and three hand-written challenges.
+ * Day-by-day structure is assembled in ./build.ts.
+ */
+
+export interface Stage {
+  id: number;
+  title: string;
+  titleTr: string;
+  level: string;
+  weeks: [number, number];
+  outcome: string;
+}
+
+export const STAGES: Stage[] = [
+  { id: 1, title: "Foundations", titleTr: "Temeller", level: "A0", weeks: [1, 4], outcome: "Read any Turkish word aloud, greet people and say who you are." },
+  { id: 2, title: "Survival", titleTr: "İlk adımlar", level: "A1", weeks: [5, 12], outcome: "Order, count money, ask where things are, talk about family and what you're doing." },
+  { id: 3, title: "Everyday life", titleTr: "Günlük hayat", level: "A1+", weeks: [13, 24], outcome: "Shop, get around, and describe your day in the present, past and future." },
+  { id: 4, title: "Conversations", titleTr: "Sohbet", level: "A2", weeks: [25, 36], outcome: "Talk about habits, abilities, plans and opinions in connected sentences." },
+  { id: 5, title: "Real Turkish", titleTr: "Gerçek Türkçe", level: "A2+", weeks: [37, 46], outcome: "Handle long sentences: the book I read, when I arrive, he said that…" },
+  { id: 6, title: "Fluency", titleTr: "Akıcılık", level: "B1", weeks: [47, 52], outcome: "Tell stories, give opinions and hold a 15-minute conversation." },
+];
+
+export interface PlanWeek {
+  week: number;
+  title: string;
+  titleTr: string;
+  goal: string;
+  /** Grammar step (1–16) introduced this week. */
+  step?: number;
+  /** Concept ids for day 1 and day 4. "step" means the week's grammar step. */
+  concepts: [string, string];
+  /** Day 1: say it out loud. */
+  say: string;
+  /** Day 4: practice challenge. */
+  extra: string;
+  /** Day 6: out in the world. */
+  out: string;
+  /** Day 5: writing task. */
+  write: string;
+}
+
+export const WEEKS: PlanWeek[] = [
+  // ── Stage 1 · Foundations ───────────────────────────────────────────────
+  {
+    week: 1, title: "Sounds and hello", titleTr: "Sesler ve selam",
+    goal: "Read Turkish letters aloud and greet anyone at any time of day.",
+    concepts: ["alphabet", "greetings"],
+    say: "Read the 29 letters aloud from the Alphabet page. Then say the special ones (ç ğ ı ö ş ü) three times each.",
+    extra: "Find three Turkish words around you (a sign, a label, a menu) and read them aloud letter by letter.",
+    out: "Greet one person today with the right greeting for the time: Günaydın, İyi günler or İyi akşamlar.",
+    write: "Write the greetings you would use at 8:00, 14:00 and 21:00, and when you leave.",
+  },
+  {
+    week: 2, title: "Please, thanks and plurals", titleTr: "Lütfen, teşekkürler, çoğullar",
+    goal: "Be polite in Turkish and make any noun plural.",
+    step: 1, concepts: ["harmony", "no-articles"],
+    say: "Say “teşekkür ederim” and “rica ederim” five times each, until each comes out in one breath.",
+    extra: "Name five things you can see, then make each one plural with -lar or -ler.",
+    out: "Thank someone in Turkish today, and answer “rica ederim” if someone thanks you.",
+    write: "Write five plurals of things in your bag or on your desk (kalemler, anahtarlar…).",
+  },
+  {
+    week: 3, title: "Who I am", titleTr: "Ben kimim",
+    goal: "Say who you are, and rescue yourself when you don't understand.",
+    step: 8, concepts: ["step", "survival"],
+    say: "Introduce yourself out loud three times: your name, your nationality, how you are. “Merhaba, ben Sam. İngilizim. İyiyim.”",
+    extra: "Practise the rescue lines until you don't need to look: Anlamadım. Tekrar eder misiniz? Yavaş konuşur musunuz?",
+    out: "Use one rescue line for real today: ask someone to repeat or to slow down.",
+    write: "Write three sentences about yourself with “to be” endings: name, where you're from, what you do.",
+  },
+  {
+    week: 4, title: "This, that, and is there?", titleTr: "Bu, şu ve var mı?",
+    goal: "Point at things, ask if something exists and ask yes/no questions.",
+    step: 9, concepts: ["pronouns", "step"],
+    say: "Point at five things and ask “Bu ne?”, then answer yourself: “Bu bir masa.”",
+    extra: "Open your fridge and ask five “… var mı?” questions. Answer each with var or yok.",
+    out: "In a shop or café, ask “… var mı?” for one thing you want.",
+    write: "Write five sentences about your home with var and yok.",
+  },
+
+  // ── Stage 2 · Survival ──────────────────────────────────────────────────
+  {
+    week: 5, title: "Numbers", titleTr: "Sayılar",
+    goal: "Count to 1,000, give your phone number and ask how many.",
+    concepts: ["numbers", "how-many"],
+    say: "Count from 1 to 20 out loud, then count back from 20 while you walk or climb stairs.",
+    extra: "Say your phone number in Turkish, first digit by digit, then in pairs (53 = elli üç).",
+    out: "Read three prices you see today aloud in Turkish: on a receipt, a sign or a menu.",
+    write: "Write in words: your age, your house number and the year you were born.",
+  },
+  {
+    week: 6, title: "Where is it?", titleTr: "Nerede?",
+    goal: "Ask and say where things and people are.",
+    step: 2, concepts: ["question-words", "step"],
+    say: "Say where five things in your home are: “Telefon masada. Anahtar çantada.”",
+    extra: "Ask one real question with each question word: Ne? Kim? Nerede? Ne zaman? Nasıl? Kaç?",
+    out: "Ask a real “nerede?” question today, even if you know the answer: “Eczane nerede?”",
+    write: "Write where five people you know are right now: “Annem evde. Ali işte.”",
+  },
+  {
+    week: 7, title: "At the café", titleTr: "Kafede",
+    goal: "Order food and drink politely, say where you're going and pay.",
+    step: 4, concepts: ["polite", "step"],
+    say: "Rehearse a whole café order out loud: “Bir çay, lütfen. Şekersiz olsun. Hesap, lütfen.”",
+    extra: "Say where you're going today three times with different places: “Markete gidiyorum. Eve gidiyorum.”",
+    out: "Order your drink in Turkish at a café, from the greeting to “teşekkürler”.",
+    write: "Write a short café dialogue: you order two things and ask for the bill.",
+  },
+  {
+    week: 8, title: "Food and where from", titleTr: "Yemek ve nereden",
+    goal: "Talk about meals and say where you and things come from.",
+    step: 3, concepts: ["step", "li-siz"],
+    say: "Say what you ate today for each meal: “Kahvaltıda peynir ve ekmek. Öğlen salata.”",
+    extra: "Describe five foods with -lı or -sız: şekerli, tuzsuz, sütlü, acılı, etsiz.",
+    out: "Ask someone “Nerelisin?”, or answer it about yourself when someone asks.",
+    write: "Write where you are from and where three friends or family members are from.",
+  },
+  {
+    week: 9, title: "Family", titleTr: "Aile",
+    goal: "Talk about your family: who they are, how many and where they live.",
+    concepts: ["my-family", "have"],
+    say: "Name your family members out loud with “my”: annem, babam, kardeşim, eşim…",
+    extra: "Answer out loud: “Kaç kardeşin var?” and “Evli misin?”",
+    out: "Show someone a family photo (or look at one yourself) and name every person in Turkish.",
+    write: "Write five sentences about your family: names, ages and where they are.",
+  },
+  {
+    week: 10, title: "What are you doing?", titleTr: "Ne yapıyorsun?",
+    goal: "Say what you and other people are doing right now.",
+    step: 10, concepts: ["verbs", "step"],
+    say: "Narrate what you're doing for one minute: “Kahve içiyorum. Telefona bakıyorum…”",
+    extra: "Guess what five people you know are doing right now: “Annem yemek yapıyor.”",
+    out: "When someone asks “Ne yapıyorsun?” today, answer in Turkish (or ask them).",
+    write: "Write six sentences about what the people around you are doing right now.",
+  },
+  {
+    week: 11, title: "Saying no", titleTr: "Hayır demek",
+    goal: "Say no properly: I'm not, I don't, there isn't.",
+    step: 11, concepts: ["step", "negation"],
+    say: "Correct five false statements out loud: “Türk müsün? Hayır, Türk değilim.”",
+    extra: "Say five things you are not doing right now: “Uyumuyorum. Televizyon izlemiyorum.”",
+    out: "Politely turn something down in Turkish today: “Hayır, teşekkürler.”",
+    write: "Write about your town: three things it has (var), three it doesn't (yok), and one thing it isn't (değil).",
+  },
+  {
+    week: 12, title: "Describing things", titleTr: "Tarif etmek",
+    goal: "Describe people, places and things, and compare two of them.",
+    concepts: ["adjectives", "comparison"],
+    say: "Describe your room with five adjectives: “Odam küçük ama güzel.”",
+    extra: "Compare two things out loud five times: “Çay kahveden daha ucuz.”",
+    out: "Stage review: greet, order, ask where, count and say no, in one two-minute monologue.",
+    write: "Describe your street or your home in six sentences.",
+  },
+
+  // ── Stage 3 · Everyday life ─────────────────────────────────────────────
+  {
+    week: 13, title: "At the market", titleTr: "Pazarda",
+    goal: "Buy fruit and vegetables: amounts, prices and “this one”.",
+    step: 5, concepts: ["amounts", "step"],
+    say: "Rehearse buying three things: “Bir kilo domates istiyorum. Ne kadar?”",
+    extra: "Say five sentences with a definite object: “Bu elmayı istiyorum. Çayı seviyorum.”",
+    out: "Buy something at a market or shop using only Turkish.",
+    write: "Write a shopping list with amounts (iki kilo elma, bir ekmek…) and a sentence for each item.",
+  },
+  {
+    week: 14, title: "Getting around", titleTr: "Yol tarifi",
+    goal: "Ask for and give directions; use buses, dolmuş and taxis.",
+    concepts: ["directions", "imperative"],
+    say: "Give directions out loud from your door to the nearest shop: “Düz git, sağa dön…”",
+    extra: "Turn five commands into polite ones: gel → gelin, otur → oturun, bak → bakın.",
+    out: "Tell a taxi or dolmuş driver where you're going in Turkish, or ask someone the way.",
+    write: "Write directions from your home to your favourite place.",
+  },
+  {
+    week: 15, title: "Mine and yours", titleTr: "Benim ve senin",
+    goal: "Say what belongs to whom, and what you want to do.",
+    step: 6, concepts: ["step", "want"],
+    say: "Name five things you own with possessive endings: çantam, telefonum, anahtarım…",
+    extra: "Say five things you want to do this weekend: “Denize gitmek istiyorum.”",
+    out: "In a shop, ask “Ne kadar?” and “Kart geçiyor mu?”",
+    write: "Write what's in your bag: “Çantamda telefonum, cüzdanım ve anahtarım var.”",
+  },
+  {
+    week: 16, title: "Work", titleTr: "İş",
+    goal: "Say what you do, where you work and how you get there.",
+    concepts: ["job-talk", "with"],
+    say: "Answer out loud: “Ne iş yapıyorsun? Nerede çalışıyorsun?”",
+    extra: "Say five sentences with -la / -le: “Otobüsle geliyorum. Arkadaşımla çalışıyorum.”",
+    out: "Tell someone what you do for work, in Turkish.",
+    write: "Write an introduction for a new colleague: name, job, workplace and how you get there.",
+  },
+  {
+    week: 17, title: "Linking nouns", titleTr: "İsim tamlamaları",
+    goal: "Link nouns: my teacher's book, a Turkish course, the city centre.",
+    step: 7, concepts: ["step", "learning-phrases"],
+    say: "Ask out loud “… Türkçede nasıl denir?” for five things you don't know the word for.",
+    extra: "Make five compounds from things around you: telefon kılıfı, kahve fincanı, ev anahtarı.",
+    out: "Ask a Turkish speaker how to say one word you've wanted to know.",
+    write: "Write about learning Turkish: why, when you study, and what is hard.",
+  },
+  {
+    week: 18, title: "Dates and the body", titleTr: "Tarihler ve vücut",
+    goal: "Say dates and birthdays, and explain where it hurts.",
+    concepts: ["dates", "it-hurts"],
+    say: "Say today's date, your birthday and three family birthdays out loud.",
+    extra: "Point at ten parts of your body and name them. Then say “… ağrıyor” for three of them.",
+    out: "Ask someone “Doğum günün ne zaman?”, or tell someone yours.",
+    write: "Write the dates of five important days in your year and what happens on them.",
+  },
+  {
+    week: 19, title: "Yesterday", titleTr: "Dün",
+    goal: "Talk about what happened: yesterday, last week, last year.",
+    step: 12, concepts: ["step", "time-past"],
+    say: "Tell yourself what you did yesterday in five sentences: “Dün markete gittim.”",
+    extra: "Compare yesterday's weather with today's: “Dün yağmur yağdı, bugün hava güneşli.”",
+    out: "When someone asks “Hafta sonu ne yaptın?”, answer in Turkish (or ask them).",
+    write: "Write a diary entry about yesterday: six sentences in the past.",
+  },
+  {
+    week: 20, title: "Clothes and colours", titleTr: "Kıyafetler ve renkler",
+    goal: "Describe clothes and colours; ask questions about the past.",
+    concepts: ["colours", "past-questions"],
+    say: "Describe what you're wearing: “Mavi bir tişört ve siyah bir pantolon giyiyorum.”",
+    extra: "Ask five past questions out loud: “Kahvaltı yaptın mı? İyi uyudun mu?”",
+    out: "In a clothes shop (or online), say what you're looking for: “Siyah bir ceket arıyorum.”",
+    write: "Write what you wore yesterday and what you're wearing today, with colours.",
+  },
+  {
+    week: 21, title: "My day", titleTr: "Günüm",
+    goal: "Describe your daily routine with times.",
+    concepts: ["clock", "before-after"],
+    say: "Describe your morning with times: “Yedide kalkıyorum. Sekizde kahvaltı yapıyorum.”",
+    extra: "Say three before/after sentences: “Kahvaltıdan sonra işe gidiyorum.”",
+    out: "Ask someone “Saat kaç?”, or tell someone the time in Turkish.",
+    write: "Write your typical weekday from morning to night, with times.",
+  },
+  {
+    week: 22, title: "Tomorrow", titleTr: "Yarın",
+    goal: "Talk about plans, the future and how you feel.",
+    step: 13, concepts: ["step", "feelings"],
+    say: "Say five plans for tomorrow: “Yarın erken kalkacağım.”",
+    extra: "Say how you feel today with three different feelings: “Biraz yorgunum ama mutluyum.”",
+    out: "Make a plan with someone in Turkish: “Yarın ne yapacaksın?”",
+    write: "Write your plans for next weekend: six sentences in the future.",
+  },
+  {
+    week: 23, title: "And, but, because", titleTr: "Ve, ama, çünkü",
+    goal: "Join sentences: and, but, because, so, too.",
+    concepts: ["connectors", "de-too"],
+    say: "Explain three choices with çünkü: “Çay içiyorum çünkü kahve sevmiyorum.”",
+    extra: "Agree with five statements using de/da: “Ben de yorgunum. Ben de çay seviyorum.”",
+    out: "Tell someone what a friend or relative does: “Kardeşim avukat ama şimdi çalışmıyor.”",
+    write: "Write five long sentences joined with ve, ama, çünkü and bu yüzden.",
+  },
+  {
+    week: 24, title: "The best", titleTr: "En iyisi",
+    goal: "Rank things and say how you do things.",
+    concepts: ["superlative", "adverbs"],
+    say: "Rank three favourites: “En sevdiğim yemek mantı. En sevdiğim yer Girne.”",
+    extra: "Say five sentences with adverbs: “Yavaş konuşuyorum. Çok güzel yemek yapıyorsun.”",
+    out: "Stage review: talk for two minutes about yesterday, today and tomorrow (past, present, future).",
+    write: "Write about your town: the biggest, the most beautiful and the most expensive places.",
+  },
+
+  // ── Stage 4 · Conversations ─────────────────────────────────────────────
+  {
+    week: 25, title: "Habits", titleTr: "Alışkanlıklar",
+    goal: "Talk about what you usually do, and make offers.",
+    step: 14, concepts: ["step", "frequency"],
+    say: "Say five habits: “Her sabah kahve içerim. Hafta sonu geç kalkarım.”",
+    extra: "Make three offers or requests with the aorist: “Çay içer misin? Kapıyı açar mısın?”",
+    out: "Offer someone something in Turkish today: “Çay içer misiniz?”",
+    write: "Write about your habits: what you always, usually, sometimes and never do.",
+  },
+  {
+    week: 26, title: "Home and travel", titleTr: "Ev ve seyahat",
+    goal: "Describe your home, plan a trip and say what you need.",
+    concepts: ["need", "for"],
+    say: "Describe your home room by room: “Evimde üç oda var. Mutfak küçük.”",
+    extra: "Say five things you need for a trip: “Pasaport lazım. Bir bavul gerek.”",
+    out: "Plan a day trip in Cyprus out loud: where, how you'll go and what you need.",
+    write: "Write about your home: the rooms, the furniture and what you'd change.",
+  },
+  {
+    week: 27, title: "Phones and the internet", titleTr: "Telefon ve internet",
+    goal: "Deal with technology and say what you must do.",
+    concepts: ["must", "phone"],
+    say: "Say five things you must do this week: “Faturayı ödemeliyim.”",
+    extra: "Rehearse a phone call: “Alo? Ben Sam. Ayşe Hanım'la görüşebilir miyim?”",
+    out: "Switch your phone (or one app) to Turkish for an hour.",
+    write: "Write a message to a friend asking for help with your phone or internet.",
+  },
+  {
+    week: 28, title: "Can and may", titleTr: "Yapabilirim",
+    goal: "Say what you can and can't do, and ask permission.",
+    step: 15, concepts: ["step", "permission"],
+    say: "Say five things you can and can't do: “Türkçe konuşabilirim. Araba süremem.”",
+    extra: "Ask permission five ways: “Oturabilir miyim? Bir soru sorabilir miyim?”",
+    out: "Ask a real “Can I…?” question: “Kartla ödeyebilir miyim?” or “Bir şey sorabilir miyim?”",
+    write: "Write a polite email to an office asking which documents you need.",
+  },
+  {
+    week: 29, title: "Opinions", titleTr: "Fikirler",
+    goal: "Give opinions, agree and disagree; talk about feelings.",
+    concepts: ["opinions", "feeling-verbs"],
+    say: "Give three opinions with bence: “Bence Türkçe çok zor değil.”",
+    extra: "Say five things you fear, love or miss, with the right ending: “Köpeklerden korkarım.”",
+    out: "Ask someone's opinion in Turkish: “Sence hangisi daha güzel?”",
+    write: "Write your opinion about life in Northern Cyprus: two good things and one bad.",
+  },
+  {
+    week: 30, title: "The one on the table", titleTr: "Masadaki",
+    goal: "Point at things precisely and compare with “like”.",
+    concepts: ["ki", "gibi"],
+    say: "Say five -ki phrases about your room: masadaki kitap, duvardaki resim.",
+    extra: "Make five comparisons with gibi: “Kedi gibi uyuyorum.”",
+    out: "Spend five minutes outside naming everything you see in Turkish.",
+    write: "Describe a place in nature you like.",
+  },
+  {
+    week: 31, title: "Hobbies", titleTr: "Hobiler",
+    goal: "Say what you like doing, and build long words with stacked endings.",
+    step: 16, concepts: ["verbal-nouns", "step"],
+    say: "Say five things you love doing: “Yüzmeyi seviyorum. Kitap okumayı seviyorum.”",
+    extra: "Build three long words and say what each piece means: ev-ler-im-de, arkadaş-lar-ım-dan.",
+    out: "Ask someone “Boş zamanlarında ne yaparsın?” and listen to the answer.",
+    write: "Write about your hobbies: what you like doing, how often and with whom.",
+  },
+  {
+    week: 32, title: "People and celebrations", titleTr: "İnsanlar ve kutlamalar",
+    goal: "Link actions: while…, and then…",
+    concepts: ["ip", "ken"],
+    say: "Describe your morning in one chain: “Kalkıp kahve yapıyorum, sonra duş alıyorum.”",
+    extra: "Say three -ken sentences: “Yürürken müzik dinliyorum. Çocukken Londra'da yaşadım.”",
+    out: "Congratulate or comfort someone the Turkish way: Tebrikler! İyi ki doğdun! Geçmiş olsun!",
+    write: "Write about an important celebration in your family.",
+  },
+  {
+    week: 33, title: "How and without", titleTr: "-arak ve -madan",
+    goal: "Say how you do things, and without doing what.",
+    concepts: ["arak", "madan"],
+    say: "Say how you get to five places: “İşe yürüyerek gidiyorum.”",
+    extra: "Say three things you do without doing something else: “Kahvaltı yapmadan çıkıyorum.”",
+    out: "Use a Turkish map app or street signs to find a place today.",
+    write: "Write how you travel around the island and what you do on the way.",
+  },
+  {
+    week: 34, title: "Exactly where", titleTr: "Tam olarak nerede",
+    goal: "Say exactly where things are, and what happens before and after.",
+    concepts: ["postpositions", "dikten-sonra"],
+    say: "Describe ten positions in your room: “Lamba masanın üstünde.”",
+    extra: "Say your evening in order with -dıktan sonra: “Yemek yedikten sonra televizyon izliyorum.”",
+    out: "Tell someone where something is using önünde, arkasında or yanında.",
+    write: "Write a map of your street in words: what is next to, in front of and behind what.",
+  },
+  {
+    week: 35, title: "Apparently", titleTr: "Galiba",
+    goal: "Talk about health and pass on things you heard.",
+    concepts: ["mis", "doctor"],
+    say: "Pass on three pieces of news you heard: “Ali hastaymış. Yarın yağmur yağacakmış.”",
+    extra: "Rehearse describing symptoms to a doctor: “Başım ağrıyor. Ateşim var. Öksürüyorum.”",
+    out: "Say “Geçmiş olsun” to someone who is ill, or tell a pharmacist what you need.",
+    write: "Write a message to your boss saying you're ill and can't come in today.",
+  },
+  {
+    week: 36, title: "If", titleTr: "Eğer",
+    goal: "Make conditions and wishes: if…, I wish…",
+    concepts: ["sa", "keske"],
+    say: "Say five if-sentences: “Yağmur yağarsa evde kalırım.”",
+    extra: "Make three wishes with keşke: “Keşke daha çok zamanım olsa.”",
+    out: "Stage review: a five-minute conversation (with a person, a tutor or yourself) about your habits, plans and opinions.",
+    write: "Write about your dream job, and what you'd do if you had it.",
+  },
+
+  // ── Stage 5 · Real Turkish ──────────────────────────────────────────────
+  {
+    week: 37, title: "When", titleTr: "-ince",
+    goal: "Say when things happen: when I arrive, as soon as I get home.",
+    concepts: ["when", "chores"],
+    say: "Say five when-sentences: “Eve gelince duş alırım.”",
+    extra: "Describe how you clean your home with five household verbs: “Önce süpürürüm, sonra…”",
+    out: "Tell someone what you'll do as soon as you get home, with -ince.",
+    write: "Write about your weekend routine with “when” and “as soon as”.",
+  },
+  {
+    week: 38, title: "The person who", titleTr: "-an",
+    goal: "Describe people and things with who/that clauses.",
+    concepts: ["an", "courtesy"],
+    say: "Describe five people around you with -an: “Kitap okuyan kadın, gülen çocuk.”",
+    extra: "Say when you'd use each: Kolay gelsin. Afiyet olsun. Elinize sağlık. Hayırlı olsun.",
+    out: "Say “Kolay gelsin” to someone who is working today.",
+    write: "Write about Turkish or Cypriot customs you've noticed.",
+  },
+  {
+    week: 39, title: "The thing I did", titleTr: "-dığım",
+    goal: "Talk about things you did, saw or bought: the book I read.",
+    concepts: ["dik", "recipe"],
+    say: "Say five sentences with -dığım: “Dün aldığım ekmek çok taze.”",
+    extra: "Explain a recipe you know, step by step: “Önce soğanı doğra…”",
+    out: "Recommend something you bought, read or watched: “İzlediğim dizi çok güzel.”",
+    write: "Write a recipe you like, with ingredients and steps.",
+  },
+  {
+    week: 40, title: "It is done", titleTr: "Yapılır",
+    goal: "Understand the passive on signs, rules and recipes; describe character.",
+    concepts: ["passive", "character"],
+    say: "Read five signs aloud and translate them: “Sigara içilmez. Park yapılmaz.”",
+    extra: "Describe three people you know: “Kardeşim çok inatçı ama komik.”",
+    out: "Find three passive forms on real signs, packaging or menus today.",
+    write: "Describe the character of two people you know well.",
+  },
+  {
+    week: 41, title: "Getting things done", titleTr: "Yaptırmak",
+    goal: "Say you had something done, and talk about life events.",
+    concepts: ["causative", "life-events"],
+    say: "Say five causatives: “Saçımı kestirdim. Arabamı yıkattım.”",
+    extra: "Talk about three big life events: “İki yıl önce Kıbrıs'a taşındım.”",
+    out: "Get something done in Turkish: book a haircut, a repair or a delivery.",
+    write: "Write your life story in ten sentences: born, studied, moved, worked.",
+  },
+  {
+    week: 42, title: "He said that", titleTr: "Dedi ki",
+    goal: "Report what people said and thought.",
+    concepts: ["reported", "expressions"],
+    say: "Report three things people told you this week: “Annem yorgun olduğunu söyledi.”",
+    extra: "Use five everyday expressions in sentences: Hadi, Boş ver, Aman, Neyse, Tabii ki.",
+    out: "Pass on a message in Turkish: tell someone what another person said.",
+    write: "Write about a conversation you had this week: who said what.",
+  },
+  {
+    week: 43, title: "In the news", titleTr: "Haberlerde",
+    goal: "Read headlines and short news in Turkish.",
+    concepts: ["news", "acak"],
+    say: "Read three Turkish headlines aloud and explain them in English.",
+    extra: "Say five sentences with -acak: “Yarın gideceğim yer çok güzel.”",
+    out: "Read one short Turkish news article and write down five new words.",
+    write: "Write a short news report about something that happened this week.",
+  },
+  {
+    week: 44, title: "Money and formal Turkish", titleTr: "Para ve resmi dil",
+    goal: "Handle banks and payments, and speak formally.",
+    concepts: ["formal", "zorunda"],
+    say: "Rehearse at the bank: “Hesap açmak istiyorum. Hangi belgeler gerekli?”",
+    extra: "Say five things you have to do: “Kirayı ödemek zorundayım.”",
+    out: "Do one money task in Turkish: at a bank, a cash machine or a payment screen.",
+    write: "Write a formal message to your landlord about the rent.",
+  },
+  {
+    week: 45, title: "In order to", titleTr: "-mek için",
+    goal: "Explain purposes, and say what you couldn't do.",
+    concepts: ["mek-icin", "cant"],
+    say: "Give five reasons: “Türkçe öğrenmek için her gün çalışıyorum.”",
+    extra: "Say three things you couldn't do this week, and why: “Gelemedim çünkü hastaydım.”",
+    out: "Explain to someone why you're learning Turkish.",
+    write: "Write your goals for this year and what you'll do to reach them.",
+  },
+  {
+    week: 46, title: "For how long", titleTr: "Ne zamandır",
+    goal: "Say how long, since when and how often.",
+    concepts: ["dir", "often"],
+    say: "Say five durations: “Üç yıldır Kıbrıs'tayım. Sabahtan beri çalışıyorum.”",
+    extra: "Say how often you do five things: “Haftada iki kez spor yapıyorum.”",
+    out: "Stage review: tell someone (or record yourself) how long you've been doing things in your life.",
+    write: "Write how long you've lived, worked and studied where you are.",
+  },
+
+  // ── Stage 6 · Fluency ───────────────────────────────────────────────────
+  {
+    week: 47, title: "Learning to learn", titleTr: "Öğrenmeyi öğrenmek",
+    goal: "Talk about what you could, can and will be able to do.",
+    concepts: ["abil-tenses", "learning-talk"],
+    say: "Say it three ways: “Bir yıl önce Türkçe konuşamıyordum. Şimdi konuşabiliyorum. Yakında daha iyi konuşabileceğim.”",
+    extra: "Explain one Turkish grammar rule in Turkish, as simply as you can.",
+    out: "Have a ten-minute conversation only in Turkish: a tutor, a neighbour, a colleague or a language exchange.",
+    write: "Write about your journey with Turkish: what was hard and what helped.",
+  },
+  {
+    week: 48, title: "Both, neither, either", titleTr: "Hem, ne, ya",
+    goal: "Use paired connectors, and put stress where it belongs.",
+    concepts: ["paired", "emphasis"],
+    say: "Say five paired sentences: “Hem çay hem kahve içerim. Ne sigara ne alkol.”",
+    extra: "Say one sentence three ways, moving the important word just before the verb.",
+    out: "Ask an older person how life used to be (or describe it yourself).",
+    write: "Write about modern life and traditional life in Cyprus.",
+  },
+  {
+    week: 49, title: "Change", titleTr: "Değişim",
+    goal: "Describe change: more and more, by myself.",
+    concepts: ["gittikce", "kendi"],
+    say: "Say five sentences about change: “Türkçem gittikçe iyileşiyor.”",
+    extra: "Use kendi five times: “Kendim yaptım. Kendine iyi bak.”",
+    out: "Describe how prices, the weather or your neighbourhood changed this year.",
+    write: "Write about how you've changed since you came to Cyprus.",
+  },
+  {
+    week: 50, title: "Sounding natural", titleTr: "Doğal konuşmak",
+    goal: "Use fillers and recognise Cypriot Turkish.",
+    concepts: ["fillers", "cypriot"],
+    say: "Tell a short story using four fillers: yani, aslında, işte, bu arada.",
+    extra: "Listen to Cypriot Turkish (radio, a café, a neighbour) and note one thing that sounds different.",
+    out: "Chat for five minutes with a local, using natural fillers.",
+    write: "Write a message to a friend the way you'd say it: with yani, aslında and bu arada.",
+  },
+  {
+    week: 51, title: "Telling stories", titleTr: "Hikâye anlatmak",
+    goal: "Tell a story from your life with past tenses and connectors.",
+    concepts: ["yordu", "storytelling"],
+    say: "Tell a two-minute story out loud: “Bir gün… O sırada… Sonunda…”",
+    extra: "Retell today's lesson dialogue as a story in the past, from memory.",
+    out: "Tell a Turkish speaker a short story about something funny that happened to you.",
+    write: "Write a story from your life in 10–12 sentences.",
+  },
+  {
+    week: 52, title: "One year", titleTr: "Bir yıl",
+    goal: "Hold a real conversation about yourself, your life and your opinions.",
+    concepts: ["review-map", "next-steps"],
+    say: "Record a three-minute voice note about yourself, then listen back.",
+    extra: "Explain to an imaginary new learner, in Turkish, how vowel harmony works.",
+    out: "A 15-minute conversation in Turkish without switching to English.",
+    write: "Write a letter to yourself of one year ago, in Turkish.",
+  },
+];
+
+export interface Concept {
+  title: string;
+  titleTr: string;
+  body: string;
+  examples: [string, string][];
+}
+
+/** Short learn cards. Grammar-step concepts come from the 16-step engine instead. */
+export const CONCEPTS: Record<string, Concept> = {
+  alphabet: {
+    title: "One letter, one sound",
+    titleTr: "Bir harf, bir ses",
+    body: "Turkish is spelled exactly as it's said, so once you know 29 letters you can read anything aloud. Watch the six that differ from English: c sounds like j in jam, ç like ch, ş like sh, ı like the a in about, ö and ü like German. ğ lengthens the vowel before it.",
+    examples: [["cami", "mosque (JA-mee)"], ["çay", "tea (chai)"], ["şeker", "sugar (sheh-KER)"], ["ılık", "warm (uh-LUHK)"]],
+  },
+  greetings: {
+    title: "Greetings by the clock",
+    titleTr: "Saate göre selam",
+    body: "Merhaba works all day. Günaydın until about 11, İyi günler in the day (and when you leave), İyi akşamlar in the evening, İyi geceler at bedtime. Answer “Nasılsın?” with “İyiyim, teşekkürler. Sen?”",
+    examples: [["Günaydın!", "Good morning!"], ["Nasılsınız?", "How are you? (polite)"], ["İyiyim, teşekkürler.", "I'm fine, thanks."]],
+  },
+  harmony: {
+    title: "Vowel harmony",
+    titleTr: "Ünlü uyumu",
+    body: "Turkish endings change their vowel to match the last vowel of the word. Back vowels (a ı o u) pull endings to a; front vowels (e i ö ü) pull them to e. It sounds smoother, and soon you'll hear when it's wrong.",
+    examples: [["kitap → kitaplar", "books"], ["ev → evler", "houses"], ["göz → gözler", "eyes"]],
+  },
+  "no-articles": {
+    title: "No “the”, no gender",
+    titleTr: "Artikel yok",
+    body: "Turkish has no word for “the” and no masculine or feminine. “Bir” (one) works as “a”, and it's often left out. The same word o means he, she and it.",
+    examples: [["Kahve sıcak.", "The coffee is hot."], ["Bir çay, lütfen.", "A tea, please."], ["O doktor.", "He / she is a doctor."]],
+  },
+  survival: {
+    title: "Rescue lines",
+    titleTr: "Kurtarıcı cümleler",
+    body: "These five lines keep any conversation going. People will happily slow down and repeat for a learner who asks in Turkish.",
+    examples: [["Anlamadım.", "I didn't understand."], ["Tekrar eder misiniz?", "Could you repeat?"], ["Yavaş konuşur musunuz?", "Could you speak slowly?"], ["Türkçem biraz.", "My Turkish is a little."]],
+  },
+  pronouns: {
+    title: "I, you, this, that",
+    titleTr: "Zamirler",
+    body: "ben I, sen you, o he/she/it, biz we, siz you (plural or polite), onlar they. Bu is this (near me), şu is that (near you, or pointing), o is that (far away). Pronouns are often dropped because the ending already shows who.",
+    examples: [["Bu ne?", "What is this?"], ["Şu kim?", "Who is that?"], ["O benim evim.", "That's my house."]],
+  },
+  numbers: {
+    title: "Numbers",
+    titleTr: "Sayılar",
+    body: "1–10: bir, iki, üç, dört, beş, altı, yedi, sekiz, dokuz, on. Tens: on, yirmi, otuz, kırk, elli, altmış, yetmiş, seksen, doksan. Then just stack: 47 is kırk yedi. Yüz is 100, bin is 1,000.",
+    examples: [["on beş", "15"], ["yirmi üç", "23"], ["iki yüz elli", "250"], ["bin dokuz yüz", "1,900"]],
+  },
+  "how-many": {
+    title: "How many? (and no plural after numbers)",
+    titleTr: "Kaç tane?",
+    body: "Ask with kaç (how many) or kaç tane. After a number the noun stays singular: iki çay, never iki çaylar. Prices: “Ne kadar?” or “Kaç lira?”",
+    examples: [["Kaç çay?", "How many teas?"], ["İki çay, lütfen.", "Two teas, please."], ["Kaç lira?", "How many lira?"]],
+  },
+  "question-words": {
+    title: "Question words",
+    titleTr: "Soru kelimeleri",
+    body: "ne what, kim who, nerede where, nereye where to, nereden where from, ne zaman when, nasıl how, neden or niye why, kaç how many. The question word goes where the answer will go, usually just before the verb.",
+    examples: [["Adın ne?", "What's your name?"], ["Nerede oturuyorsun?", "Where do you live?"], ["Ne zaman?", "When?"]],
+  },
+  polite: {
+    title: "Asking politely",
+    titleTr: "Kibar istekler",
+    body: "The easiest polite order is the thing + lütfen. “… istiyorum” means I'd like. “… alabilir miyim?” means can I have. Reply to thanks with “rica ederim”.",
+    examples: [["Bir su, lütfen.", "A water, please."], ["Menüyü alabilir miyim?", "Can I have the menu?"], ["Hesap, lütfen.", "The bill, please."]],
+  },
+  "li-siz": {
+    title: "With and without: -lı and -sız",
+    titleTr: "-lı / -sız",
+    body: "-lı adds “with”, -sız means “without”. Both follow 4-way harmony (-lı -li -lu -lü, -sız -siz -suz -süz). They're everywhere on menus.",
+    examples: [["şekerli / şekersiz", "with / without sugar"], ["sütlü kahve", "coffee with milk"], ["Kıbrıslı", "from Cyprus, Cypriot"]],
+  },
+  "my-family": {
+    title: "My mum, my dad",
+    titleTr: "Annem, babam",
+    body: "Add -(ı)m for “my”: anne → annem, baba → babam, kardeş → kardeşim. Turkish has separate words for many relatives: anneanne (mum's mum), babaanne (dad's mum), dayı (mum's brother), amca (dad's brother), teyze and hala for aunts.",
+    examples: [["Annem öğretmen.", "My mum is a teacher."], ["Bu benim kardeşim.", "This is my brother/sister."], ["Teyzem Girne'de.", "My aunt is in Girne."]],
+  },
+  have: {
+    title: "“I have” = my … exists",
+    titleTr: "… var",
+    body: "Turkish has no verb “to have”. Say “my X exists”: kardeşim var (I have a sibling). Use yok for “I don't have”. Ask with var mı?",
+    examples: [["İki kardeşim var.", "I have two siblings."], ["Arabam yok.", "I don't have a car."], ["Çocuğun var mı?", "Do you have children?"]],
+  },
+  verbs: {
+    title: "How verbs work",
+    titleTr: "Fiiller",
+    body: "Dictionary verbs end in -mak or -mek: gelmek (to come). Drop it to get the stem: gel-. Every tense is the stem + a tense ending + a person ending. Gel + iyor + um → geliyorum, I'm coming.",
+    examples: [["içmek → iç-", "to drink → drink"], ["yapmak → yap-", "to do → do"], ["İçiyorum.", "I'm drinking."]],
+  },
+  negation: {
+    title: "Three kinds of “not”",
+    titleTr: "Olumsuzluk",
+    body: "değil negates nouns and adjectives (öğrenci değilim, I'm not a student). -ma/-me goes inside verbs (gelmiyorum, I'm not coming). yok means there isn't / I don't have. Hayır is just “no”.",
+    examples: [["Yorgun değilim.", "I'm not tired."], ["Et yemiyorum.", "I don't eat meat."], ["Süt yok.", "There's no milk."]],
+  },
+  adjectives: {
+    title: "Adjectives come first",
+    titleTr: "Sıfatlar",
+    body: "Adjectives go before the noun and never change: büyük ev, büyük evler. “A big house” is büyük bir ev; bir goes between. As a predicate they take the to-be ending: Ev büyük. Ben yorgunum.",
+    examples: [["güzel bir gün", "a beautiful day"], ["Bu çok pahalı.", "This is very expensive."], ["Odam küçük.", "My room is small."]],
+  },
+  comparison: {
+    title: "Comparing: daha and -dan",
+    titleTr: "Karşılaştırma",
+    body: "Put daha (more) before the adjective. The thing you compare with takes -dan/-den (from): “Çay kahveden daha ucuz” is tea is cheaper than coffee. Daha can even be dropped when -dan is there.",
+    examples: [["Girne Lefkoşa'dan daha küçük.", "Girne is smaller than Lefkoşa."], ["Bugün daha sıcak.", "Today is hotter."], ["Sen benden uzunsun.", "You're taller than me."]],
+  },
+  amounts: {
+    title: "Kilos, pieces and prices",
+    titleTr: "Kilo, tane, fiyat",
+    body: "Ask “Kilosu ne kadar?” (how much per kilo). Order with a number + kilo / tane / paket: bir kilo, yarım kilo, iki tane. “Bu” and “şu” help: “Şundan bir kilo, lütfen.”",
+    examples: [["Domatesin kilosu ne kadar?", "How much is a kilo of tomatoes?"], ["Yarım kilo peynir.", "Half a kilo of cheese."], ["Üç tane limon.", "Three lemons."]],
+  },
+  directions: {
+    title: "Left, right, straight on",
+    titleTr: "Sağ, sol, düz",
+    body: "sağa to the right, sola to the left, düz straight, geri back. Kadar means “as far as”: “Işıklara kadar düz gidin.” Ask: “… nasıl gidebilirim?” or simply “… nerede?”",
+    examples: [["Sağa dönün.", "Turn right."], ["Işıklara kadar düz gidin.", "Go straight to the lights."], ["Otogar nerede?", "Where's the bus station?"]],
+  },
+  imperative: {
+    title: "Telling people what to do",
+    titleTr: "Emir kipi",
+    body: "The bare stem is a command to one friend: Gel! Bak! For politeness (or several people) add -(y)ın/-(y)in: Gelin, Bakın, Oturun. Negative: Gelme, Gelmeyin. Add lütfen to soften it.",
+    examples: [["Buyurun, oturun.", "Please, sit down."], ["Bekleyin, lütfen.", "Wait, please."], ["Korkma!", "Don't be afraid!"]],
+  },
+  want: {
+    title: "I want to …",
+    titleTr: "-mak istiyorum",
+    body: "Keep the full -mak/-mek verb and add istiyorum: gitmek istiyorum, I want to go. For a thing, use the noun (with -ı for a specific one): Bir kahve istiyorum. Bu çantayı istiyorum.",
+    examples: [["Türkçe öğrenmek istiyorum.", "I want to learn Turkish."], ["Ne yemek istersin?", "What would you like to eat?"], ["Bunu istemiyorum.", "I don't want this."]],
+  },
+  "job-talk": {
+    title: "Talking about work",
+    titleTr: "İş hakkında",
+    body: "Ask “Ne iş yapıyorsun?” (what do you do). Answer with the job + to-be: Ben öğretmenim, Mühendisim. Where: “… -da çalışıyorum.” No article before jobs.",
+    examples: [["Ne iş yapıyorsunuz?", "What do you do? (polite)"], ["Hemşireyim.", "I'm a nurse."], ["Bir bankada çalışıyorum.", "I work in a bank."]],
+  },
+  with: {
+    title: "With: -la / -le",
+    titleTr: "ile",
+    body: "ile means with or by. It usually shrinks into the word as -la/-le (after a vowel -yla/-yle): otobüsle by bus, arkadaşımla with my friend. It also means “and” between nouns: çay ile kahve.",
+    examples: [["Otobüsle geliyorum.", "I'm coming by bus."], ["Annemle konuştum.", "I talked with my mum."], ["Kartla ödüyorum.", "I'm paying by card."]],
+  },
+  "learning-phrases": {
+    title: "Asking about words",
+    titleTr: "Kelime sormak",
+    body: "These turn every Turkish speaker into a teacher. Ask them often.",
+    examples: [["Bu ne demek?", "What does this mean?"], ["… Türkçede nasıl denir?", "How do you say … in Turkish?"], ["Nasıl yazılır?", "How is it written?"]],
+  },
+  dates: {
+    title: "Dates and months",
+    titleTr: "Tarihler",
+    body: "Say the day number then the month: 5 Mayıs, 21 Ağustos. Months: Ocak, Şubat, Mart, Nisan, Mayıs, Haziran, Temmuz, Ağustos, Eylül, Ekim, Kasım, Aralık. “In May” is Mayısta; on a date, use the bare date.",
+    examples: [["Bugün ayın kaçı?", "What's the date today?"], ["Doğum günüm 3 Mart.", "My birthday is 3 March."], ["Ağustosta çok sıcak.", "It's very hot in August."]],
+  },
+  "it-hurts": {
+    title: "Where it hurts",
+    titleTr: "Neren ağrıyor?",
+    body: "Say “my X hurts”: başım ağrıyor (my head hurts), dişim ağrıyor. Someone may ask “Neyin var?” (what's wrong?). The kind reply to anyone ill is “Geçmiş olsun.”",
+    examples: [["Başım ağrıyor.", "I have a headache."], ["Midem bulanıyor.", "I feel sick."], ["Geçmiş olsun!", "Get well soon!"]],
+  },
+  "time-past": {
+    title: "Yesterday and last week",
+    titleTr: "Geçmiş zaman ifadeleri",
+    body: "dün yesterday, evvelsi gün the day before, geçen hafta / ay / yıl last week / month / year, … önce … ago: iki gün önce. These words usually come first in the sentence.",
+    examples: [["Geçen hafta Girne'ye gittim.", "Last week I went to Girne."], ["Üç gün önce geldim.", "I came three days ago."], ["Dün ne yaptın?", "What did you do yesterday?"]],
+  },
+  colours: {
+    title: "Colours",
+    titleTr: "Renkler",
+    body: "beyaz, siyah, kırmızı, mavi, yeşil, sarı, turuncu, mor, pembe, gri, kahverengi. Colours work like adjectives: kırmızı bir elbise. To ask: “Ne renk?”",
+    examples: [["Mavi bir gömlek arıyorum.", "I'm looking for a blue shirt."], ["Arabanız ne renk?", "What colour is your car?"], ["Bunun siyahı var mı?", "Do you have this in black?"]],
+  },
+  "past-questions": {
+    title: "Did you …?",
+    titleTr: "-dı mı?",
+    body: "In the past, the question particle comes after the person ending: geldin mi? (did you come?), gördünüz mü? Answer with the verb: Geldim / Gelmedim.",
+    examples: [["Yemek yedin mi?", "Did you eat?"], ["Filmi beğendiniz mi?", "Did you like the film?"], ["Hayır, görmedim.", "No, I didn't see it."]],
+  },
+  clock: {
+    title: "Telling the time",
+    titleTr: "Saat kaç?",
+    body: "“Saat kaç?” What time is it? Saat üç (3:00), üç buçuk (3:30). “At what time?” is “Saat kaçta?”, answered with -da: üçte, yedi buçukta.",
+    examples: [["Saat kaç? Saat dört.", "What time is it? Four."], ["Saat kaçta? Sekizde.", "At what time? At eight."], ["Dokuz buçukta başlıyor.", "It starts at 9:30."]],
+  },
+  "before-after": {
+    title: "Before and after",
+    titleTr: "Önce ve sonra",
+    body: "önce before, sonra after. With a noun, the noun takes -dan/-den: kahvaltıdan sonra (after breakfast), işten önce (before work). Alone they mean first / then.",
+    examples: [["Önce kahve, sonra iş.", "Coffee first, then work."], ["Dersten sonra eve gidiyorum.", "After class I go home."], ["Yemekten önce.", "Before the meal."]],
+  },
+  feelings: {
+    title: "How you feel",
+    titleTr: "Duygular",
+    body: "Beyond iyiyim: yorgunum (tired), mutluyum (happy), üzgünüm (sad, or sorry), aç (hungry), susadım (I'm thirsty), sıkıldım (I'm bored). Some are past-tense forms in Turkish: acıktım, I've got hungry.",
+    examples: [["Çok yorgunum.", "I'm very tired."], ["Acıktım.", "I'm hungry."], ["Sıkıldın mı?", "Are you bored?"]],
+  },
+  connectors: {
+    title: "Joining sentences",
+    titleTr: "Bağlaçlar",
+    body: "ve and, ama but, çünkü because, bu yüzden so / that's why, veya or. Turkish speakers also love “ama” with a pause for contrast.",
+    examples: [["Yorgunum ama mutluyum.", "I'm tired but happy."], ["Gelmedim çünkü hastaydım.", "I didn't come because I was ill."], ["Yağmur yağıyor, bu yüzden evdeyim.", "It's raining, so I'm at home."]],
+  },
+  "de-too": {
+    title: "Too: de / da",
+    titleTr: "de / da",
+    body: "de/da (written as a separate word) means too or also, and follows what it refers to. Ben de means me too. Don't mix it up with the locative ending -de, which is joined to the word.",
+    examples: [["Ben de!", "Me too!"], ["Ayşe de geliyor.", "Ayşe is coming too."], ["Çay da var.", "There's tea too."]],
+  },
+  superlative: {
+    title: "The most: en",
+    titleTr: "En",
+    body: "Put en before an adjective for “the most”: en büyük (biggest), en güzel (most beautiful). “My favourite” is en sevdiğim, a ready-made phrase.",
+    examples: [["En sevdiğim yemek mantı.", "My favourite food is mantı."], ["Kıbrıs'ın en büyük şehri.", "Cyprus's biggest city."], ["En iyisi bu.", "This is the best one."]],
+  },
+  adverbs: {
+    title: "How you do things",
+    titleTr: "Zarflar",
+    body: "Most adjectives work as adverbs unchanged: hızlı konuşuyor (he speaks fast), iyi yüzüyorum. Add çok, biraz or hiç to adjust. -ca/-ce also makes adverbs: yavaşça, sessizce.",
+    examples: [["Yavaş konuşur musunuz?", "Could you speak slowly?"], ["Çok iyi yemek yapıyorsun.", "You cook very well."], ["Sessizce girdi.", "He came in quietly."]],
+  },
+  frequency: {
+    title: "How often",
+    titleTr: "Ne sıklıkla?",
+    body: "her zaman always, genellikle usually, sık sık often, bazen sometimes, nadiren rarely, hiç never (with a negative verb). They pair naturally with the aorist.",
+    examples: [["Her zaman çay içerim.", "I always drink tea."], ["Bazen yürürüm.", "Sometimes I walk."], ["Hiç sigara içmem.", "I never smoke."]],
+  },
+  need: {
+    title: "Need: lazım and gerek",
+    titleTr: "Lazım, gerek",
+    body: "The thing you need comes first, then lazım or gerek (needed). To say who needs it, use the dative: bana lazım (I need it). For an action, keep -mak: gitmem lazım (I need to go).",
+    examples: [["Bir taksi lazım.", "I need a taxi."], ["Bana yardım lazım.", "I need help."], ["Erken kalkmam gerek.", "I need to get up early."]],
+  },
+  for: {
+    title: "For: için",
+    titleTr: "için",
+    body: "için follows the word: senin için (for you), bu iş için. Pronouns take the genitive: benim için, onun için. With a verb it means “in order to”, which comes later.",
+    examples: [["Bu hediye senin için.", "This present is for you."], ["Tatil için Karpaz'a gidiyoruz.", "We're going to Karpaz for a holiday."], ["Ne için?", "What for?"]],
+  },
+  must: {
+    title: "Must: -malı / -meli",
+    titleTr: "-malı",
+    body: "Stem + malı/meli + person: gitmeliyim (I must go), yapmalısın (you should do). It's for duties and advice. For outside obligation, -mak zorunda comes later.",
+    examples: [["Daha çok su içmelisin.", "You should drink more water."], ["Şimdi çıkmalıyım.", "I must leave now."], ["Ne yapmalıyım?", "What should I do?"]],
+  },
+  phone: {
+    title: "On the phone",
+    titleTr: "Telefonda",
+    body: "Answer with “Alo?”. Introduce yourself with “Ben …”. To ask for someone: “… ile görüşebilir miyim?” Texting is mesaj atmak; to call is aramak.",
+    examples: [["Alo, kim arıyor?", "Hello, who's calling?"], ["Sonra seni ararım.", "I'll call you later."], ["Mesaj atar mısın?", "Will you text me?"]],
+  },
+  permission: {
+    title: "May I …?",
+    titleTr: "-abilir miyim?",
+    body: "The ability ending in a question is the polite way to ask permission: oturabilir miyim? (may I sit?), sorabilir miyim? For a request to someone else: yardım edebilir misiniz?",
+    examples: [["Pencereyi açabilir miyim?", "May I open the window?"], ["Burada fotoğraf çekebilir miyim?", "Can I take photos here?"], ["Bana yardım edebilir misiniz?", "Could you help me?"]],
+  },
+  opinions: {
+    title: "Giving your opinion",
+    titleTr: "Fikir bildirmek",
+    body: "bence in my opinion, sence in your opinion, sanırım / galiba I think / probably. Agree with “Katılıyorum” or “Haklısın”, disagree with “Bence öyle değil.”",
+    examples: [["Bence bu çok güzel.", "I think this is lovely."], ["Sence ne yapmalıyım?", "What do you think I should do?"], ["Haklısın.", "You're right."]],
+  },
+  "feeling-verbs": {
+    title: "Feelings take cases",
+    titleTr: "Duygu fiilleri",
+    body: "Some verbs need a particular ending on the object. -dan: korkmak (be afraid of), hoşlanmak (like). -ı: sevmek, özlemek (miss). -a: kızmak (be angry at), şaşırmak (be surprised at).",
+    examples: [["Köpeklerden korkarım.", "I'm afraid of dogs."], ["Ailemi özlüyorum.", "I miss my family."], ["Bana kızma!", "Don't be angry with me!"]],
+  },
+  ki: {
+    title: "The one in: -ki",
+    titleTr: "-ki",
+    body: "Add -ki to a location or time to make an adjective: masadaki kitap (the book on the table), bugünkü ders (today's lesson). It doesn't follow vowel harmony (mostly).",
+    examples: [["Masadaki çay senin.", "The tea on the table is yours."], ["Bugünkü hava çok güzel.", "Today's weather is lovely."], ["Evdeki herkes uyuyor.", "Everyone at home is asleep."]],
+  },
+  gibi: {
+    title: "Like: gibi",
+    titleTr: "gibi",
+    body: "gibi (like, as) follows the word: kedi gibi (like a cat). Pronouns take the genitive: benim gibi (like me). kadar means “as … as”: senin kadar uzun (as tall as you).",
+    examples: [["Kardeşim benim gibi.", "My sibling is like me."], ["Bal gibi tatlı.", "Sweet as honey."], ["Senin kadar hızlı değilim.", "I'm not as fast as you."]],
+  },
+  "verbal-nouns": {
+    title: "I like doing: -mayı",
+    titleTr: "-mayı seviyorum",
+    body: "To like doing something, turn the verb into a noun with -ma/-me and give it the object ending: yüzmeyi seviyorum (I love swimming). With hoşlanmak it takes -dan: okumaktan hoşlanırım.",
+    examples: [["Kitap okumayı seviyorum.", "I love reading books."], ["Yemek yapmayı sever misin?", "Do you like cooking?"], ["Erken kalkmaktan nefret ederim.", "I hate getting up early."]],
+  },
+  ip: {
+    title: "And then: -ıp",
+    titleTr: "-ıp",
+    body: "-ıp/-ip/-up/-üp joins two actions by the same person: the first verb takes -ıp, only the last carries the tense. Kalkıp çıktım: I got up and went out.",
+    examples: [["Eve gidip dinlendim.", "I went home and rested."], ["Oturup konuşalım.", "Let's sit and talk."], ["Kahve alıp geliyorum.", "I'll grab a coffee and come."]],
+  },
+  ken: {
+    title: "While: -ken",
+    titleTr: "-ken",
+    body: "-ken means while or when (as a…). Add it to a verb in the aorist or -yor, or to a noun: yürürken (while walking), çocukken (as a child), evdeyken (while at home).",
+    examples: [["Yürürken müzik dinlerim.", "I listen to music while walking."], ["Çocukken Londra'da yaşadım.", "As a child I lived in London."], ["Evdeyken ara.", "Call while you're at home."]],
+  },
+  arak: {
+    title: "By doing: -arak",
+    titleTr: "-arak",
+    body: "-arak/-erek says how something is done: yürüyerek (on foot, by walking), gülerek (laughing). One subject, two actions at once.",
+    examples: [["İşe yürüyerek gidiyorum.", "I walk to work."], ["Gülerek anlattı.", "She told it laughing."], ["Türkçeyi dizi izleyerek öğrendim.", "I learned Turkish by watching series."]],
+  },
+  madan: {
+    title: "Without doing: -madan",
+    titleTr: "-madan",
+    body: "-madan/-meden means without doing (or before doing): kahvaltı yapmadan (without having breakfast), sormadan (without asking).",
+    examples: [["Kahvaltı yapmadan çıktım.", "I left without breakfast."], ["Sormadan alma!", "Don't take it without asking!"], ["Yatmadan önce kitap okurum.", "I read before going to bed."]],
+  },
+  postpositions: {
+    title: "On, under, next to",
+    titleTr: "Yer bildiren kelimeler",
+    body: "Position words are nouns: üst (top), alt (bottom), ön (front), arka (back), yan (side), iç (inside). The owner takes -ın, the position word takes -(s)ı plus -nda: masanın üstünde (on the table), evin önünde (in front of the house).",
+    examples: [["Kedi masanın altında.", "The cat is under the table."], ["Bankanın yanında bir kafe var.", "There's a café next to the bank."], ["Evin arkasında bahçe var.", "There's a garden behind the house."]],
+  },
+  "dikten-sonra": {
+    title: "After doing: -dıktan sonra",
+    titleTr: "-dıktan sonra",
+    body: "After an action: verb + dıktan sonra (yedikten sonra, after eating). Before an action: verb + madan önce (yemeden önce).",
+    examples: [["Yemek yedikten sonra yürüyorum.", "After eating I go for a walk."], ["İşten çıktıktan sonra ararım.", "I'll call after I leave work."], ["Uyumadan önce dişlerini fırçala.", "Brush your teeth before sleeping."]],
+  },
+  mis: {
+    title: "Apparently: -mış",
+    titleTr: "-mış",
+    body: "-mış/-miş/-muş/-müş marks things you didn't see yourself: you heard them or just found out. Ali gelmiş: apparently Ali has come. On nouns: hastaymış, he's ill (I hear).",
+    examples: [["Ayşe evlenmiş!", "Ayşe got married (I hear)!"], ["Yarın yağmur yağacakmış.", "Apparently it'll rain tomorrow."], ["Çok güzelmiş.", "It's lovely (I see now)."]],
+  },
+  doctor: {
+    title: "At the doctor's",
+    titleTr: "Doktorda",
+    body: "Ateşim var (I have a fever), öksürüyorum (I'm coughing), grip oldum (I've got flu). The doctor may ask “Neyiniz var?” or “Ne zamandır?” The pharmacy is eczane.",
+    examples: [["İki gündür ateşim var.", "I've had a fever for two days."], ["Bir ağrı kesici istiyorum.", "I'd like a painkiller."], ["Reçete lazım mı?", "Do I need a prescription?"]],
+  },
+  sa: {
+    title: "If: -sa",
+    titleTr: "-sa",
+    body: "Real conditions: aorist + sa: gelirsen (if you come), yağmur yağarsa (if it rains). The main clause is usually aorist or future. Eğer (if) can start the sentence but isn't needed.",
+    examples: [["Vaktin olursa gel.", "Come if you have time."], ["Yağmur yağarsa evde kalırız.", "If it rains we'll stay at home."], ["İstersen yardım ederim.", "I'll help if you want."]],
+  },
+  keske: {
+    title: "I wish: keşke",
+    titleTr: "keşke",
+    body: "Keşke + stem + sa + person = I wish: keşke gelsen (I wish you'd come). For a wish about now: keşke zamanım olsa (I wish I had time).",
+    examples: [["Keşke Türkçem daha iyi olsa.", "I wish my Turkish were better."], ["Keşke sen de gelsen.", "I wish you'd come too."], ["Keşke!", "If only!"]],
+  },
+  when: {
+    title: "When / as soon as",
+    titleTr: "-ınca, -dığında",
+    body: "-ınca/-ince (as soon as, when): eve gelince. -dığında + person: geldiğinde (when you come). Both attach to the verb stem.",
+    examples: [["Eve gelince seni ararım.", "I'll call you when I get home."], ["Yaz gelince denize gideriz.", "When summer comes we go to the sea."], ["Çocukken oynadığımızda…", "When we played as children…"]],
+  },
+  chores: {
+    title: "Housework",
+    titleTr: "Ev işleri",
+    body: "Most housework uses yapmak or a single verb: temizlik yapmak (clean), süpürmek (sweep / vacuum), ütü yapmak (iron), bulaşık yıkamak (wash up), çamaşır yıkamak (do laundry).",
+    examples: [["Bulaşıkları ben yıkarım.", "I'll do the dishes."], ["Bugün temizlik günü.", "Today is cleaning day."], ["Çamaşırları astın mı?", "Did you hang out the laundry?"]],
+  },
+  an: {
+    title: "The one who: -an",
+    titleTr: "-an",
+    body: "-an/-en (-yan/-yen after vowels) turns a verb into a “who/that” adjective: gülen kız (the girl who is laughing), Türkçe konuşan adam (the man who speaks Turkish). No separate “who” word.",
+    examples: [["Kapıda bekleyen kim?", "Who's the one waiting at the door?"], ["Girne'ye giden otobüs.", "The bus that goes to Girne."], ["Bilen var mı?", "Does anyone know?"]],
+  },
+  courtesy: {
+    title: "Phrases for every moment",
+    titleTr: "Nezaket ifadeleri",
+    body: "Turkish has a ready phrase for many moments. Kolay gelsin to someone working, Afiyet olsun to someone eating, Elinize sağlık to the cook, Hayırlı olsun for something new, Geçmiş olsun to someone ill.",
+    examples: [["Kolay gelsin!", "Hope it goes easily!"], ["Elinize sağlık, çok güzel olmuş.", "Bless your hands, it's delicious."], ["Yeni arabanız hayırlı olsun.", "Enjoy your new car."]],
+  },
+  dik: {
+    title: "The thing I did: -dığım",
+    titleTr: "-dık + iyelik",
+    body: "When you are the subject: verb + dık + possessive ending: okuduğum kitap (the book I read), gittiğimiz yer (the place we went). This is how Turkish says “that I…”.",
+    examples: [["Dün izlediğim film çok iyiydi.", "The film I watched yesterday was very good."], ["Oturduğum ev küçük.", "The house I live in is small."], ["Söylediğini anlamadım.", "I didn't understand what you said."]],
+  },
+  recipe: {
+    title: "Recipes",
+    titleTr: "Tarifler",
+    body: "Recipes use the imperative and short verbs: doğra (chop), karıştır (mix), pişir (cook), ekle (add), kızart (fry). Önce first, sonra then, en son finally.",
+    examples: [["Soğanı ince doğra.", "Chop the onion finely."], ["Tuz ve biber ekle.", "Add salt and pepper."], ["On dakika pişir.", "Cook for ten minutes."]],
+  },
+  passive: {
+    title: "It is done: passive",
+    titleTr: "Edilgen",
+    body: "Add -ıl (after consonants) or -n (after vowels) before the tense: yapılır (is done), yenir (is eaten), içilmez (is not drunk / no smoking). Very common on signs and in rules.",
+    examples: [["Burada sigara içilmez.", "No smoking here."], ["Bu kelime nasıl okunur?", "How is this word read?"], ["Dükkan saat dokuzda açılır.", "The shop opens at nine."]],
+  },
+  character: {
+    title: "Describing character",
+    titleTr: "Karakter",
+    body: "Character adjectives work like any adjective: çalışkan (hard-working), sakin (calm), inatçı (stubborn), cömert (generous). -lı/-sız make many more: sabırlı, sabırsız (patient, impatient).",
+    examples: [["Babam çok sabırlı.", "My dad is very patient."], ["Biraz inatçısın.", "You're a bit stubborn."], ["Herkes onu sever çünkü çok cömert.", "Everyone loves him because he's generous."]],
+  },
+  causative: {
+    title: "Having it done: causative",
+    titleTr: "Ettirgen",
+    body: "Add -dır/-tır (or -t after vowels) to make someone do it: yapmak → yaptırmak (have done), kesmek → kestirmek. You'll hear it for haircuts, repairs and cleaning.",
+    examples: [["Saçımı kestirdim.", "I had my hair cut."], ["Arabayı tamir ettirdim.", "I had the car repaired."], ["Beni güldürme!", "Don't make me laugh!"]],
+  },
+  "life-events": {
+    title: "Life events",
+    titleTr: "Hayattaki olaylar",
+    body: "doğmak (be born), okula başlamak, mezun olmak (graduate), evlenmek, taşınmak (move house), emekli olmak (retire). Years take -da: 2015'te, 1990'da.",
+    examples: [["1985'te Londra'da doğdum.", "I was born in London in 1985."], ["2021'de Kıbrıs'a taşındık.", "We moved to Cyprus in 2021."], ["Geçen yıl mezun oldu.", "She graduated last year."]],
+  },
+  reported: {
+    title: "He said that …",
+    titleTr: "Dolaylı anlatım",
+    body: "Two ways: (1) quote then diye or dedi: “Geliyorum” dedi. (2) turn the clause into a noun: geleceğini söyledi (he said he'd come). The first is easier and very common in speech.",
+    examples: [["“Yorgunum” dedi.", "She said “I'm tired”."], ["Yorgun olduğunu söyledi.", "She said that she was tired."], ["Gelecek mi diye sordum.", "I asked if he'd come."]],
+  },
+  expressions: {
+    title: "Everyday expressions",
+    titleTr: "Günlük ifadeler",
+    body: "Hadi (come on, let's), boş ver (never mind), aman (oh dear, careful), neyse (anyway), tabii (of course), olur (OK, sure), inşallah (hopefully).",
+    examples: [["Hadi gidelim!", "Come on, let's go!"], ["Boş ver, önemli değil.", "Never mind, it doesn't matter."], ["Olur, tabii.", "Sure, of course."]],
+  },
+  news: {
+    title: "Reading headlines",
+    titleTr: "Manşet okumak",
+    body: "Headlines drop endings and verbs: “Lefkoşa'da yeni park” (a new park in Lefkoşa). Reports use -dı for facts and -mış for reported claims. Look for the verb at the end.",
+    examples: [["Benzine yeni zam", "New fuel price rise"], ["Bakan açıkladı", "The minister announced"], ["Yağmur bekleniyor", "Rain is expected"]],
+  },
+  acak: {
+    title: "The one that will: -acak",
+    titleTr: "-acak",
+    body: "-acak/-ecek also describes nouns: yapılacak işler (things to be done), gideceğim yer (the place I'll go, with a possessive ending). Same shape as the future tense.",
+    examples: [["Yarın gideceğim yer çok güzel.", "The place I'm going tomorrow is lovely."], ["Yapılacak çok iş var.", "There's a lot to do."], ["İçecek bir şey ister misin?", "Do you want something to drink?"]],
+  },
+  formal: {
+    title: "Formal Turkish",
+    titleTr: "Resmi dil",
+    body: "Use siz and -ınız with strangers and officials: Nasılsınız? Adınız ne? Add Bey / Hanım after first names: Ahmet Bey, Ayşe Hanım. “Rica etsem…” is a polite way to ask.",
+    examples: [["Adınızı öğrenebilir miyim?", "May I have your name?"], ["Rica etsem bir bardak su alabilir miyim?", "Could I possibly have a glass of water?"], ["Buyurun, Mehmet Bey.", "Go ahead, Mr Mehmet."]],
+  },
+  zorunda: {
+    title: "Have to: -mak zorunda",
+    titleTr: "-mak zorunda",
+    body: "Full verb + zorunda + to-be ending: gitmek zorundayım (I have to go). It's an outside obligation, stronger than -malı. Negative: zorunda değilsin (you don't have to).",
+    examples: [["Pazartesi çalışmak zorundayım.", "I have to work on Monday."], ["Gelmek zorunda değilsin.", "You don't have to come."], ["Vize almak zorunda mıyız?", "Do we have to get a visa?"]],
+  },
+  "mek-icin": {
+    title: "In order to: -mak için",
+    titleTr: "-mak için",
+    body: "Full verb + için gives a purpose: öğrenmek için (in order to learn). Ask why with “Ne için?” or “Neden?”",
+    examples: [["Ekmek almak için çıktım.", "I went out to buy bread."], ["Türkçe öğrenmek için buradayım.", "I'm here to learn Turkish."], ["Uyumak için çok erken.", "It's too early to sleep."]],
+  },
+  cant: {
+    title: "Can't: -ama",
+    titleTr: "-ama",
+    body: "Inability is stem + a/e (y after vowels) + ma/me: gelemem (I can't come), yapamadım (I couldn't do it), anlayamıyorum (I can't understand).",
+    examples: [["Bugün gelemem.", "I can't come today."], ["Uyuyamadım.", "I couldn't sleep."], ["Bunu açamıyorum.", "I can't open this."]],
+  },
+  dir: {
+    title: "For / since: -dır and -dan beri",
+    titleTr: "-dır, -dan beri",
+    body: "For a length of time: time + dır: üç yıldır (for three years). Since a point: -dan beri: Mayıstan beri, sabahtan beri. Both use the present tense in Turkish.",
+    examples: [["Üç yıldır Kıbrıs'tayım.", "I've been in Cyprus for three years."], ["Sabahtan beri bekliyorum.", "I've been waiting since morning."], ["Ne zamandır Türkçe öğreniyorsun?", "How long have you been learning Turkish?"]],
+  },
+  often: {
+    title: "Times per week",
+    titleTr: "Haftada kaç kez?",
+    body: "Haftada (per week), günde (per day), ayda (per month) + number + kez or defa: haftada iki kez. Once is bir kez or bir kere.",
+    examples: [["Günde üç kez kahve içerim.", "I drink coffee three times a day."], ["Ayda bir annemi ararım.", "I call my mum once a month."], ["Haftada kaç gün çalışıyorsun?", "How many days a week do you work?"]],
+  },
+  "abil-tenses": {
+    title: "Could, can, will be able to",
+    titleTr: "Yeterlilik",
+    body: "-abil/-ebil sits before any tense: konuşabiliyorum (I'm able to speak), konuşabildim (I managed to speak), konuşabileceğim (I'll be able to). Negative ability uses -ama: konuşamadım.",
+    examples: [["Sonunda anlayabildim.", "I was finally able to understand."], ["Yakında okuyabileceksin.", "Soon you'll be able to read."], ["Eskiden konuşamıyordum.", "I used to be unable to speak."]],
+  },
+  "learning-talk": {
+    title: "Talking about learning",
+    titleTr: "Öğrenme hakkında",
+    body: "Useful: anlamak (understand), hatırlamak (remember), unutmak (forget), tekrar etmek (repeat), pratik yapmak (practise), alışmak (get used to, with -a).",
+    examples: [["Bu kelimeyi hep unutuyorum.", "I always forget this word."], ["Her gün pratik yapıyorum.", "I practise every day."], ["Aksana alıştım.", "I've got used to the accent."]],
+  },
+  paired: {
+    title: "Both, neither, either",
+    titleTr: "Hem… hem, ne… ne, ya… ya",
+    body: "hem … hem (both … and), ne … ne (neither … nor, with a positive verb), ya … ya (either … or). They make your Turkish sound much more natural.",
+    examples: [["Hem çalışıyor hem okuyor.", "She both works and studies."], ["Ne çay ne kahve içer.", "He drinks neither tea nor coffee."], ["Ya bugün ya yarın.", "Either today or tomorrow."]],
+  },
+  emphasis: {
+    title: "Stress goes before the verb",
+    titleTr: "Vurgu",
+    body: "The most important word sits right before the verb. “Ali dün Girne'ye gitti” stresses Girne; “Ali Girne'ye dün gitti” stresses yesterday; “Dün Girne'ye Ali gitti” stresses Ali.",
+    examples: [["Kahveyi ben yaptım.", "I made the coffee (it was me)."], ["Ben kahveyi yaptım.", "I made the coffee (not something else)."], ["Yarın mı geliyorsun?", "Are you coming tomorrow (not today)?"]],
+  },
+  gittikce: {
+    title: "More and more: gittikçe",
+    titleTr: "gittikçe, -dıkça",
+    body: "gittikçe means increasingly. -dıkça/-dikçe means “the more…”: çalıştıkça (the more you work). Pair with daha for “the more…, the more…”.",
+    examples: [["Hava gittikçe ısınıyor.", "The weather is getting warmer and warmer."], ["Konuştukça öğreniyorsun.", "The more you speak, the more you learn."], ["Türkçem gittikçe iyileşiyor.", "My Turkish is getting better and better."]],
+  },
+  kendi: {
+    title: "Myself: kendi",
+    titleTr: "kendi",
+    body: "kendi + possessive = myself, yourself…: kendim, kendin, kendisi. Kendi … -ım means my own: kendi evim (my own house). Kendine iyi bak: take care of yourself.",
+    examples: [["Bunu kendim yaptım.", "I made this myself."], ["Kendine iyi bak.", "Take care of yourself."], ["Kendi arabam var.", "I have my own car."]],
+  },
+  fillers: {
+    title: "Fillers that buy time",
+    titleTr: "Dolgu kelimeler",
+    body: "yani (I mean), aslında (actually), işte (well, you know), şey (um, thingy), bu arada (by the way), neyse (anyway). They give you time to think and make you sound natural.",
+    examples: [["Şey… adı neydi?", "Um… what was his name?"], ["Aslında ben de bilmiyorum.", "Actually, I don't know either."], ["Bu arada, yarın geliyor musun?", "By the way, are you coming tomorrow?"]],
+  },
+  cypriot: {
+    title: "Cypriot Turkish",
+    titleTr: "Kıbrıs Türkçesi",
+    body: "In Northern Cyprus you'll often hear questions without mı, using intonation instead (“Geldin?”), and different everyday words. Locals understand standard Turkish perfectly, so keep speaking it; just get used to listening for the local version.",
+    examples: [["Geldin?", "Did you come? (Cypriot, no mı)"], ["Geldin mi?", "Did you come? (standard)"], ["hellim", "halloumi"]],
+  },
+  yordu: {
+    title: "Was doing: -yordu",
+    titleTr: "-yordu",
+    body: "Stem + iyor + du + person describes background in the past: yürüyordum (I was walking). Use it for the scene, and -dı for what happened: Yürüyordum, birden yağmur yağdı.",
+    examples: [["Yemek yapıyordum, telefon çaldı.", "I was cooking when the phone rang."], ["Eskiden İngiltere'de yaşıyordum.", "I used to live in England."], ["Ne yapıyordun?", "What were you doing?"]],
+  },
+  storytelling: {
+    title: "Telling a story",
+    titleTr: "Hikâye anlatmak",
+    body: "Open with “Bir gün…” (one day), set the scene with -yordu, move on with sonra, o sırada (at that moment), birden (suddenly), and close with sonunda (in the end).",
+    examples: [["Bir gün denize gidiyordum.", "One day I was going to the sea."], ["Birden araba durdu.", "Suddenly the car stopped."], ["Sonunda her şey yolunda gitti.", "In the end everything went fine."]],
+  },
+  "review-map": {
+    title: "Your whole Turkish on one page",
+    titleTr: "Bütün yıl",
+    body: "Every Turkish word is a root + endings in a fixed order: noun + plural + possessive + case (ev-ler-im-de), verb + negative + tense + person (gel-me-di-m). You've learned every one of these slots this year.",
+    examples: [["evlerimizden", "from our houses"], ["gelemeyeceğim", "I won't be able to come"], ["konuşabiliyor musun?", "can you speak?"]],
+  },
+  "next-steps": {
+    title: "What comes next",
+    titleTr: "Bundan sonra",
+    body: "To grow from here: talk to people every week, watch a Turkish series with Turkish subtitles, read short news daily, and keep your reviews going. Your plan can start again with harder lessons any time.",
+    examples: [["Her gün biraz.", "A little every day."], ["Yavaş yavaş.", "Slowly, step by step."], ["Hadi, devam!", "Come on, keep going!"]],
+  },
+};
+
+/** Generic challenges for the days without a hand-written one, by stage. */
+export const DRILL_CHALLENGES: string[] = [
+  "Get five drills right in a row. If you slip, start counting again.",
+  "Before you check each drill, say the answer out loud first.",
+  "Do the drills once, then go back and say every answer again from memory.",
+  "Beat yesterday: aim for one more correct answer than last time.",
+];
+
+export const LISTEN_CHALLENGES: string[][] = [
+  // Stage 1–2: very short
+  [
+    "Listen to each dialogue line, then say it straight after, three times.",
+    "Pick two lines from today's dialogue and learn them by heart.",
+    "Read the dialogue aloud twice: once slowly, once at normal speed.",
+  ],
+  // Stage 3–4
+  [
+    "Shadow the dialogue: play a line and speak along with it until you match the rhythm.",
+    "Cover the English and translate the dialogue line by line out loud.",
+    "Play the other person's lines and answer them yourself, without reading yours.",
+  ],
+  // Stage 5–6
+  [
+    "Retell the dialogue in three sentences without looking.",
+    "Change one detail in the dialogue (a place, a time) and act it out loud.",
+    "Record yourself reading the dialogue, then compare it with the audio.",
+  ],
+];
+
+export const CHECKIN_CHALLENGES: string[] = [
+  "Say this week's goal out loud as a sentence about yourself, in Turkish if you can.",
+  "Explain this week's grammar to an imaginary friend in 30 seconds.",
+  "Write down the three words from this week you like most, and use each in a sentence.",
+  "Record a 30-second voice note in Turkish about your week.",
+];

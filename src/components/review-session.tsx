@@ -76,13 +76,13 @@ export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: Review
             Aferin.
           </h1>
           <p className="mt-3 text-[17px] text-ink-soft">Reviews done for today.</p>
-          <dl className="mt-10 grid max-w-md grid-cols-3 gap-6 border-t border-line pt-6 tabular">
+          <dl className="stagger mt-10 grid max-w-md grid-cols-3 gap-6 border-t border-line pt-6 tabular">
             {[
               { label: "answers", value: n },
               { label: "accuracy", value: `${acc}%` },
               { label: "minutes", value: mins },
-            ].map((x) => (
-              <div key={x.label}>
+            ].map((x, i) => (
+              <div key={x.label} style={{ "--i": i } as React.CSSProperties}>
                 <dd className="font-display text-[42px] leading-none font-semibold">{x.value}</dd>
                 <dt className="mt-2 text-[14px] text-muted">{x.label}</dt>
               </div>
@@ -127,7 +127,7 @@ export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: Review
   const right = (
     <span className="flex items-center gap-3">
       {stats.combo >= 3 ? (
-        <span className="flex items-center gap-1 text-accent-text" aria-label={`${stats.combo} correct in a row`}>
+        <span key={stats.combo} className="flex animate-pop items-center gap-1 text-accent-text" aria-label={`${stats.combo} correct in a row`}>
           <IconFlame size={16} />
           {stats.combo}
         </span>
@@ -153,7 +153,7 @@ export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: Review
       {phase === "intro" ? (
         <>
           <p className="text-[15px] text-muted">New word, unit {card.unit || "–"}</p>
-          <div className="mt-4 flex items-start justify-between gap-4">
+          <div key={item.key} className="mt-4 flex animate-slide-in items-start justify-between gap-4">
             <h1 className="display-xl text-[52px] sm:text-[72px]" lang="tr">
               {card.tr}
             </h1>
@@ -180,6 +180,7 @@ export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: Review
         </>
       ) : (
         <>
+          <div key={item.key} className="animate-slide-in">
           <Prompt label={enToTr ? "Write this in Turkish" : "What does this mean?"}>
             <div className="flex items-start justify-between gap-4">
               <p className={enToTr ? "font-display text-[33px] leading-tight font-medium sm:text-[42px]" : "display-xl text-[48px] sm:text-[60px]"} lang={enToTr ? "en" : "tr"}>
@@ -188,6 +189,7 @@ export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: Review
               {!enToTr ? <Speak text={card.tr} size="lg" className="mt-1" /> : null}
             </div>
           </Prompt>
+          </div>
           <TypeAnswer
             key={item.key}
             resetKey={item.key}

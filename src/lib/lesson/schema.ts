@@ -84,6 +84,8 @@ export const WeeklyQuizSchema = z.object({
   vocabCardIds: z.array(z.number().int()),
   drillSeed: z.string(),
   maxStep: z.number().int(),
+  /** Unlocked steps (teaching order); older quizzes only have maxStep. */
+  steps: z.array(z.number().int()).optional(),
   translation: z.object({ en: z.string(), tr: z.string() }),
   title: z.string(),
   titleTr: z.string(),

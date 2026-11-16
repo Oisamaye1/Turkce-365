@@ -153,3 +153,27 @@ export const IconSunSmall = (p: P) => (
     <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
   </S>
 );
+
+/** Plan: a winding route with a start and a goal. */
+export const IconRoute = (p: P) => (
+  <S {...p}>
+    <circle cx="6" cy="19" r="2" />
+    <path d="M8 19h8.5a3.5 3.5 0 000-7h-9a3.5 3.5 0 010-7H16" />
+    <path d="M16 2.5l2.5 2.5L16 7.5" />
+  </S>
+);
+
+/** Tiny challenge: a small target. */
+export const IconTarget = (p: P) => (
+  <S {...p}>
+    <circle cx="12" cy="12" r="8.5" />
+    <circle cx="12" cy="12" r="4.5" />
+    <circle cx="12" cy="12" r="0.8" fill="currentColor" />
+  </S>
+);
+
+export const IconChevron = (p: P) => (
+  <S {...p}>
+    <path d="M9 6l6 6-6 6" />
+  </S>
+);

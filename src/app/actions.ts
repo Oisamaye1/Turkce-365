@@ -9,6 +9,9 @@ import { completeLesson, getLesson, saveProgress, type LessonProgress } from "@/
 import { updateMission } from "@/lib/db/missions";
 import { setSetting, today } from "@/lib/db/settings";
 import { saveWriting } from "@/lib/db/writing";
+import { completeDay, daysCompletedOn, reopenDay, savePlan, setTick } from "@/lib/db/plan";
+import { PLAN_DAYS, START_POINTS } from "@/lib/plan/build";
+import { getPlanDayView } from "@/lib/plan/status";
 import { buildLexicon, generateDrills, type Drill } from "@/lib/grammar/drills";
 import { claudeEnabled, detectClaude, runClaudeJson } from "@/lib/claude/cli";
 import { correctWriting, type CorrectionOutcome } from "@/lib/lesson/correct";
@@ -202,4 +205,47 @@ export async function checkClaudeAction(testCall: boolean) {
 export async function buildReportNowAction() {
   await generateWeeklyReport(await today(), null);
   revalidatePath("/progress");
+}
+
+// ---------------------------------------------------------------- learning plan
+
+const PlanInput = z.object({
+  start: z.enum(["zero", "basics", "survival", "a2"]),
+  daysPerWeek: z.number().int().min(3).max(7),
+});
+
+export async function createPlanAction(input: z.input<typeof PlanInput>): Promise<{ ok: boolean; startDay?: number; error?: string }> {
+  const p = PlanInput.safeParse(input);
+  if (!p.success) return { ok: false, error: "Choose where to start and how many days a week." };
+  const sp = START_POINTS.find((x) => x.id === p.data.start)!;
+  const cfg = await savePlan({ startDay: sp.day, startedOn: await today(), daysPerWeek: p.data.daysPerWeek }, { reset: true });
+  revalidatePath("/", "layout");
+  return { ok: true, startDay: cfg.startDay };
+}
+
+const TICK_KEYS = ["learn", "reviews", "lesson", "drills", "write", "mission", "selfcheck", "challenge"] as const;
+
+export async function planTickAction(day: number, key: string, value: string | null): Promise<{ ok: boolean }> {
+  if (!TICK_KEYS.includes(key as (typeof TICK_KEYS)[number]) || !Number.isInteger(day) || day < 1 || day > PLAN_DAYS) return { ok: false };
+  if (value !== null && !/^[a-z]{2,12}$/.test(value)) return { ok: false };
+  await setTick(day, key, value);
+  revalidatePath("/");
+  revalidatePath("/plan", "layout");
+  return { ok: true };
+}
+
+export async function finishPlanDayAction(day: number): Promise<{ ok: boolean; next?: number; finishedToday?: number; error?: string }> {
+  const view = await getPlanDayView(day);
+  if (!view) return { ok: false, error: "No plan yet." };
+  if (!view.canFinish) return { ok: false, error: "Finish the remaining tasks first, or mark them as done." };
+  const date = await today();
+  await completeDay(day, date);
+  revalidatePath("/", "layout");
+  return { ok: true, next: Math.min(PLAN_DAYS, day + 1), finishedToday: (await daysCompletedOn(date)).length };
+}
+
+export async function reopenPlanDayAction(day: number) {
+  if (!Number.isInteger(day)) return;
+  await reopenDay(day);
+  revalidatePath("/", "layout");
 }

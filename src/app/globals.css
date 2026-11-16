@@ -163,7 +163,7 @@ body {
 /* ---------------------------------------------------------------- buttons (flat) */
 
 @utility btn {
-  @apply inline-flex h-11 items-center justify-center gap-2 rounded-[10px] px-4 text-[15px] font-medium whitespace-nowrap transition-colors duration-150 select-none disabled:cursor-not-allowed disabled:opacity-45;
+  @apply inline-flex h-11 items-center justify-center gap-2 rounded-[10px] px-4 text-[15px] font-medium whitespace-nowrap transition-[color,background-color,border-color,transform,filter] duration-150 select-none active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-45 disabled:active:scale-100;
 }
 @utility btn-primary {
   @apply btn bg-brand text-white hover:bg-brand-hover;
@@ -181,7 +181,7 @@ body {
   @apply btn bg-bad text-white hover:brightness-95;
 }
 @utility btn-quiet {
-  @apply inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-[15px] font-medium text-brand-text hover:bg-brand-tint;
+  @apply inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-[15px] font-medium text-brand-text transition-[background-color,transform] duration-150 hover:bg-brand-tint active:scale-[0.97];
 }
 
 /* ---------------------------------------------------------------- inputs & bits */
@@ -223,4 +223,89 @@ body {
     opacity: 1;
     transform: none;
   }
+}
+
+/* ---------------------------------------------------------------- motion
+ * One vocabulary of movement: things arrive by rising a few pixels, confirmations pop,
+ * mistakes shake, progress grows from the left. Durations stay short (≤ 450ms) except
+ * the "you are here" pulse. Everything is disabled under prefers-reduced-motion above.
+ */
+@theme {
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-page: page-in 380ms var(--ease-out-quint) backwards;
+  --animate-rise: rise 460ms var(--ease-out-quint) backwards;
+  --animate-pop: pop 360ms var(--ease-spring) backwards;
+  --animate-shake: shake 380ms ease-in-out backwards;
+  --animate-grow: grow 700ms var(--ease-out-quint) backwards;
+  --animate-draw: draw 360ms var(--ease-out-quint) 80ms backwards;
+  --animate-here: here 2.4s ease-out infinite;
+  --animate-fade: fade 240ms ease-out backwards;
+  --animate-slide-in: slide-in 320ms var(--ease-out-quint) backwards;
+}
+
+/* Keyframes live outside @theme so they're always emitted (some are used directly). */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(2px); }
+}
+@keyframes grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes draw {
+  from { stroke-dashoffset: 24; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes here {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 45%, transparent); }
+  70%, 100% { box-shadow: 0 0 0 12px color-mix(in oklab, var(--accent) 0%, transparent); }
+}
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes burst {
+  0% { transform: translate(0, 0) rotate(0) scale(0.4); opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1); opacity: 0; }
+}
+
+/* Staggered arrival for lists: set --i on each child. */
+.stagger > * {
+  animation: rise 460ms var(--ease-out-quint) backwards;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+.check-draw path {
+  stroke-dasharray: 24;
+  animation: draw 360ms var(--ease-out-quint) 80ms backwards;
+}
+
+/* Colours and borders change smoothly when the theme switches. */
+body,
+.theme-fade {
+  transition:
+    background-color 240ms ease,
+    color 240ms ease;
 }

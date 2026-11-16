@@ -1,5 +1,12 @@
 import { getDb, type DB } from "./index";
-import { GRAMMAR_STEPS, MAX_STEP, UNLOCK_ACCURACY, UNLOCK_WINDOW } from "@/lib/grammar/steps";
+import { GRAMMAR_STEPS, UNLOCK_ACCURACY, UNLOCK_WINDOW } from "@/lib/grammar/steps";
+import { STEP_ORDER } from "@/lib/plan/build";
+
+/** Next step in the teaching order (null after the last). */
+export function nextStepInOrder(stepId: number): number | null {
+  const i = STEP_ORDER.indexOf(stepId);
+  return i >= 0 && i + 1 < STEP_ORDER.length ? STEP_ORDER[i + 1] : null;
+}
 import type { CheckResult } from "@/lib/turkish/answer";
 
 export interface StepStatus {
@@ -63,12 +70,18 @@ export async function recentAccuracy(stepId: number, dbIn?: DB): Promise<{ accur
   return { accuracy: n ? Number(r!.score) / n : 0, count: n };
 }
 
-/** Highest unlocked step — the learner's "current grammar step". */
+/** Furthest unlocked step in the teaching order — the learner's "current grammar step". */
 export async function currentGrammarStep(): Promise<number> {
+  return (await unlockedSteps()).at(-1) ?? STEP_ORDER[0];
+}
+
+/** Unlocked steps, in teaching order. */
+export async function unlockedSteps(): Promise<number[]> {
   const db = await getDb();
   await ensureFirstStep(db);
-  const r = await db.one<{ s: number | null }>("SELECT MAX(step_id) AS s FROM grammar_progress WHERE unlocked_at IS NOT NULL");
-  return Number(r?.s ?? 1);
+  const rows = await db.all<{ step_id: number }>("SELECT step_id FROM grammar_progress WHERE unlocked_at IS NOT NULL");
+  const open = new Set(rows.map((r) => Number(r.step_id)));
+  return STEP_ORDER.filter((s) => open.has(s));
 }
 
 export interface DrillAnswerInput {
@@ -98,8 +111,8 @@ export async function recordDrill(input: DrillAnswerInput, now = new Date()): Pr
     const { accuracy, count } = await recentAccuracy(input.stepId, t);
     await t.run("UPDATE grammar_progress SET mastery = ? WHERE step_id = ?", [accuracy, input.stepId]);
     let unlocked: number | null = null;
-    if (count >= UNLOCK_WINDOW && accuracy >= UNLOCK_ACCURACY && input.stepId < MAX_STEP) {
-      const next = input.stepId + 1;
+    const next = nextStepInOrder(input.stepId);
+    if (count >= UNLOCK_WINDOW && accuracy >= UNLOCK_ACCURACY && next !== null) {
       const already = await t.one<{ unlocked_at: string | null }>("SELECT unlocked_at FROM grammar_progress WHERE step_id = ?", [next]);
       if (!already?.unlocked_at) {
         await t.run(
@@ -114,10 +127,11 @@ export async function recordDrill(input: DrillAnswerInput, now = new Date()): Pr
   });
 }
 
-/** Manually unlock steps 1..stepId (Settings → "I already know this"). */
+/** Manually unlock every step up to stepId in teaching order (Settings → "I already know this"). */
 export async function unlockStepsUpTo(stepId: number) {
   const db = await getDb();
-  for (let s = 1; s <= stepId; s++) {
+  const upto = STEP_ORDER.indexOf(stepId);
+  for (const s of STEP_ORDER.slice(0, upto < 0 ? STEP_ORDER.length : upto + 1)) {
     await db.run(
       `INSERT INTO grammar_progress (step_id, unlocked_at) VALUES (?, ?)
        ON CONFLICT (step_id) DO UPDATE SET unlocked_at = COALESCE(grammar_progress.unlocked_at, excluded.unlocked_at)`,

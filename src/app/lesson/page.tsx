@@ -40,7 +40,7 @@ export default async function LessonPage({ searchParams }: { searchParams: Promi
   if (row.lesson.kind === "weekly") {
     const quiz = row.lesson;
     const cards = await getCardsByIds(quiz.vocabCardIds);
-    const drills = generateMixedDrills(quiz.maxStep, 10, lex, seededRng(quiz.drillSeed));
+    const drills = generateMixedDrills(quiz.steps ?? quiz.maxStep, 10, lex, seededRng(quiz.drillSeed));
     const report = (await listReports()).find((r) => r.week === quiz.weekStart) ?? null;
     return <WeeklyQuiz quiz={quiz} cards={cards} drills={drills} existingReport={row.completedAt ? report : null} />;
   }

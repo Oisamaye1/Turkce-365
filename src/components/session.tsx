@@ -16,16 +16,16 @@ export interface SessionStep {
 /** Today's session as a numbered stepper (it is a real sequence). */
 export function SessionSteps({ steps }: { steps: SessionStep[] }) {
   return (
-    <ol className="relative">
+    <ol className="stagger relative">
       {steps.map((s, i) => {
         const last = i === steps.length - 1;
         const marker =
           s.state === "done" ? (
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-ok text-white">
+            <span className="grid h-8 w-8 animate-pop place-items-center rounded-full bg-ok text-white">
               <IconCheck size={16} />
             </span>
           ) : s.state === "current" ? (
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-accent text-[14px] font-semibold text-white ring-4 ring-accent-tint tabular">{i + 1}</span>
+            <span className="grid h-8 w-8 animate-here place-items-center rounded-full bg-accent text-[14px] font-semibold text-white tabular">{i + 1}</span>
           ) : s.state === "locked" ? (
             <span className="grid h-8 w-8 place-items-center rounded-full border border-line-strong bg-paper text-muted">
               <IconLock size={14} />
@@ -51,7 +51,7 @@ export function SessionSteps({ steps }: { steps: SessionStep[] }) {
           </div>
         );
         return (
-          <li key={s.key} className="relative flex gap-4">
+          <li key={s.key} className="relative flex gap-4" style={{ "--i": i } as React.CSSProperties}>
             <div className="relative flex w-8 shrink-0 justify-center pt-4">
               {!last ? <span className="absolute top-12 bottom-[-16px] w-px bg-line-strong" aria-hidden="true" /> : null}
               {marker}

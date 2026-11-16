@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IconBlocks, IconCards, IconChart, IconFlag, IconFlame, IconGear, IconLetters, IconPencil, IconSun } from "./icons";
+import { IconBlocks, IconCards, IconChart, IconFlag, IconFlame, IconGear, IconLetters, IconPencil, IconRoute, IconSun } from "./icons";
 import { ThemeToggle } from "./theme";
 
 export const NAV = [
   { href: "/", en: "Today", tr: "Bugün", Icon: IconSun },
+  { href: "/plan", en: "Plan", tr: "Yol haritası", Icon: IconRoute },
   { href: "/review", en: "Review", tr: "Tekrar", Icon: IconCards },
   { href: "/gym", en: "Suffixes", tr: "Ekler", Icon: IconBlocks },
   { href: "/write", en: "Write", tr: "Yaz", Icon: IconPencil },
@@ -45,10 +46,11 @@ export function AppShell({ streak, due, children }: { streak: number; due: numbe
               key={href}
               href={href}
               aria-current={active(href) ? "page" : undefined}
-              className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-[15px] ${
+              className={`group relative flex items-center gap-3 rounded-lg px-3 py-2 text-[15px] transition-colors duration-150 ${
                 active(href) ? "bg-haze font-medium text-ink" : "text-ink-soft hover:bg-haze hover:text-ink"
               }`}
             >
+              {active(href) ? <span className="absolute inset-y-2 left-0 w-0.5 origin-center animate-pop rounded-full bg-accent" aria-hidden="true" /> : null}
               <Icon size={19} className={active(href) ? "text-brand-text" : ""} />
               <span className="flex-1">{en}</span>
               <span className="text-[12px] text-muted opacity-0 transition-opacity group-hover:opacity-100" lang="tr">
@@ -92,11 +94,11 @@ export function AppShell({ streak, due, children }: { streak: number; due: numbe
       <main className="mx-auto w-full max-w-[1080px] px-4 pt-6 pb-28 sm:px-8 lg:pt-12 lg:pb-16">{children}</main>
 
       <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-line bg-paper/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden" aria-label="Main">
-        {[...NAV.slice(0, 4), NAV[5]].map(({ href, en, Icon }) => {
-          const on = active(href) || (href === "/progress" && ["/missions", "/alphabet", "/settings"].some((h) => path.startsWith(h)));
+        {[...NAV.slice(0, 4), NAV[6]].map(({ href, en, Icon }) => {
+          const on = active(href) || (href === "/progress" && ["/write", "/missions", "/alphabet", "/settings"].some((h) => path.startsWith(h)));
           return (
-            <Link key={href} href={href} className={`flex flex-col items-center gap-1 py-2.5 text-[11px] ${on ? "text-brand-text" : "text-muted"}`}>
-              <Icon size={21} />
+            <Link key={href} href={href} className={`flex flex-col items-center gap-1 py-2.5 text-[11px] transition-colors ${on ? "text-brand-text" : "text-muted"}`}>
+              <Icon size={21} className={on ? "animate-pop" : ""} />
               {href === "/progress" ? "More" : en}
             </Link>
           );

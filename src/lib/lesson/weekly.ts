@@ -1,7 +1,7 @@
 /** Sunday check-in: quiz builder and weekly progress report. */
 import { getDb } from "@/lib/db";
 import { getCardsByIds, knownWords, type Card } from "@/lib/db/cards";
-import { currentGrammarStep, stepAccuracySince } from "@/lib/db/grammar";
+import { currentGrammarStep, stepAccuracySince, unlockedSteps } from "@/lib/db/grammar";
 import { lessonsBetween } from "@/lib/db/lessons";
 import { getSettings } from "@/lib/db/settings";
 import { dailyActivity, retention, streak, topMistakes, wordsLearned, type DayActivity, type RecurringMistake } from "@/lib/db/stats";
@@ -41,6 +41,7 @@ export async function buildWeeklyQuiz(date: string): Promise<WeeklyQuiz> {
     vocabCardIds: ids,
     drillSeed: `weekly-${date}`,
     maxStep: await currentGrammarStep(),
+    steps: await unlockedSteps(),
     translation,
     title: "Weekly check-in",
     titleTr: "Haftalık değerlendirme",

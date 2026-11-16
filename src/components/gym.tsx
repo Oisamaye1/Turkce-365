@@ -49,9 +49,9 @@ export function Gym({ steps, statuses, initialStep }: { steps: GrammarStep[]; st
   return (
     <div className="grid gap-12 lg:grid-cols-[250px_minmax(0,1fr)]">
       <nav className="order-2 lg:order-1" aria-label="Grammar steps">
-        <p className="mb-3 text-[14px] text-muted">Each step unlocks the next at 90% over your last 20 drills.</p>
+        <p className="mb-3 text-[14px] text-muted">Each step unlocks the next at 90% over your last 20 drills, or when your plan gets there.</p>
         <ol className="border-t border-line">
-          {steps.map((s) => {
+          {steps.map((s, pos) => {
             const st = statuses.find((x) => x.stepId === s.id);
             const locked = !st?.unlocked;
             const v = mastery[s.id] ?? 0;
@@ -70,7 +70,7 @@ export function Gym({ steps, statuses, initialStep }: { steps: GrammarStep[]; st
                   className={`relative flex w-full items-center gap-3 border-b border-line py-2.5 pl-3 text-left ${locked ? "text-muted" : "hover:bg-haze"} ${on ? "bg-haze" : ""}`}
                 >
                   {on ? <span className="absolute inset-y-0 left-0 w-0.5 bg-accent" aria-hidden="true" /> : null}
-                  <span className="w-5 shrink-0 text-[13px] text-muted tabular">{s.id}</span>
+                  <span className="w-5 shrink-0 text-[13px] text-muted tabular">{pos + 1}</span>
                   <span className={`min-w-0 flex-1 truncate text-[15px] ${on ? "font-medium text-ink" : ""}`}>{s.title}</span>
                   <span className="shrink-0 pr-3 text-[13px] tabular">
                     {locked ? <IconLock size={14} /> : done ? <IconCheck size={15} className="text-ok-text" /> : v ? <span className="text-muted">{Math.round(v * 100)}%</span> : null}
@@ -83,7 +83,9 @@ export function Gym({ steps, statuses, initialStep }: { steps: GrammarStep[]; st
       </nav>
 
       <section className="order-1 min-w-0 lg:order-2">
-        <p className="text-[15px] text-muted">Step {step.id} of 16</p>
+        <p className="text-[15px] text-muted">
+          Step {steps.findIndex((x) => x.id === step.id) + 1} of {steps.length}
+        </p>
         <h2 className="font-display mt-1 text-[33px] leading-tight font-semibold sm:text-[42px]">{step.title}</h2>
         <p className="text-ink-soft" lang="tr">
           {step.titleTr}
@@ -120,9 +122,9 @@ export function Gym({ steps, statuses, initialStep }: { steps: GrammarStep[]; st
         </div>
 
         {unlocked ? (
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-[14px] bg-ok-tint p-5" role="status">
+          <div className="mt-8 flex animate-rise flex-wrap items-center justify-between gap-4 rounded-[14px] bg-ok-tint p-5" role="status">
             <div>
-              <p className="font-display text-[21px] font-semibold text-ok-text">Step {unlocked} unlocked</p>
+              <p className="font-display text-[21px] font-semibold text-ok-text">Next step unlocked</p>
               <p className="text-ink-soft">{steps.find((s) => s.id === unlocked)?.title}</p>
             </div>
             <button
@@ -132,7 +134,7 @@ export function Gym({ steps, statuses, initialStep }: { steps: GrammarStep[]; st
                 setStepId(unlocked);
               }}
             >
-              Start step {unlocked}
+              Start it
             </button>
           </div>
         ) : null}

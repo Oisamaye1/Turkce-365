@@ -1,3 +1,4 @@
+import { MoreTabs } from "@/components/nav";
 import { WritePage } from "@/components/write-page";
 import { PageTitle } from "@/components/ui";
 import { getLesson } from "@/lib/db/lessons";
@@ -13,13 +14,16 @@ const FREE_PROMPTS = [
   { prompt: "What did you do last weekend? Use the past tense.", promptTr: "Geçen hafta sonu ne yaptın?", hints: ["Cumartesi …", "… gittim.", "… yedim."] },
 ];
 
-export default async function Write() {
+export default async function Write({ searchParams }: { searchParams: Promise<{ topic?: string }> }) {
+  const sp = await searchParams;
+  const topic = sp.topic?.slice(0, 300);
   const date = await today();
   const row = await getLesson(date);
   const lesson = row?.lesson.kind === "daily" ? (row.lesson as DailyLesson) : null;
-  const prompts = [...(lesson ? [{ prompt: lesson.writing.prompt, promptTr: lesson.writing.promptTr, hints: lesson.writing.hints, fromLesson: true }] : []), ...FREE_PROMPTS];
+  const prompts = [...(topic ? [{ prompt: topic, hints: [], fromPlan: true }] : []), ...(lesson ? [{ prompt: lesson.writing.prompt, promptTr: lesson.writing.promptTr, hints: lesson.writing.hints, fromLesson: true }] : []), ...FREE_PROMPTS];
   return (
     <div>
+      <MoreTabs />
       <PageTitle en="Write" tr="Yaz" />
       <WritePage prompts={prompts} lessonDate={lesson ? date : undefined} history={await listWritings(20)} />
     </div>

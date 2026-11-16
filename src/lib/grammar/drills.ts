@@ -400,11 +400,12 @@ export function generateDrills(stepId: number, count: number, lex: DrillLexicon,
   return out;
 }
 
-/** Mixed drills across all unlocked steps (used by the weekly check-in). */
-export function generateMixedDrills(maxStep: number, count: number, lex: DrillLexicon, rng: Rng = Math.random): Drill[] {
+/** Mixed drills across steps (used by the weekly check-in): a list of step ids, or 1..maxStep. */
+export function generateMixedDrills(steps: number | number[], count: number, lex: DrillLexicon, rng: Rng = Math.random): Drill[] {
+  const pool = Array.isArray(steps) ? (steps.length ? steps : [1]) : Array.from({ length: Math.max(1, steps) }, (_, i) => i + 1);
   const out: Drill[] = [];
   for (let i = 0; i < count; i++) {
-    const step = 1 + Math.floor(rng() * Math.max(1, maxStep));
+    const step = pool[Math.floor(rng() * pool.length)];
     const [d] = generateDrills(step, 1, lex, rng);
     if (d && !out.some((o) => o.answer === d.answer)) out.push({ ...d, id: `mix-${i}-${d.answer}` });
   }

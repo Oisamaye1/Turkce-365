@@ -257,9 +257,9 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
         <p className="text-sm text-muted">Already know some grammar? Unlock steps up to:</p>
         <div className="flex flex-wrap gap-2">
           <select className="input !w-auto" value={unlockTo} onChange={(e) => setUnlockTo(Number(e.target.value))}>
-            {steps.map((s) => (
+            {steps.map((s, i) => (
               <option key={s.id} value={s.id}>
-                {s.id}. {s.title}
+                {i + 1}. {s.title}
               </option>
             ))}
           </select>
@@ -267,7 +267,7 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
             className="btn-secondary"
             onClick={async () => {
               await unlockStepAction(unlockTo);
-              setMsg(`Unlocked steps 1–${unlockTo}`);
+              setMsg(`Unlocked everything up to ${steps.find((x) => x.id === unlockTo)?.title ?? "that step"}`);
               router.refresh();
             }}
           >

@@ -27,67 +27,67 @@ export default async function ProgressPage() {
     listLessons(14),
   ]);
 
-  const tiles = [
-    { label: "words met", hint: `${Math.round((t.introduced / 1500) * 100)}% of the 1,500`, value: t.introduced, cls: "border-kobalt text-kobalt" },
-    { label: "recall this week", hint: `${ret.reviews} reviews`, value: ret.reviews ? `${Math.round(ret.rate * 100)}%` : "—", cls: "border-zeytin text-zeytin-depth" },
-    { label: "day streak", hint: `best ${st.best}`, value: st.current, cls: "border-cay text-cay-depth", flame: true },
-    { label: "lessons done", hint: `${t.mature} words well learned`, value: t.lessonsDone, cls: "border-turkuaz text-turkuaz-depth" },
+  const figures = [
+    { label: "words met", hint: `${Math.round((t.introduced / 1500) * 100)}% of the 1,500`, value: t.introduced },
+    { label: "recall this week", hint: `over ${ret.reviews} reviews`, value: ret.reviews ? `${Math.round(ret.rate * 100)}%` : "–" },
+    { label: "day streak", hint: `best ${st.best}`, value: st.current },
+    { label: "lessons done", hint: `${t.mature} words well learned`, value: t.lessonsDone },
   ];
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-16">
       <div>
         <MoreTabs />
         <PageTitle en="Progress" tr="İlerleme">
           <BuildReportButton />
         </PageTitle>
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {tiles.map((x) => (
-            <div key={x.label} className={`rounded-3xl border-2 p-4 ${x.cls}`}>
-              <div className="font-display flex items-center gap-1 text-4xl font-extrabold">
-                {x.flame ? <IconFlame size={32} lit={st.current > 0} /> : null}
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-6 lg:grid-cols-4">
+          {figures.map((x) => (
+            <div key={x.label}>
+              <dd className="font-display flex items-center gap-2 text-[48px] leading-none font-semibold tabular">
+                {x.label === "day streak" ? <IconFlame size={30} className={st.current ? "text-accent" : "text-muted"} /> : null}
                 {x.value}
-              </div>
-              <div className="font-medium text-ink">{x.label}</div>
-              <div className="text-sm text-muted">{x.hint}</div>
+              </dd>
+              <dt className="mt-2 text-[15px]">{x.label}</dt>
+              <p className="text-[14px] text-muted">{x.hint}</p>
             </div>
           ))}
-        </div>
+        </dl>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <section className="card">
-          <h2 className="font-display text-xl font-extrabold">Practice over the last four weeks</h2>
-          <p className="text-sm text-muted">Reviews and suffix drills per day</p>
+      <div className="grid gap-10 lg:grid-cols-2">
+        <section>
+          <h2 className="font-display text-[21px] font-semibold">Practice over four weeks</h2>
+          <p className="text-[14px] text-muted">Reviews and suffix drills per day</p>
           <ActivityChart data={activity} />
         </section>
-        <section className="card">
-          <h2 className="font-display text-xl font-extrabold">Words you&apos;ve met</h2>
-          <p className="text-sm text-muted">Running total over the same four weeks</p>
+        <section>
+          <h2 className="font-display text-[21px] font-semibold">Words you&apos;ve met</h2>
+          <p className="text-[14px] text-muted">Running total over the same four weeks</p>
           <WordsChart data={activity} start={before} />
         </section>
       </div>
-      <details className="-mt-6 text-sm">
-        <summary className="btn-quiet inline-flex cursor-pointer !px-0">Show the numbers as a table</summary>
-        <div className="mt-2 overflow-x-auto rounded-2xl border-2 border-line">
-          <table className="w-full text-left">
-            <thead className="bg-wash text-muted">
-              <tr>
-                <th className="px-3 py-2">Date</th>
-                <th className="px-3">Reviews</th>
-                <th className="px-3">Correct</th>
-                <th className="px-3">Drills</th>
-                <th className="px-3">New words</th>
+      <details className="-mt-10 text-[14px]">
+        <summary className="btn-quiet -ml-2 cursor-pointer">Show the numbers as a table</summary>
+        <div className="mt-2 overflow-x-auto">
+          <table className="w-full text-left tabular">
+            <thead className="text-muted">
+              <tr className="border-b border-line">
+                <th className="py-2 pr-4 font-normal">Date</th>
+                <th className="pr-4 font-normal">Reviews</th>
+                <th className="pr-4 font-normal">Correct</th>
+                <th className="pr-4 font-normal">Drills</th>
+                <th className="font-normal">New words</th>
               </tr>
             </thead>
             <tbody>
               {activity.map((d) => (
-                <tr key={d.date} className="border-t-2 border-line">
-                  <td className="px-3 py-1.5">{d.date}</td>
-                  <td className="px-3">{d.reviews}</td>
-                  <td className="px-3">{d.correct}</td>
-                  <td className="px-3">{d.drills}</td>
-                  <td className="px-3">{d.newWords}</td>
+                <tr key={d.date} className="border-b border-line">
+                  <td className="py-1.5 pr-4">{d.date}</td>
+                  <td className="pr-4">{d.reviews}</td>
+                  <td className="pr-4">{d.correct}</td>
+                  <td className="pr-4">{d.drills}</td>
+                  <td>{d.newWords}</td>
                 </tr>
               ))}
             </tbody>
@@ -96,20 +96,25 @@ export default async function ProgressPage() {
       </details>
 
       <section>
-        <h2 className="font-display text-2xl font-extrabold">Suffix mastery</h2>
-        <p className="mb-4 text-muted">Accuracy over your last 20 drills in each grammar step.</p>
-        <div className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+        <h2 className="font-display text-[26px] font-semibold">Suffix mastery</h2>
+        <p className="mb-6 text-ink-soft">Accuracy over your last 20 drills in each grammar step.</p>
+        <div className="grid gap-x-10 sm:grid-cols-2">
           {GRAMMAR_STEPS.map((s) => {
             const x = steps.find((y) => y.stepId === s.id)!;
             return (
-              <Link key={s.id} href={x.unlocked ? `/gym?step=${s.id}` : "/gym"} className={`block rounded-2xl px-2 py-1.5 hover:bg-wash ${x.unlocked ? "" : "opacity-50"}`}>
-                <div className="mb-1 flex justify-between gap-2">
-                  <span className="truncate font-medium">
-                    {s.id}. {s.title}
+              <Link
+                key={s.id}
+                href={x.unlocked ? `/gym?step=${s.id}` : "/gym"}
+                className={`block border-b border-line py-3 hover:bg-haze ${x.unlocked ? "" : "opacity-50"}`}
+              >
+                <div className="mb-2 flex justify-between gap-3 text-[15px]">
+                  <span className="truncate">
+                    <span className="mr-2 text-muted tabular">{s.id}</span>
+                    {s.title}
                   </span>
-                  <span className="shrink-0 text-sm text-muted">{x.unlocked ? `${Math.round(x.mastery * 100)}%` : "locked"}</span>
+                  <span className="shrink-0 text-[14px] text-muted tabular">{x.unlocked ? `${Math.round(x.mastery * 100)}%` : "locked"}</span>
                 </div>
-                <ProgressBar value={x.mastery} thin tone={x.mastered ? "zeytin" : "kobalt"} />
+                <ProgressBar value={x.mastery} tone={x.mastered ? "ok" : "brand"} />
               </Link>
             );
           })}
@@ -117,36 +122,36 @@ export default async function ProgressPage() {
       </section>
 
       <section>
-        <h2 className="font-display mb-4 text-2xl font-extrabold">Weekly reports</h2>
+        <h2 className="font-display mb-6 text-[26px] font-semibold">Weekly reports</h2>
         {reports.length ? (
-          <div className="space-y-4">
+          <div className="space-y-6">
             <ReportView report={reports[0]} />
             {reports.slice(1).map((r) => (
-              <details key={r.week} className="rounded-2xl border-2 border-line">
-                <summary className="font-display cursor-pointer px-4 py-3 text-lg font-bold">Week of {r.week}</summary>
-                <div className="p-4">
+              <details key={r.week} className="border-t border-line">
+                <summary className="cursor-pointer py-3 text-[15px]">Week of {r.week}</summary>
+                <div className="pb-6">
                   <ReportView report={r} />
                 </div>
               </details>
             ))}
           </div>
         ) : (
-          <p className="text-muted">Your first report appears after the Sunday check-in.</p>
+          <p className="text-ink-soft">Your first report appears after the Sunday check-in.</p>
         )}
       </section>
 
       {lessons.length ? (
         <section>
-          <h2 className="font-display mb-3 text-2xl font-extrabold">Past lessons</h2>
-          <ul className="grid gap-2 sm:grid-cols-2">
+          <h2 className="font-display mb-4 text-[26px] font-semibold">Past lessons</h2>
+          <ul className="grid border-t border-line sm:grid-cols-2 sm:gap-x-10">
             {lessons.map((l) => (
               <li key={l.date}>
-                <Link href={`/lesson?date=${l.date}`} className="flex items-center justify-between gap-3 rounded-2xl border-2 border-line px-4 py-3 hover:bg-wash">
+                <Link href={`/lesson?date=${l.date}`} className="flex items-center justify-between gap-3 border-b border-line py-3 hover:bg-haze">
                   <span className="min-w-0">
-                    <span className="font-display block truncate font-bold">{"title" in l.lesson ? l.lesson.title : ""}</span>
-                    <span className="block text-xs text-muted">{l.date}</span>
+                    <span className="block truncate text-[15px]">{"title" in l.lesson ? l.lesson.title : ""}</span>
+                    <span className="block text-[13px] text-muted tabular">{l.date}</span>
                   </span>
-                  {l.completedAt ? <span className="rounded-full bg-zeytin-tint px-2.5 py-0.5 text-xs font-semibold text-zeytin-depth">Done</span> : null}
+                  {l.completedAt ? <span className="pill bg-ok-tint text-ok-text">Done</span> : null}
                 </Link>
               </li>
             ))}

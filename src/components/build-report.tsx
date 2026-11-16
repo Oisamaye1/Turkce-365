@@ -9,7 +9,7 @@ export function BuildReportButton() {
   const router = useRouter();
   return (
     <button
-      className="btn-ghost !min-h-10 !text-[15px]"
+      className="btn-secondary"
       disabled={busy}
       onClick={async () => {
         setBusy(true);

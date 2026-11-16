@@ -3,7 +3,6 @@ import { GenerateLesson } from "@/components/catch-up";
 import { LessonPlayer } from "@/components/lesson/lesson-player";
 import { WeeklyQuiz } from "@/components/lesson/weekly-quiz";
 import { FocusShell } from "@/components/focus";
-import { Simit } from "@/components/simit";
 import { getCardsByIds, knownWords } from "@/lib/db/cards";
 import { getLesson } from "@/lib/db/lessons";
 import { today } from "@/lib/db/settings";
@@ -23,11 +22,12 @@ export default async function LessonPage({ searchParams }: { searchParams: Promi
   if (!row) {
     return (
       <FocusShell progress={0} max={1}>
-        <div className="flex flex-col items-center pt-8 text-center">
-          <Simit size={140} mood="calm" />
-          <h1 className="font-display mt-4 text-3xl font-extrabold">No lesson yet for {date}</h1>
-          <p className="mt-2 max-w-sm text-ink-soft">Lessons are written every morning at 05:30. You can also make today&apos;s lesson right now.</p>
-          <div className="mt-6">{date === todayDate ? <GenerateLesson auto={false} /> : null}</div>
+        <div className="pt-6">
+          <h1 className="display-xl text-[48px] sm:text-[64px]">Henüz ders yok.</h1>
+          <p className="mt-4 max-w-[46ch] text-[17px] text-ink-soft">
+            There is no lesson for {date} yet. Lessons are written every morning at 05:30{date === todayDate ? ", and you can make today's lesson right now" : ""}.
+          </p>
+          <div className="mt-8">{date === todayDate ? <GenerateLesson auto={false} /> : null}</div>
         </div>
       </FocusShell>
     );

@@ -3,14 +3,12 @@
 import { useState } from "react";
 import { updateMissionAction } from "@/app/actions";
 import type { MissionRow } from "@/lib/db/missions";
-import { IconTarget } from "./icons";
-import { Simit } from "./simit";
 import { Speak } from "./speech";
 
 const STATUS = {
-  active: { label: "To do", cls: "bg-nar-tint text-nar-depth" },
-  done: { label: "Done", cls: "bg-zeytin-tint text-zeytin-depth" },
-  struggled: { label: "Tried it", cls: "bg-cay-tint text-cay-depth" },
+  active: { label: "To do", cls: "bg-accent-tint text-accent-text" },
+  done: { label: "Done", cls: "bg-ok-tint text-ok-text" },
+  struggled: { label: "Tried it", cls: "bg-warn-tint text-warn-text" },
 };
 
 export function MissionCard({ row, current = false }: { row: MissionRow; current?: boolean }) {
@@ -23,71 +21,61 @@ export function MissionCard({ row, current = false }: { row: MissionRow; current
   const save = async (s: MissionRow["status"]) => {
     setStatus(s);
     await updateMissionAction(row.week, s, reflection);
-    setSaved(s === "done" ? "Marked as done. Harika!" : s === "struggled" ? "Saved. These phrases will come back in your lessons." : "Saved.");
+    setSaved(s === "done" ? "Marked as done." : s === "struggled" ? "Saved. These phrases will come back in your lessons." : "Saved.");
   };
 
   if (!current && !open) {
     return (
-      <button onClick={() => setOpen(true)} className="flex w-full items-center gap-3 rounded-2xl border-2 border-line px-4 py-3 text-left hover:bg-wash">
-        <IconTarget size={30} />
-        <span className="min-w-0 flex-1">
-          <span className="font-display block truncate text-lg font-bold">{m.title}</span>
-          <span className="block text-xs text-muted">
-            Week {row.learnerWeek}, from {row.week}
-          </span>
-        </span>
-        <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS[status].cls}`}>{STATUS[status].label}</span>
+      <button onClick={() => setOpen(true)} className="flex w-full items-center gap-4 border-b border-line py-3.5 text-left hover:bg-haze">
+        <span className="w-16 shrink-0 text-[13px] text-muted tabular">Week {row.learnerWeek}</span>
+        <span className="min-w-0 flex-1 truncate text-[15px]">{m.title}</span>
+        <span className={`pill ${STATUS[status].cls}`}>{STATUS[status].label}</span>
       </button>
     );
   }
 
   return (
-    <article className={`overflow-hidden rounded-3xl border-2 ${current ? "border-nar/40" : "border-line"}`}>
-      <div className={`flex items-start gap-4 p-5 ${current ? "bg-nar-tint" : "bg-wash"}`}>
-        <Simit size={84} mood={status === "done" ? "proud" : "calm"} className="hidden shrink-0 sm:block" />
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm text-ink-soft">
-              Week {row.learnerWeek}
-              {m.round ? `, round ${m.round}` : ""}
-            </span>
-            <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS[status].cls}`}>{STATUS[status].label}</span>
-          </div>
-          <h2 className="font-display text-2xl leading-tight font-extrabold">{m.title}</h2>
-          <p className="text-ink-soft" lang="tr">
-            {m.titleTr}
-          </p>
-          <p className="mt-3 text-lg">{m.goal}</p>
-          <p className="mt-1 text-sm text-ink-soft">Where: {m.place}</p>
-        </div>
+    <article className={current ? "" : "border-b border-line py-8"}>
+      <div className="flex flex-wrap items-center gap-3 text-[14px] text-muted">
+        <span className="tabular">
+          Week {row.learnerWeek}
+          {m.round ? `, round ${m.round}` : ""}
+        </span>
+        <span className={`pill ${STATUS[status].cls}`}>{STATUS[status].label}</span>
       </div>
+      <h2 className="font-display mt-2 text-[33px] leading-tight font-semibold sm:text-[42px]">{m.title}</h2>
+      <p className="text-ink-soft" lang="tr">
+        {m.titleTr}
+      </p>
+      <p className="mt-5 max-w-[60ch] text-[19px] leading-relaxed">{m.goal}</p>
+      <p className="mt-2 text-[15px] text-muted">Where: {m.place}</p>
 
-      <div className="space-y-5 p-5">
+      <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">
         <section>
-          <h3 className="font-display mb-2 text-lg font-extrabold">Your phrase sheet</h3>
-          <ul className="divide-y-2 divide-line rounded-2xl border-2 border-line">
+          <h3 className="font-display text-[21px] font-semibold">Phrases to take with you</h3>
+          <ol className="mt-3 border-t border-line">
             {m.phrases.map((p) => (
-              <li key={p.tr} className="flex items-center gap-3 px-3 py-2.5">
-                <Speak text={p.tr} size="sm" />
-                <span className="min-w-0">
-                  <span className="font-display block text-lg leading-tight font-bold" lang="tr">
+              <li key={p.tr} className="flex items-center gap-4 border-b border-line py-3.5">
+                <div className="min-w-0 flex-1">
+                  <p className="tr-word text-[24px] leading-tight" lang="tr">
                     {p.tr}
-                  </span>
-                  <span className="block text-sm text-ink-soft">{p.en}</span>
-                </span>
+                  </p>
+                  <p className="text-[15px] text-ink-soft">{p.en}</p>
+                </div>
+                <Speak text={p.tr} size="sm" />
               </li>
             ))}
-          </ul>
-          <p className="mt-3 text-ink-soft">Tip: {m.tips}</p>
+          </ol>
+          <p className="mt-4 max-w-[60ch] text-[15px] text-ink-soft">{m.tips}</p>
         </section>
 
         <section>
-          <label htmlFor={`refl-${row.week}`} className="font-display text-lg font-extrabold">
+          <label htmlFor={`refl-${row.week}`} className="font-display text-[21px] font-semibold">
             How did it go?
           </label>
           <textarea
             id={`refl-${row.week}`}
-            className="input mt-2 min-h-24 !text-base"
+            className="input mt-3 min-h-28 !text-[15px]"
             placeholder="What did you say? What was hard? Anything you didn't understand?"
             value={reflection}
             onChange={(e) => {
@@ -96,15 +84,15 @@ export function MissionCard({ row, current = false }: { row: MissionRow; current
             }}
           />
           <div className="mt-3 flex flex-wrap gap-2">
-            <button className="btn-success" onClick={() => save("done")}>
+            <button className="btn-primary" onClick={() => save("done")}>
               I did it
             </button>
-            <button className="btn-ghost" onClick={() => save("struggled")}>
+            <button className="btn-secondary" onClick={() => save("struggled")}>
               I tried, it was hard
             </button>
           </div>
           {saved ? (
-            <p className="mt-2 text-sm font-medium text-zeytin-depth" role="status">
+            <p className="mt-3 text-[14px] text-ok-text" role="status">
               {saved}
             </p>
           ) : null}

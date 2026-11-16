@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { IconSpeaker, IconTurtle } from "./icons";
+import { IconSlow, IconSpeaker } from "./icons";
 
 interface SpeechCtx {
   voices: SpeechSynthesisVoice[];
@@ -58,7 +58,7 @@ export function VoiceProvider({ initialVoiceURI, children }: { initialVoiceURI?:
 
 export const useSpeech = () => useContext(Ctx);
 
-/** Round speaker button (Duolingo-style) — hidden when no Turkish voice is installed. */
+/** Speaker button — hidden when no Turkish voice is installed. */
 export function Speak({
   text,
   slow = false,
@@ -73,8 +73,8 @@ export function Speak({
 }) {
   const { speak, available } = useSpeech();
   if (!available) return null;
-  const dim = size === "lg" ? "h-16 w-16" : size === "sm" ? "h-8 w-8" : "h-11 w-11";
-  const icon = size === "lg" ? 34 : size === "sm" ? 18 : 24;
+  const dim = size === "lg" ? "h-12 w-12" : size === "sm" ? "h-8 w-8" : "h-10 w-10";
+  const icon = size === "lg" ? 22 : size === "sm" ? 16 : 19;
   return (
     <button
       type="button"
@@ -82,12 +82,12 @@ export function Speak({
         e.stopPropagation();
         speak(text, slow ? 0.6 : 0.9);
       }}
-      className={`grid shrink-0 place-items-center rounded-2xl ${dim} ${
-        slow ? "bg-turkuaz-tint text-turkuaz-depth" : "bg-turkuaz text-white shadow-[0_4px_0_var(--turkuaz-depth)] active:translate-y-1 active:shadow-none"
-      } ${className}`}
+      className={`grid shrink-0 place-items-center rounded-full ${dim} ${
+        slow ? "text-ink-soft hover:bg-haze" : "bg-brand-tint text-brand-text hover:bg-brand hover:text-white"
+      } transition-colors ${className}`}
       aria-label={slow ? `Play slowly: ${text}` : `Play: ${text}`}
     >
-      {slow ? <IconTurtle size={icon} /> : <IconSpeaker size={icon} />}
+      {slow ? <IconSlow size={icon} /> : <IconSpeaker size={icon} />}
     </button>
   );
 }

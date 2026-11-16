@@ -1,33 +1,42 @@
 import Link from "next/link";
 import unitsJson from "../../data/units.json";
+import { WordAnatomy } from "@/components/anatomy";
 import { GenerateLesson } from "@/components/catch-up";
-import { IconBook, IconCards, IconChat, IconFlame, IconKey, IconPen, IconSpark, IconTrophy } from "@/components/icons";
-import { SessionPath, type NodeState, type PathNode } from "@/components/path";
-import { Simit } from "@/components/simit";
-import { ProgressBar, SpeechBubble } from "@/components/ui";
+import { IconArrow, IconFlame } from "@/components/icons";
+import { SessionSteps, type SessionStep, type StepState } from "@/components/session";
+import { ProgressBar } from "@/components/ui";
 import { countDue, currentUnit } from "@/lib/db/cards";
 import { currentGrammarStep, getStepStatuses } from "@/lib/db/grammar";
 import { getLesson } from "@/lib/db/lessons";
 import { ensureMission } from "@/lib/db/missions";
 import { getSettings, today } from "@/lib/db/settings";
-import { activeDates, streak, totals } from "@/lib/db/stats";
+import { activeDates, streak } from "@/lib/db/stats";
+import { STEP_ANATOMY } from "@/lib/grammar/anatomy";
 import { getStep } from "@/lib/grammar/steps";
-import { addDays, isAfterLessonTime, isSunday, learnerWeek, mondayOf } from "@/lib/time";
+import { addDays, isAfterLessonTime, isSunday, learnerWeek, localTime, mondayOf, weekdayLabel } from "@/lib/time";
 
 const UNITS = unitsJson as { unit: number; title: string; titleTr: string }[];
-const DAYS = ["M", "T", "W", "T", "F", "S", "S"];
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-export default async function LearnPage() {
+/** Turkish greeting for the learner's local time of day. */
+function greeting(hhmm: string): { tr: string; en: string } {
+  const h = Number(hhmm.slice(0, 2));
+  if (h >= 5 && h < 11) return { tr: "Günaydın.", en: "Good morning." };
+  if (h >= 11 && h < 17) return { tr: "İyi günler.", en: "Good afternoon." };
+  if (h >= 17 && h < 22) return { tr: "İyi akşamlar.", en: "Good evening." };
+  return { tr: "İyi geceler.", en: "Good night." };
+}
+
+export default async function TodayPage() {
   const s = await getSettings();
   const date = await today();
-  const [lesson, due, st, mission, stepId, statuses, t, unitNo, active] = await Promise.all([
+  const [lesson, due, st, mission, stepId, statuses, unitNo, active] = await Promise.all([
     getLesson(date),
     countDue(),
     streak(),
     ensureMission(date),
     currentGrammarStep(),
     getStepStatuses(),
-    totals(),
     currentUnit(),
     activeDates(),
   ]);
@@ -39,204 +48,173 @@ export default async function LearnPage() {
   const reviewsLeft = due.due + due.fresh;
   const sunday = isSunday(date);
   const monday = mondayOf(date);
+  const hello = greeting(localTime(new Date(), s.timezone));
+  const day = weekdayLabel(date);
+  const dd = date.split("-")[2];
+  const monthName = new Date(`${date}T12:00:00Z`).toLocaleString("en-GB", { month: "long", timeZone: "UTC" });
+  const anatomy = STEP_ANATOMY[step.id];
 
-  // ---- build today's path
+  // ---- today's session
   const section = lesson?.completedAt ? 99 : (lesson?.progress.section ?? 0);
-  const reviewsState: NodeState = reviewsLeft === 0 ? "done" : "current";
-  const lessonState = (i: number): NodeState => {
-    if (!lesson) return "locked";
-    if (section > i) return "done";
-    if (section === i) return reviewsLeft === 0 || section > 0 ? "current" : "next";
-    return "next";
-  };
-  const nodes: PathNode[] = [
-    { key: "reviews", title: reviewsLeft ? `${reviewsLeft} reviews` : "Reviews", titleTr: "Tekrar", href: "/review", state: reviewsState, icon: <IconCards size={36} />, tone: "turkuaz", minutes: reviewsLeft ? Math.max(1, Math.round((reviewsLeft * 9) / 60)) : undefined },
-    ...(sunday
-      ? [
-          { key: "quiz", title: "Weekly check-in", titleTr: "Haftalık değerlendirme", href: "/lesson", state: lessonState(0), icon: <IconSpark size={34} />, tone: "kobalt" as const, minutes: 10 },
-        ]
-      : [
-          { key: "warmup", title: "Warm-up", titleTr: "Isınma", href: "/lesson?s=0", state: lessonState(0), icon: <IconFlame size={36} />, tone: "cay" as const, minutes: 3 },
-          { key: "dialogue", title: "Dialogue", titleTr: "Diyalog", href: "/lesson?s=1", state: lessonState(1), icon: <IconChat size={34} />, tone: "kobalt" as const, minutes: 5 },
-          { key: "phrases", title: "New phrases", titleTr: "Yeni ifadeler", href: "/lesson?s=2", state: lessonState(2), icon: <IconSpark size={34} />, tone: "turkuaz" as const, minutes: 3 },
-          { key: "grammar", title: "Grammar", titleTr: "Dilbilgisi", href: "/lesson?s=3", state: lessonState(3), icon: <IconKey size={34} />, tone: "nar" as const, minutes: 4 },
-          { key: "writing", title: "Writing", titleTr: "Yazma", href: "/lesson?s=4", state: lessonState(4), icon: <IconPen size={32} />, tone: "kobalt" as const, minutes: 5 },
-        ]),
+  const lessonState = (i: number): StepState => (!lesson ? "locked" : section > i ? "done" : "next");
+  const lessonTitle = lesson && "title" in lesson.lesson ? lesson.lesson.title : undefined;
+  const steps: SessionStep[] = [
     {
-      key: "finish",
-      title: "Done for today",
-      titleTr: "Bugünlük bitti",
-      href: lesson ? "/lesson" : null,
-      state: lesson?.completedAt ? "done" : "locked",
-      icon: <IconTrophy size={40} />,
-      tone: "cay",
-      finish: true,
+      key: "reviews",
+      title: reviewsLeft ? `${reviewsLeft} reviews` : "Reviews",
+      titleTr: "Tekrar",
+      detail: due.fresh ? `${due.fresh} new words` : undefined,
+      minutes: reviewsLeft ? Math.max(1, Math.round((reviewsLeft * 9) / 60)) : undefined,
+      href: "/review",
+      state: reviewsLeft === 0 ? "done" : "next",
     },
+    ...(sunday
+      ? [{ key: "quiz", title: "Weekly check-in", titleTr: "Haftalık değerlendirme", minutes: 10, href: "/lesson", state: lessonState(0) }]
+      : [
+          { key: "warmup", title: "Warm-up", titleTr: "Isınma", detail: "recent mistakes", minutes: 3, href: "/lesson?s=0", state: lessonState(0) },
+          { key: "dialogue", title: lessonTitle ? `Dialogue: ${lessonTitle}` : "Dialogue", titleTr: "Diyalog", minutes: 5, href: "/lesson?s=1", state: lessonState(1) },
+          { key: "phrases", title: "Five new phrases", titleTr: "Yeni ifadeler", minutes: 3, href: "/lesson?s=2", state: lessonState(2) },
+          { key: "grammar", title: `Grammar: ${step.title}`, titleTr: "Dilbilgisi", minutes: 4, href: "/lesson?s=3", state: lessonState(3) },
+          { key: "writing", title: "Write a few sentences", titleTr: "Yazma", minutes: 5, href: "/lesson?s=4", state: lessonState(4) },
+        ]),
   ];
-  // Only one "current" node: the first unfinished one.
-  let seenCurrent = false;
-  for (const n of nodes) {
-    if (n.state === "current") {
-      if (seenCurrent) n.state = "next";
-      seenCurrent = true;
-    }
-  }
-  if (!seenCurrent) {
-    const firstOpen = nodes.find((n) => n.state === "next");
-    if (firstOpen) firstOpen.state = "current";
-  }
-  const allDone = !!lesson?.completedAt && reviewsLeft === 0;
+  const firstOpen = steps.find((x) => x.state === "next");
+  if (firstOpen) firstOpen.state = "current";
+  const total = steps.reduce((a, x) => a + (x.state === "done" ? 0 : (x.minutes ?? 0)), 0);
+  const allDone = steps.every((x) => x.state === "done");
 
   return (
-    <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
-      <div className="min-w-0">
-        {/* Unit banner */}
-        <section className="iznik relative overflow-hidden rounded-3xl bg-banner px-5 py-5 text-white shadow-[0_5px_0_var(--banner-depth)] sm:px-7">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="min-w-0">
-              <p className="font-display text-[15px] font-bold text-white/75">
-                Week {week}, unit {unit.unit}
-              </p>
-              <h1 className="font-display text-[28px] leading-tight font-extrabold">{unit.title}</h1>
-              <p className="text-white/80" lang="tr">
-                {unit.titleTr}
-              </p>
-            </div>
-            <Link
-              href={`/gym?step=${step.id}`}
-              className="font-display flex items-center gap-2 rounded-2xl border-2 border-white/35 px-4 py-2.5 font-bold hover:bg-white/10"
-            >
-              <IconBook size={22} />
-              Grammar guide
-            </Link>
-          </div>
-        </section>
+    <div>
+      {/* Greeting hero */}
+      <section className="mb-10 lg:mb-14">
+        <p className="text-[15px] text-muted">
+          {day.en} {Number(dd)} {monthName}, week {week}
+        </p>
+        <h1 className="display-xl mt-2 text-[56px] text-ink sm:text-[80px]" lang="tr">
+          {hello.tr}
+        </h1>
+        <p className="mt-3 text-[17px] text-ink-soft">
+          {hello.en}{" "}
+          {allDone
+            ? "Everything for today is done. Aferin."
+            : total
+              ? `About ${total} minutes left today.`
+              : "Your lesson arrives soon."}
+        </p>
+        <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3 text-[15px] text-ink-soft tabular">
+          <span className="flex items-center gap-2">
+            <IconFlame size={18} className={st.current ? "text-accent" : "text-muted"} />
+            <span>
+              <b className="font-semibold text-ink">{st.current}</b>-day streak
+            </span>
+          </span>
+          <span>
+            <b className="font-semibold text-ink">{reviewsLeft}</b> reviews waiting
+          </span>
+          <span>
+            Unit <b className="font-semibold text-ink">{unit.unit}</b>, {unit.title}
+          </span>
+        </div>
+      </section>
 
-        {/* Lesson status / generation */}
-        {!lesson ? (
-          <div className="mx-auto mt-6 flex max-w-md items-start gap-3">
-            <Simit size={72} mood="calm" className="shrink-0" />
-            <SpeechBubble className="flex-1">
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_340px]">
+        {/* Today's session */}
+        <section aria-labelledby="session-h">
+          <div className="mb-2 flex items-baseline justify-between gap-3">
+            <h2 id="session-h" className="font-display text-[26px] font-semibold">
+              {sunday ? "Sunday check-in" : "Today's session"}
+            </h2>
+            {lesson && lesson.kind === "daily" ? (
+              <span className="text-[14px] text-muted">{lesson.source === "claude" ? "Written by Claude for you" : "Offline lesson"}</span>
+            ) : null}
+          </div>
+          <SessionSteps steps={steps} />
+          {!lesson ? (
+            <div className="mt-6 rounded-[14px] bg-haze p-5">
               {afterTime ? (
                 <GenerateLesson auto />
               ) : (
                 <div className="space-y-3">
-                  <p>
-                    Your lesson arrives at <b>{s.lessonTime}</b>. Start with your reviews — or make the lesson now.
+                  <p className="text-ink-soft">
+                    Today&apos;s lesson is written at <b className="text-ink">{s.lessonTime}</b>. Start with your reviews, or make it now.
                   </p>
-                  <GenerateLesson auto={false} label="Make today's lesson" />
+                  <GenerateLesson auto={false} />
                 </div>
               )}
-            </SpeechBubble>
-          </div>
-        ) : (
-          <div className="mt-6 text-center">
-            <p className="font-display text-xl font-extrabold">{"title" in lesson.lesson ? lesson.lesson.title : ""}</p>
-            <p className="text-sm text-muted" lang="tr">
-              {"titleTr" in lesson.lesson ? lesson.lesson.titleTr : ""}
-              {lesson.kind === "daily" ? (lesson.source === "claude" ? ", written by Claude for you" : ", offline lesson") : ""}
-            </p>
-          </div>
-        )}
+            </div>
+          ) : null}
+        </section>
 
-        <div className="relative mt-14">
-          <SessionPath nodes={nodes} />
-          <div className="pointer-events-none absolute top-[38%] right-0 hidden sm:block" aria-hidden="true">
-            <Simit size={110} mood={allDone ? "proud" : "calm"} />
-          </div>
-        </div>
+        {/* Side column */}
+        <aside className="space-y-10">
+          {anatomy ? (
+            <section aria-labelledby="anatomy-h">
+              <h2 id="anatomy-h" className="text-[15px] text-muted">
+                Step {step.id} of 16: {step.title}
+              </h2>
+              <div className="mt-4">
+                <WordAnatomy parts={anatomy.parts} labels={anatomy.labels} size="lg" />
+              </div>
+              <p className="mt-4 text-ink-soft">“{anatomy.en}”</p>
+              <div className="mt-5 flex items-center gap-3">
+                <ProgressBar value={stepStatus?.mastery ?? 0} tone="ok" />
+                <span className="shrink-0 text-[14px] text-muted tabular">{Math.round((stepStatus?.mastery ?? 0) * 100)}%</span>
+              </div>
+              <Link href={`/gym?step=${step.id}`} className="btn-quiet mt-3 -ml-2">
+                Practise this suffix <IconArrow size={16} />
+              </Link>
+            </section>
+          ) : null}
 
-        {allDone ? (
-          <div className="mx-auto mt-4 flex max-w-md items-center gap-3">
-            <Simit size={64} mood="happy" className="shrink-0 sm:hidden" />
-            <SpeechBubble className="flex-1">
-              <b>Aferin!</b> Everything for today is done. Practise in the Suffix gym, or try this week&apos;s mission in real life.
-            </SpeechBubble>
-          </div>
-        ) : null}
+          <section aria-labelledby="mission-h" className="border-t border-line pt-8">
+            <h2 id="mission-h" className="text-[15px] text-muted">
+              This week&apos;s mission
+            </h2>
+            <p className="font-display mt-2 text-[21px] leading-snug font-semibold">{mission.mission.title}</p>
+            <p className="mt-1.5 text-ink-soft">{mission.mission.goal}</p>
+            <div className="mt-3 flex items-center gap-3">
+              <Link href="/missions" className="btn-quiet -ml-2">
+                Phrase sheet <IconArrow size={16} />
+              </Link>
+              {mission.status !== "active" ? (
+                <span className={`pill ${mission.status === "done" ? "bg-ok-tint text-ok-text" : "bg-warn-tint text-warn-text"}`}>
+                  {mission.status === "done" ? "Done" : "Tried it"}
+                </span>
+              ) : null}
+            </div>
+          </section>
+
+          <section aria-labelledby="week-h" className="border-t border-line pt-8">
+            <h2 id="week-h" className="text-[15px] text-muted">
+              This week
+            </h2>
+            <ol className="mt-3 grid grid-cols-7 gap-1.5 text-center">
+              {DAYS.map((d, i) => {
+                const dayDate = addDays(monday, i);
+                const on = active.has(dayDate);
+                const isToday = dayDate === date;
+                return (
+                  <li key={d} className="flex flex-col items-center gap-1.5">
+                    <span className={`text-[12px] ${isToday ? "font-semibold text-ink" : "text-muted"}`}>{d}</span>
+                    <span
+                      className={`h-2.5 w-full rounded-full ${on ? "bg-accent" : isToday ? "bg-accent-tint" : "bg-line"}`}
+                      aria-label={`${d}${on ? ", practised" : ""}`}
+                    />
+                  </li>
+                );
+              })}
+            </ol>
+            <p className="mt-3 text-[14px] text-muted">Best streak so far: {st.best} day{st.best === 1 ? "" : "s"}</p>
+          </section>
+
+          {week <= 2 ? (
+            <Link href="/alphabet" className="block rounded-[14px] border border-line p-5 hover:bg-haze">
+              <p className="font-display text-[19px] font-semibold">Start with the sounds</p>
+              <p className="mt-1 text-[15px] text-ink-soft">The 29 letters, and the seven that differ from English: c ç ğ ı ö ş ü.</p>
+            </Link>
+          ) : null}
+        </aside>
       </div>
-
-      {/* Right rail */}
-      <aside className="space-y-4">
-        <section className="card">
-          <div className="flex items-center gap-3">
-            <IconFlame size={44} lit={st.current > 0} />
-            <div>
-              <p className="font-display text-3xl leading-none font-extrabold text-cay-depth">{st.current}</p>
-              <p className="text-sm text-ink-soft">day streak, best {st.best}</p>
-            </div>
-          </div>
-          <div className="mt-4 grid grid-cols-7 gap-1.5 text-center">
-            {DAYS.map((d, i) => {
-              const day = addDays(monday, i);
-              const on = active.has(day);
-              const isToday = day === date;
-              return (
-                <div key={day} className="flex flex-col items-center gap-1">
-                  <span className={`text-xs ${isToday ? "font-bold text-ink" : "text-muted"}`}>{d}</span>
-                  <span
-                    className={`grid h-8 w-8 place-items-center rounded-full ${on ? "bg-cay text-white" : isToday ? "border-2 border-cay bg-paper" : "bg-wash"}`}
-                    aria-label={`${day}${on ? ", practised" : ""}`}
-                  >
-                    {on ? <IconFlame size={18} lit={false} /> : null}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        <section className="card">
-          <div className="flex items-start justify-between gap-2">
-            <div>
-              <p className="text-sm text-muted">This week&apos;s mission</p>
-              <h2 className="font-display text-xl leading-tight font-extrabold">{mission.mission.title}</h2>
-            </div>
-            <span
-              className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-                mission.status === "done" ? "bg-zeytin-tint text-zeytin-depth" : mission.status === "struggled" ? "bg-cay-tint text-cay-depth" : "bg-nar-tint text-nar-depth"
-              }`}
-            >
-              {mission.status === "done" ? "Done" : mission.status === "struggled" ? "Tried" : "To do"}
-            </span>
-          </div>
-          <p className="mt-2 text-sm text-ink-soft">{mission.mission.goal}</p>
-          <Link href="/missions" className="btn-ghost mt-4 w-full">
-            Open phrase sheet
-          </Link>
-        </section>
-
-        <section className="card">
-          <p className="text-sm text-muted">Grammar step {step.id} of 16</p>
-          <h2 className="font-display text-xl leading-tight font-extrabold">{step.title}</h2>
-          <div className="mt-3 flex items-center gap-3">
-            <ProgressBar value={stepStatus?.mastery ?? 0} tone="zeytin" />
-            <span className="font-display shrink-0 font-bold text-ink-soft">{Math.round((stepStatus?.mastery ?? 0) * 100)}%</span>
-          </div>
-          <p className="mt-1 text-xs text-muted">Reach 90% over 20 drills to unlock the next step.</p>
-          <Link href={`/gym?step=${step.id}`} className="btn-ghost mt-4 w-full">
-            Practise suffixes
-          </Link>
-        </section>
-
-        <section className="grid grid-cols-2 gap-3">
-          <div className="card !p-3">
-            <p className="font-display text-2xl font-extrabold text-kobalt">{t.introduced}</p>
-            <p className="text-sm text-ink-soft">words met</p>
-          </div>
-          <div className="card !p-3">
-            <p className="font-display text-2xl font-extrabold text-turkuaz-depth">{t.lessonsDone}</p>
-            <p className="text-sm text-ink-soft">lessons done</p>
-          </div>
-        </section>
-
-        {week <= 2 ? (
-          <Link href="/alphabet" className="card block hover:bg-wash">
-            <p className="font-display text-lg font-extrabold">New here? Start with the sounds</p>
-            <p className="text-sm text-ink-soft">29 letters, and the seven that differ from English: c ç ğ ı ö ş ü.</p>
-          </Link>
-        ) : null}
-      </aside>
     </div>
   );
 }

@@ -10,12 +10,12 @@ export default async function MissionsPage() {
   return (
     <div>
       <MoreTabs />
-      <PageTitle en="Missions" tr="Görevler — one real conversation a week" />
+      <PageTitle en="Missions" tr="Görevler" lede="One real conversation each week, somewhere in Northern Cyprus." />
       <MissionCard row={current} current />
       {past.length ? (
-        <section className="mt-10">
-          <h2 className="font-display mb-3 text-xl font-extrabold">Earlier missions</h2>
-          <div className="space-y-3">
+        <section className="mt-16">
+          <h2 className="font-display mb-3 text-[21px] font-semibold">Earlier missions</h2>
+          <div className="border-t border-line">
             {past.map((m) => (
               <MissionCard key={m.week} row={m} />
             ))}

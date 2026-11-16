@@ -30,9 +30,9 @@ export function TurkishKeyboard({ target, className = "" }: { target?: React.Ref
     if (shift) setShift(false);
   };
   const key =
-    "font-display grid h-11 min-w-11 place-items-center rounded-xl border-2 border-line bg-paper px-2 text-xl font-bold text-ink shadow-[0_3px_0_var(--line)] active:translate-y-[3px] active:shadow-none";
+    "font-display grid h-10 min-w-10 place-items-center rounded-lg border border-line-strong bg-paper px-2 text-[19px] font-medium text-ink hover:bg-haze active:bg-brand-tint";
   return (
-    <div className={`flex flex-wrap items-center gap-2 ${className}`} aria-label="Turkish letters">
+    <div className={`flex flex-wrap items-center gap-1.5 ${className}`} aria-label="Turkish letters">
       {keys.map((k) => (
         <button key={k} type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => press(k)} className={key}>
           {k}
@@ -42,7 +42,7 @@ export function TurkishKeyboard({ target, className = "" }: { target?: React.Ref
         type="button"
         onMouseDown={(e) => e.preventDefault()}
         onClick={() => setShift((s) => !s)}
-        className={`${key} ${shift ? "!border-kobalt !text-kobalt" : "text-muted"}`}
+        className={`${key} ${shift ? "!border-brand !text-brand-text" : "!text-muted"}`}
         aria-pressed={shift}
         aria-label="Capital letters"
       >

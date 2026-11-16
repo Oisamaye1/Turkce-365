@@ -53,9 +53,9 @@ export function SettingsForm({
 
   return (
     <div className="space-y-5">
-      <section className="card space-y-5">
-        <h2 className="font-display text-xl font-extrabold">
-          Learning <span className="ml-1 text-base font-normal text-muted" lang="tr">Öğrenme</span>
+      <section className="space-y-5 border-t border-line pt-8">
+        <h2 className="font-display text-[21px] font-semibold">
+          Learning <span className="ml-2 text-[15px] font-normal text-muted" lang="tr">Öğrenme</span>
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block space-y-1">
@@ -86,20 +86,20 @@ export function SettingsForm({
         <p className="text-xs text-muted">After changing the lesson time, run <code>npm run scheduler:setup</code> again.</p>
       </section>
 
-      <section className="card space-y-3">
-        <h2 className="font-display text-xl font-extrabold">
-          Voice <span className="ml-1 text-base font-normal text-muted" lang="tr">Ses</span>
+      <section className="space-y-3 border-t border-line pt-8">
+        <h2 className="font-display text-[21px] font-semibold">
+          Voice <span className="ml-2 text-[15px] font-normal text-muted" lang="tr">Ses</span>
         </h2>
         {voices.length ? (
           <div className="flex flex-wrap items-center gap-2">
-            <select className="input !w-auto !text-base" value={voice?.voiceURI} onChange={(e) => setVoiceURI(e.target.value)}>
+            <select className="input !w-auto" value={voice?.voiceURI} onChange={(e) => setVoiceURI(e.target.value)}>
               {voices.map((v) => (
                 <option key={v.voiceURI} value={v.voiceURI}>
                   {v.name} ({v.lang})
                 </option>
               ))}
             </select>
-            <button className="btn-ghost" onClick={() => speak("Merhaba! Türkçe öğreniyorum. Çok güzel, teşekkür ederim.")}>
+            <button className="btn-secondary" onClick={() => speak("Merhaba! Türkçe öğreniyorum. Çok güzel, teşekkür ederim.")}>
               ▶ Test voice
             </button>
           </div>
@@ -110,14 +110,14 @@ export function SettingsForm({
         )}
       </section>
 
-      <section className="card space-y-3">
-        <h2 className="font-display text-xl font-extrabold">
-          Claude <span className="ml-1 text-base font-normal text-muted" lang="tr">Yapay zeka</span>
+      <section className="space-y-3 border-t border-line pt-8">
+        <h2 className="font-display text-[21px] font-semibold">
+          Claude <span className="ml-2 text-[15px] font-normal text-muted" lang="tr">Yapay zeka</span>
         </h2>
         <p className="text-sm text-muted">AI features run through the Claude Code CLI (<code>claude -p</code>) with your Pro login — no API key. Everything else works offline.</p>
         <div className="flex flex-wrap gap-2">
           <button
-            className="btn-ghost"
+            className="btn-secondary"
             disabled={!!busy}
             onClick={async () => {
               setBusy("detect");
@@ -128,7 +128,7 @@ export function SettingsForm({
             Detect CLI
           </button>
           <button
-            className="btn-ghost"
+            className="btn-secondary"
             disabled={!!busy}
             onClick={async () => {
               setBusy("test");
@@ -140,11 +140,11 @@ export function SettingsForm({
           </button>
         </div>
         {check ? (
-          <div className="rounded-xl bg-card-2 p-3 text-sm">
+          <div className="rounded-xl bg-haze p-3 text-sm">
             {check.caps.available ? (
               <>
                 <div>
-                  <Badge tone="good">found</Badge> {check.caps.version} at <code>{check.caps.bin}</code>
+                  <Badge tone="ok">found</Badge> {check.caps.version} at <code>{check.caps.bin}</code>
                 </div>
                 <div className="mt-1 text-xs text-muted">
                   flags:{" "}
@@ -167,9 +167,9 @@ export function SettingsForm({
         ) : null}
       </section>
 
-      <section className="card space-y-3">
-        <h2 className="font-display text-xl font-extrabold">
-          Daily lesson <span className="ml-1 text-base font-normal text-muted" lang="tr">Günlük ders</span>
+      <section className="space-y-3 border-t border-line pt-8">
+        <h2 className="font-display text-[21px] font-semibold">
+          Daily lesson <span className="ml-2 text-[15px] font-normal text-muted" lang="tr">Günlük ders</span>
         </h2>
         {online ? (
           <div className="space-y-2 text-sm">
@@ -186,7 +186,7 @@ export function SettingsForm({
                 <Badge tone="warn">never — set it up on your computer</Badge>
               )}
             </p>
-            <pre className="overflow-x-auto rounded-xl bg-card-2 p-3 text-xs">{`npx vercel env pull .env.local   # gets DATABASE_URL
+            <pre className="overflow-x-auto rounded-xl bg-haze p-3 text-xs">{`npx vercel env pull .env.local   # gets DATABASE_URL
 npm run worker                   # test once
 npm run scheduler:setup          # every 15 minutes`}</pre>
           </div>
@@ -195,14 +195,14 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
             <p className="text-sm">
               Scheduled at <b>{settings.lessonTime}</b> {settings.timezone}. Install the scheduler on this computer ({platform}):
             </p>
-            <pre className="overflow-x-auto rounded-xl bg-card-2 p-3 text-sm">npm run scheduler:setup</pre>
+            <pre className="overflow-x-auto rounded-xl bg-haze p-3 text-sm">npm run scheduler:setup</pre>
           </>
         )}
         <div className="flex flex-wrap gap-2">
           {(online ? (["offline"] as const) : (["claude", "offline"] as const)).map((k) => (
             <button
               key={k}
-              className="btn-ghost"
+              className="btn-secondary"
               disabled={!!busy}
               onClick={async () => {
                 if (!confirm("Replace today's lesson with a new one? Progress in it will be reset.")) return;
@@ -233,7 +233,7 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
                   <td className="py-1 pr-3 whitespace-nowrap">{new Date(j.startedAt).toLocaleString("en-GB", { timeZone: settings.timezone })}</td>
                   <td className="pr-3">{j.trigger}</td>
                   <td className="pr-3">
-                    <Badge tone={j.status === "ok" ? "good" : j.status === "fallback" ? "warn" : j.status === "error" ? "bad" : "neutral"}>{j.status}</Badge>
+                    <Badge tone={j.status === "ok" ? "ok" : j.status === "fallback" ? "warn" : j.status === "error" ? "bad" : "neutral"}>{j.status}</Badge>
                   </td>
                   <td className="text-xs text-muted">{j.message}</td>
                 </tr>
@@ -250,13 +250,13 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
         </div>
       </section>
 
-      <section className="card space-y-3">
-        <h2 className="font-display text-xl font-extrabold">
-          Grammar level <span className="ml-1 text-base font-normal text-muted" lang="tr">Seviye</span>
+      <section className="space-y-3 border-t border-line pt-8">
+        <h2 className="font-display text-[21px] font-semibold">
+          Grammar level <span className="ml-2 text-[15px] font-normal text-muted" lang="tr">Seviye</span>
         </h2>
         <p className="text-sm text-muted">Already know some grammar? Unlock steps up to:</p>
         <div className="flex flex-wrap gap-2">
-          <select className="input !w-auto !text-base" value={unlockTo} onChange={(e) => setUnlockTo(Number(e.target.value))}>
+          <select className="input !w-auto" value={unlockTo} onChange={(e) => setUnlockTo(Number(e.target.value))}>
             {steps.map((s) => (
               <option key={s.id} value={s.id}>
                 {s.id}. {s.title}
@@ -264,7 +264,7 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
             ))}
           </select>
           <button
-            className="btn-ghost"
+            className="btn-secondary"
             onClick={async () => {
               await unlockStepAction(unlockTo);
               setMsg(`Unlocked steps 1–${unlockTo}`);
@@ -276,15 +276,15 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
         </div>
       </section>
 
-      <section className="card space-y-3">
-        <h2 className="font-display text-xl font-extrabold">
-          Backup <span className="ml-1 text-base font-normal text-muted" lang="tr">Yedekleme</span>
+      <section className="space-y-3 border-t border-line pt-8">
+        <h2 className="font-display text-[21px] font-semibold">
+          Backup <span className="ml-2 text-[15px] font-normal text-muted" lang="tr">Yedekleme</span>
         </h2>
         <p className="text-sm text-muted">
           Database: <code className="break-all">{dbFile}</code>
         </p>
         <div className="flex flex-wrap gap-2">
-          <a className="btn-ghost" href="/api/export/json">
+          <a className="btn-secondary" href="/api/export/json">
             ⬇ Export everything (.json)
           </a>
         </div>
@@ -293,12 +293,12 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
         </p>
       </section>
       {online ? (
-        <section className="card flex items-center justify-between gap-3">
-          <h2 className="font-display text-xl font-extrabold">
-            Account <span className="ml-1 text-base font-normal text-muted" lang="tr">Hesap</span>
+        <section className="flex items-center justify-between gap-3 border-t border-line pt-8">
+          <h2 className="font-display text-[21px] font-semibold">
+            Account <span className="ml-2 text-[15px] font-normal text-muted" lang="tr">Hesap</span>
           </h2>
           <form action={logoutAction}>
-            <button className="btn-ghost">Log out</button>
+            <button className="btn-secondary">Log out</button>
           </form>
         </section>
       ) : null}

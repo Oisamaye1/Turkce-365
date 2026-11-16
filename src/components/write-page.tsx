@@ -22,16 +22,16 @@ export function WritePage({ prompts, lessonDate, history }: { prompts: Prompt[];
   const offset = prompts[0]?.fromLesson ? 1 : 0;
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
-      <section className="min-w-0 space-y-5">
-        <div className="flex flex-wrap gap-2" role="tablist" aria-label="Writing topics">
+    <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px]">
+      <section className="min-w-0 space-y-8">
+        <div className="-mx-1 flex flex-wrap gap-1 border-b border-line" role="tablist" aria-label="Writing topics">
           {prompts.map((x, k) => (
             <button
               key={k}
               role="tab"
               aria-selected={k === i}
               onClick={() => setI(k)}
-              className={`font-display rounded-2xl border-2 px-3.5 py-1.5 font-bold ${k === i ? "border-kobalt bg-kobalt-tint text-kobalt" : "border-line text-ink-soft hover:bg-wash"}`}
+              className={`-mb-px border-b-2 px-3 py-2.5 text-[15px] ${k === i ? "border-accent font-medium text-ink" : "border-transparent text-ink-soft hover:text-ink"}`}
             >
               {x.fromLesson ? "Today's task" : SHORT[k - offset] ?? `Topic ${k}`}
             </button>
@@ -40,13 +40,13 @@ export function WritePage({ prompts, lessonDate, history }: { prompts: Prompt[];
             role="tab"
             aria-selected={i === -1}
             onClick={() => setI(-1)}
-            className={`font-display rounded-2xl border-2 px-3.5 py-1.5 font-bold ${i === -1 ? "border-kobalt bg-kobalt-tint text-kobalt" : "border-line text-ink-soft hover:bg-wash"}`}
+            className={`-mb-px border-b-2 px-3 py-2.5 text-[15px] ${i === -1 ? "border-accent font-medium text-ink" : "border-transparent text-ink-soft hover:text-ink"}`}
           >
             My own topic
           </button>
         </div>
         {i === -1 ? (
-          <input className="input !text-base" placeholder="What do you want to write about?" value={custom} onChange={(e) => setCustom(e.target.value)} />
+          <input className="input" placeholder="What do you want to write about?" value={custom} onChange={(e) => setCustom(e.target.value)} />
         ) : null}
         <WritingBox
           key={`${i}-${p.prompt}`}
@@ -58,26 +58,26 @@ export function WritePage({ prompts, lessonDate, history }: { prompts: Prompt[];
       </section>
 
       <aside>
-        <h2 className="font-display mb-3 text-xl font-extrabold">Your past writing</h2>
+        <h2 className="font-display mb-3 text-[21px] font-semibold">Past writing</h2>
         {history.length ? (
-          <ul className="space-y-2">
+          <ul className="divide-y divide-line border-y border-line">
             {history.map((w) => (
-              <li key={w.id} className="rounded-2xl border-2 border-line">
-                <button className="flex w-full items-center justify-between gap-3 px-3 py-2.5 text-left" onClick={() => setOpen(open === w.id ? null : w.id)} aria-expanded={open === w.id}>
+              <li key={w.id}>
+                <button className="flex w-full items-center justify-between gap-3 py-3 text-left" onClick={() => setOpen(open === w.id ? null : w.id)} aria-expanded={open === w.id}>
                   <span className="min-w-0">
-                    <span className="block truncate font-medium">{w.prompt}</span>
-                    <span className="block text-xs text-muted">{w.date}</span>
+                    <span className="block truncate text-[15px]">{w.prompt}</span>
+                    <span className="block text-[13px] text-muted">{w.date}</span>
                   </span>
                   <span
-                    className={`font-display shrink-0 rounded-full px-2.5 py-0.5 text-sm font-bold ${
-                      w.score === null ? "bg-wash text-muted" : w.score >= 8 ? "bg-zeytin-tint text-zeytin-depth" : w.score >= 5 ? "bg-cay-tint text-cay-depth" : "bg-nar-tint text-nar-depth"
+                    className={`shrink-0 text-[14px] tabular ${
+                      w.score === null ? "text-muted" : w.score >= 8 ? "text-ok-text" : w.score >= 5 ? "text-warn-text" : "text-bad-text"
                     }`}
                   >
                     {w.score !== null ? `${w.score}/10` : w.attempts >= 3 ? "failed" : "waiting"}
                   </span>
                 </button>
                 {open === w.id ? (
-                  <div className="border-t-2 border-line p-3">
+                  <div className="pb-5">
                     {w.corrected ? <CorrectionView mine={w.myText} correction={w.corrected} /> : <p className="whitespace-pre-wrap" lang="tr">{w.myText}</p>}
                   </div>
                 ) : null}
@@ -85,7 +85,7 @@ export function WritePage({ prompts, lessonDate, history }: { prompts: Prompt[];
             ))}
           </ul>
         ) : (
-          <p className="text-sm text-muted">Nothing yet. Your corrected texts will collect here.</p>
+          <p className="text-[15px] text-muted">Nothing yet. Your corrected texts collect here.</p>
         )}
       </aside>
     </div>

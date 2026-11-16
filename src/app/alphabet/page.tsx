@@ -6,7 +6,7 @@ export default function AlphabetPage() {
   return (
     <div>
       <MoreTabs />
-      <PageTitle en="Sounds and letters" tr="Alfabe ve telaffuz" />
+      <PageTitle en="Alphabet" tr="Alfabe" lede="Turkish is spelled the way it sounds. Learn 29 letters once and you can read anything." />
       <AlphabetModule />
     </div>
   );

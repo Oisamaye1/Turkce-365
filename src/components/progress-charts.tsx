@@ -7,7 +7,7 @@ const AXIS = { fontSize: 11, fill: "var(--muted)" };
 const tooltipStyle = {
   contentStyle: { background: "var(--paper)", border: "2px solid var(--line)", borderRadius: 14, color: "var(--ink)", fontSize: 12 },
   labelStyle: { color: "var(--muted)" },
-  cursor: { fill: "var(--wash)" },
+  cursor: { fill: "var(--haze)" },
 };
 const short = (d: string) => d.slice(5).replace("-", "/");
 

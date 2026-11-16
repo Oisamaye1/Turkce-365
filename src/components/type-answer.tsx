@@ -13,14 +13,14 @@ export interface AnswerResult extends CheckOutcome {
   ms: number;
 }
 
-/** Highlights the letters that were missing or wrong in the expected answer. */
+/** Underlines the letters that were missing from an almost-right answer. */
 export function LetterDiff({ given, expected }: { given: string; expected: string }) {
   const parts = diffChars(normalizeAnswer(given), normalizeAnswer(expected));
   return (
-    <span className="font-display text-xl font-bold">
+    <span className="tr-word text-[21px]">
       {parts.map((p, i) =>
         p.removed ? null : (
-          <span key={i} className={p.added ? "rounded-md bg-cay/40 px-0.5 underline decoration-2 underline-offset-4" : ""}>
+          <span key={i} className={p.added ? "rounded-sm bg-warn/30 underline decoration-warn decoration-2 underline-offset-4" : ""}>
             {p.value}
           </span>
         ),
@@ -30,10 +30,10 @@ export function LetterDiff({ given, expected }: { given: string; expected: strin
 }
 
 /**
- * Typed answer with a Duolingo-style feedback sheet.
- * - `sheet="fixed"`: the Check button and feedback live in a bar pinned to the bottom (focus mode).
- * - `sheet="inline"`: the same bar sits under the input (pages with navigation).
- * The parent passes the actions shown after checking (Continue, grades…) as children.
+ * Typed answer with a feedback panel.
+ * - `sheet="fixed"`: the Check button and feedback sit in a bar pinned to the bottom (focus mode).
+ * - `sheet="inline"`: the same panel sits under the input (pages with navigation).
+ * Children are the actions shown after checking; the first should be the primary one.
  */
 export function TypeAnswer({
   expected,
@@ -57,9 +57,7 @@ export function TypeAnswer({
   autoFocus?: boolean;
   resetKey?: string | number;
   sheet?: "fixed" | "inline";
-  /** Extra content inside the feedback sheet (examples, breakdowns). */
   details?: React.ReactNode;
-  /** Actions after checking — the first button should be the primary one. */
   children?: React.ReactNode;
 }) {
   const [value, setValue] = useState("");
@@ -85,71 +83,66 @@ export function TypeAnswer({
 
   const copy = result ? RESULT_COPY[result.result] : null;
   const exact = result?.result === "correct" && normalizeAnswer(result.expected) === normalizeAnswer(value);
+  const formId = `ta-${resetKey ?? "x"}`;
 
-  const bar = (
-    <div
-      className={
-        sheet === "fixed"
-          ? `fixed inset-x-0 bottom-0 z-40 border-t-2 ${result ? `${copy!.sheet} border-transparent` : "border-line bg-paper"} pb-[env(safe-area-inset-bottom)]`
-          : `rounded-3xl ${result ? copy!.sheet : ""}`
-      }
-      style={result && sheet === "fixed" ? { animation: "sheet-up 180ms ease-out" } : undefined}
-    >
-      <div className={`mx-auto flex max-w-3xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between ${sheet === "fixed" ? "px-4 py-5 sm:px-6" : result ? "p-4" : ""}`}>
-        {result && copy ? (
-          <div className="flex min-w-0 items-start gap-3" role="status" aria-live="polite">
-            <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-full bg-paper ${copy.text}`} style={{ animation: "pop 260ms ease-out" }}>
-              {result.result === "wrong" ? <IconX size={26} /> : <IconCheck size={26} />}
+  const feedback =
+    result && copy ? (
+      <div className="flex min-w-0 items-start gap-3" role="status" aria-live="polite">
+        <span className={`mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full ${copy.dot} text-white`}>
+          {result.result === "wrong" ? <IconX size={16} /> : <IconCheck size={16} />}
+        </span>
+        <div className="min-w-0">
+          <p className={`font-display text-[21px] leading-tight font-semibold ${copy.text}`}>
+            {copy.title}
+            <span className="ml-2 text-[15px] font-normal opacity-75" lang="tr">
+              {copy.tr}
             </span>
-            <div className="min-w-0">
-              <div className={`font-display text-2xl leading-tight font-extrabold ${copy.text}`}>
-                {copy.tr} <span className="text-base font-bold opacity-80">{copy.title}</span>
-              </div>
-              {!exact ? (
-                <div className={`mt-0.5 ${copy.text}`}>
-                  {result.result === "correct" ? (
-                    <span>
-                      Also accepted: <b>{result.expected}</b>
-                    </span>
+          </p>
+          {!exact ? (
+            <div className="mt-1">
+              {result.result === "correct" ? (
+                <p className="text-ink-soft">
+                  Also right: <span className="tr-word">{result.expected}</span>
+                </p>
+              ) : (
+                <>
+                  <p className="text-[14px] text-ink-soft">
+                    {result.reason === "missing-turkish-letters"
+                      ? "Spelling counts — the Turkish letters are missing:"
+                      : result.reason === "typo"
+                        ? "One small typo:"
+                        : "The answer is:"}
+                  </p>
+                  {lang === "tr" && value.trim() && result.result === "almost" ? (
+                    <LetterDiff given={value} expected={result.expected} />
                   ) : (
-                    <>
-                      <div className="text-sm font-semibold">
-                        {result.reason === "missing-turkish-letters"
-                          ? "Spelling counts — check the Turkish letters:"
-                          : result.reason === "typo"
-                            ? "One small typo:"
-                            : "Correct answer:"}
-                      </div>
-                      <div className="text-ink">
-                        {lang === "tr" && value.trim() && result.result === "almost" ? <LetterDiff given={value} expected={result.expected} /> : <b className="font-display text-xl">{result.expected}</b>}
-                      </div>
-                    </>
+                    <p className="tr-word text-[21px]">{result.expected}</p>
                   )}
-                </div>
-              ) : null}
-              {details ? <div className="mt-2 text-ink">{details}</div> : null}
+                </>
+              )}
             </div>
-          </div>
-        ) : (
-          <span className="hidden sm:block" />
-        )}
-        <div className="flex shrink-0 flex-wrap justify-end gap-2 [&>*]:flex-1 sm:[&>*]:flex-none">
-          {result ? (
-            children
-          ) : (
-            <button className="btn-primary w-full sm:w-44" type="submit" form={`ta-${resetKey ?? "x"}`} disabled={!value.trim()}>
-              Check
-            </button>
-          )}
+          ) : null}
+          {details ? <div className="mt-3 text-ink">{details}</div> : null}
         </div>
       </div>
+    ) : null;
+
+  const actions = (
+    <div className="flex shrink-0 flex-wrap justify-end gap-2 [&>*]:flex-1 sm:[&>*]:flex-none">
+      {result ? (
+        children
+      ) : (
+        <button className="btn-primary w-full sm:w-40" type="submit" form={formId} disabled={!value.trim()}>
+          Check
+        </button>
+      )}
     </div>
   );
 
   return (
     <div className="space-y-4">
       <form
-        id={`ta-${resetKey ?? "x"}`}
+        id={formId}
         onSubmit={(e) => {
           e.preventDefault();
           submit();
@@ -157,8 +150,8 @@ export function TypeAnswer({
       >
         <input
           ref={input}
-          className={`input font-display !text-2xl font-bold ${
-            result ? (result.result === "correct" ? "!border-zeytin" : result.result === "almost" ? "!border-cay" : "!border-nar") : ""
+          className={`input font-display !py-3.5 !text-[24px] font-medium tracking-tight ${
+            result ? (result.result === "correct" ? "!border-ok" : result.result === "almost" ? "!border-warn" : "!border-bad") : ""
           }`}
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -173,8 +166,26 @@ export function TypeAnswer({
         />
       </form>
       {lang === "tr" && !result ? <TurkishKeyboard target={input} /> : null}
-      {sheet === "fixed" ? <div className="h-40" aria-hidden="true" /> : null}
-      {bar}
+
+      {sheet === "fixed" ? (
+        <>
+          <div className="h-44" aria-hidden="true" />
+          <div
+            className={`fixed inset-x-0 bottom-0 z-40 border-t pb-[env(safe-area-inset-bottom)] ${result ? `${copy!.tint} border-transparent` : "border-line bg-paper/95 backdrop-blur"}`}
+            style={result ? { animation: "sheet-up 200ms ease-out" } : undefined}
+          >
+            <div className="mx-auto flex max-w-[720px] flex-col gap-4 px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
+              {feedback ?? <span className="hidden sm:block" />}
+              {actions}
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className={`flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between ${result ? `rounded-[14px] p-4 ${copy!.tint}` : ""}`}>
+          {feedback ?? <span className="hidden sm:block" />}
+          {actions}
+        </div>
+      )}
     </div>
   );
 }

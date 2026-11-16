@@ -7,10 +7,9 @@ import type { ReviewItem } from "@/lib/db/cards";
 import { GRADES, NEW_CARD_STATE, previewIntervals, suggestGrade, type Grade } from "@/lib/srs/sm2";
 import { FocusShell, FooterBar } from "./focus";
 import { IconFlame } from "./icons";
-import { Simit } from "./simit";
 import { Speak } from "./speech";
 import { TypeAnswer, type AnswerResult } from "./type-answer";
-import { Badge, SpeechBubble } from "./ui";
+import { Badge, Prompt, RESULT_COPY } from "./ui";
 
 const GRADE_LABEL: Record<Grade, string> = { again: "Again", hard: "Hard", good: "Good", easy: "Easy" };
 
@@ -21,7 +20,7 @@ interface QueueItem extends ReviewItem {
 }
 
 export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: ReviewItem[] }) {
-  // Interleave new cards among the reviews (one new after every three reviews).
+  // One new word after every three reviews.
   const initial = useMemo(() => {
     const q: QueueItem[] = [];
     const d = due.map((x) => ({ ...x, key: `${x.card.id}-${x.direction}`, isNew: false }));
@@ -46,17 +45,20 @@ export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: Review
   if (!initial.length) {
     return (
       <FocusShell progress={1} max={1}>
-        <div className="flex flex-col items-center pt-10 text-center">
-          <Simit size={150} mood="happy" />
-          <h1 className="font-display mt-4 text-3xl font-extrabold">All caught up</h1>
-          <p className="mt-2 max-w-sm text-ink-soft">No reviews are due and today&apos;s new words are done. Come back tomorrow, or train your suffixes.</p>
+        <div className="pt-10">
+          <h1 className="display-xl text-[56px]" lang="tr">
+            Tamam.
+          </h1>
+          <p className="mt-4 max-w-[46ch] text-[17px] text-ink-soft">
+            Nothing is due and today&apos;s new words are done. Come back tomorrow, or practise your suffixes.
+          </p>
         </div>
         <FooterBar>
-          <Link href="/gym" className="btn-ghost">
-            Suffix gym
+          <Link href="/gym" className="btn-secondary">
+            Practise suffixes
           </Link>
           <Link href="/" className="btn-primary">
-            Back to the path
+            Back to today
           </Link>
         </FooterBar>
       </FocusShell>
@@ -69,29 +71,28 @@ export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: Review
     const mins = Math.max(1, Math.round((Date.now() - startedAt) / 60000));
     return (
       <FocusShell progress={1} max={1}>
-        <div className="flex flex-col items-center pt-6 text-center">
-          <Simit size={150} mood="proud" />
-          <h1 className="font-display mt-4 text-3xl font-extrabold text-cay-depth">Reviews done!</h1>
-          <p className="text-ink-soft" lang="tr">
-            Tekrarlar bitti — aferin.
-          </p>
-          <div className="mt-8 grid w-full max-w-md grid-cols-3 gap-3">
+        <div className="pt-8">
+          <h1 className="display-xl text-[56px] sm:text-[72px]" lang="tr">
+            Aferin.
+          </h1>
+          <p className="mt-3 text-[17px] text-ink-soft">Reviews done for today.</p>
+          <dl className="mt-10 grid max-w-md grid-cols-3 gap-6 border-t border-line pt-6 tabular">
             {[
-              { label: "Answers", value: n, cls: "border-kobalt text-kobalt" },
-              { label: "Accuracy", value: `${acc}%`, cls: "border-zeytin text-zeytin-depth" },
-              { label: "Minutes", value: mins, cls: "border-cay text-cay-depth" },
+              { label: "answers", value: n },
+              { label: "accuracy", value: `${acc}%` },
+              { label: "minutes", value: mins },
             ].map((x) => (
-              <div key={x.label} className={`rounded-2xl border-2 p-3 ${x.cls}`}>
-                <div className="font-display text-3xl font-extrabold">{x.value}</div>
-                <div className="text-sm text-ink-soft">{x.label}</div>
+              <div key={x.label}>
+                <dd className="font-display text-[42px] leading-none font-semibold">{x.value}</dd>
+                <dt className="mt-2 text-[14px] text-muted">{x.label}</dt>
               </div>
             ))}
-          </div>
-          {stats.best >= 3 ? <p className="mt-4 text-sm text-muted">Longest run of correct answers: {stats.best}</p> : null}
+          </dl>
+          {stats.best >= 3 ? <p className="mt-6 text-[15px] text-ink-soft">Longest run of correct answers: {stats.best}.</p> : null}
         </div>
         <FooterBar>
-          <Link href="/" className="btn-ghost">
-            Back to the path
+          <Link href="/" className="btn-secondary">
+            Back to today
           </Link>
           <Link href="/lesson" className="btn-primary">
             Start today&apos;s lesson
@@ -123,68 +124,70 @@ export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: Review
     setBusy(false);
   };
 
-  const combo =
-    stats.combo >= 3 ? (
-      <span className="font-display flex items-center gap-1 text-lg font-extrabold text-cay-depth" aria-label={`${stats.combo} correct in a row`}>
-        <IconFlame size={22} />
-        {stats.combo}
+  const right = (
+    <span className="flex items-center gap-3">
+      {stats.combo >= 3 ? (
+        <span className="flex items-center gap-1 text-accent-text" aria-label={`${stats.combo} correct in a row`}>
+          <IconFlame size={16} />
+          {stats.combo}
+        </span>
+      ) : null}
+      <span>
+        {Math.min(pos + 1, queue.length)}/{queue.length}
       </span>
-    ) : null;
+    </span>
+  );
+
+  const tags = (
+    <div className="mb-6 flex flex-wrap gap-2">
+      {item.isNew ? <Badge tone="accent">New word</Badge> : null}
+      {item.relearn ? <Badge tone="warn">Once more</Badge> : null}
+      {card.leech ? <Badge tone="bad">Keeps slipping</Badge> : null}
+      {card.source === "correction" ? <Badge tone="brand">From your writing</Badge> : null}
+    </div>
+  );
 
   return (
-    <FocusShell progress={pos} max={queue.length} right={combo}>
-      <div className="mb-5 flex flex-wrap gap-2">
-        {item.isNew ? <Badge tone="accent">New word</Badge> : null}
-        {item.relearn ? <Badge tone="warn">One more time</Badge> : null}
-        {card.leech ? <Badge tone="bad">Tricky word</Badge> : null}
-        {card.source === "correction" ? <Badge tone="warn">From your writing</Badge> : null}
-      </div>
-
+    <FocusShell progress={pos} max={queue.length} right={right}>
+      {tags}
       {phase === "intro" ? (
         <>
-          <h1 className="font-display text-2xl font-extrabold">Meet a new word</h1>
-          <div className="mt-6 flex flex-col items-center rounded-3xl border-2 border-line px-5 py-8 text-center">
-            <div className="flex items-center gap-3">
-              <span className="tr-word text-5xl sm:text-6xl" lang="tr">
-                {card.tr}
-              </span>
-            </div>
-            <div className="mt-4 flex gap-2">
+          <p className="text-[15px] text-muted">New word, unit {card.unit || "–"}</p>
+          <div className="mt-4 flex items-start justify-between gap-4">
+            <h1 className="display-xl text-[52px] sm:text-[72px]" lang="tr">
+              {card.tr}
+            </h1>
+            <div className="mt-2 flex shrink-0 gap-1">
               <Speak text={card.tr} size="lg" />
               <Speak text={card.tr} slow size="lg" />
             </div>
-            <p className="mt-4 text-xl text-ink-soft">{card.en}</p>
-            {card.exTr ? (
-              <div className="mt-6 w-full max-w-md rounded-2xl bg-wash px-4 py-3 text-left">
-                <div className="flex items-center gap-2" lang="tr">
-                  <Speak text={card.exTr} size="sm" />
-                  <span className="font-medium">{card.exTr}</span>
-                </div>
-                <div className="mt-1 text-sm text-muted">{card.exEn}</div>
-              </div>
-            ) : null}
-            {card.note ? <p className="mt-3 text-sm text-ink-soft">{card.note}</p> : null}
           </div>
-          <FooterBar note={`${card.pos}${card.unit ? `, unit ${card.unit}` : ""}`}>
-            <button className="btn-primary sm:w-44" autoFocus onClick={() => setPhase("test")}>
+          <p className="mt-4 text-[21px] text-ink-soft">{card.en}</p>
+          {card.exTr ? (
+            <figure className="mt-10 border-l-2 border-accent pl-5">
+              <p className="tr-word text-[21px] font-medium" lang="tr">
+                {card.exTr}
+              </p>
+              <figcaption className="mt-1 text-ink-soft">{card.exEn}</figcaption>
+            </figure>
+          ) : null}
+          {card.note ? <p className="mt-6 text-[15px] text-ink-soft">{card.note}</p> : null}
+          <FooterBar note={card.pos}>
+            <button className="btn-primary sm:w-40" autoFocus onClick={() => setPhase("test")}>
               Got it
             </button>
           </FooterBar>
         </>
       ) : (
         <>
-          <h1 className="font-display text-2xl font-extrabold">{enToTr ? "Write this in Turkish" : "What does this mean?"}</h1>
-          <div className="my-6 flex items-center gap-3">
-            <Simit size={96} mood={answer ? (answer.result === "wrong" ? "oops" : "happy") : "calm"} className="shrink-0" />
-            <SpeechBubble>
-              <div className="flex items-center gap-3">
-                {!enToTr ? <Speak text={card.tr} size="sm" /> : null}
-                <span className={enToTr ? "text-xl font-medium" : "tr-word text-2xl"} lang={enToTr ? "en" : "tr"}>
-                  {enToTr ? card.en : card.tr}
-                </span>
-              </div>
-            </SpeechBubble>
-          </div>
+          <Prompt label={enToTr ? "Write this in Turkish" : "What does this mean?"}>
+            <div className="flex items-start justify-between gap-4">
+              <p className={enToTr ? "font-display text-[33px] leading-tight font-medium sm:text-[42px]" : "display-xl text-[48px] sm:text-[60px]"} lang={enToTr ? "en" : "tr"}>
+                {enToTr ? card.en : card.tr}
+              </p>
+              {!enToTr ? <Speak text={card.tr} size="lg" className="mt-1" /> : null}
+            </div>
+          </Prompt>
           <TypeAnswer
             key={item.key}
             resetKey={item.key}
@@ -193,40 +196,35 @@ export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: Review
             onChecked={setAnswer}
             sheet="fixed"
             details={
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {card.exTr ? (
-                  <div className="flex items-start gap-2 text-sm">
+                  <div className="flex items-start gap-2 text-[15px]">
                     <Speak text={card.tr} size="sm" />
-                    <span>
-                      <span lang="tr">{card.exTr}</span>
+                    <p>
+                      <span lang="tr" className="font-medium">
+                        {card.exTr}
+                      </span>
                       <span className="block text-ink-soft">{card.exEn}</span>
-                    </span>
+                    </p>
                   </div>
                 ) : null}
-                <div className="flex flex-wrap items-center gap-1.5" aria-label="How well did you know it?">
-                  <span className="text-xs text-ink-soft">Rate it:</span>
+                <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Rate how well you knew it">
+                  <span className="mr-1 text-[13px] text-ink-soft">Next review</span>
                   {GRADES.map((g) => (
                     <button
                       key={g}
                       onClick={() => grade(g)}
                       disabled={busy}
-                      className={`rounded-full border-2 px-2.5 py-0.5 text-xs font-semibold ${
-                        suggested === g ? "border-ink bg-ink text-paper" : "border-ink/20 bg-paper/60 text-ink-soft hover:border-ink/40"
-                      }`}
+                      className={`rounded-md px-2 py-1 text-[13px] tabular ${suggested === g ? "bg-ink text-paper" : "text-ink-soft hover:bg-paper/70"}`}
                     >
-                      {GRADE_LABEL[g]} {previews[g]}
+                      {GRADE_LABEL[g]} <span className="opacity-70">{previews[g]}</span>
                     </button>
                   ))}
                 </div>
               </div>
             }
           >
-            <button
-              className={answer?.result === "correct" ? "btn-success sm:w-44" : answer?.result === "almost" ? "btn-cay sm:w-44" : "btn-danger sm:w-44"}
-              autoFocus
-              disabled={busy}
-              onClick={() => grade(suggested)}
-            >
+            <button className={`${answer ? RESULT_COPY[answer.result].btn : "btn-primary"} sm:w-40`} autoFocus disabled={busy} onClick={() => grade(suggested)}>
               Continue
             </button>
           </TypeAnswer>

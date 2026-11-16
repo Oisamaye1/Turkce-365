@@ -4,8 +4,6 @@ import { useRef, useState } from "react";
 import { retryCorrectionAction, submitWritingAction, type WritingResult } from "@/app/actions";
 import { CorrectionView } from "./correction-view";
 import { TurkishKeyboard } from "./keyboard";
-import { Simit } from "./simit";
-import { SpeechBubble } from "./ui";
 
 export function WritingBox({
   prompt,
@@ -45,28 +43,25 @@ export function WritingBox({
   if (res?.correction) return <CorrectionView mine={text} correction={res.correction} cardsAdded={res.cardsAdded} />;
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-start gap-3">
-        <Simit size={84} className="shrink-0" mood={res?.queued ? "happy" : "calm"} />
-        <SpeechBubble className="flex-1">
-          <p className="font-medium">{prompt}</p>
-          {promptTr ? (
-            <p className="mt-1 text-sm text-muted" lang="tr">
-              {promptTr}
-            </p>
-          ) : null}
-        </SpeechBubble>
+    <div className="space-y-5">
+      <div>
+        <p className="font-display text-[26px] leading-snug font-semibold">{prompt}</p>
+        {promptTr ? (
+          <p className="mt-1 text-ink-soft" lang="tr">
+            {promptTr}
+          </p>
+        ) : null}
       </div>
       {hints.length ? (
-        <div className="flex flex-wrap gap-2">
-          <span className="self-center text-sm text-muted">Start with:</span>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-[14px] text-muted">Start with</span>
           {hints.map((h) => (
             <button
               key={h}
               type="button"
               disabled={!!res}
               onClick={() => setText((t) => (t ? `${t} ${h}` : h))}
-              className="font-display rounded-xl border-2 border-b-4 border-line px-3 py-1 font-bold text-ink-soft hover:bg-wash"
+              className="rounded-lg border border-line-strong px-2.5 py-1 text-[15px] text-ink hover:bg-haze"
               lang="tr"
             >
               {h}
@@ -76,10 +71,10 @@ export function WritingBox({
       ) : null}
       <textarea
         ref={area}
-        className="input min-h-40 !text-lg"
+        className="input min-h-44 leading-relaxed"
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="Türkçe yaz… three to five sentences"
+        placeholder="Türkçe yaz — three to five sentences"
         lang="tr"
         spellCheck={false}
         disabled={busy || !!res}
@@ -88,21 +83,21 @@ export function WritingBox({
       {!res ? <TurkishKeyboard target={area} /> : null}
 
       {res?.queued ? (
-        <div className="rounded-3xl bg-turkuaz-tint p-4" role="status">
-          <p className="font-display text-xl font-extrabold text-turkuaz-depth">Saved — queued for correction</p>
-          <p className="mt-1 text-ink">
-            Claude runs on your computer, which picks this up within about 15 minutes while it&apos;s on. The corrected text appears under Write, and every
+        <div className="rounded-[14px] bg-brand-tint p-4" role="status">
+          <p className="font-medium text-brand-text">Saved and queued for correction</p>
+          <p className="mt-1 text-[15px] text-ink-soft">
+            Claude runs on your computer and picks this up within about 15 minutes while it&apos;s on. The corrected text appears under Write, and each
             error becomes a card in today&apos;s reviews.
           </p>
         </div>
       ) : null}
       {res?.error ? (
-        <div className="rounded-3xl bg-cay-tint p-4 text-ink" role="alert">
+        <p className="rounded-[14px] bg-warn-tint p-4 text-[15px] text-ink" role="alert">
           {res.error}
-        </div>
+        </p>
       ) : null}
 
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-wrap items-center gap-4">
         {!res ? (
           <button className="btn-primary" disabled={busy || text.trim().length < 3} onClick={submit}>
             {busy ? "Checking your Turkish…" : "Check my writing"}
@@ -113,7 +108,7 @@ export function WritingBox({
           </button>
         ) : null}
         {!res ? (
-          <span className="text-sm text-muted">
+          <span className="text-[14px] text-muted tabular">
             {sentences} sentence{sentences === 1 ? "" : "s"}
           </span>
         ) : null}

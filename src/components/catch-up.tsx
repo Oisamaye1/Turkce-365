@@ -40,17 +40,17 @@ export function GenerateLesson({ auto, label = "Make today's lesson" }: { auto: 
 
   if (state === "working")
     return (
-      <div className="flex items-center gap-3 text-ink-soft" role="status">
-        <span className="h-5 w-5 shrink-0 animate-spin rounded-full border-[3px] border-kobalt border-t-transparent" />
+      <p className="flex items-center gap-3 text-ink-soft" role="status">
+        <span className="h-4 w-4 shrink-0 animate-spin rounded-full border-2 border-brand border-t-transparent" />
         Preparing today&apos;s lesson…
-      </div>
+      </p>
     );
   return (
     <div className="flex flex-col gap-2">
       <button className="btn-primary self-start" onClick={() => run(true)}>
         {label}
       </button>
-      {state === "error" ? <p className="text-sm text-nar-depth">{msg}</p> : msg ? <p className="text-sm text-muted">{msg}</p> : null}
+      {state === "error" ? <p className="text-[14px] text-bad-text">{msg}</p> : msg ? <p className="text-[14px] text-muted">{msg}</p> : null}
     </div>
   );
 }

@@ -4,23 +4,25 @@ import { useState } from "react";
 import { recordDrillAction } from "@/app/actions";
 import type { Drill } from "@/lib/grammar/drills";
 import type { CheckResult } from "@/lib/turkish/answer";
+import { WordAnatomy } from "./anatomy";
 import { Speak } from "./speech";
 import { TypeAnswer, type AnswerResult } from "./type-answer";
+import { RESULT_COPY } from "./ui";
 
 const RULE_TEXT: Record<string, string> = {
-  "vowel-harmony-2": "2-way harmony (a/e)",
-  "vowel-harmony-4": "4-way harmony (ı/i/u/ü)",
+  "vowel-harmony-2": "two-way harmony (a/e)",
+  "vowel-harmony-4": "four-way harmony (ı/i/u/ü)",
   "consonant-assimilation": "d becomes t after f s t k ç ş h p",
-  "consonant-softening": "softening: p→b ç→c t→d k→ğ",
+  "consonant-softening": "softening: p→b, ç→c, t→d, k→ğ",
   "buffer-y": "buffer y after a vowel",
   "buffer-s": "buffer s for his/her",
-  "buffer-n": "buffer n (genitive)",
+  "buffer-n": "buffer n before the genitive",
   "pronominal-n": "extra n after his/her/their",
-  "vowel-drop": "vowel drops (şehir → şehri)",
-  "consonant-doubling": "consonant doubles (hak → hakkı)",
-  "harmony-exception": "loanword takes front vowels",
+  "vowel-drop": "the last vowel drops (şehir → şehri)",
+  "consonant-doubling": "the consonant doubles (hak → hakkı)",
+  "harmony-exception": "loanword that takes front vowels",
   "irregular-stem": "irregular stem",
-  "vowel-narrowing": "stem vowel changes before -yor / y",
+  "vowel-narrowing": "the stem vowel changes before -yor / y",
   "proper-noun-apostrophe": "apostrophe after a name",
 };
 
@@ -30,7 +32,7 @@ export interface DrillOutcome {
   given: string;
 }
 
-/** Suffix "building blocks": root + tags, then the learner types the full form. */
+/** A suffix drill: root plus the target meaning; the learner types the full form. */
 export function DrillCard({
   drill,
   context,
@@ -60,24 +62,24 @@ export function DrillCard({
     onRecorded?.(rec);
   };
 
-  return (
-    <div className="space-y-5">
-      <h2 className="font-display text-2xl leading-tight font-extrabold">Build the word for “{drill.prompt}”</h2>
+  const rules = drill.rules.filter((r) => RULE_TEXT[r]).map((r) => RULE_TEXT[r]);
 
-      <div className="flex flex-wrap items-center gap-2" aria-label="Building blocks">
-        <span className="font-display rounded-2xl border-2 border-b-4 border-line bg-paper px-4 py-2 text-2xl font-extrabold text-ink" lang="tr">
+  return (
+    <div>
+      <p className="text-[15px] text-muted">Build the Turkish for</p>
+      <p className="font-display mt-1 text-[33px] leading-tight font-medium sm:text-[42px]">“{drill.prompt}”</p>
+      <div className="mt-5 mb-8 flex flex-wrap items-center gap-x-2 gap-y-2 text-[15px]" aria-label="Start from">
+        <span className="tr-word rounded-md border-b-2 border-ink bg-haze px-2 py-0.5 text-[19px]" lang="tr">
           {drill.root}
         </span>
+        <span className="text-muted">{drill.rootEn}</span>
         {drill.tags.map((t) => (
           <span key={t} className="flex items-center gap-2">
-            <span className="font-display text-xl font-bold text-muted">+</span>
-            <span className="font-display rounded-2xl border-2 border-b-4 border-turkuaz/50 bg-turkuaz-tint px-3 py-2 font-bold text-turkuaz-depth">{t}</span>
+            <span className="text-muted">+</span>
+            <span className="rounded-md bg-brand-tint px-2 py-0.5 text-brand-text">{t}</span>
           </span>
         ))}
       </div>
-      <p className="text-sm text-muted">
-        {drill.root} means “{drill.rootEn}”.
-      </p>
 
       <TypeAnswer
         key={drill.id}
@@ -89,32 +91,16 @@ export function DrillCard({
         onChecked={checked}
         details={
           <div className="space-y-2">
-            <div className="flex flex-wrap items-center gap-1">
-              {drill.breakdown.map((p, i) => (
-                <span key={i} className="flex items-center gap-1">
-                  {i > 0 && p !== "·" ? <span className="text-ink-soft">+</span> : null}
-                  {p === "·" ? (
-                    <span className="w-2" />
-                  ) : (
-                    <span className={`font-display rounded-lg px-2 py-0.5 font-bold ${i === 0 ? "bg-paper text-ink" : "bg-paper/70 text-turkuaz-depth"}`}>{p}</span>
-                  )}
-                </span>
-              ))}
-              <Speak text={drill.answer} size="sm" className="ml-1" />
+            <div className="flex items-center gap-2">
+              <WordAnatomy parts={drill.breakdown} size="sm" />
+              <Speak text={drill.answer} size="sm" />
             </div>
-            {drill.rules.some((r) => RULE_TEXT[r]) ? (
-              <p className="text-sm text-ink-soft">
-                {drill.rules
-                  .filter((r) => RULE_TEXT[r])
-                  .map((r) => RULE_TEXT[r])
-                  .join("; ")}
-              </p>
-            ) : null}
+            {rules.length ? <p className="text-[14px] text-ink-soft">{rules.join("; ")}</p> : null}
           </div>
         }
       >
         <button
-          className={ans?.result === "correct" ? "btn-success sm:w-44" : ans?.result === "almost" ? "btn-cay sm:w-44" : "btn-danger sm:w-44"}
+          className={`${ans ? RESULT_COPY[ans.result].btn : "btn-primary"} sm:w-40`}
           autoFocus
           onClick={() => ans && onDone({ drill, result: ans.result, given: ans.given })}
         >
@@ -149,7 +135,7 @@ export function DrillSet({
   const d = drills[i];
   return (
     <div>
-      <p className="mb-3 text-sm text-muted">
+      <p className="mb-4 text-[14px] text-muted tabular">
         Drill {Math.min(i + 1, drills.length)} of {drills.length}
       </p>
       {d ? (

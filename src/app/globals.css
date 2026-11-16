@@ -1,139 +1,109 @@
 @import "tailwindcss";
-@import "@fontsource/baloo-2/latin-ext-700.css";
-@import "@fontsource/baloo-2/latin-ext-800.css";
-@import "@fontsource/baloo-2/latin-700.css";
-@import "@fontsource/baloo-2/latin-800.css";
-@import "@fontsource-variable/rubik/index.css";
+@import "@fontsource-variable/bricolage-grotesque/standard.css";
+@import "@fontsource-variable/geist/index.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Türkçe 365 — "Iznik & çay" palette.
- * Every pressable colour has a darker "depth" twin used for the chunky 3D edge.
+ * Türkçe 365 — "Harbour & orchard".
+ * Petrol (Kyrenia harbour) for actions, orange (Güzelyurt groves) only for "now".
+ * Flat surfaces: hierarchy comes from type and space, not shadows.
  */
 :root {
   --paper: #ffffff;
-  --wash: #f2f5fb;
-  --line: #e1e6f0;
-  --ink: #22304d;
-  --ink-soft: #4a5776;
-  --muted: #7884a0;
+  --haze: #f2f5f6;
+  --line: #e1e7e9;
+  --line-strong: #c9d3d6;
+  --ink: #15232a;
+  --ink-soft: #4c5b62;
+  --muted: #74838a;
 
-  --kobalt: #3355e8;
-  --kobalt-depth: #2338b5;
-  --kobalt-tint: #e6ecff;
+  --brand: #0e5263;
+  --brand-hover: #0a3f4c;
+  --brand-tint: #e3eff2;
+  --brand-text: #0e5263;
 
-  --turkuaz: #14b8b0;
-  --turkuaz-depth: #0d8c86;
-  --turkuaz-tint: #dcf6f4;
+  --accent: #f2681d;
+  --accent-tint: #fdeadd;
+  --accent-text: #b4470c;
 
-  --cay: #ffae33;
-  --cay-depth: #e08a0b;
-  --cay-tint: #fff1d9;
+  --ok: #1c9a67;
+  --ok-tint: #e2f4ec;
+  --ok-text: #11704a;
 
-  --nar: #ee4462;
-  --nar-depth: #b8283f;
-  --nar-tint: #ffe5ea;
+  --warn: #d9961a;
+  --warn-tint: #fbf0d8;
+  --warn-text: #865806;
 
-  --zeytin: #38b865;
-  --zeytin-depth: #26914c;
-  --zeytin-tint: #ddf5e5;
+  --bad: #d64545;
+  --bad-tint: #fbe7e7;
+  --bad-text: #a62b2b;
 
-  --locked: #e1e6f0;
-  --locked-depth: #c4ccdc;
-
-  --banner: #3355e8;
-  --banner-depth: #2338b5;
-
-  --series-1: #2a78d6; /* validated categorical pair (dataviz) */
-  --series-2: #eb6834;
+  --series-1: #00819c; /* validated categorical pair (dataviz) */
+  --series-2: #f2681d;
 }
 
 .dark {
-  --paper: #141c2f;
-  --wash: #1b2540;
-  --line: #2b3a5e;
-  --ink: #eaf0fb;
-  --ink-soft: #c2cce2;
-  --muted: #8b97b5;
+  --paper: #0b1518;
+  --haze: #122126;
+  --line: #213439;
+  --line-strong: #2e464d;
+  --ink: #e8eff1;
+  --ink-soft: #b3c1c6;
+  --muted: #7f949a;
 
-  --kobalt: #6b86ff;
-  --kobalt-depth: #3f58cc;
-  --kobalt-tint: #222f5c;
+  --brand: #1f95ad;
+  --brand-hover: #2aa9c3;
+  --brand-tint: #0f2f38;
+  --brand-text: #5cc3d8;
 
-  --turkuaz: #2fd0c8;
-  --turkuaz-depth: #17958f;
-  --turkuaz-tint: #143a44;
+  --accent: #f07a35;
+  --accent-tint: #3a2215;
+  --accent-text: #ffa36d;
 
-  --cay: #ffbb52;
-  --cay-depth: #c98013;
-  --cay-tint: #3b2f19;
+  --ok: #3ac389;
+  --ok-tint: #0f2e22;
+  --ok-text: #62d9a5;
 
-  --nar: #ff6680;
-  --nar-depth: #c23a52;
-  --nar-tint: #401f2b;
+  --warn: #e8ae3c;
+  --warn-tint: #33270e;
+  --warn-text: #f2c567;
 
-  --zeytin: #52d17e;
-  --zeytin-depth: #2a9a53;
-  --zeytin-tint: #173a28;
+  --bad: #ef6767;
+  --bad-tint: #3a1a1c;
+  --bad-text: #ff8f8f;
 
-  --locked: #2b3a5e;
-  --locked-depth: #1f2b47;
-
-  --banner: #3348c4;
-  --banner-depth: #212f86;
-
-  --series-1: #3987e5;
-  --series-2: #d95926;
+  --series-1: #119cb8;
+  --series-2: #e8641c;
 }
 
 @theme inline {
   --color-paper: var(--paper);
-  --color-wash: var(--wash);
+  --color-haze: var(--haze);
   --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-muted: var(--muted);
-  --color-kobalt: var(--kobalt);
-  --color-kobalt-depth: var(--kobalt-depth);
-  --color-kobalt-tint: var(--kobalt-tint);
-  --color-turkuaz: var(--turkuaz);
-  --color-turkuaz-depth: var(--turkuaz-depth);
-  --color-turkuaz-tint: var(--turkuaz-tint);
-  --color-cay: var(--cay);
-  --color-cay-depth: var(--cay-depth);
-  --color-cay-tint: var(--cay-tint);
-  --color-nar: var(--nar);
-  --color-nar-depth: var(--nar-depth);
-  --color-nar-tint: var(--nar-tint);
-  --color-zeytin: var(--zeytin);
-  --color-zeytin-depth: var(--zeytin-depth);
-  --color-zeytin-tint: var(--zeytin-tint);
-  --color-locked: var(--locked);
-  --color-locked-depth: var(--locked-depth);
-  --color-banner: var(--banner);
-  --color-banner-depth: var(--banner-depth);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-tint: var(--brand-tint);
+  --color-brand-text: var(--brand-text);
+  --color-accent: var(--accent);
+  --color-accent-tint: var(--accent-tint);
+  --color-accent-text: var(--accent-text);
+  --color-ok: var(--ok);
+  --color-ok-tint: var(--ok-tint);
+  --color-ok-text: var(--ok-text);
+  --color-warn: var(--warn);
+  --color-warn-tint: var(--warn-tint);
+  --color-warn-text: var(--warn-text);
+  --color-bad: var(--bad);
+  --color-bad-tint: var(--bad-tint);
+  --color-bad-text: var(--bad-text);
 
-  /* Legacy aliases so older class names keep working. */
-  --color-bg: var(--paper);
-  --color-fg: var(--ink);
-  --color-card: var(--paper);
-  --color-card-2: var(--wash);
-  --color-border: var(--line);
-  --color-accent: var(--kobalt);
-  --color-accent-fg: #ffffff;
-  --color-accent-soft: var(--kobalt-tint);
-  --color-sea: var(--turkuaz-depth);
-  --color-sea-soft: var(--turkuaz-tint);
-  --color-good: var(--zeytin-depth);
-  --color-good-soft: var(--zeytin-tint);
-  --color-warn: var(--cay-depth);
-  --color-warn-soft: var(--cay-tint);
-  --color-bad: var(--nar-depth);
-  --color-bad-soft: var(--nar-tint);
-
-  --font-sans: "Rubik Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Baloo 2", "Rubik Variable", ui-rounded, system-ui, sans-serif;
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Geist Variable", ui-sans-serif, system-ui, sans-serif;
 }
 
 html {
@@ -143,88 +113,85 @@ html {
 body {
   background: var(--paper);
   color: var(--ink);
-  font-feature-settings: "kern";
+  font-size: 16px;
+  line-height: 1.55;
+  font-feature-settings: "kern", "ss01";
 }
 
 :focus-visible {
-  outline: 3px solid var(--turkuaz);
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
-  border-radius: 10px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: var(--accent-tint);
 }
 
 /* ---------------------------------------------------------------- type */
 
+/* Headings and every Turkish word: Bricolage, slightly condensed, tight. */
 @utility font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.01em;
+  font-stretch: 92%;
+  letter-spacing: -0.015em;
+}
+@utility display-xl {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+@utility tr-word {
+  font-family: var(--font-display);
+  font-stretch: 90%;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+@utility tabular {
+  font-variant-numeric: tabular-nums;
 }
 
 /* ---------------------------------------------------------------- surfaces */
 
-/* Flat panel: 2px line, no shadow. */
 @utility card {
-  @apply rounded-2xl border-2 border-line bg-paper p-4 sm:p-5;
+  @apply rounded-[14px] border border-line bg-paper p-5;
 }
 
-/* ---------------------------------------------------------------- chunky 3D buttons */
+/* ---------------------------------------------------------------- buttons (flat) */
 
 @utility btn {
-  @apply font-display inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl px-5 text-[17px] leading-none font-extrabold transition-[transform,box-shadow] duration-75 select-none disabled:cursor-not-allowed disabled:opacity-60;
-  --depth: var(--line);
-  box-shadow: 0 4px 0 var(--depth);
-  margin-bottom: 4px;
-  &:active:not(:disabled) {
-    transform: translateY(4px);
-    box-shadow: 0 0 0 var(--depth);
-  }
+  @apply inline-flex h-11 items-center justify-center gap-2 rounded-[10px] px-4 text-[15px] font-medium whitespace-nowrap transition-colors duration-150 select-none disabled:cursor-not-allowed disabled:opacity-45;
 }
 @utility btn-primary {
-  @apply btn bg-kobalt text-white hover:brightness-105;
-  --depth: var(--kobalt-depth);
+  @apply btn bg-brand text-white hover:bg-brand-hover;
 }
-@utility btn-success {
-  @apply btn bg-zeytin text-white hover:brightness-105;
-  --depth: var(--zeytin-depth);
+@utility btn-secondary {
+  @apply btn border border-line-strong bg-paper text-ink hover:bg-haze;
 }
-@utility btn-danger {
-  @apply btn bg-nar text-white hover:brightness-105;
-  --depth: var(--nar-depth);
+@utility btn-ok {
+  @apply btn bg-ok text-white hover:brightness-95;
 }
-@utility btn-cay {
-  @apply btn bg-cay text-[#4a2c00] hover:brightness-105;
-  --depth: var(--cay-depth);
+@utility btn-warn {
+  @apply btn bg-warn text-[#2b1d00] hover:brightness-95;
 }
-@utility btn-ghost {
-  @apply btn border-2 border-line bg-paper text-kobalt hover:bg-wash;
-  --depth: var(--line);
+@utility btn-bad {
+  @apply btn bg-bad text-white hover:brightness-95;
 }
 @utility btn-quiet {
-  @apply font-display inline-flex items-center gap-1.5 rounded-xl px-3 py-2 font-bold text-kobalt hover:bg-kobalt-tint;
+  @apply inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-[15px] font-medium text-brand-text hover:bg-brand-tint;
 }
 
 /* ---------------------------------------------------------------- inputs & bits */
 
 @utility input {
-  @apply w-full rounded-2xl border-2 border-line bg-wash px-4 py-3.5 text-lg text-ink outline-none placeholder:text-muted focus:border-kobalt focus:bg-paper;
+  @apply w-full rounded-[10px] border border-line-strong bg-paper px-3.5 py-3 text-[17px] text-ink outline-none placeholder:text-muted focus:border-brand focus:ring-3 focus:ring-brand/15;
 }
 
-@utility chip {
-  @apply inline-flex items-center gap-1 rounded-full bg-wash px-2.5 py-1 text-xs font-medium text-ink-soft;
-}
-
-@utility label-tr {
-  @apply font-normal text-muted;
-}
-
-/* Turkish word as display type */
-@utility tr-word {
-  @apply font-display font-extrabold tracking-tight text-ink;
-}
-
-/* Iznik 8-point star tiling, used only on unit banners */
-@utility iznik {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.11' stroke-width='2'%3E%3Cpath d='M28 6l6 9 10-3-3 10 9 6-9 6 3 10-10-3-6 9-6-9-10 3 3-10-9-6 9-6-3-10 10 3z'/%3E%3Ccircle cx='28' cy='28' r='5'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 56px 56px;
+@utility pill {
+  @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[13px] font-medium;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -237,34 +204,23 @@ body {
   }
 }
 
-/* The current node on the path gently bobs (the one bit of ambient motion). */
-@keyframes bob {
-  0%,
-  100% {
-    transform: translate(-50%, 0);
-  }
-  50% {
-    transform: translate(-50%, -6px);
-  }
-}
 @keyframes sheet-up {
   from {
-    transform: translateY(100%);
+    transform: translateY(16px);
+    opacity: 0;
   }
   to {
     transform: translateY(0);
+    opacity: 1;
   }
 }
-@keyframes pop {
-  0% {
-    transform: scale(0.6);
+@keyframes reveal {
+  from {
     opacity: 0;
+    transform: translateY(6px);
   }
-  70% {
-    transform: scale(1.08);
-  }
-  100% {
-    transform: scale(1);
+  to {
     opacity: 1;
+    transform: none;
   }
 }

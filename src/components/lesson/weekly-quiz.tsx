@@ -10,10 +10,9 @@ import type { WeeklyReport } from "@/lib/lesson/weekly";
 import { suggestGrade } from "@/lib/srs/sm2";
 import { DrillSet } from "../drill-runner";
 import { FocusShell, FooterBar } from "../focus";
-import { Simit } from "../simit";
 import { Speak } from "../speech";
 import { TypeAnswer, type AnswerResult } from "../type-answer";
-import { SpeechBubble } from "../ui";
+import { Prompt, RESULT_COPY } from "../ui";
 import { ReportView } from "./report-view";
 
 const PARTS = ["Words", "Suffixes", "Translation", "Report"];
@@ -48,26 +47,22 @@ export function WeeklyQuiz({ quiz, cards, drills, existingReport }: { quiz: Week
   };
 
   return (
-    <FocusShell progress={progress} max={1} right={<span className="font-display hidden text-[15px] font-bold text-muted sm:inline">{PARTS[part]}</span>}>
+    <FocusShell progress={progress} max={1} right={PARTS[part]}>
       {part < 3 ? (
-        <div className="mb-5">
-          <p className="font-display font-bold text-kobalt">Weekly check-in</p>
-          <p className="text-sm text-muted" lang="tr">
-            Haftalık değerlendirme, about 10 minutes
-          </p>
-        </div>
+        <p className="mb-6 text-[15px] text-muted">
+          <span className="font-medium text-accent-text">Weekly check-in</span>
+          <span className="ml-2" lang="tr">
+            Haftalık değerlendirme
+          </span>
+        </p>
       ) : null}
 
       {part === 0 ? (
         card ? (
           <>
-            <h1 className="font-display text-2xl font-extrabold">Write this in Turkish</h1>
-            <div className="my-6 flex items-center gap-3">
-              <Simit size={96} mood={ans ? (ans.result === "wrong" ? "oops" : "happy") : "calm"} className="shrink-0" />
-              <SpeechBubble>
-                <span className="text-xl font-medium">{card.en}</span>
-              </SpeechBubble>
-            </div>
+            <Prompt label={`Write this in Turkish, ${i + 1} of ${cards.length}`}>
+              <p className="font-display text-[33px] leading-tight font-medium sm:text-[42px]">{card.en}</p>
+            </Prompt>
             <TypeAnswer
               key={card.id}
               resetKey={card.id}
@@ -88,7 +83,7 @@ export function WeeklyQuiz({ quiz, cards, drills, existingReport }: { quiz: Week
               }}
             >
               <button
-                className={ans?.result === "correct" ? "btn-success sm:w-44" : ans?.result === "almost" ? "btn-cay sm:w-44" : "btn-danger sm:w-44"}
+                className={`${ans ? RESULT_COPY[ans.result].btn : "btn-primary"} sm:w-40`}
                 autoFocus
                 onClick={() => {
                   setAns(null);
@@ -102,12 +97,9 @@ export function WeeklyQuiz({ quiz, cards, drills, existingReport }: { quiz: Week
           </>
         ) : (
           <>
-            <div className="flex items-center gap-3">
-              <Simit size={96} className="shrink-0" />
-              <SpeechBubble>Not enough words learned yet for a vocabulary quiz — on to the suffixes.</SpeechBubble>
-            </div>
+            <p className="text-[17px] text-ink-soft">Not enough words learned yet for a vocabulary quiz — on to the suffixes.</p>
             <FooterBar>
-              <button className="btn-primary sm:w-44" onClick={() => setPart(1)}>
+              <button className="btn-primary sm:w-40" onClick={() => setPart(1)}>
                 Continue
               </button>
             </FooterBar>
@@ -129,26 +121,22 @@ export function WeeklyQuiz({ quiz, cards, drills, existingReport }: { quiz: Week
 
       {part === 2 ? (
         <>
-          <h1 className="font-display text-2xl font-extrabold">Translate into Turkish</h1>
-          <div className="my-6 flex items-center gap-3">
-            <Simit size={96} mood={trans ? "happy" : "calm"} className="shrink-0" />
-            <SpeechBubble>
-              <span className="text-xl font-medium">{quiz.translation.en}</span>
-            </SpeechBubble>
-          </div>
+          <Prompt label="Translate into Turkish">
+            <p className="font-display text-[33px] leading-tight font-medium">{quiz.translation.en}</p>
+          </Prompt>
           <TypeAnswer
             expected={quiz.translation.tr}
             onChecked={setTrans}
             placeholder="Türkçe yaz"
             sheet="fixed"
             details={
-              <div className="flex items-center gap-2 text-sm">
+              <div className="flex items-center gap-2 text-[14px] text-ink-soft">
                 <Speak text={quiz.translation.tr} size="sm" />
                 <span>Other translations can be right too — compare word order and suffixes.</span>
               </div>
             }
           >
-            <button className="btn-primary sm:w-56" disabled={busy} onClick={finish}>
+            <button className="btn-primary sm:w-52" disabled={busy} onClick={finish}>
               {busy ? "Building your report…" : "See my weekly report"}
             </button>
           </TypeAnswer>
@@ -157,17 +145,17 @@ export function WeeklyQuiz({ quiz, cards, drills, existingReport }: { quiz: Week
 
       {part === 3 && report ? (
         <>
-          <div className="mb-6 flex flex-col items-center text-center">
-            <Simit size={130} mood="proud" />
-            <h1 className="font-display mt-3 text-3xl font-extrabold text-cay-depth">Week {report.week} wrapped up</h1>
-          </div>
+          <h1 className="display-xl mb-10 text-[48px] sm:text-[64px]" lang="tr">
+            Haftan bitti.
+            <span className="mt-3 block font-sans text-[17px] font-normal tracking-normal text-ink-soft">The week of {report.week}, in numbers.</span>
+          </h1>
           <ReportView report={report} />
           <FooterBar>
-            <Link href="/progress" className="btn-ghost">
+            <Link href="/progress" className="btn-secondary">
               All reports
             </Link>
             <Link href="/" className="btn-primary">
-              Back to the path
+              Back to today
             </Link>
           </FooterBar>
         </>

@@ -2,21 +2,20 @@
 
 import { diffWords } from "diff";
 import type { Correction } from "@/lib/lesson/schema";
-import { Simit } from "./simit";
 import { Speak } from "./speech";
 
 /** Word-level diff between the learner's text and the corrected text. */
 export function TextDiff({ mine, corrected }: { mine: string; corrected: string }) {
   const parts = diffWords(mine, corrected);
   return (
-    <p className="text-lg leading-loose" lang="tr">
+    <p className="text-[19px] leading-loose" lang="tr">
       {parts.map((p, i) =>
         p.added ? (
-          <ins key={i} className="rounded-md bg-zeytin-tint px-1 font-semibold text-zeytin-depth no-underline">
+          <ins key={i} className="rounded-sm bg-ok-tint px-0.5 text-ok-text no-underline">
             {p.value}
           </ins>
         ) : p.removed ? (
-          <del key={i} className="rounded-md bg-nar-tint px-1 text-nar-depth">
+          <del key={i} className="rounded-sm bg-bad-tint px-0.5 text-bad-text decoration-1">
             {p.value}
           </del>
         ) : (
@@ -29,59 +28,61 @@ export function TextDiff({ mine, corrected }: { mine: string; corrected: string 
 
 export function CorrectionView({ mine, correction, cardsAdded }: { mine: string; correction: Correction; cardsAdded?: number }) {
   const s = correction.score;
-  const tone = s >= 8 ? "text-zeytin-depth border-zeytin" : s >= 5 ? "text-cay-depth border-cay" : "text-nar-depth border-nar";
+  const tone = s >= 8 ? "text-ok-text" : s >= 5 ? "text-warn-text" : "text-bad-text";
   return (
-    <div className="space-y-5">
-      <div className="flex items-center gap-4">
-        <Simit size={84} mood={s >= 8 ? "proud" : s >= 5 ? "happy" : "oops"} className="shrink-0" />
-        <div className={`font-display grid h-20 w-20 shrink-0 place-items-center rounded-full border-4 text-3xl font-extrabold ${tone}`} aria-label={`Score ${s} out of 10`}>
+    <div className="space-y-10">
+      <div className="flex items-start gap-6">
+        <p className={`font-display text-[64px] leading-none font-semibold tabular ${tone}`} aria-label={`Score ${s} out of 10`}>
           {s}
-        </div>
-        <p className="min-w-0 text-ink">{correction.comment}</p>
+          <span className="text-[21px] text-muted">/10</span>
+        </p>
+        <p className="max-w-[48ch] pt-2 text-[17px] text-ink">{correction.comment}</p>
       </div>
 
-      <section className="card">
-        <h3 className="font-display text-lg font-extrabold">What changed</h3>
-        <p className="mb-2 text-sm text-muted">Red was removed, green was added.</p>
+      <section>
+        <h3 className="font-display text-[21px] font-semibold">What changed</h3>
+        <p className="mb-3 text-[14px] text-muted">Red was removed, green was added.</p>
         <TextDiff mine={mine} corrected={correction.corrected} />
       </section>
 
-      <section className="flex items-start gap-3 rounded-3xl bg-wash p-4">
-        <Speak text={correction.corrected} />
-        <div className="min-w-0">
-          <p className="text-sm text-muted">Corrected version</p>
-          <p className="text-lg font-medium" lang="tr">
-            {correction.corrected}
-          </p>
+      <section className="border-l-2 border-ok pl-5">
+        <div className="flex items-center gap-2">
+          <h3 className="text-[14px] text-muted">Corrected version</h3>
+          <Speak text={correction.corrected} size="sm" />
         </div>
+        <p className="tr-word mt-1 text-[21px] leading-relaxed font-medium" lang="tr">
+          {correction.corrected}
+        </p>
       </section>
 
       {correction.errors.length ? (
-        <section className="space-y-3">
-          <h3 className="font-display text-lg font-extrabold">
+        <section>
+          <h3 className="font-display text-[21px] font-semibold">
             {correction.errors.length} thing{correction.errors.length > 1 ? "s" : ""} to fix
           </h3>
-          {correction.errors.map((e, i) => (
-            <div key={i} className="rounded-3xl border-2 border-line p-4">
-              <div className="flex flex-wrap items-center gap-2" lang="tr">
-                <span className="font-display rounded-xl bg-nar-tint px-2.5 py-1 font-bold text-nar-depth line-through">{e.original}</span>
-                <span className="text-muted" aria-hidden="true">
-                  becomes
-                </span>
-                <span className="font-display rounded-xl bg-zeytin-tint px-2.5 py-1 font-bold text-zeytin-depth">{e.correction}</span>
-                <span className="rounded-full bg-turkuaz-tint px-2.5 py-0.5 text-xs font-semibold text-turkuaz-depth">{e.rule}</span>
-              </div>
-              <p className="mt-2 text-ink-soft">{e.explanationEN}</p>
-            </div>
-          ))}
+          <ol className="mt-3 divide-y divide-line border-y border-line">
+            {correction.errors.map((e, i) => (
+              <li key={i} className="py-4">
+                <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1" lang="tr">
+                  <span className="text-bad-text line-through decoration-1">{e.original}</span>
+                  <span className="text-muted" aria-label="becomes">
+                    →
+                  </span>
+                  <span className="font-medium text-ok-text">{e.correction}</span>
+                  <span className="pill bg-haze text-ink-soft">{e.rule}</span>
+                </p>
+                <p className="mt-1.5 max-w-[62ch] text-[15px] text-ink-soft">{e.explanationEN}</p>
+              </li>
+            ))}
+          </ol>
           {cardsAdded ? (
-            <p className="font-medium text-turkuaz-depth">
-              {cardsAdded} correction card{cardsAdded > 1 ? "s" : ""} added to today&apos;s reviews.
+            <p className="mt-3 text-[15px] text-brand-text">
+              {cardsAdded} correction card{cardsAdded > 1 ? "s were" : " was"} added to today&apos;s reviews.
             </p>
           ) : null}
         </section>
       ) : (
-        <p className="font-display text-xl font-extrabold text-zeytin-depth">No mistakes — mükemmel!</p>
+        <p className="font-display text-[21px] font-semibold text-ok-text">No mistakes. Mükemmel.</p>
       )}
     </div>
   );

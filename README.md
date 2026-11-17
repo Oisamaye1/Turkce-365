@@ -27,7 +27,7 @@ You type and write Turkish all the time; there is no multiple choice. Mistakes k
 - **Vercel can't run `claude -p`**, because your Pro login lives on your computer. The online app therefore never calls Claude.
   - If no lesson exists by **06:00**, a Vercel Cron job creates the **offline lesson**.
   - Writing you submit online is **queued**. The worker on your computer corrects it within ~15 minutes while the computer is on.
-- **Password gate.** On your first visit you choose a password, stored as a scrypt hash in the database. The session cookie lasts a year. The gate is active when `AUTH_SECRET` is set.
+- **Accounts.** Everyone signs in with a username and password (scrypt hashes, a signed one-year session cookie). The first visit creates the admin account; if the app had a password before, the admin confirms it and keeps all existing progress. Nobody can sign up without a one-time signup code from the admin. See [Accounts and the admin dashboard](#accounts-and-the-admin-dashboard).
 - **Vercel environment variables:**
 
   | Variable | Purpose |
@@ -54,7 +54,7 @@ Settings → *Daily lesson job* shows when the worker last checked in.
 
 ## Local-only mode
 
-Without `DATABASE_URL`, the app keeps everything in an embedded Postgres (PGlite) at `data/pglite/`. Claude runs in-process, and there is no password.
+Without `DATABASE_URL`, the app keeps everything in an embedded Postgres (PGlite) at `data/pglite/`. Claude runs in-process. Accounts work the same as online (a built-in development secret signs the cookie if `AUTH_SECRET` isn't set).
 
 ```bash
 npm install
@@ -62,6 +62,15 @@ npm run check:claude
 npm run build && npm start      # http://localhost:3000 (and your phone on the same Wi-Fi)
 npm run scheduler:setup         # worker every 15 min; it hands work to the running app
 ```
+
+## Accounts and the admin dashboard
+
+- **One schema per learner.** Each account's words, reviews, lessons, writing and plan live in their own Postgres schema (`turkce` for the first admin, `turkce_u_<random>` for everyone else). Accounts, signup codes and the activity log live in `turkce_app`. The app's queries are unchanged: `getDb()` returns the signed-in learner's schema and `qualify()` in `src/lib/db/index.ts` prefixes every learner table with it. A request without a valid session never falls back to anyone's data.
+- **Signup codes** (`/admin/codes`): make 1–25 at a time, with a private note, an expiry (7 days, 30 days or never) and optionally admin rights. A code is claimed inside the same transaction that creates the account, so it works exactly once. Send the code, or the link `/signup?code=…` that fills it in.
+- **Learners** (`/admin`): plan day, streak, words, last practice for everyone. On a learner's page: pause or resume the account, sign them out everywhere, reset their password (a temporary one is shown once and they must change it), make or remove an admin, switch Claude off for them (offline lessons, no corrections), or delete the account with all its data.
+- **Activity** (`/admin/activity`): sign-ups, sign-ins and every admin change.
+- **Account** (`/account`): each learner changes their name and password, downloads their data, and signs out here or on every device.
+- **The worker and cron run for everyone.** The worker on your computer loops over every active learner (Claude only for learners who have it on, all on your Pro plan's limits); the daily cron makes offline lessons for everyone. Command-line scripts (`npm run backup`, `npm run lesson`) act on the admin's original data.
 
 ## A day with the app (≈ 20–25 min)
 

@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IconBlocks, IconCards, IconChart, IconFlag, IconFlame, IconGear, IconLetters, IconPencil, IconRoute, IconSun } from "./icons";
+import { createContext, useContext } from "react";
+import { IconBlocks, IconCards, IconChart, IconFlag, IconFlame, IconGear, IconLetters, IconPencil, IconRoute, IconShield, IconSun } from "./icons";
 import { ThemeToggle } from "./theme";
 
 export const NAV = [
@@ -17,6 +18,25 @@ export const NAV = [
   { href: "/settings", en: "Settings", tr: "Ayarlar", Icon: IconGear },
 ];
 
+export interface ShellUser {
+  name: string;
+  username: string;
+  isAdmin: boolean;
+}
+const UserCtx = createContext<ShellUser | null>(null);
+
+function Avatar({ name, size = 28 }: { name: string; size?: number }) {
+  return (
+    <span
+      className="grid shrink-0 place-items-center rounded-full bg-brand-tint font-display font-semibold text-brand-text"
+      style={{ width: size, height: size, fontSize: size * 0.45 }}
+      aria-hidden="true"
+    >
+      {name.trim().charAt(0).toLocaleUpperCase("tr")}
+    </span>
+  );
+}
+
 /** Routes that run full-screen with no navigation, so the exercise has your full attention. */
 const FOCUS = ["/review", "/lesson", "/login"];
 
@@ -28,20 +48,22 @@ export function Wordmark() {
   );
 }
 
-export function AppShell({ streak, due, children }: { streak: number; due: number; children: React.ReactNode }) {
+export function AppShell({ streak, due, user, children }: { streak: number; due: number; user: ShellUser; children: React.ReactNode }) {
   const path = usePathname();
+  const nav = user.isAdmin ? [...NAV, { href: "/admin", en: "Admin", tr: "Yönetim", Icon: IconShield }] : NAV;
   const focus = FOCUS.some((f) => path === f || path.startsWith(`${f}/`));
   const active = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
-  if (focus) return <>{children}</>;
+  if (focus) return <UserCtx.Provider value={user}>{children}</UserCtx.Provider>;
 
   return (
+    <UserCtx.Provider value={user}>
     <div className="min-h-dvh lg:pl-60">
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col border-r border-line bg-paper px-3 py-6 lg:flex">
         <Link href="/" className="mb-8 px-3">
           <Wordmark />
         </Link>
         <nav className="flex flex-1 flex-col gap-0.5" aria-label="Main">
-          {NAV.map(({ href, en, tr, Icon }) => (
+          {nav.map(({ href, en, tr, Icon }) => (
             <Link
               key={href}
               href={href}
@@ -71,6 +93,17 @@ export function AppShell({ streak, due, children }: { streak: number; due: numbe
             </span>
           </div>
           <ThemeToggle withLabel />
+          <Link
+            href="/account"
+            aria-current={path.startsWith("/account") ? "page" : undefined}
+            className={`mt-1 flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-haze ${path.startsWith("/account") ? "bg-haze" : ""}`}
+          >
+            <Avatar name={user.name} />
+            <span className="min-w-0">
+              <span className="block truncate text-[14px] font-medium text-ink">{user.name}</span>
+              <span className="block truncate text-[12px] text-muted">@{user.username}</span>
+            </span>
+          </Link>
         </div>
       </aside>
 
@@ -88,6 +121,9 @@ export function AppShell({ streak, due, children }: { streak: number; due: numbe
             {due}
           </Link>
           <ThemeToggle />
+          <Link href="/account" aria-label="Your account">
+            <Avatar name={user.name} size={30} />
+          </Link>
         </div>
       </header>
 
@@ -95,7 +131,7 @@ export function AppShell({ streak, due, children }: { streak: number; due: numbe
 
       <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-line bg-paper/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden" aria-label="Main">
         {[...NAV.slice(0, 4), NAV[6]].map(({ href, en, Icon }) => {
-          const on = active(href) || (href === "/progress" && ["/write", "/missions", "/alphabet", "/settings"].some((h) => path.startsWith(h)));
+          const on = active(href) || (href === "/progress" && ["/write", "/missions", "/alphabet", "/settings", "/account", "/admin"].some((h) => path.startsWith(h)));
           return (
             <Link key={href} href={href} className={`flex flex-col items-center gap-1 py-2.5 text-[11px] transition-colors ${on ? "text-brand-text" : "text-muted"}`}>
               <Icon size={21} className={on ? "animate-pop" : ""} />
@@ -105,15 +141,18 @@ export function AppShell({ streak, due, children }: { streak: number; due: numbe
         })}
       </nav>
     </div>
+    </UserCtx.Provider>
   );
 }
 
 /** Secondary pages on phones (Missions / Progress / Alphabet / Settings). */
 export function MoreTabs() {
   const path = usePathname();
+  const user = useContext(UserCtx);
+  const tabs = [...NAV.slice(4), { href: "/account", en: "Account" }, ...(user?.isAdmin ? [{ href: "/admin", en: "Admin" }] : [])];
   return (
     <div className="-mx-4 mb-6 flex gap-1 overflow-x-auto border-b border-line px-4 lg:hidden [scrollbar-width:none]">
-      {NAV.slice(4).map(({ href, en }) => (
+      {tabs.map(({ href, en }) => (
         <Link
           key={href}
           href={href}

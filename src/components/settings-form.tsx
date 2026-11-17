@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { checkClaudeAction, regenerateTodayAction, saveSettingsAction, unlockStepAction } from "@/app/actions";
-import { logoutAction } from "@/app/login/actions";
 import type { JobRun } from "@/lib/db/jobs";
 import type { Settings } from "@/lib/db/settings";
 import { useSpeech } from "./speech";
@@ -20,6 +19,7 @@ export function SettingsForm({
   platform,
   currentStep,
   steps,
+  isAdmin,
 }: {
   settings: Settings;
   jobs: JobRun[];
@@ -29,6 +29,7 @@ export function SettingsForm({
   platform: string;
   currentStep: number;
   steps: { id: number; title: string }[];
+  isAdmin: boolean;
 }) {
   const router = useRouter();
   const { voices, voice, setVoiceURI, speak } = useSpeech();
@@ -71,11 +72,13 @@ export function SettingsForm({
             <input className="input" value={form.timezone} onChange={(e) => setForm({ ...form, timezone: e.target.value })} />
             <span className="text-xs text-muted">Northern Cyprus = Europe/Istanbul (UTC+3, no DST). Not Europe/Nicosia.</span>
           </label>
+          {isAdmin ? (
           <label className="block space-y-1">
             <span className="font-medium">Claude model (optional)</span>
             <input className="input" placeholder="default — e.g. sonnet" value={form.claudeModel} onChange={(e) => setForm({ ...form, claudeModel: e.target.value })} />
             <span className="text-xs text-muted">Passed to claude -p --model. Leave empty for your CLI default.</span>
           </label>
+          ) : null}
         </div>
         <div className="flex items-center gap-3">
           <button className="btn-primary" onClick={save} disabled={busy === "save"}>
@@ -83,7 +86,7 @@ export function SettingsForm({
           </button>
           {msg ? <span className="font-medium">{msg}</span> : null}
         </div>
-        <p className="text-xs text-muted">After changing the lesson time, run <code>npm run scheduler:setup</code> again.</p>
+        {isAdmin ? <p className="text-xs text-muted">After changing the lesson time, run <code>npm run scheduler:setup</code> again.</p> : null}
       </section>
 
       <section className="space-y-3 border-t border-line pt-8">
@@ -110,6 +113,8 @@ export function SettingsForm({
         )}
       </section>
 
+      {isAdmin ? (
+        <>
       <section className="space-y-3 border-t border-line pt-8">
         <h2 className="font-display text-[21px] font-semibold">
           Claude <span className="ml-2 text-[15px] font-normal text-muted" lang="tr">Yapay zeka</span>
@@ -250,6 +255,9 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
         </div>
       </section>
 
+        </>
+      ) : null}
+
       <section className="space-y-3 border-t border-line pt-8">
         <h2 className="font-display text-[21px] font-semibold">
           Grammar level <span className="ml-2 text-[15px] font-normal text-muted" lang="tr">Seviye</span>
@@ -276,6 +284,8 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
         </div>
       </section>
 
+      {isAdmin ? (
+        <>
       <section className="space-y-3 border-t border-line pt-8">
         <h2 className="font-display text-[21px] font-semibold">
           Backup <span className="ml-2 text-[15px] font-normal text-muted" lang="tr">Yedekleme</span>
@@ -292,15 +302,7 @@ npm run scheduler:setup          # every 15 minutes`}</pre>
           Or from a terminal: <code>npm run backup</code> (writes a JSON export to data/backups/).
         </p>
       </section>
-      {online ? (
-        <section className="flex items-center justify-between gap-3 border-t border-line pt-8">
-          <h2 className="font-display text-[21px] font-semibold">
-            Account <span className="ml-2 text-[15px] font-normal text-muted" lang="tr">Hesap</span>
-          </h2>
-          <form action={logoutAction}>
-            <button className="btn-secondary">Log out</button>
-          </form>
-        </section>
+        </>
       ) : null}
     </div>
   );

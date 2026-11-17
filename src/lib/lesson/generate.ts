@@ -10,6 +10,7 @@ import { finishJob, isJobRunning, startJob, type JobTrigger } from "@/lib/db/job
 import { getLesson, listLessons, saveLesson, usedDialogueIds, type LessonRow } from "@/lib/db/lessons";
 import { ensureMission, recentStruggles } from "@/lib/db/missions";
 import { getSettings } from "@/lib/db/settings";
+import { currentUser } from "@/lib/users/session";
 import { currentPlanDay, getPlan, unlockPlanSteps } from "@/lib/db/plan";
 import { PLAN_DAYS, planDay } from "@/lib/plan/build";
 import type { VocabEntry } from "@/lib/vocab/types";
@@ -111,7 +112,8 @@ async function generate(date: string, opts: GenerateOptions): Promise<GenerateRe
     let content: LessonContent | null = null;
     let source: "claude" | "fallback" = "fallback";
     let note = "";
-    if (opts.useClaude !== false) {
+    const learner = await currentUser();
+    if (opts.useClaude !== false && learner?.aiEnabled !== false) {
       const sevenDaysAgo = addDays(date, -7);
       const vocabMisses = (await recentMistakeCards(7, 10)).map((c) => `${c.tr} (${c.en})`);
       const writingMisses = (await recentMistakes(sevenDaysAgo, 10)).map((m) => `[${m.ruleTag}] "${m.original}" → "${m.correction}"`);

@@ -7,8 +7,10 @@ import { lastWorkerSeen, recentJobs } from "@/lib/db/jobs";
 import { dbLabel } from "@/lib/db";
 import { getSettings } from "@/lib/db/settings";
 import { GRAMMAR_STEPS } from "@/lib/grammar/steps";
+import { requireUser } from "@/lib/users/session";
 
 export default async function SettingsPage() {
+  const me = await requireUser();
   const s = await getSettings();
   const jobs = await recentJobs(8);
   const workerSeen = await lastWorkerSeen();
@@ -24,6 +26,7 @@ export default async function SettingsPage() {
         workerSeen={workerSeen}
         platform={process.platform}
         currentStep={await currentGrammarStep()}
+        isAdmin={me.role === "admin"}
         steps={STEP_ORDER.map((id) => GRAMMAR_STEPS.find((x) => x.id === id)!).map((x) => ({ id: x.id, title: x.title }))}
       />
     </div>

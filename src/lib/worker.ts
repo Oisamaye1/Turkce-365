@@ -7,6 +7,8 @@
  *   3. rewrites locally-generated weekly report notes with Claude.
  */
 import { setSetting, getSettings } from "@/lib/db/settings";
+import { runAsUser } from "@/lib/users/context";
+import { activeUsers } from "@/lib/users/store";
 import { countJobs } from "@/lib/db/jobs";
 import { getLesson } from "@/lib/db/lessons";
 import { pendingWritings } from "@/lib/db/writing";
@@ -17,6 +19,8 @@ import { upgradeReportNarratives } from "@/lib/lesson/weekly";
 import { localDate, startOfLocalDayIso } from "@/lib/time";
 
 export interface WorkerSummary {
+  /** Learners processed. */
+  learners?: number;
   claude: boolean;
   lesson: GenerateResult | null;
   upgraded: boolean;
@@ -25,10 +29,38 @@ export interface WorkerSummary {
   reports: number;
 }
 
+/**
+ * Run for every active learner. Claude is used only for learners whose account has it on;
+ * the others still get today's offline lesson. Totals are summed across learners.
+ */
 export async function runWorker(log: (m: string) => void = () => {}): Promise<WorkerSummary> {
-  await setSetting("worker_last_seen", new Date().toISOString());
   const caps = claudeEnabled() ? await detectClaude() : null;
-  const claude = !!caps?.available;
+  const users = await activeUsers();
+  const total: WorkerSummary = { learners: users.length, claude: !!caps?.available, lesson: null, upgraded: false, corrected: 0, correctionErrors: 0, reports: 0 };
+  if (!users.length) {
+    // Not set up yet (no accounts): work on the original learner's data.
+    return runWorkerForLearner(!!caps?.available, caps?.error, log);
+  }
+  for (const u of users) {
+    const s = await runAsUser(u, () =>
+      runWorkerForLearner(!!caps?.available && u.aiEnabled, caps?.available && !u.aiEnabled ? "turned off for this learner" : caps?.error, (m) => log(`[${u.username}] ${m}`)),
+    ).catch((e) => {
+      log(`[${u.username}] failed: ${e instanceof Error ? e.message : String(e)}`);
+      return null;
+    });
+    if (!s) continue;
+    if (u.role === "admin" || !total.lesson) total.lesson = s.lesson;
+    total.upgraded ||= s.upgraded;
+    total.corrected += s.corrected;
+    total.correctionErrors += s.correctionErrors;
+    total.reports += s.reports;
+  }
+  return total;
+}
+
+async function runWorkerForLearner(claude: boolean, why: string | undefined, log: (m: string) => void): Promise<WorkerSummary> {
+  await setSetting("worker_last_seen", new Date().toISOString());
+  const caps = { error: why };
   const summary: WorkerSummary = { claude, lesson: null, upgraded: false, corrected: 0, correctionErrors: 0, reports: 0 };
 
   // 1. Today's lesson

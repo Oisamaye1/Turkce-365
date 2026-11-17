@@ -1,6 +1,7 @@
 import { knownWords } from "@/lib/db/cards";
 import { currentGrammarStep } from "@/lib/db/grammar";
 import { getSettings } from "@/lib/db/settings";
+import { currentUser } from "@/lib/users/session";
 import { applyCorrection, getWriting, markWritingAttempt } from "@/lib/db/writing";
 import { getStep } from "@/lib/grammar/steps";
 import { claudeEnabled, runClaudeJson } from "@/lib/claude/cli";
@@ -21,6 +22,9 @@ export async function correctWriting(writingId: number): Promise<CorrectionOutco
   const w = await getWriting(writingId);
   if (!w) return { writingId, correction: null, cardsAdded: 0, error: "Writing not found." };
   if (w.corrected) return { writingId, correction: w.corrected, cardsAdded: 0 };
+  if ((await currentUser())?.aiEnabled === false) {
+    return { writingId, correction: null, cardsAdded: 0, error: "Automatic corrections aren't switched on for your account. Your text is saved." };
+  }
   if (!claudeEnabled()) return { writingId, correction: null, cardsAdded: 0, queued: true };
   const step = getStep(await currentGrammarStep());
   const level = learnerLevel((await knownWords(3000)).length, step.id);

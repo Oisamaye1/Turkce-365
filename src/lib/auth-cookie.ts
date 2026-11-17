@@ -1,11 +1,18 @@
 /**
  * Signed session cookie (Web Crypto HMAC — works in middleware/Edge and Node).
- * Enabled only when AUTH_SECRET is set (the online deployment).
+ * Value: "<userId>.<sessionVersion>.<expiresMs>.<signature>". The middleware only checks the
+ * signature; the server also checks that the user is active and the version is current
+ * (bumping the version signs a user out everywhere).
  */
 export const SESSION_COOKIE = "t365_session";
 export const SESSION_DAYS = 365;
 
 const enc = new TextEncoder();
+
+/** AUTH_SECRET on the server; a fixed fallback only for local, non-Vercel runs. */
+export function authSecret(): string {
+  return process.env.AUTH_SECRET || (process.env.VERCEL ? "" : "turkce-365-local-only-secret");
+}
 
 async function hmac(secret: string, data: string): Promise<string> {
   const key = await crypto.subtle.importKey("raw", enc.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
@@ -13,20 +20,27 @@ async function hmac(secret: string, data: string): Promise<string> {
   return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-export async function makeSession(secret: string, now = Date.now()): Promise<string> {
-  const exp = String(now + SESSION_DAYS * 86_400_000);
-  return `${exp}.${await hmac(secret, `t365:${exp}`)}`;
+export async function makeSession(secret: string, userId: number, version: number, now = Date.now()): Promise<string> {
+  const exp = now + SESSION_DAYS * 86_400_000;
+  const body = `${userId}.${version}.${exp}`;
+  return `${body}.${await hmac(secret, `t365:${body}`)}`;
 }
 
-export async function verifySession(secret: string, value: string | undefined, now = Date.now()): Promise<boolean> {
-  if (!value) return false;
-  const [exp, sig] = value.split(".");
-  if (!exp || !sig || Number(exp) < now) return false;
-  const expected = await hmac(secret, `t365:${exp}`);
-  if (expected.length !== sig.length) return false;
+export interface SessionClaims {
+  userId: number;
+  version: number;
+  exp: number;
+}
+
+export async function readSession(secret: string, value: string | undefined, now = Date.now()): Promise<SessionClaims | null> {
+  if (!secret || !value) return null;
+  const parts = value.split(".");
+  if (parts.length !== 4) return null;
+  const [uid, ver, exp, sig] = parts;
+  if (!/^\d+$/.test(uid) || !/^\d+$/.test(ver) || !/^\d+$/.test(exp) || Number(exp) < now) return null;
+  const expected = await hmac(secret, `t365:${uid}.${ver}.${exp}`);
+  if (expected.length !== sig.length) return null;
   let diff = 0;
   for (let i = 0; i < sig.length; i++) diff |= expected.charCodeAt(i) ^ sig.charCodeAt(i);
-  return diff === 0;
+  return diff === 0 ? { userId: Number(uid), version: Number(ver), exp: Number(exp) } : null;
 }
-
-export const authEnabled = () => !!process.env.AUTH_SECRET;

@@ -177,3 +177,25 @@ export const IconChevron = (p: P) => (
     <path d="M9 6l6 6-6 6" />
   </S>
 );
+
+/** Admin: a shield. */
+export const IconShield = (p: P) => (
+  <S {...p}>
+    <path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6L12 3z" />
+    <path d="M9 12l2 2 4-4" />
+  </S>
+);
+
+export const IconUser = (p: P) => (
+  <S {...p}>
+    <circle cx="12" cy="8.5" r="3.75" />
+    <path d="M4.5 20c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5" />
+  </S>
+);
+
+export const IconCopy = (p: P) => (
+  <S {...p}>
+    <rect x="8.5" y="8.5" width="12" height="12" rx="2" />
+    <path d="M15.5 8.5V5.5a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2h3" />
+  </S>
+);

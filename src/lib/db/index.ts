@@ -7,7 +7,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { SCHEMA_MARKER, SCHEMA_SQL, SCHEMA_VERSION } from "./schema";
+import { APP_SCHEMA_SQL, SCHEMA_MARKER, SCHEMA_SQL, SCHEMA_VERSION } from "./schema";
 import { seedIfEmpty } from "./seed";
 
 export interface DB {
@@ -123,21 +123,124 @@ async function pgliteDriver(dir: string | null): Promise<DB> {
   return db;
 }
 
+// ---------------------------------------------------------------- multi-user scoping
+/*
+ * Every learner has their own Postgres schema with the same tables (the first account, the
+ * admin, keeps the original "turkce" schema). Accounts and signup codes live in "turkce_app".
+ * Code calls getDb() exactly as before; it returns a view of the signed-in learner's schema in
+ * which every table name is qualified with that schema. No query needs a user_id.
+ */
+
+/** Tables that exist once per learner. */
+export const USER_TABLES = [
+  "settings",
+  "cards",
+  "reviews",
+  "review_log",
+  "grammar_progress",
+  "gym_log",
+  "lessons",
+  "writings",
+  "mistakes",
+  "missions",
+  "weekly_reports",
+  "job_runs",
+  "plan_days",
+] as const;
+
+export const APP_SCHEMA = "turkce_app";
+export const LEGACY_SCHEMA = "turkce";
+const SCHEMA_NAME = /^turkce(_u_[0-9a-f]{8,16})?$/;
+
+export function isValidSchemaName(s: string): boolean {
+  return SCHEMA_NAME.test(s);
+}
+
+const TABLE_REF = new RegExp(`\\b(FROM|JOIN|INTO|UPDATE)(\\s+)(${USER_TABLES.join("|")})\\b(?!\\s*\\.)`, "gi");
+const qualified = new Map<string, string>();
+
+/** Prefix every learner table after FROM / JOIN / INTO / UPDATE with the learner's schema. */
+export function qualify(sql: string, schema: string): string {
+  const key = `${schema}\u0000${sql}`;
+  let out = qualified.get(key);
+  if (out === undefined) {
+    out = sql.replace(TABLE_REF, (_m, kw: string, ws: string, t: string) => `${kw}${ws}"${schema}".${t.toLowerCase()}`);
+    if (qualified.size > 5000) qualified.clear();
+    qualified.set(key, out);
+  }
+  return out;
+}
+
+function scoped(base: DB, schema: string): DB {
+  const db: DB = {
+    kind: base.kind,
+    all: (s, p) => base.all(qualify(s, schema), p),
+    one: (s, p) => base.one(qualify(s, schema), p),
+    run: (s, p) => base.run(qualify(s, schema), p),
+    exec: (s) => base.exec(qualify(s, schema)),
+    tx: (fn) => base.tx((t) => fn(scoped(t, schema))),
+    close: async () => {},
+  };
+  return db;
+}
+
+async function tableExists(db: DB, schema: string, table: string): Promise<boolean> {
+  const r = await db.one<{ ok: boolean }>(
+    "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = ? AND table_name = ?) AS ok",
+    [schema, table],
+  );
+  return !!r?.ok;
+}
+
+/** Shared tables: accounts, signup codes, audit log. */
+async function ensureAppSchema(db: DB) {
+  if (await tableExists(db, APP_SCHEMA, "audit_log")) return;
+  await db.tx(async (t) => {
+    await t.run("SELECT pg_advisory_xact_lock(365360)");
+    if (await tableExists(t, APP_SCHEMA, "audit_log")) return;
+    for (const stmt of APP_SCHEMA_SQL.split(";").map((x) => x.trim()).filter(Boolean)) await t.run(stmt);
+  });
+}
+
+/** Create (or bring up to date) one learner's schema, then load the word deck. */
+async function migrateUserSchema(base: DB, schema: string) {
+  if (!isValidSchemaName(schema)) throw new Error(`Invalid schema name: ${schema}`);
+  if (!(await tableExists(base, schema, SCHEMA_MARKER))) {
+    // Serverless cold starts can race: create under a lock, inside one transaction.
+    await base.tx(async (t) => {
+      await t.run("SELECT pg_advisory_xact_lock(365364)");
+      if (await tableExists(t, schema, SCHEMA_MARKER)) return;
+      await t.run(`CREATE SCHEMA IF NOT EXISTS "${schema}"`);
+      await t.run(`SET LOCAL search_path TO "${schema}"`);
+      for (const stmt of SCHEMA_SQL.split(";").map((x) => x.trim()).filter(Boolean)) await t.run(stmt);
+      await t.run(
+        `INSERT INTO "${schema}".settings (key, value) VALUES ('schema_version', ?) ON CONFLICT (key) DO UPDATE SET value = excluded.value`,
+        [String(SCHEMA_VERSION)],
+      );
+    });
+  }
+  await seedIfEmpty(scoped(base, schema));
+}
+
 // ---------------------------------------------------------------- lifecycle
+
+const g = globalThis as unknown as {
+  __turkceDb?: Promise<DB>;
+  __turkceSchemas?: Map<string, Promise<DB>>;
+  __turkceTestSchema?: string;
+};
 
 export async function openDb(target: string = process.env.DATABASE_URL ?? localDbDir()): Promise<DB> {
   const isUrl = /^postgres(ql)?:\/\//.test(target);
   const db = isUrl ? await postgresDriver(target) : await pgliteDriver(target === ":memory:" ? null : target);
-  if (!isUrl) await db.exec("CREATE SCHEMA IF NOT EXISTS turkce; SET search_path TO turkce;");
-  await migrate(db);
-  await seedIfEmpty(db);
+  if (!isUrl) await db.exec(`CREATE SCHEMA IF NOT EXISTS ${LEGACY_SCHEMA}; SET search_path TO ${LEGACY_SCHEMA};`);
+  await ensureAppSchema(db);
+  await migrateUserSchema(db, LEGACY_SCHEMA);
   return db;
 }
 
-const g = globalThis as unknown as { __turkceDb?: Promise<DB> };
-
-/** Shared, lazily-initialised connection (cached across hot reloads and warm serverless calls). */
-export function getDb(): Promise<DB> {
+/** The raw connection (no learner scope): for accounts, codes and admin work. */
+export function getBaseDb(): Promise<DB> {
   if (!g.__turkceDb) {
     g.__turkceDb = openDb().catch((e) => {
       g.__turkceDb = undefined;
@@ -147,39 +250,66 @@ export function getDb(): Promise<DB> {
   return g.__turkceDb;
 }
 
-/** For tests: install a specific database instance. */
-export function setDbForTesting(db: DB) {
+/** A learner's database view; creates and seeds the schema the first time it's used. */
+export async function getUserDb(schema: string): Promise<DB> {
+  if (!isValidSchemaName(schema)) throw new Error(`Invalid schema name: ${schema}`);
+  g.__turkceSchemas ??= new Map();
+  let p = g.__turkceSchemas.get(schema);
+  if (!p) {
+    p = (async () => {
+      const base = await getBaseDb();
+      await migrateUserSchema(base, schema);
+      return scoped(base, schema);
+    })().catch((e) => {
+      g.__turkceSchemas?.delete(schema);
+      throw e;
+    });
+    g.__turkceSchemas.set(schema, p);
+  }
+  return p;
+}
+
+export class NotSignedInError extends Error {
+  constructor() {
+    super("Not signed in.");
+  }
+}
+
+/** The signed-in learner's database (or the learner a worker/admin task runs as). */
+export async function getDb(): Promise<DB> {
+  const { currentUser, inRequest } = await import("@/lib/users/session");
+  const user = await currentUser();
+  if (user) return getUserDb(user.schemaName);
+  if (g.__turkceTestSchema) return getUserDb(g.__turkceTestSchema);
+  // A web request without a valid session never falls back to anyone's data.
+  if (await inRequest()) throw new NotSignedInError();
+  // Command-line scripts on your computer (backup, generate-lesson…): the original account.
+  return getUserDb(LEGACY_SCHEMA);
+}
+
+/** Drop a learner's schema and everything in it. Never the original schema. */
+export async function dropUserSchema(schema: string) {
+  if (!isValidSchemaName(schema) || schema === LEGACY_SCHEMA) throw new Error("Refusing to drop this schema.");
+  const base = await getBaseDb();
+  await base.run(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`);
+  g.__turkceSchemas?.delete(schema);
+}
+
+/** For tests: install a database and act as the original learner when nobody is signed in. */
+export function setDbForTesting(db: DB, schema: string = LEGACY_SCHEMA) {
   g.__turkceDb = Promise.resolve(db);
+  g.__turkceSchemas = new Map([[LEGACY_SCHEMA, Promise.resolve(scoped(db, LEGACY_SCHEMA))]]);
+  g.__turkceTestSchema = schema;
 }
 
 export function dbLabel(): string {
   const url = process.env.DATABASE_URL;
-  if (!url) return `PGlite (local) · ${localDbDir()}`;
+  if (!url) return `PGlite (local) · ${localDbDir()} · one schema per learner`;
   try {
     const u = new URL(url);
-    return `Postgres · ${u.hostname} · schema turkce`;
+    return `Postgres · ${u.hostname} · one schema per learner`;
   } catch {
     return "Postgres";
-  }
-}
-
-async function migrate(db: DB) {
-  const done = await db.one<{ ok: boolean }>(
-    "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = current_schema() AND table_name = ?) AS ok",
-    [SCHEMA_MARKER],
-  );
-  if (!done?.ok) {
-    // Serverless cold starts can race: create the schema under a lock, inside one transaction.
-    await db.tx(async (t) => {
-      await t.run("SELECT pg_advisory_xact_lock(365364)");
-      const again = await t.one<{ ok: boolean }>(
-        "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = current_schema() AND table_name = ?) AS ok",
-        [SCHEMA_MARKER],
-      );
-      if (again?.ok) return;
-      for (const stmt of SCHEMA_SQL.split(";").map((x) => x.trim()).filter(Boolean)) await t.run(stmt);
-      await t.run("INSERT INTO settings (key, value) VALUES ('schema_version', ?) ON CONFLICT (key) DO UPDATE SET value = excluded.value", [String(SCHEMA_VERSION)]);
-    });
   }
 }
 

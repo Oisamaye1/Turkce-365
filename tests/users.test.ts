@@ -114,3 +114,25 @@ describe("data isolation", () => {
     expect(await getPlan()).toBeNull();
   }, 60_000);
 });
+
+describe("usernames", () => {
+  it("turns what people type into a simple sign-in name", async () => {
+    const { normalizeUsername, usernameProblem } = await import("@/lib/users/username");
+    expect(normalizeUsername("  Ayşe Yılmaz ")).toBe("ayse.yilmaz");
+    expect(normalizeUsername("ÖMER")).toBe("omer");
+    expect(normalizeUsername("İLKNUR")).toBe("ilknur");
+    expect(normalizeUsername("Me@Mail.com")).toBe("me@mail.com");
+    expect(normalizeUsername("José")).toBe("jose");
+    for (const u of ["ayse.yilmaz", "omer", "me@mail.com", "ali_1990"]) expect(usernameProblem(u)).toBeNull();
+    expect(usernameProblem("ab")).toMatch(/at least 3/);
+    expect(usernameProblem("ali!")).toMatch(/“!”/);
+  });
+
+  it("signs up and signs in with the same forgiving name", async () => {
+    const [code] = await createCodes({ count: 1, note: null, role: "user", expiresDays: null, createdBy: admin.id });
+    const r = await signUpWithCode({ code: code.code, username: "Şükrü Öz", name: "Şükrü", password: "password1" });
+    expect(r.ok && r.user.username).toBe("sukru.oz");
+    const { getUserForLogin } = await import("@/lib/users/store");
+    expect((await getUserForLogin("ŞÜKRÜ ÖZ"))?.user.username).toBe("sukru.oz");
+  });
+});

@@ -6,6 +6,7 @@ import { randomBytes } from "node:crypto";
 import { APP_SCHEMA, LEGACY_SCHEMA, getBaseDb, type DB } from "@/lib/db";
 import { hashPassword } from "./password";
 import type { AppUser, Role, SignupCode, UserStatus } from "./types";
+import { normalizeUsername } from "./username";
 
 const U = `${APP_SCHEMA}.users`;
 const C = `${APP_SCHEMA}.signup_codes`;
@@ -44,14 +45,7 @@ const toUser = (r: UserRow): AppUser => ({
   inviteCodeId: r.invite_code_id == null ? null : Number(r.invite_code_id),
 });
 
-/** Usernames: 3–24 lowercase letters, digits, dot, dash or underscore. */
-export function normalizeUsername(u: string): string {
-  return u.trim().toLowerCase();
-}
-export function usernameProblem(u: string): string | null {
-  if (!/^[a-z0-9._-]{3,24}$/.test(u)) return "Use 3–24 characters: letters, numbers, dots, dashes or underscores.";
-  return null;
-}
+export { normalizeUsername, usernameProblem } from "./username";
 
 // ---------------------------------------------------------------- users
 

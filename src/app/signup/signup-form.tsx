@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { signupAction } from "../login/actions";
-import { Field } from "../login/login-form";
+import { Field, UsernameField } from "../login/login-form";
 
 export function SignupForm({ code }: { code: string }) {
   const [state, action, pending] = useActionState(signupAction, null);
@@ -26,9 +26,7 @@ export function SignupForm({ code }: { code: string }) {
       <Field label="Your name">
         <input name="name" className="input mt-1.5" autoComplete="name" required maxLength={60} autoFocus={!!code} defaultValue={v.name} />
       </Field>
-      <Field label="Username" hint="You'll sign in with this. 3–24 characters: letters, numbers, dots, dashes or underscores.">
-        <input name="username" className="input mt-1.5" autoComplete="username" autoCapitalize="none" autoCorrect="off" spellCheck={false} required defaultValue={v.username} />
-      </Field>
+      <UsernameField defaultValue={v.username} />
       <Field label="Password, at least 8 characters">
         <input name="password" type="password" className="input mt-1.5" autoComplete="new-password" required />
       </Field>

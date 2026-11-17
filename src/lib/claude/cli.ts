@@ -9,7 +9,7 @@
  */
 import { spawn } from "node:child_process";
 import os from "node:os";
-import type { ZodType, ZodTypeDef } from "zod";
+import type { ZodType } from "zod";
 
 export interface ClaudeCapabilities {
   available: boolean;
@@ -123,8 +123,7 @@ export interface RunJsonOptions {
 }
 
 /** Ask Claude for JSON and validate it with Zod. Never throws. */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function runClaudeJson<T>(prompt: string, schema: ZodType<T, ZodTypeDef, any>, opts: RunJsonOptions = {}): Promise<ClaudeJsonResult<T>> {
+export async function runClaudeJson<T>(prompt: string, schema: ZodType<T>, opts: RunJsonOptions = {}): Promise<ClaudeJsonResult<T>> {
   const started = Date.now();
   if (!claudeEnabled()) return { ok: false, error: "Claude is not available on this server (TURKCE_DISABLE_CLAUDE=1)", ms: 0 };
   const caps = await detectClaude();

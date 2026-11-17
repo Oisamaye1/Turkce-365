@@ -1,4 +1,5 @@
 import { MoreTabs } from "@/components/nav";
+import { InstallSection } from "@/components/pwa";
 import { PageTitle } from "@/components/ui";
 import { requireUser } from "@/lib/users/session";
 import { logoutAction } from "../login/actions";
@@ -37,6 +38,11 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
         <section className="space-y-4 border-t border-line pt-8">
           <h2 className="font-display text-[21px] font-semibold">Password</h2>
           <PasswordForm />
+        </section>
+
+        <section className="space-y-3 border-t border-line pt-8">
+          <h2 className="font-display text-[21px] font-semibold">Use it like an app</h2>
+          <InstallSection />
         </section>
 
         <section className="space-y-3 border-t border-line pt-8">

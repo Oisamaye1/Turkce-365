@@ -3,6 +3,7 @@ import unitsJson from "../../data/units.json";
 import { WordAnatomy } from "@/components/anatomy";
 import { GenerateLesson } from "@/components/catch-up";
 import { PlanDayChecklist } from "@/components/plan/plan-day";
+import { InstallHint } from "@/components/pwa";
 import { DAY_KIND_LABEL, firstDayOfWeek, grammarStarted, planDay } from "@/lib/plan/build";
 import { planDayProps } from "@/lib/plan/props";
 import { getPlanRows } from "@/lib/db/plan";
@@ -101,6 +102,7 @@ export default async function TodayPage() {
 
   return (
     <div>
+      <InstallHint />
       {/* Greeting hero */}
       <section className="mb-10 lg:mb-14">
         <p className="text-[15px] text-muted">

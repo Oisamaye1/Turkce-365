@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { currentUser } from "@/lib/users/session";
 import "./globals.css";
 import { AppShell } from "@/components/nav";
+import { ServiceWorker } from "@/components/pwa";
 import { VoiceProvider } from "@/components/speech";
 import { THEME_SCRIPT } from "@/components/theme";
 import { countDue } from "@/lib/db/cards";
@@ -13,11 +14,18 @@ import { streak } from "@/lib/db/stats";
 export const metadata: Metadata = {
   title: "Türkçe 365",
   description: "Your personal Turkish tutor — 20 minutes a day, A0 → A2/B1.",
+  applicationName: "Türkçe 365",
+  // iPhone / iPad: "Add to Home Screen" opens full-screen, with this name under the icon.
+  appleWebApp: { capable: true, title: "Türkçe 365", statusBarStyle: "default" },
+  formatDetection: { telephone: false },
+  // Older iOS versions only read the Apple-specific name.
+  other: { "apple-mobile-web-app-capable": "yes" },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#0b1518" },
@@ -41,6 +49,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </head>
         <body className="min-h-dvh font-sans antialiased">
           <VoiceProvider initialVoiceURI={null}>{children}</VoiceProvider>
+          <ServiceWorker />
         </body>
       </html>
     );
@@ -58,6 +67,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {children}
           </AppShell>
         </VoiceProvider>
+        <ServiceWorker />
       </body>
     </html>
   );

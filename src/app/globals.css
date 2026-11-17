@@ -309,3 +309,21 @@ body,
     background-color 240ms ease,
     color 240ms ease;
 }
+
+/* ---------------------------------------------------------------- installed app
+ * Feel like an app on a phone: no grey tap flash, no notch overlap in landscape,
+ * no accidental page bounce revealing the background behind the bottom bar.
+ */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+@media (display-mode: standalone) {
+  html,
+  body {
+    overscroll-behavior-y: none;
+  }
+}

@@ -11,6 +11,7 @@ import { analyzeText } from "@/lib/lesson/analyze";
 import type { DailyLesson } from "@/lib/lesson/schema";
 import { listReports } from "@/lib/lesson/weekly";
 import { trLower } from "@/lib/turkish";
+import { exercisePool, learnerStage } from "@/lib/srs/stage";
 import type { VocabEntry } from "@/lib/vocab/types";
 
 export default async function LessonPage({ searchParams }: { searchParams: Promise<{ date?: string; s?: string }> }) {
@@ -34,6 +35,7 @@ export default async function LessonPage({ searchParams }: { searchParams: Promi
   }
 
   const vocab = vocabJson as VocabEntry[];
+  const [stage, pool] = await Promise.all([learnerStage(), exercisePool()]);
   const known = new Set((await knownWords(3000)).map((c) => c.tr));
   const lex = buildLexicon(vocab, known);
 
@@ -42,7 +44,7 @@ export default async function LessonPage({ searchParams }: { searchParams: Promi
     const cards = await getCardsByIds(quiz.vocabCardIds);
     const drills = generateMixedDrills(quiz.steps ?? quiz.maxStep, 10, lex, seededRng(quiz.drillSeed));
     const report = (await listReports()).find((r) => r.week === quiz.weekStart) ?? null;
-    return <WeeklyQuiz quiz={quiz} cards={cards} drills={drills} existingReport={row.completedAt ? report : null} />;
+    return <WeeklyQuiz quiz={quiz} cards={cards} drills={drills} existingReport={row.completedAt ? report : null} stage={stage} pool={pool} />;
   }
 
   const lesson = row.lesson as DailyLesson;
@@ -63,6 +65,8 @@ export default async function LessonPage({ searchParams }: { searchParams: Promi
         progress={row.progress}
         completed={!!row.completedAt}
         warmupCards={warmupCards}
+        stage={stage}
+        pool={pool}
         drills={drills}
         analysis={analysis}
         initialSection={sp.s !== undefined && /^[0-4]$/.test(sp.s) ? Number(sp.s) : undefined}

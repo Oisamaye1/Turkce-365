@@ -8,8 +8,11 @@ import { GRADES, NEW_CARD_STATE, previewIntervals, suggestGrade, type Grade } fr
 import { FocusShell, FooterBar } from "./focus";
 import { IconFlame } from "./icons";
 import { Speak } from "./speech";
-import { TypeAnswer, type AnswerResult } from "./type-answer";
-import { Badge, Prompt, RESULT_COPY } from "./ui";
+import type { AnswerResult } from "./type-answer";
+import { Badge, RESULT_COPY } from "./ui";
+import { CardExercise } from "./card-exercise";
+import { autoGraded, exerciseFor } from "@/lib/srs/ladder";
+import type { PoolWord } from "@/lib/srs/stage";
 
 const GRADE_LABEL: Record<Grade, string> = { again: "Again", hard: "Hard", good: "Good", easy: "Easy" };
 
@@ -19,7 +22,7 @@ interface QueueItem extends ReviewItem {
   relearn?: boolean;
 }
 
-export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: ReviewItem[] }) {
+export function ReviewSession({ due, fresh, stage, pool }: { due: ReviewItem[]; fresh: ReviewItem[]; stage: number; pool: PoolWord[] }) {
   // One new word after every three reviews.
   const initial = useMemo(() => {
     const q: QueueItem[] = [];
@@ -106,7 +109,18 @@ export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: Review
   const enToTr = item.direction === "en-tr";
   const state = item.state ?? NEW_CARD_STATE;
   const previews = previewIntervals(state);
-  const suggested = answer ? suggestGrade(answer.result, answer.ms, (enToTr ? card.tr : card.en).length) : "good";
+  const exercise = exerciseFor({ direction: item.direction, repetitions: state.repetitions, isNew: item.isNew, stage, tr: card.tr, pos: card.pos });
+  const auto = autoGraded(exercise);
+  // Easier exercises are graded for you: right → Good, nearly → Hard, wrong → Again.
+  const suggested: Grade = answer
+    ? auto
+      ? answer.result === "correct"
+        ? "good"
+        : answer.result === "almost"
+          ? "hard"
+          : "again"
+      : suggestGrade(answer.result, answer.ms, (enToTr ? card.tr : card.en).length)
+    : "good";
 
   const grade = async (g: Grade) => {
     if (!answer || busy) return;
@@ -179,37 +193,28 @@ export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: Review
           </FooterBar>
         </>
       ) : (
-        <>
-          <div key={item.key} className="animate-slide-in">
-          <Prompt label={enToTr ? "Write this in Turkish" : "What does this mean?"}>
-            <div className="flex items-start justify-between gap-4">
-              <p className={enToTr ? "font-display text-[33px] leading-tight font-medium sm:text-[42px]" : "display-xl text-[48px] sm:text-[60px]"} lang={enToTr ? "en" : "tr"}>
-                {enToTr ? card.en : card.tr}
-              </p>
-              {!enToTr ? <Speak text={card.tr} size="lg" className="mt-1" /> : null}
-            </div>
-          </Prompt>
-          </div>
-          <TypeAnswer
-            key={item.key}
-            resetKey={item.key}
-            expected={enToTr ? card.tr : card.en}
-            lang={enToTr ? "tr" : "en"}
-            onChecked={setAnswer}
-            sheet="fixed"
-            details={
-              <div className="space-y-3">
-                {card.exTr ? (
-                  <div className="flex items-start gap-2 text-[15px]">
-                    <Speak text={card.tr} size="sm" />
-                    <p>
-                      <span lang="tr" className="font-medium">
-                        {card.exTr}
-                      </span>
-                      <span className="block text-ink-soft">{card.exEn}</span>
-                    </p>
-                  </div>
-                ) : null}
+        <CardExercise
+          key={item.key}
+          exercise={exercise}
+          card={card}
+          direction={item.direction}
+          pool={pool}
+          onChecked={setAnswer}
+          result={answer}
+          details={
+            <div className="space-y-3">
+              {card.exTr ? (
+                <div className="flex items-start gap-2 text-[15px]">
+                  <Speak text={card.tr} size="sm" />
+                  <p>
+                    <span lang="tr" className="font-medium">
+                      {card.exTr}
+                    </span>
+                    <span className="block text-ink-soft">{card.exEn}</span>
+                  </p>
+                </div>
+              ) : null}
+              {!auto ? (
                 <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Rate how well you knew it">
                   <span className="mr-1 text-[13px] text-ink-soft">Next review</span>
                   {GRADES.map((g) => (
@@ -223,14 +228,18 @@ export function ReviewSession({ due, fresh }: { due: ReviewItem[]; fresh: Review
                     </button>
                   ))}
                 </div>
-              </div>
-            }
-          >
-            <button className={`${answer ? RESULT_COPY[answer.result].btn : "btn-primary"} sm:w-40`} autoFocus disabled={busy} onClick={() => grade(suggested)}>
-              Continue
-            </button>
-          </TypeAnswer>
-        </>
+              ) : answer?.result === "correct" ? (
+                <p className="text-[14px] text-ink-soft">Next time this one gets a little harder.</p>
+              ) : (
+                <p className="text-[14px] text-ink-soft">It comes back again in this session, a bit easier.</p>
+              )}
+            </div>
+          }
+        >
+          <button className={`${answer ? RESULT_COPY[answer.result].btn : "btn-primary"} sm:w-40`} autoFocus disabled={busy} onClick={() => grade(suggested)}>
+            Continue
+          </button>
+        </CardExercise>
       )}
     </FocusShell>
   );

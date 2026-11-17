@@ -11,13 +11,30 @@ import { suggestGrade } from "@/lib/srs/sm2";
 import { DrillSet } from "../drill-runner";
 import { FocusShell, FooterBar } from "../focus";
 import { Speak } from "../speech";
-import { TypeAnswer, type AnswerResult } from "../type-answer";
+import type { AnswerResult } from "../type-answer";
+import { CardExercise } from "../card-exercise";
+import { exerciseFor } from "@/lib/srs/ladder";
+import type { PoolWord } from "@/lib/srs/stage";
 import { Prompt, RESULT_COPY } from "../ui";
 import { ReportView } from "./report-view";
 
 const PARTS = ["Words", "Suffixes", "Translation", "Report"];
 
-export function WeeklyQuiz({ quiz, cards, drills, existingReport }: { quiz: WeeklyQuizT; cards: Card[]; drills: Drill[]; existingReport: WeeklyReport | null }) {
+export function WeeklyQuiz({
+  quiz,
+  cards,
+  drills,
+  existingReport,
+  stage,
+  pool,
+}: {
+  quiz: WeeklyQuizT;
+  cards: Card[];
+  drills: Drill[];
+  existingReport: WeeklyReport | null;
+  stage: number;
+  pool: PoolWord[];
+}) {
   const [part, setPart] = useState<0 | 1 | 2 | 3>(existingReport ? 3 : 0);
   const [vocab, setVocab] = useState({ correct: 0, total: 0 });
   const [drillScore, setDrillScore] = useState({ correct: 0, total: 0 });
@@ -60,14 +77,16 @@ export function WeeklyQuiz({ quiz, cards, drills, existingReport }: { quiz: Week
       {part === 0 ? (
         card ? (
           <>
-            <Prompt label={`Write this in Turkish, ${i + 1} of ${cards.length}`}>
-              <p className="font-display text-[33px] leading-tight font-medium sm:text-[42px]">{card.en}</p>
-            </Prompt>
-            <TypeAnswer
+            <CardExercise
               key={card.id}
-              resetKey={card.id}
-              expected={card.tr}
-              sheet="fixed"
+              // The check-in asks for a little more than reviews, still paced by stage.
+              exercise={exerciseFor({ direction: "en-tr", repetitions: Math.min(stage + 1, 5), stage, tr: card.tr, pos: card.pos })}
+              card={card}
+              direction="en-tr"
+              pool={pool}
+              label={`${i + 1} of ${cards.length}`}
+              result={ans}
+              showLadder={false}
               onChecked={(r) => {
                 setAns(r);
                 setVocab((v) => ({ correct: v.correct + (r.result === "correct" ? 1 : 0), total: v.total + 1 }));
@@ -93,7 +112,7 @@ export function WeeklyQuiz({ quiz, cards, drills, existingReport }: { quiz: Week
               >
                 Continue
               </button>
-            </TypeAnswer>
+            </CardExercise>
           </>
         ) : (
           <>
@@ -121,25 +140,27 @@ export function WeeklyQuiz({ quiz, cards, drills, existingReport }: { quiz: Week
 
       {part === 2 ? (
         <>
-          <Prompt label="Translate into Turkish">
-            <p className="font-display text-[33px] leading-tight font-medium">{quiz.translation.en}</p>
-          </Prompt>
-          <TypeAnswer
-            expected={quiz.translation.tr}
+          <CardExercise
+            // A whole sentence: built from word tiles until stage 4, typed after that.
+            exercise={stage <= 3 ? "build" : "type"}
+            card={{ id: 9_000_001, tr: quiz.translation.tr, en: quiz.translation.en, pos: "sentence", unit: 0 }}
+            direction="en-tr"
+            pool={pool}
+            label="Translate a sentence from this week"
+            result={trans}
+            showLadder={false}
             onChecked={setTrans}
-            placeholder="Türkçe yaz"
-            sheet="fixed"
             details={
               <div className="flex items-center gap-2 text-[14px] text-ink-soft">
                 <Speak text={quiz.translation.tr} size="sm" />
-                <span>Other translations can be right too — compare word order and suffixes.</span>
+                <span>Other translations can be right too. Compare word order and endings.</span>
               </div>
             }
           >
             <button className="btn-primary sm:w-52" disabled={busy} onClick={finish}>
               {busy ? "Building your report…" : "See my weekly report"}
             </button>
-          </TypeAnswer>
+          </CardExercise>
         </>
       ) : null}
 

@@ -14,6 +14,9 @@ import { DrillSet } from "../drill-runner";
 import { FocusShell, FooterBar } from "../focus";
 import { Speak, useSpeech } from "../speech";
 import { TypeAnswer, type AnswerResult } from "../type-answer";
+import { CardExercise } from "../card-exercise";
+import { exerciseFor } from "@/lib/srs/ladder";
+import type { PoolWord } from "@/lib/srs/stage";
 import { Prompt, RESULT_COPY } from "../ui";
 import { WritingBox } from "../writing-box";
 
@@ -33,6 +36,8 @@ export function LessonPlayer({
   drills,
   analysis,
   initialSection,
+  stage,
+  pool,
 }: {
   lesson: DailyLesson;
   progress: LessonProgress;
@@ -41,6 +46,8 @@ export function LessonPlayer({
   drills: Drill[];
   analysis: Record<string, WordAnalysis>;
   initialSection?: number;
+  stage: number;
+  pool: PoolWord[];
 }) {
   const [section, setSection] = useState(Math.min(initialSection ?? progress.section ?? 0, SECTIONS.length));
   const [prog, setProg] = useState<LessonProgress>(progress);
@@ -71,7 +78,7 @@ export function LessonPlayer({
         </p>
       ) : null}
 
-      {section === 0 ? <Warmup cards={warmupCards} lesson={lesson} onStep={setSub} onDone={(w) => go(1, { warmup: w })} /> : null}
+      {section === 0 ? <Warmup cards={warmupCards} lesson={lesson} stage={stage} pool={pool} onStep={setSub} onDone={(w) => go(1, { warmup: w })} /> : null}
       {section === 1 ? <DialogueSection lesson={lesson} analysis={analysis} onDone={() => go(2)} /> : null}
       {section === 2 ? <PhrasesSection lesson={lesson} added={!!prog.phrasesAdded} onDone={() => go(3, { phrasesAdded: true })} /> : null}
       {section === 3 ? <GrammarSection lesson={lesson} drills={drills} onStep={setSub} onDone={(d) => go(4, { drills: d })} /> : null}
@@ -122,11 +129,15 @@ export function LessonPlayer({
 function Warmup({
   cards,
   lesson,
+  stage,
+  pool,
   onStep,
   onDone,
 }: {
   cards: Card[];
   lesson: DailyLesson;
+  stage: number;
+  pool: PoolWord[];
   onStep: (x: number) => void;
   onDone: (w: { correct: number; total: number }) => void;
 }) {
@@ -153,15 +164,17 @@ function Warmup({
   if (!finished) {
     return (
       <>
-        <Prompt label={`A recent mistake, ${i + 1} of ${cards.length}`}>
-          <p className="font-display text-[33px] leading-tight font-medium sm:text-[42px]">{card.en}</p>
-        </Prompt>
-        <TypeAnswer
+        <CardExercise
           key={card.id}
-          resetKey={card.id}
-          expected={card.tr}
+          // Mistakes come back as recall, paced by stage: pick → build/hint → type.
+          exercise={exerciseFor({ direction: "en-tr", repetitions: Math.min(stage, 3), stage, tr: card.tr, pos: card.pos })}
+          card={card}
+          direction="en-tr"
+          pool={pool}
+          label={`A recent mistake, ${i + 1} of ${cards.length}`}
           onChecked={checked}
-          sheet="fixed"
+          result={ans}
+          showLadder={false}
           details={card.exTr ? <span className="text-[15px]" lang="tr">{card.exTr}</span> : null}
         >
           <button
@@ -175,7 +188,7 @@ function Warmup({
           >
             Continue
           </button>
-        </TypeAnswer>
+        </CardExercise>
       </>
     );
   }

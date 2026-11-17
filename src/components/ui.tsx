@@ -58,10 +58,10 @@ export function Badge({ children, tone = "neutral" }: { children: React.ReactNod
 }
 
 /** A large prompt line used in exercises (replaces mascot speech bubbles). */
-export function Prompt({ label, children }: { label: string; children: React.ReactNode }) {
+export function Prompt({ label, children }: { label: React.ReactNode; children: React.ReactNode }) {
   return (
     <div className="mt-2 mb-8">
-      <p className="text-[15px] text-muted">{label}</p>
+      <div className="text-[15px] text-muted">{label}</div>
       <div className="mt-2">{children}</div>
     </div>
   );

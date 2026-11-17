@@ -121,6 +121,10 @@ function setupWindows(lessonTime: string) {
   const mm = String(t.m).padStart(2, "0");
   const node = process.execPath;
   const tsx = path.join(ROOT, "node_modules", "tsx", "dist", "cli.mjs");
+  // A logon trigger without a UserId fires for *any* user, which needs admin rights
+  // ("Access is denied"). Scope the trigger and the task to the current user instead.
+  const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const user = esc(`${process.env.USERDOMAIN ?? os.hostname()}\\${os.userInfo().username}`);
   const xml = `<?xml version="1.0" encoding="UTF-16"?>
 <Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
   <RegistrationInfo><Description>Türkçe 365 — generate today's Turkish lesson at ${lessonTime} (${TARGET_TZ})</Description></RegistrationInfo>
@@ -131,8 +135,11 @@ function setupWindows(lessonTime: string) {
       <ScheduleByDay><DaysInterval>1</DaysInterval></ScheduleByDay>
       <Repetition><Interval>PT15M</Interval><Duration>P1D</Duration><StopAtDurationEnd>false</StopAtDurationEnd></Repetition>
     </CalendarTrigger>
-    <LogonTrigger><Enabled>true</Enabled><Delay>PT2M</Delay></LogonTrigger>
+    <LogonTrigger><Enabled>true</Enabled><UserId>${user}</UserId><Delay>PT2M</Delay></LogonTrigger>
   </Triggers>
+  <Principals>
+    <Principal id="Author"><UserId>${user}</UserId><LogonType>InteractiveToken</LogonType><RunLevel>LeastPrivilege</RunLevel></Principal>
+  </Principals>
   <Settings>
     <StartWhenAvailable>true</StartWhenAvailable>
     <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>

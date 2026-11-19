@@ -86,7 +86,7 @@ export function WritingBox({
         <div className="rounded-[14px] bg-brand-tint p-4" role="status">
           <p className="font-medium text-brand-text">Saved and queued for correction</p>
           <p className="mt-1 text-[15px] text-ink-soft">
-            Claude runs on your computer and picks this up within about 15 minutes while it&apos;s on. The corrected text appears under Write, and each
+            Claude runs on your computer and picks this up on its next run (every 6 hours, and when you log on) while it&apos;s on. The corrected text appears under Write, and each
             error becomes a card in today&apos;s reviews.
           </p>
         </div>

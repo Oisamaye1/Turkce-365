@@ -17,7 +17,7 @@ You type and write Turkish all the time; there is no multiple choice. Mistakes k
                                ▲  password gate          ▲
                                │  06:00 backup cron      │ DATABASE_URL (.env.local)
                                │  (offline lesson)       │
-                     your computer: npm run worker  every 15 min (claude -p, Pro login)
+                     your computer: npm run worker  every 6 h + at logon (claude -p, Pro login)
                        • 05:30 Istanbul → today's Claude lesson (+ desktop notification)
                        • upgrades an offline lesson to Claude if you haven't started it
                        • corrects writing you submitted online → error cards in today's reviews
@@ -26,7 +26,7 @@ You type and write Turkish all the time; there is no multiple choice. Mistakes k
 
 - **Vercel can't run `claude -p`**, because your Pro login lives on your computer. The online app therefore never calls Claude.
   - If no lesson exists by **06:00**, a Vercel Cron job creates the **offline lesson**.
-  - Writing you submit online is **queued**. The worker on your computer corrects it within ~15 minutes while the computer is on.
+  - Writing you submit online is **queued**. The worker on your computer corrects it on its next run (every 6 hours from 05:30, and at logon) while the computer is on.
 - **Accounts.** Everyone signs in with a username and password (scrypt hashes, a signed one-year session cookie). The first visit creates the admin account; if the app had a password before, the admin confirms it and keeps all existing progress. Nobody can sign up without a one-time signup code from the admin. See [Accounts and the admin dashboard](#accounts-and-the-admin-dashboard).
 - **Vercel environment variables:**
 
@@ -47,7 +47,7 @@ npx vercel link            # pick the "turkce-365" project
 npx vercel env pull .env.local   # writes DATABASE_URL for the worker
 npm run check:claude       # verifies claude -p works with your Pro login
 npm run worker             # run once by hand
-npm run scheduler:setup    # every 15 min (cron / Task Scheduler)
+npm run scheduler:setup    # every 6 h from 05:30 + at logon (cron / Task Scheduler)
 ```
 
 Settings → *Daily lesson job* shows when the worker last checked in.
@@ -60,7 +60,7 @@ Without `DATABASE_URL`, the app keeps everything in an embedded Postgres (PGlite
 npm install
 npm run check:claude
 npm run build && npm start      # http://localhost:3000 (and your phone on the same Wi-Fi)
-npm run scheduler:setup         # worker every 15 min; it hands work to the running app
+npm run scheduler:setup         # worker every 6 h; it hands work to the running app
 ```
 
 ## Accounts and the admin dashboard

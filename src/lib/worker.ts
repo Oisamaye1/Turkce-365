@@ -1,6 +1,6 @@
 /**
  * The "AI helper" that runs on your computer (where `claude -p` and your Pro login live).
- * Every 15 minutes (cron / Task Scheduler) it:
+ * Every 6 hours from the lesson time, and at logon (cron / Task Scheduler), it:
  *   1. creates today's lesson with Claude after 05:30 — or upgrades an offline lesson the
  *      online app/cron made while the computer was off (only if you haven't started it yet);
  *   2. corrects writing you submitted from the online app (cards land in today's reviews);

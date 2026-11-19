@@ -1,6 +1,6 @@
 /**
  * The AI helper — run on YOUR computer (where `claude` is logged in with your Pro plan).
- * The scheduler runs it every 15 minutes:
+ * The scheduler runs it every 6 hours from 05:30, and at logon:
  *   - creates today's Claude lesson after 05:30 Europe/Istanbul (desktop notification)
  *   - upgrades an offline lesson the online app made while the computer was off
  *   - corrects writing you submitted on your phone → error cards land in today's reviews

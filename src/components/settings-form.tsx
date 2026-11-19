@@ -179,7 +179,7 @@ export function SettingsForm({
         {online ? (
           <div className="space-y-2 text-sm">
             <p>
-              Lessons are written by the <b>worker on your computer</b> at {settings.lessonTime} {settings.timezone} (it runs every 15 min and also
+              Lessons are written by the <b>worker on your computer</b> at {settings.lessonTime} {settings.timezone} (it runs every 6 hours from then, and at logon, and also
               corrects writing you submit here). If the computer is off, a backup cron creates an offline lesson at 06:00 and the worker upgrades it
               later if you haven&apos;t started it.
             </p>
@@ -193,7 +193,7 @@ export function SettingsForm({
             </p>
             <pre className="overflow-x-auto rounded-xl bg-haze p-3 text-xs">{`npx vercel env pull .env.local   # gets DATABASE_URL
 npm run worker                   # test once
-npm run scheduler:setup          # every 15 minutes`}</pre>
+npm run scheduler:setup          # every 6 hours`}</pre>
           </div>
         ) : (
           <>

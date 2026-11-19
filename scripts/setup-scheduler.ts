@@ -5,12 +5,12 @@
  *   npm run scheduler:setup -- --dry-run # just print what would be installed
  *   npm run scheduler:setup -- --remove  # uninstall
  *
- * Installs the WORKER (scripts/worker.ts) every 15 minutes — it creates the lesson after 05:30
- * and processes corrections queued from the online app.
+ * Installs the WORKER (scripts/worker.ts) every 6 hours, starting at the lesson time (05:30) —
+ * it creates the lesson and processes corrections queued from the online app.
  * macOS / Linux → user crontab. The time is converted from Europe/Istanbul to the
  *   system timezone (cron on macOS ignores CRON_TZ). If the system zone has DST, both
  *   possible times are scheduled; the script itself refuses to run before 05:30
- *   Istanbul time and is idempotent, so it never generates twice. Hourly catch-up
+ *   Istanbul time and is idempotent, so it never generates twice. The 6-hourly
  *   runs and an @reboot run cover a machine that was asleep at 05:30.
  * Windows → Task Scheduler task with "Run task as soon as possible after a scheduled
  *   start is missed" (StartWhenAvailable) + a logon trigger.
@@ -25,6 +25,8 @@ const MARK_BEGIN = "# >>> turkce-365 >>>";
 const MARK_END = "# <<< turkce-365 <<<";
 const TASK_NAME = "Turkce365DailyLesson";
 const TARGET_TZ = "Europe/Istanbul";
+/** How often the worker runs, anchored on the lesson time. Must divide 24. */
+const INTERVAL_HOURS = 6;
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
 const remove = args.has("--remove");
@@ -83,10 +85,12 @@ function setupCron(lessonTime: string) {
   const cmd = commandLine();
   const lines = [
     MARK_BEGIN,
-    `# Türkçe 365 worker — every 15 min: lesson at ${lessonTime} ${TARGET_TZ} (system timezone: ${sysTz}),`,
-    `# writing corrections queued from the online app, weekly-report notes. Idempotent.`,
-    ...times.filter((t) => t.m % 15 !== 0).map((t) => `${t.m} ${t.h} * * * ${cmd}`),
-    `*/15 * * * * ${cmd}`,
+    `# Türkçe 365 worker — every ${INTERVAL_HOURS} h from the lesson time ${lessonTime} ${TARGET_TZ} (system timezone: ${sysTz}):`,
+    `# lesson, writing corrections queued from the online app, weekly-report notes. Idempotent.`,
+    ...times.map((t) => {
+      const hours = Array.from({ length: 24 / INTERVAL_HOURS }, (_, i) => (t.h + i * INTERVAL_HOURS) % 24).sort((a, b) => a - b);
+      return `${t.m} ${hours.join(",")} * * * ${cmd}`;
+    }),
     `@reboot sleep 90 && ${cmd}`,
     MARK_END,
   ];
@@ -125,6 +129,7 @@ function setupWindows(lessonTime: string) {
   // ("Access is denied"). Scope the trigger and the task to the current user instead.
   const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const user = esc(`${process.env.USERDOMAIN ?? os.hostname()}\\${os.userInfo().username}`);
+  // The action runs `conhost.exe --headless cmd.exe /c …` so no console window pops up on the desktop.
   const xml = `<?xml version="1.0" encoding="UTF-16"?>
 <Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
   <RegistrationInfo><Description>Türkçe 365 — generate today's Turkish lesson at ${lessonTime} (${TARGET_TZ})</Description></RegistrationInfo>
@@ -133,7 +138,7 @@ function setupWindows(lessonTime: string) {
       <StartBoundary>2024-01-01T${hh}:${mm}:00</StartBoundary>
       <Enabled>true</Enabled>
       <ScheduleByDay><DaysInterval>1</DaysInterval></ScheduleByDay>
-      <Repetition><Interval>PT15M</Interval><Duration>P1D</Duration><StopAtDurationEnd>false</StopAtDurationEnd></Repetition>
+      <Repetition><Interval>PT${INTERVAL_HOURS}H</Interval><Duration>P1D</Duration><StopAtDurationEnd>false</StopAtDurationEnd></Repetition>
     </CalendarTrigger>
     <LogonTrigger><Enabled>true</Enabled><UserId>${user}</UserId><Delay>PT2M</Delay></LogonTrigger>
   </Triggers>
@@ -150,8 +155,8 @@ function setupWindows(lessonTime: string) {
   </Settings>
   <Actions Context="Author">
     <Exec>
-      <Command>cmd.exe</Command>
-      <Arguments>/c cd /d "${ROOT}" &amp;&amp; "${node}" "${tsx}" scripts\\worker.ts &gt;&gt; logs\\worker.log 2&gt;&amp;1</Arguments>
+      <Command>conhost.exe</Command>
+      <Arguments>--headless cmd.exe /c cd /d "${ROOT}" &amp;&amp; "${node}" "${tsx}" scripts\\worker.ts &gt;&gt; logs\\worker.log 2&gt;&amp;1</Arguments>
       <WorkingDirectory>${ROOT}</WorkingDirectory>
     </Exec>
   </Actions>
@@ -172,8 +177,8 @@ function setupWindows(lessonTime: string) {
     console.error("schtasks failed:", r.stderr || r.error);
     process.exit(1);
   }
-  console.log(`✓ Registered Task Scheduler task "${TASK_NAME}": every 15 min from ${hh}:${mm} local time (= ${lessonTime} ${TARGET_TZ}),`);
-  console.log("  with 'run as soon as possible after a missed start' and a run at logon.");
+  console.log(`✓ Registered Task Scheduler task "${TASK_NAME}": every ${INTERVAL_HOURS} h from ${hh}:${mm} local time (= ${lessonTime} ${TARGET_TZ}),`);
+  console.log("  with 'run as soon as possible after a missed start', a run at logon, and no console window.");
   if (t.h !== 5 || t.m !== 30) console.log("  Tip: set Windows to the 'Istanbul' time zone (UTC+03:00) so the clock matches North Cyprus time.");
 }
 

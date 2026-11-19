@@ -7,6 +7,10 @@ import { InstallHint } from "@/components/pwa";
 import { DAY_KIND_LABEL, firstDayOfWeek, grammarStarted, planDay } from "@/lib/plan/build";
 import { planDayProps } from "@/lib/plan/props";
 import { getPlanRows } from "@/lib/db/plan";
+import { getActivity } from "@/lib/db/activity";
+import { CHAPTERS } from "@/lib/learn/chapters";
+import { GAMES } from "@/lib/practice/catalog";
+import { STORIES } from "@/lib/read/stories";
 import { IconArrow, IconCheck, IconFlame, IconRoute } from "@/components/icons";
 import { SessionSteps, type SessionStep, type StepState } from "@/components/session";
 import { ProgressBar } from "@/components/ui";
@@ -35,7 +39,7 @@ function greeting(hhmm: string): { tr: string; en: string } {
 export default async function TodayPage() {
   const s = await getSettings();
   const date = await today();
-  const [lesson, due, st, mission, gStep, statuses, unitNo, active, planData] = await Promise.all([
+  const [lesson, due, st, mission, gStep, statuses, unitNo, active, planData, activity] = await Promise.all([
     getLesson(date),
     countDue(),
     streak(),
@@ -45,6 +49,7 @@ export default async function TodayPage() {
     currentUnit(),
     activeDates(),
     planDayProps(),
+    getActivity(),
   ]);
   const pd = planData?.props.day;
   const step = getStep(pd ? pd.step : gStep);
@@ -98,6 +103,12 @@ export default async function TodayPage() {
     total = open.reduce((a, t) => a + t.minutes, 0);
     allDone = finishedToday > 0;
   }
+  // Something extra beside the plan: the course chapter for this week, a story at your level, a game.
+  const curWeek = pd?.week ?? week;
+  const curStage = pd?.stage.id ?? 1;
+  const extraChapter = CHAPTERS.find((c) => c.week <= curWeek && !activity.learn[c.id]) ?? CHAPTERS.find((c) => !activity.learn[c.id]);
+  const extraStory = STORIES.find((x) => x.stage <= curStage && !activity.read[x.id]);
+  const extraGame = GAMES.find((g) => g.id === (curStage <= 2 ? "harmony" : "lightning"))!;
   const weekDays = pd ? Array.from({ length: 7 }, (_, i) => firstDayOfWeek(pd.week) + i) : [];
 
   return (
@@ -318,6 +329,31 @@ export default async function TodayPage() {
               })}
             </ol>
             <p className="mt-3 text-[14px] text-muted">Best streak so far: {st.best} day{st.best === 1 ? "" : "s"}</p>
+          </section>
+
+          <section aria-labelledby="extra-h" className="border-t border-line pt-8">
+            <h2 id="extra-h" className="text-[15px] text-muted">
+              Extra practice
+            </h2>
+            <ul className="mt-3 divide-y divide-line">
+              {[
+                extraChapter ? { href: `/learn/${extraChapter.id}`, kind: "Learn", title: extraChapter.title } : null,
+                extraStory ? { href: `/read/${extraStory.id}`, kind: `Read, ${extraStory.level}`, title: extraStory.title } : null,
+                { href: `/practice/${extraGame.id}`, kind: "Play", title: extraGame.title },
+              ]
+                .filter((x): x is { href: string; kind: string; title: string } => !!x)
+                .map((x) => (
+                  <li key={x.href}>
+                    <Link href={x.href} className="group flex items-center justify-between gap-3 py-2.5">
+                      <span className="min-w-0">
+                        <span className="block text-[12px] text-muted">{x.kind}</span>
+                        <span className="block truncate text-[15px] font-medium text-ink">{x.title}</span>
+                      </span>
+                      <IconArrow size={16} className="shrink-0 text-muted transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </li>
+                ))}
+            </ul>
           </section>
 
           {week <= 2 && !pd ? (

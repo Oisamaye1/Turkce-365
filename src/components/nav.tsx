@@ -3,20 +3,27 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { createContext, useContext } from "react";
-import { IconBlocks, IconCards, IconChart, IconFlag, IconFlame, IconGear, IconLetters, IconPencil, IconRoute, IconShield, IconSun } from "./icons";
+import { IconBlocks, IconCards, IconChart, IconFlag, IconFlame, IconGear, IconLetters, IconPencil, IconOpenBook, IconPlay, IconRoute, IconShield, IconSpark, IconSun } from "./icons";
 import { ThemeToggle } from "./theme";
 
 export const NAV = [
-  { href: "/", en: "Today", tr: "Bugün", Icon: IconSun },
-  { href: "/plan", en: "Plan", tr: "Yol haritası", Icon: IconRoute },
-  { href: "/review", en: "Review", tr: "Tekrar", Icon: IconCards },
-  { href: "/gym", en: "Suffixes", tr: "Ekler", Icon: IconBlocks },
-  { href: "/write", en: "Write", tr: "Yaz", Icon: IconPencil },
-  { href: "/missions", en: "Missions", tr: "Görevler", Icon: IconFlag },
-  { href: "/progress", en: "Progress", tr: "İlerleme", Icon: IconChart },
-  { href: "/alphabet", en: "Alphabet", tr: "Alfabe", Icon: IconLetters },
-  { href: "/settings", en: "Settings", tr: "Ayarlar", Icon: IconGear },
+  { href: "/", en: "Today", tr: "Bugün", Icon: IconSun, group: "Daily" },
+  { href: "/plan", en: "Plan", tr: "Yol haritası", Icon: IconRoute, group: "Daily" },
+  { href: "/review", en: "Review", tr: "Tekrar", Icon: IconCards, group: "Daily" },
+  { href: "/gym", en: "Suffixes", tr: "Ekler", Icon: IconBlocks, group: "Study" },
+  { href: "/learn", en: "Learn", tr: "Öğren", Icon: IconSpark, group: "Study" },
+  { href: "/practice", en: "Practice", tr: "Pratik", Icon: IconPlay, group: "Study" },
+  { href: "/read", en: "Read", tr: "Oku", Icon: IconOpenBook, group: "Study" },
+  { href: "/write", en: "Write", tr: "Yaz", Icon: IconPencil, group: "Study" },
+  { href: "/alphabet", en: "Alphabet", tr: "Alfabe", Icon: IconLetters, group: "Study" },
+  { href: "/missions", en: "Missions", tr: "Görevler", Icon: IconFlag, group: "You" },
+  { href: "/progress", en: "Progress", tr: "İlerleme", Icon: IconChart, group: "You" },
+  { href: "/settings", en: "Settings", tr: "Ayarlar", Icon: IconGear, group: "You" },
 ];
+
+/** Phone bottom bar: these four, plus "More" for everything else. */
+const BOTTOM = ["/", "/plan", "/review", "/practice"];
+const MORE_HREF = "/progress";
 
 export interface ShellUser {
   name: string;
@@ -50,7 +57,7 @@ export function Wordmark() {
 
 export function AppShell({ streak, due, user, children }: { streak: number; due: number; user: ShellUser; children: React.ReactNode }) {
   const path = usePathname();
-  const nav = user.isAdmin ? [...NAV, { href: "/admin", en: "Admin", tr: "Yönetim", Icon: IconShield }] : NAV;
+  const nav = user.isAdmin ? [...NAV, { href: "/admin", en: "Admin", tr: "Yönetim", Icon: IconShield, group: "You" }] : NAV;
   const focus = FOCUS.some((f) => path === f || path.startsWith(`${f}/`));
   const active = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
   if (focus) return <UserCtx.Provider value={user}>{children}</UserCtx.Provider>;
@@ -62,13 +69,16 @@ export function AppShell({ streak, due, user, children }: { streak: number; due:
         <Link href="/" className="mb-8 px-3">
           <Wordmark />
         </Link>
-        <nav className="flex flex-1 flex-col gap-0.5" aria-label="Main">
-          {nav.map(({ href, en, tr, Icon }) => (
+        <nav className="-mx-1 flex flex-1 flex-col gap-0.5 overflow-y-auto px-1 [scrollbar-width:thin]" aria-label="Main">
+          {nav.map(({ href, en, tr, Icon, group }, i) => (
+            <div key={href}>
+              {i === 0 || nav[i - 1].group !== group ? (
+                <p className={`px-3 pb-1 text-[12px] text-muted ${i === 0 ? "" : "mt-4"}`}>{group}</p>
+              ) : null}
             <Link
-              key={href}
               href={href}
               aria-current={active(href) ? "page" : undefined}
-              className={`group relative flex items-center gap-3 rounded-lg px-3 py-2 text-[15px] transition-colors duration-150 ${
+              className={`group relative flex items-center gap-3 rounded-lg px-3 py-[7px] text-[15px] transition-colors duration-150 ${
                 active(href) ? "bg-haze font-medium text-ink" : "text-ink-soft hover:bg-haze hover:text-ink"
               }`}
             >
@@ -79,6 +89,7 @@ export function AppShell({ streak, due, user, children }: { streak: number; due:
                 {tr}
               </span>
             </Link>
+            </div>
           ))}
         </nav>
         <div className="space-y-1 border-t border-line pt-4">
@@ -130,8 +141,10 @@ export function AppShell({ streak, due, user, children }: { streak: number; due:
       <main className="mx-auto w-full max-w-[1080px] px-4 pt-6 pb-28 sm:px-8 lg:pt-12 lg:pb-16">{children}</main>
 
       <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-line bg-paper/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden" aria-label="Main">
-        {[...NAV.slice(0, 4), NAV[6]].map(({ href, en, Icon }) => {
-          const on = active(href) || (href === "/progress" && ["/write", "/missions", "/alphabet", "/settings", "/account", "/admin"].some((h) => path.startsWith(h)));
+        {[...NAV.filter((n) => BOTTOM.includes(n.href)), NAV.find((n) => n.href === MORE_HREF)!].map(({ href, en, Icon }) => {
+          const inPractice = ["/practice", "/learn", "/read", "/words"].some((h) => path.startsWith(h));
+          const inBottom = BOTTOM.some((b) => (b === "/" ? path === "/" : path.startsWith(b)));
+          const on = href === "/practice" ? inPractice : href === MORE_HREF ? !inBottom && !inPractice : active(href);
           return (
             <Link key={href} href={href} className={`flex flex-col items-center gap-1 py-2.5 text-[11px] transition-colors ${on ? "text-brand-text" : "text-muted"}`}>
               <Icon size={21} className={on ? "animate-pop" : ""} />
@@ -149,7 +162,7 @@ export function AppShell({ streak, due, user, children }: { streak: number; due:
 export function MoreTabs() {
   const path = usePathname();
   const user = useContext(UserCtx);
-  const tabs = [...NAV.slice(4), { href: "/account", en: "Account" }, ...(user?.isAdmin ? [{ href: "/admin", en: "Admin" }] : [])];
+  const tabs = [...NAV.filter((n) => !BOTTOM.includes(n.href)), { href: "/account", en: "Account" }, ...(user?.isAdmin ? [{ href: "/admin", en: "Admin" }] : [])];
   return (
     <div className="-mx-4 mb-6 flex gap-1 overflow-x-auto border-b border-line px-4 lg:hidden [scrollbar-width:none]">
       {tabs.map(({ href, en }) => (

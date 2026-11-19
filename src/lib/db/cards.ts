@@ -106,10 +106,14 @@ export async function newCardsRemainingToday(): Promise<number> {
     // With a plan, new words follow the plan: everything up to the current plan day.
     const day = (await currentPlanDay(plan)) ?? plan.startDay;
     const db = await getDb();
+    // The plan's words so far that haven't been started (words added early from the
+    // dictionary don't count against the plan).
     const r = await db.one<{ n: number }>(
-      `SELECT COUNT(*)::int AS n FROM reviews r JOIN cards c ON c.id = r.card_id WHERE r.direction = 'en-tr' AND c.source = 'seed'`,
+      `SELECT COUNT(*)::int AS n FROM cards c
+       WHERE c.source = 'seed' AND c.seq <= ? AND NOT EXISTS (SELECT 1 FROM reviews r WHERE r.card_id = c.id AND r.direction = 'en-tr')`,
+      [wordsThrough(day)],
     );
-    const behind = wordsThrough(day) - Number(r?.n ?? 0);
+    const behind = Number(r?.n ?? 0);
     return Math.max(0, Math.min(behind, PLAN_DAILY_CAP - (await introducedToday())));
   }
   return Math.max(0, s.newCardsPerDay - (await introducedToday()));
@@ -334,4 +338,59 @@ export async function currentUnit(): Promise<number> {
     "SELECT MAX(c.unit) AS u FROM cards c JOIN reviews r ON r.card_id = c.id WHERE c.source = 'seed'",
   );
   return Math.max(1, Number(r?.u ?? 1));
+}
+
+/** Put a word into the learner's reviews right away (due now), if it isn't there yet. */
+export async function introduceCardNow(cardId: number, now = new Date()): Promise<boolean> {
+  const db = await getDb();
+  const card = await db.one<{ id: number }>("SELECT id FROM cards WHERE id = ?", [cardId]);
+  if (!card) return false;
+  await db.run(
+    `INSERT INTO reviews (card_id, direction, due_date, introduced_at) VALUES (?, 'en-tr', ?, ?) ON CONFLICT DO NOTHING`,
+    [cardId, now.toISOString(), now.toISOString()],
+  );
+  return true;
+}
+
+export interface DictionaryWord {
+  id: number;
+  tr: string;
+  en: string;
+  pos: string;
+  unit: number;
+  exTr: string | null;
+  exEn: string | null;
+  /** null = not started; otherwise successful reviews in a row. */
+  reps: number | null;
+}
+
+/** The whole word list with the learner's status, for the dictionary. */
+export async function dictionary(): Promise<DictionaryWord[]> {
+  const db = await getDb();
+  const rows = await db.all<{ id: number; tr: string; en: string; pos: string; unit: number; exTr: string | null; exEn: string | null; reps: number | null }>(
+    `SELECT c.id, c.tr, c.en, c.pos, c.unit, c."exTr", c."exEn", r.repetitions AS reps
+     FROM cards c LEFT JOIN reviews r ON r.card_id = c.id AND r.direction = 'en-tr'
+     WHERE c.source = 'seed' ORDER BY c.seq`,
+  );
+  return rows.map((r) => ({ ...r, id: Number(r.id), unit: Number(r.unit), reps: r.reps == null ? null : Number(r.reps) }));
+}
+
+/** Words for the practice games: the learner's words, topped up with the first units. */
+export async function practiceWords(min = 40): Promise<{ id: number; tr: string; en: string; pos: string; unit: number }[]> {
+  const db = await getDb();
+  const mine = await db.all<{ id: number; tr: string; en: string; pos: string; unit: number }>(
+    `SELECT c.id, c.tr, c.en, c.pos, c.unit FROM cards c
+     WHERE c.source = 'seed' AND EXISTS (SELECT 1 FROM reviews r WHERE r.card_id = c.id AND r.direction = 'en-tr')
+     ORDER BY c.seq`,
+  );
+  let words = mine;
+  if (words.length < min) {
+    const extra = await db.all<{ id: number; tr: string; en: string; pos: string; unit: number }>(
+      `SELECT c.id, c.tr, c.en, c.pos, c.unit FROM cards c WHERE c.source = 'seed' ORDER BY c.seq LIMIT ?`,
+      [min + words.length],
+    );
+    const have = new Set(words.map((w) => Number(w.id)));
+    words = [...words, ...extra.filter((w) => !have.has(Number(w.id)))].slice(0, Math.max(min, words.length));
+  }
+  return words.map((w) => ({ ...w, id: Number(w.id), unit: Number(w.unit) }));
 }

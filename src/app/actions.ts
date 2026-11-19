@@ -3,12 +3,13 @@
 import { revalidatePath } from "next/cache";
 import vocabJson from "../../data/vocab.json";
 import type { VocabEntry } from "@/lib/vocab/types";
-import { addCardsToDeck, knownWords, recordReview, type Direction } from "@/lib/db/cards";
+import { addCardsToDeck, introduceCardNow, knownWords, recordReview, type Direction } from "@/lib/db/cards";
 import { recordDrill, unlockStepsUpTo } from "@/lib/db/grammar";
 import { completeLesson, getLesson, saveProgress, type LessonProgress } from "@/lib/db/lessons";
 import { updateMission } from "@/lib/db/missions";
 import { setSetting, today } from "@/lib/db/settings";
 import { saveWriting } from "@/lib/db/writing";
+import { completeChapter, markRead, recordGame } from "@/lib/db/activity";
 import { completeDay, daysCompletedOn, reopenDay, savePlan, setTick } from "@/lib/db/plan";
 import { PLAN_DAYS, START_POINTS } from "@/lib/plan/build";
 import { getPlanDayView } from "@/lib/plan/status";
@@ -248,4 +249,36 @@ export async function reopenPlanDayAction(day: number) {
   if (!Number.isInteger(day)) return;
   await reopenDay(day);
   revalidatePath("/", "layout");
+}
+
+// ---------------------------------------------------------------- practice, learn, read
+
+const ACTIVITY_ID = /^[a-z0-9-]{2,40}$/;
+
+export async function recordGameAction(id: string, score: number) {
+  if (!ACTIVITY_ID.test(id) || !Number.isFinite(score) || score < 0 || score > 100_000) return null;
+  const r = await recordGame(id, Math.round(score));
+  revalidatePath("/practice");
+  return r;
+}
+
+export async function completeChapterAction(id: string, score: number, total: number) {
+  if (!ACTIVITY_ID.test(id) || !Number.isInteger(score) || !Number.isInteger(total) || score < 0 || score > total || total > 50) return;
+  await completeChapter(id, score, total);
+  revalidatePath("/learn", "layout");
+}
+
+export async function markReadAction(id: string) {
+  if (!ACTIVITY_ID.test(id)) return;
+  await markRead(id);
+  revalidatePath("/read", "layout");
+}
+
+/** Start learning a word now from the dictionary (it joins today's reviews). */
+export async function learnWordNowAction(cardId: number) {
+  if (!Number.isInteger(cardId)) return { ok: false };
+  const ok = await introduceCardNow(cardId);
+  revalidatePath("/words");
+  revalidatePath("/review");
+  return { ok };
 }

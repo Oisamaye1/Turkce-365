@@ -5,7 +5,7 @@
  */
 import vocabJson from "../../../data/vocab.json";
 import type { VocabEntry } from "@/lib/vocab/types";
-import { conjugate, copula, inflectNoun, trLower, type Case, type Person, type Tense } from "@/lib/turkish";
+import { conjugate, copula, inflectNoun, personsFor, trLower, type Case, type Person, type Tense } from "@/lib/turkish";
 import { nounEntry, verbEntry, TENSE_LABEL } from "@/lib/grammar/drills";
 import { POSSESSIVE_EN, SUBJECT_EN, firstGloss } from "@/lib/grammar/english";
 
@@ -19,7 +19,7 @@ export interface WordAnalysis {
 
 const PERSONS: Person[] = ["1sg", "2sg", "3sg", "1pl", "2pl", "3pl"];
 const CASES: Case[] = ["nom", "acc", "dat", "loc", "abl", "gen", "ins"];
-const TENSES: Tense[] = ["present", "past", "future", "aorist", "ability"];
+const TENSES: Tense[] = ["present", "past", "future", "aorist", "ability", "imperative", "necessity", "evidential", "conditional", "pastcont"];
 const CASE_LABEL: Record<Case, string> = {
   nom: "",
   acc: "object",
@@ -73,10 +73,11 @@ function build(): Map<string, WordAnalysis> {
       const ve = verbEntry(v);
       add(map, v.stem ?? v.tr, { root: v.tr, meaning, parts: [v.stem ?? v.tr], description: "verb stem / command" });
       for (const t of TENSES) {
-        for (const p of PERSONS) {
+        for (const p of personsFor(t)) {
           for (const negative of [false, true]) {
             const r = conjugate(ve, t, p, { negative });
-            const desc = `${SUBJECT_EN[p]} · ${TENSE_LABEL[t]}${negative ? " · negative" : ""}`;
+            const who = t === "imperative" ? (p === "2sg" ? "you (to a friend)" : "you (polite)") : SUBJECT_EN[p];
+            const desc = `${who} · ${TENSE_LABEL[t]}${negative ? " · negative" : ""}`;
             add(map, r.form, { root: v.tr, meaning, parts: r.parts, description: desc });
             // Bare question stems ("geliyor" in "geliyor musun")
             if (p === "3sg") add(map, r.form, { root: v.tr, meaning, parts: r.parts, description: desc });

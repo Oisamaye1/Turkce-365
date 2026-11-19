@@ -199,3 +199,19 @@ export const IconCopy = (p: P) => (
     <path d="M15.5 8.5V5.5a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2h3" />
   </S>
 );
+
+/** Read: an open book. */
+export const IconOpenBook = (p: P) => (
+  <S {...p}>
+    <path d="M3 5.5c3-.9 6-.6 9 1.2v13c-3-1.8-6-2.1-9-1.2v-13z" />
+    <path d="M21 5.5c-3-.9-6-.6-9 1.2v13c3-1.8 6-2.1 9-1.2v-13z" />
+  </S>
+);
+
+/** Practice: a game controller. */
+export const IconPlay = (p: P) => (
+  <S {...p}>
+    <path d="M7 8h10a4.5 4.5 0 014.4 5.4l-.7 3.4a2.3 2.3 0 01-4 1L15 16H9l-1.7 1.8a2.3 2.3 0 01-4-1l-.7-3.4A4.5 4.5 0 017 8z" />
+    <path d="M8 11v3M6.5 12.5h3M15.5 12h.01M17.5 13.5h.01" />
+  </S>
+);

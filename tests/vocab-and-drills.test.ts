@@ -14,9 +14,9 @@ const byTr = (tr: string, pos?: string) => vocab.find((v) => v.tr === tr && (!po
 describe("vocabulary source", () => {
   const built = parseVocabSources(path.resolve(__dirname, "../data/vocab-src"));
   it("builds without validation errors", () => expect(built.errors).toEqual([]));
-  it("has ~1,500 entries in themed units of ~25", () => {
-    expect(built.entries.length).toBe(1500);
-    expect(built.units.length).toBe(60);
+  it("has 1,700 entries in 68 themed units of 25", () => {
+    expect(built.entries.length).toBe(1700);
+    expect(built.units.length).toBe(68);
   });
   it("data/vocab.json is up to date with the sources", () => {
     expect(vocab.length).toBe(built.entries.length);
@@ -97,8 +97,8 @@ describe("drill generator", () => {
 });
 
 describe("grammar steps", () => {
-  it("has 16 steps in the spec order", () => {
-    expect(GRAMMAR_STEPS.map((s) => s.id)).toEqual([...Array(16)].map((_, i) => i + 1));
+  it("has 22 steps numbered in order", () => {
+    expect(GRAMMAR_STEPS.map((s) => s.id)).toEqual([...Array(22)].map((_, i) => i + 1));
   });
   it("explanations are at most 120 words", () => {
     for (const s of GRAMMAR_STEPS) expect(s.explanation.split(/\s+/).length, s.slug).toBeLessThanOrEqual(120);

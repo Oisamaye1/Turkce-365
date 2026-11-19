@@ -5,7 +5,7 @@ import { CountUp } from "@/components/count-up";
 import { ProgressBar } from "@/components/ui";
 import { currentPlanDay, getPlan, getPlanRows } from "@/lib/db/plan";
 import { today } from "@/lib/db/settings";
-import { DAY_KIND_LABEL, PLAN_DAYS, START_POINTS, firstDayOfStage, firstDayOfWeek, planDay, stepsIntroducedBy, wordsThrough } from "@/lib/plan/build";
+import { DAY_KIND_LABEL, PLAN_DAYS, START_POINTS, STEP_ORDER, firstDayOfStage, firstDayOfWeek, planDay, stepsIntroducedBy, wordsThrough } from "@/lib/plan/build";
 import { STAGES, WEEKS } from "@/lib/plan/curriculum";
 
 export const metadata = { title: "Plan · Türkçe 365" };
@@ -75,7 +75,7 @@ export default async function PlanPage({ searchParams }: { searchParams: Promise
           {[
             { k: "days finished", v: doneDays },
             { k: "words in the plan so far", v: wordsThrough(cur) },
-            { k: "suffix steps open", v: stepsIntroducedBy(cur).length, suffix: " / 16" },
+            { k: "suffix steps open", v: stepsIntroducedBy(cur).length, suffix: ` / ${STEP_ORDER.length}` },
             { k: "estimated finish", text: finishEstimate },
           ].map((x) => (
             <div key={x.k}>

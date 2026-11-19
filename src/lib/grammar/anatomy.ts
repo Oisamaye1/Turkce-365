@@ -22,4 +22,10 @@ export const STEP_ANATOMY: Record<number, Anatomy> = {
   14: { parts: ["iç", "er", "im"], labels: ["drink", "usually", "I"], en: "I (usually) drink" },
   15: { parts: ["konuş", "abil", "ir", "im"], labels: ["speak", "can", "aorist", "I"], en: "I can speak" },
   16: { parts: ["ev", "ler", "im", "den"], labels: ["house", "plural", "my", "from"], en: "from my houses" },
+  17: { parts: ["otur", "un"], labels: ["sit", "(please)"], en: "please sit down" },
+  18: { parts: ["git", "mek", "ist", "iyor", "um"], labels: ["go", "to", "want", "-ing", "I"], en: "I want to go" },
+  19: { parts: ["git", "meli", "y", "im"], labels: ["go", "must", "buffer", "I"], en: "I must go" },
+  20: { parts: ["gel", "miş"], labels: ["come", "apparently"], en: "apparently he came" },
+  21: { parts: ["gel", "ir", "se", "m"], labels: ["come", "aorist", "if", "I"], en: "if I come" },
+  22: { parts: ["gel", "iyor", "du", "m"], labels: ["come", "-ing", "was", "I"], en: "I was coming" },
 };

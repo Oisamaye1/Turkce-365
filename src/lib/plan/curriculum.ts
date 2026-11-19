@@ -169,7 +169,7 @@ export const WEEKS: PlanWeek[] = [
   {
     week: 14, title: "Getting around", titleTr: "Yol tarifi",
     goal: "Ask for and give directions; use buses, dolmuş and taxis.",
-    concepts: ["directions", "imperative"],
+    step: 17, concepts: ["directions", "imperative"],
     say: "Give directions out loud from your door to the nearest shop: “Düz git, sağa dön…”",
     extra: "Turn five commands into polite ones: gel → gelin, otur → oturun, bak → bakın.",
     out: "Tell a taxi or dolmuş driver where you're going in Turkish, or ask someone the way.",
@@ -187,7 +187,7 @@ export const WEEKS: PlanWeek[] = [
   {
     week: 16, title: "Work", titleTr: "İş",
     goal: "Say what you do, where you work and how you get there.",
-    concepts: ["job-talk", "with"],
+    step: 18, concepts: ["job-talk", "with"],
     say: "Answer out loud: “Ne iş yapıyorsun? Nerede çalışıyorsun?”",
     extra: "Say five sentences with -la / -le: “Otobüsle geliyorum. Arkadaşımla çalışıyorum.”",
     out: "Tell someone what you do for work, in Turkish.",
@@ -288,7 +288,7 @@ export const WEEKS: PlanWeek[] = [
   {
     week: 27, title: "Phones and the internet", titleTr: "Telefon ve internet",
     goal: "Deal with technology and say what you must do.",
-    concepts: ["must", "phone"],
+    step: 19, concepts: ["must", "phone"],
     say: "Say five things you must do this week: “Faturayı ödemeliyim.”",
     extra: "Rehearse a phone call: “Alo? Ben Sam. Ayşe Hanım'la görüşebilir miyim?”",
     out: "Switch your phone (or one app) to Turkish for an hour.",
@@ -360,7 +360,7 @@ export const WEEKS: PlanWeek[] = [
   {
     week: 35, title: "Apparently", titleTr: "Galiba",
     goal: "Talk about health and pass on things you heard.",
-    concepts: ["mis", "doctor"],
+    step: 20, concepts: ["mis", "doctor"],
     say: "Pass on three pieces of news you heard: “Ali hastaymış. Yarın yağmur yağacakmış.”",
     extra: "Rehearse describing symptoms to a doctor: “Başım ağrıyor. Ateşim var. Öksürüyorum.”",
     out: "Say “Geçmiş olsun” to someone who is ill, or tell a pharmacist what you need.",
@@ -369,7 +369,7 @@ export const WEEKS: PlanWeek[] = [
   {
     week: 36, title: "If", titleTr: "Eğer",
     goal: "Make conditions and wishes: if…, I wish…",
-    concepts: ["sa", "keske"],
+    step: 21, concepts: ["sa", "keske"],
     say: "Say five if-sentences: “Yağmur yağarsa evde kalırım.”",
     extra: "Make three wishes with keşke: “Keşke daha çok zamanım olsa.”",
     out: "Stage review: a five-minute conversation (with a person, a tutor or yourself) about your habits, plans and opinions.",
@@ -508,7 +508,7 @@ export const WEEKS: PlanWeek[] = [
   {
     week: 51, title: "Telling stories", titleTr: "Hikâye anlatmak",
     goal: "Tell a story from your life with past tenses and connectors.",
-    concepts: ["yordu", "storytelling"],
+    step: 22, concepts: ["yordu", "storytelling"],
     say: "Tell a two-minute story out loud: “Bir gün… O sırada… Sonunda…”",
     extra: "Retell today's lesson dialogue as a story in the past, from memory.",
     out: "Tell a Turkish speaker a short story about something funny that happened to you.",

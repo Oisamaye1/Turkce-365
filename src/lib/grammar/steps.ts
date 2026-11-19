@@ -260,6 +260,96 @@ export const GRAMMAR_STEPS: GrammarStep[] = [
       { tr: "evinde", en: "in his house", breakdown: "ev + i + n + de" },
     ],
   },
+  {
+    id: 17,
+    slug: "imperative",
+    title: "Commands -(y)In (do it!)",
+    titleTr: "Emir kipi",
+    tag: "imperative",
+    explanation:
+      "The bare stem is a command to one friend: Gel! (Come!), Bak! (Look!). To be polite, or to talk to several people, add -ın/-in/-un/-ün (with y after a vowel): gelin, bakın, başlayın, okuyun. Negative: add -ma/-me: gelme (don't come), gelmeyin (please don't come). Stems that soften do so before the vowel: git → gidin, et → edin.",
+    examples: [
+      { tr: "gelin", en: "come (polite)", breakdown: "gel + in" },
+      { tr: "başlayın", en: "start (polite)", breakdown: "başla + y + ın" },
+      { tr: "gitme", en: "don't go", breakdown: "git + me" },
+      { tr: "beklemeyin", en: "please don't wait", breakdown: "bekle + me + y + in" },
+    ],
+  },
+  {
+    id: 18,
+    slug: "want",
+    title: "Want to -mAk istiyorum",
+    titleTr: "İstek",
+    tag: "want",
+    explanation:
+      "To say you want to do something, keep the dictionary form of the verb (-mak/-mek) and add istemek in the present continuous: gitmek istiyorum (I want to go), yemek istiyor musun? (do you want to eat?). Only istemek changes for the person; the first verb stays the same. Negative: gitmek istemiyorum (I don't want to go).",
+    examples: [
+      { tr: "gitmek istiyorum", en: "I want to go", breakdown: "git + mek · ist + iyor + um" },
+      { tr: "okumak istiyor", en: "she wants to read", breakdown: "oku + mak · ist + iyor" },
+      { tr: "gelmek istemiyorum", en: "I don't want to come", breakdown: "gel + mek · iste + mi + yor + um" },
+      { tr: "yemek istiyor musun", en: "do you want to eat?", breakdown: "ye + mek · ist + iyor · mu + sun" },
+    ],
+  },
+  {
+    id: 19,
+    slug: "necessity",
+    title: "Must -mAlI",
+    titleTr: "Gereklilik",
+    tag: "necessity",
+    explanation:
+      "-malı / -meli means must or should: gitmeliyim (I must go), dinlenmelisin (you should rest). Add the person endings of 'to be', with y after the vowel: -yım, -sın, (nothing), -yız, -sınız, -lar. Negative: put -ma/-me before it: gitmemeliyim (I mustn't go). Question: gitmeli miyim? (should I go?). It's for duties and advice; for outside obligation use -mak zorunda.",
+    examples: [
+      { tr: "gitmeliyim", en: "I must go", breakdown: "git + meli + y + im" },
+      { tr: "okumalısın", en: "you should read", breakdown: "oku + malı + sın" },
+      { tr: "içmemeli", en: "he shouldn't drink", breakdown: "iç + me + meli" },
+      { tr: "beklemeli miyiz", en: "should we wait?", breakdown: "bekle + meli · mi + y + iz" },
+    ],
+  },
+  {
+    id: 20,
+    slug: "evidential",
+    title: "Apparently -mIş",
+    titleTr: "Duyulan geçmiş",
+    tag: "evidential",
+    explanation:
+      "-mış/-miş/-muş/-müş is the past for things you didn't see happen: you heard about them or just found out. Ali gelmiş (apparently Ali came), yağmur yağmış (it rained, I see the wet street). It takes the person endings of 'to be': gelmişim, gelmişsin, gelmiş, gelmişiz. Negative: gelmemiş. Question: gelmiş mi? In stories and news it's everywhere.",
+    examples: [
+      { tr: "gelmiş", en: "apparently he came", breakdown: "gel + miş" },
+      { tr: "okumuşsun", en: "apparently you read it", breakdown: "oku + muş + sun" },
+      { tr: "gitmemiş", en: "apparently she didn't go", breakdown: "git + me + miş" },
+      { tr: "uyumuşum", en: "I fell asleep (I realise)", breakdown: "uyu + muş + um" },
+    ],
+  },
+  {
+    id: 21,
+    slug: "conditional",
+    title: "If -sA (with the aorist)",
+    titleTr: "Şart",
+    tag: "conditional",
+    explanation:
+      "For a real 'if', take the aorist and add -sa/-se plus the past-tense person endings: gelirsem (if I come), gelirsen, gelirse, gelirsek, gelirseniz, gelirlerse. Negative uses the negative aorist: gelmezsem (if I don't come). The main clause is usually aorist or future: Yağmur yağarsa evde kalırım (if it rains, I stay at home). Eğer (if) can start the sentence but isn't needed.",
+    examples: [
+      { tr: "gelirsem", en: "if I come", breakdown: "gel + ir + se + m" },
+      { tr: "yağarsa", en: "if it rains", breakdown: "yağ + ar + sa" },
+      { tr: "istersen", en: "if you want", breakdown: "iste + r + se + n" },
+      { tr: "gelmezsek", en: "if we don't come", breakdown: "gel + mez + se + k" },
+    ],
+  },
+  {
+    id: 22,
+    slug: "pastcont",
+    title: "Was doing -(I)yordu",
+    titleTr: "Şimdiki zamanın hikâyesi",
+    tag: "past-continuous",
+    explanation:
+      "Add -du to a present-continuous verb to say what was going on in the past: geliyordu (he was coming), çalışıyordum (I was working). Person endings follow: -dum, -dun, -du, -duk, -dunuz, and -lardı for they. Negative: gelmiyordum. Use it for the background of a story, and -dı for what happened: Yürüyordum, birden yağmur yağdı.",
+    examples: [
+      { tr: "geliyordum", en: "I was coming", breakdown: "gel + iyor + du + m" },
+      { tr: "okuyordu", en: "she was reading", breakdown: "oku + yor + du" },
+      { tr: "çalışmıyorduk", en: "we weren't working", breakdown: "çalış + mı + yor + du + k" },
+      { tr: "uyuyorlardı", en: "they were sleeping", breakdown: "uyu + yor + lar + dı" },
+    ],
+  },
 ];
 
 export const STEP_BY_ID = new Map(GRAMMAR_STEPS.map((s) => [s.id, s]));

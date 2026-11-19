@@ -63,6 +63,24 @@ export async function seedIfEmpty(db: DB) {
   });
 }
 
+/**
+ * Add words that were added to data/vocab.json after this learner's deck was created.
+ * Insert-only (existing cards and their history are untouched); a no-op once complete.
+ */
+export async function addMissingSeedWords(db: DB): Promise<number> {
+  const vocab = vocabJson as VocabEntry[];
+  const n = await db.one<{ n: number }>("SELECT COUNT(*)::int AS n FROM cards WHERE source = 'seed'");
+  if (Number(n?.n ?? 0) >= vocab.length) return 0;
+  return db.tx(async (t) => {
+    await t.run("SELECT pg_advisory_xact_lock(365365)");
+    const existing = await t.all<{ tr: string; pos: string }>("SELECT tr, pos FROM cards WHERE source = 'seed'");
+    const have = new Set(existing.map((r) => `${r.tr}|${r.pos}`));
+    const fresh = vocab.map((v, i) => [v, i] as const).filter(([v]) => !have.has(`${v.tr}|${v.pos}`)).map(([v, i]) => rowValues(v, i + 1));
+    for (let i = 0; i < fresh.length; i += 250) await insertBatch(t, fresh.slice(i, i + 250));
+    return fresh.length;
+  });
+}
+
 /** Upsert data/vocab.json into the seed deck, matching on (tr, pos). Keeps all review history. */
 export async function syncSeedVocab(db: DB): Promise<{ updated: number; inserted: number; total: number }> {
   const vocab = vocabJson as VocabEntry[];

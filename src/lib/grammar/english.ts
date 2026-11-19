@@ -181,7 +181,18 @@ function third(base: string): string {
   return base + "s";
 }
 
-export type EnTense = "present" | "past" | "future" | "aorist" | "ability";
+export type EnTense =
+  | "present"
+  | "past"
+  | "future"
+  | "aorist"
+  | "ability"
+  | "imperative"
+  | "want"
+  | "necessity"
+  | "evidential"
+  | "conditional"
+  | "pastcont";
 
 export function englishVerbPhrase(
   en: string,
@@ -215,6 +226,24 @@ export function englishVerbPhrase(
       case "ability":
         s = q ? `Can ${subj}${n} be${rest}?` : `${subj} ${neg ? "cannot" : "can"} be${rest}`;
         break;
+      case "imperative":
+        s = person === "2sg" ? `${neg ? "Don't be" : "Be"}${rest}! (to a friend)` : `Please ${neg ? "don't be" : "be"}${rest} (polite)`;
+        break;
+      case "want":
+        s = q ? `${cap(does(person))} ${subj} want to be${rest}?` : neg ? `${subj} ${does(person)} not want to be${rest}` : `${subj} ${person === "3sg" ? "wants" : "want"} to be${rest}`;
+        break;
+      case "necessity":
+        s = q ? `Should ${subj} be${rest}?` : `${subj} must${n} be${rest}`;
+        break;
+      case "evidential":
+        s = q ? `${cap(was)} ${subj}${n}${rest}? (did you hear?)` : `Apparently ${subj} ${was}${n}${rest}`;
+        break;
+      case "conditional":
+        s = `If ${subj} ${be}${n}${rest}`;
+        break;
+      case "pastcont":
+        s = `${subj} ${was}${n}${rest} (at the time)`;
+        break;
     }
     return cap(s);
   }
@@ -246,8 +275,43 @@ export function englishVerbPhrase(
     case "ability":
       s = q ? `Can ${subj}${neg ? " not" : ""} ${base}${rest}?` : `${subj} ${neg ? "cannot" : "can"} ${base}${rest}`;
       break;
+    case "imperative":
+      s =
+        person === "2sg"
+          ? `${neg ? `Don't ${base}` : cap(base)}${rest}! (to a friend)`
+          : `Please ${neg ? "don't " : ""}${base}${rest} (polite)`;
+      break;
+    case "want":
+      s = q
+        ? `${cap(does(person))} ${subj}${neg ? " not" : ""} want to ${base}${rest}?`
+        : neg
+          ? `${subj} ${does(person)} not want to ${base}${rest}`
+          : `${subj} ${person === "3sg" ? "wants" : "want"} to ${base}${rest}`;
+      break;
+    case "necessity":
+      s = q ? `Should ${subj}${neg ? " not" : ""} ${base}${rest}?` : `${subj} must${neg ? " not" : ""} ${base}${rest}`;
+      break;
+    case "evidential":
+      s = q
+        ? `Did ${subj}${neg ? " not" : ""} ${base}${rest}? (did you hear?)`
+        : neg
+          ? `Apparently ${subj} did not ${base}${rest}`
+          : `Apparently ${subj} ${past(base)}${rest}`;
+      break;
+    case "conditional":
+      s = neg ? `If ${subj} ${does(person)} not ${base}${rest}` : `If ${subj} ${person === "3sg" ? third(base) : base}${rest}`;
+      break;
+    case "pastcont": {
+      const was = person === "1sg" || person === "3sg" ? "was" : "were";
+      s = `${subj} ${was}${neg ? " not" : ""} ${ing(base)}${rest}`;
+      break;
+    }
   }
   return cap(s);
+}
+
+function does(person: Person): string {
+  return person === "3sg" ? "does" : "do";
 }
 
 export function cap(s: string): string {

@@ -4,6 +4,7 @@
  */
 import { applyTemplate, endsWithVowel, harmonyA, harmonyI, lastChar, soften } from "./phonology";
 import type { Inflected, Person, RuleTag } from "./nouns";
+import { PERSONS } from "./nouns";
 
 export interface VerbEntry {
   /** Dictionary form: "gelmek", "teşekkür etmek". */
@@ -16,8 +17,23 @@ export interface VerbEntry {
   softens?: boolean;
 }
 
-export type Tense = "present" | "past" | "future" | "aorist" | "ability";
-export const TENSES: Tense[] = ["present", "past", "future", "aorist", "ability"];
+export type Tense =
+  | "present"
+  | "past"
+  | "future"
+  | "aorist"
+  | "ability"
+  | "imperative"
+  | "want"
+  | "necessity"
+  | "evidential"
+  | "conditional"
+  | "pastcont";
+export const TENSES: Tense[] = ["present", "past", "future", "aorist", "ability", "imperative", "want", "necessity", "evidential", "conditional", "pastcont"];
+/** Tenses that have a question form in the drills and the Word Lab. */
+export const QUESTION_TENSES: Tense[] = ["present", "past", "future", "aorist", "ability", "want", "necessity", "evidential"];
+/** Imperatives only exist for "you" (one friend) and "you" (polite / several people). */
+export const IMPERATIVE_PERSONS: Person[] = ["2sg", "2pl"];
 
 export interface ConjugateOptions {
   negative?: boolean;
@@ -121,7 +137,24 @@ export function conjugate(v: VerbEntry, tense: Tense, person: Person, opts: Conj
       return aorist(v, person, opts);
     case "ability":
       return ability(v, person, opts);
+    case "imperative":
+      return imperative(v, person, opts);
+    case "want":
+      return want(v, person, opts);
+    case "necessity":
+      return necessity(v, person, opts);
+    case "evidential":
+      return evidential(v, person, opts);
+    case "conditional":
+      return conditional(v, person, opts);
+    case "pastcont":
+      return pastContinuous(v, person, opts);
   }
+}
+
+/** Persons a tense can be used with. */
+export function personsFor(tense: Tense): Person[] {
+  return tense === "imperative" ? IMPERATIVE_PERSONS : PERSONS;
 }
 
 /** -(I)yor: geliyorum, başlıyor, okuyor, gidiyor, gelmiyorum. */
@@ -295,6 +328,118 @@ function ability(v: VerbEntry, person: Person, opts: ConjugateOptions): Inflecte
   }
   const ending = applyTemplate(base, TYPE1[person]);
   return { form: base + ending, parts: ending ? [root, bil, "ir", ending] : [root, bil, "ir"], rules };
+}
+
+/** Imperative: gel! / gelin; başla / başlayın; negative gelme / gelmeyin. Only 2sg and 2pl. */
+function imperative(v: VerbEntry, person: Person, opts: ConjugateOptions): Inflected {
+  const rules: RuleTag[] = [];
+  const stem = verbStem(v);
+  const plural = person !== "2sg";
+  if (opts.negative) {
+    const neg = "m" + harmonyA(stem);
+    rules.push("vowel-harmony-2");
+    if (!plural) return { form: stem + neg, parts: [stem, neg], rules };
+    const end = applyTemplate(stem + neg, "(y)In");
+    rules.push("buffer-y", "vowel-harmony-4");
+    return { form: stem + neg + end, parts: [stem, neg, end], rules };
+  }
+  if (!plural) return { form: stem, parts: [stem], rules };
+  // ye → yiyin (de keeps deyin)
+  const root = lastWord(stem) === "ye" ? (rules.push("vowel-narrowing"), stem.slice(0, -1) + "i") : vowelStem(v, rules);
+  const end = applyTemplate(root, "(y)In");
+  rules.push("vowel-harmony-4");
+  if (endsWithVowel(root)) rules.push("buffer-y");
+  return { form: root + end, parts: [root, end], rules: [...new Set(rules)] };
+}
+
+/** -mAk istemek: gelmek istiyorum, gelmek istemiyorum, gelmek istiyor musun? */
+const ISTEMEK: VerbEntry = { infinitive: "istemek", aorist: "ister" };
+function want(v: VerbEntry, person: Person, opts: ConjugateOptions): Inflected {
+  const inf = v.infinitive;
+  const iste = presentContinuous(ISTEMEK, person, opts);
+  return { form: `${inf} ${iste.form}`, parts: [verbStem(v), inf.slice(verbStem(v).length), ...iste.parts], rules: ["vowel-harmony-2", ...iste.rules] };
+}
+
+/** -mAlI: gelmeliyim, gelmelisin, gelmeli; negative gelmemeliyim; question gelmeli miyim? */
+function necessity(v: VerbEntry, person: Person, opts: ConjugateOptions): Inflected {
+  const rules: RuleTag[] = ["vowel-harmony-2", "vowel-harmony-4"];
+  const stem = verbStem(v);
+  const parts = [stem];
+  let cur = stem;
+  if (opts.negative) {
+    const neg = "m" + harmonyA(stem);
+    parts.push(neg);
+    cur += neg;
+  }
+  const mali = applyTemplate(cur, "mAlI");
+  parts.push(mali);
+  cur += mali;
+  if (opts.question) {
+    const { verb, q } = questionType1(cur, person);
+    const extra = verb.slice(cur.length);
+    return { form: `${verb} ${q}`, parts: [...parts, ...(extra ? [extra] : []), q], rules };
+  }
+  const ending = applyTemplate(cur, TYPE1[person]);
+  if (ending.startsWith("y")) rules.push("buffer-y");
+  return { form: cur + ending, parts: ending ? [...parts, ending] : parts, rules };
+}
+
+/** -mIş (heard / found out): gelmişim, gelmiş, gelmemiş; question gelmiş mi? */
+function evidential(v: VerbEntry, person: Person, opts: ConjugateOptions): Inflected {
+  const rules: RuleTag[] = ["vowel-harmony-4"];
+  const stem = verbStem(v);
+  const parts = [stem];
+  let cur = stem;
+  if (opts.negative) {
+    const neg = "m" + harmonyA(stem);
+    parts.push(neg);
+    cur += neg;
+    rules.push("vowel-harmony-2");
+  }
+  const mis = applyTemplate(cur, "mIş");
+  parts.push(mis);
+  cur += mis;
+  if (opts.question) {
+    const { verb, q } = questionType1(cur, person);
+    const extra = verb.slice(cur.length);
+    return { form: `${verb} ${q}`, parts: [...parts, ...(extra ? [extra] : []), q], rules };
+  }
+  const ending = applyTemplate(cur, TYPE1[person]);
+  return { form: cur + ending, parts: ending ? [...parts, ending] : parts, rules };
+}
+
+/** Aorist + -sA (real "if"): gelirsem, gelirse, gelirlerse; negative gelmezsem. No question form. */
+function conditional(v: VerbEntry, person: Person, opts: ConjugateOptions): Inflected {
+  const rules: RuleTag[] = ["vowel-harmony-2"];
+  const stem = verbStem(v);
+  let parts: string[];
+  let base: string;
+  if (opts.negative) {
+    const neg = "m" + harmonyA(stem);
+    base = stem + neg + "z";
+    parts = [stem, neg + "z"];
+  } else {
+    base = aoristBase(v);
+    parts = [aoristRoot(v), base.slice(aoristRoot(v).length)];
+    rules.push("vowel-harmony-4");
+  }
+  if (person === "3pl") {
+    const ler = applyTemplate(base, "lAr");
+    const se = applyTemplate(base + ler, "sA");
+    return { form: base + ler + se, parts: [...parts, ler, se], rules };
+  }
+  const se = applyTemplate(base, "sA");
+  const ending = applyTemplate(base + se, TYPE2[person]);
+  return { form: base + se + ending, parts: ending ? [...parts, se, ending] : [...parts, se], rules };
+}
+
+/** -(I)yordu: geliyordum, geliyordu, geliyorlardı; negative gelmiyordum. No question form. */
+function pastContinuous(v: VerbEntry, person: Person, opts: ConjugateOptions): Inflected {
+  const pres = presentContinuous(v, "3sg", { negative: opts.negative });
+  const base = pres.form; // geliyor / gelmiyor
+  if (person === "3pl") return { form: `${base}lardı`, parts: [...pres.parts, "lar", "dı"], rules: pres.rules };
+  const ending = { "1sg": "m", "2sg": "n", "3sg": "", "1pl": "k", "2pl": "nuz", "3pl": "" }[person];
+  return { form: `${base}du${ending}`, parts: [...pres.parts, "du", ...(ending ? [ending] : [])], rules: pres.rules };
 }
 
 /**

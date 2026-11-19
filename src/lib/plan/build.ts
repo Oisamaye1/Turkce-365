@@ -20,7 +20,8 @@ import {
 
 export const PLAN_DAYS = 365;
 export const PLAN_WEEKS = 52;
-export const TOTAL_WORDS = 1500;
+/** Size of the word deck (data/vocab.json; checked by tests). */
+export const TOTAL_WORDS = 1700;
 
 export type DayKind = "learn" | "drill" | "listen" | "learn2" | "write" | "out" | "checkin" | "graduation";
 export const DAY_KINDS: DayKind[] = ["learn", "drill", "listen", "learn2", "write", "out", "checkin"];
@@ -80,7 +81,7 @@ export interface PlanDay {
   step: number;
   /** Step introduced in this week, if any. */
   newStep?: number;
-  /** New words today: positions [from, to) in the 1,500-word list. */
+  /** New words today: positions [from, to) in the word list. */
   words: { from: number; to: number };
   challenge: string;
   tasks: PlanTask[];

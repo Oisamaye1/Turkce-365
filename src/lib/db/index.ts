@@ -8,7 +8,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { APP_SCHEMA_SQL, SCHEMA_MARKER, SCHEMA_SQL, SCHEMA_VERSION } from "./schema";
-import { seedIfEmpty } from "./seed";
+import { addMissingSeedWords, seedIfEmpty } from "./seed";
 
 export interface DB {
   all<T = Record<string, unknown>>(sql: string, params?: unknown[]): Promise<T[]>;
@@ -219,7 +219,9 @@ async function migrateUserSchema(base: DB, schema: string) {
       );
     });
   }
-  await seedIfEmpty(scoped(base, schema));
+  const db = scoped(base, schema);
+  await seedIfEmpty(db);
+  await addMissingSeedWords(db);
 }
 
 // ---------------------------------------------------------------- lifecycle

@@ -1,0 +1,217 @@
+# Türkçe 365 — vocabulary source, units 61–68 (Phase 5–6: real Turkish → fluency)
+
+@ 61 | Opinions & discussion | Fikir ve tartışma
+itiraz etmek | to object | v eder s | Kimse itiraz etmedi. | Nobody objected.
+ikna etmek | to persuade | v eder s | Onu ikna edemedim. | I couldn't persuade him.
+iddia | claim | n | Bu iddia doğru değil. | This claim isn't true.
+kanıt | proof / evidence | n ns | Kanıtın var mı? | Do you have proof?
+neden olmak | to cause | v olur | Yağmur trafiğe neden oldu. | The rain caused traffic.
+avantaj | advantage | n | Bunun birçok avantajı var. | This has many advantages.
+dezavantaj | disadvantage | n | Tek dezavantajı fiyatı. | Its only disadvantage is the price.
+açıkçası | frankly | adv | Açıkçası bu fikri sevmedim. | Frankly, I didn't like this idea.
+bence de | I think so too | phrase | Bence de çok güzel. | I think so too, it's lovely.
+bilakis | on the contrary | adv | Yorgun değilim, bilakis çok enerjiliyim. | I'm not tired; on the contrary, I'm very energetic.
+öte yandan | on the other hand | phrase | Öte yandan, çok pahalı. | On the other hand, it's very expensive.
+mantıklı | logical / sensible | adj | Bu çok mantıklı bir plan. | This is a very sensible plan.
+saçma | nonsense / absurd | adj | Bu saçma bir fikir. | This is an absurd idea.
+haklı olmak | to be right | v olur | Haklı olabilirsin. | You might be right.
+haksız | unfair / wrong | adj | Bu karar çok haksız. | This decision is very unfair.
+genel olarak | in general | phrase | Genel olarak memnunum. | In general, I'm satisfied.
+katılıyorum | I agree | phrase | Haklısın, katılıyorum. | You're right, I agree.
+aynı fikirde olmak | to agree / to be of the same opinion | v olur | Bu konuda aynı fikirdeyiz. | We agree on this.
+eleştirmek | to criticise | v eleştirir | Filmi çok eleştirdiler. | They criticised the film a lot.
+övmek | to praise | v över | Öğretmen onu çok övdü. | The teacher praised her a lot.
+abartmak | to exaggerate | v abartır | Biraz abartıyorsun. | You're exaggerating a bit.
+gerçekçi | realistic | adj | Gerçekçi bir plan yapalım. | Let's make a realistic plan.
+tarafsız | neutral / impartial | adj | Tarafsız olmaya çalışıyorum. | I'm trying to be neutral.
+önyargı | prejudice | n | Önyargılı olmayalım. | Let's not be prejudiced.
+tartışmalı | controversial | adj | Çok tartışmalı bir konu. | It's a very controversial topic.
+
+@ 62 | Environment & climate | Çevre ve iklim
+iklim | climate | n | Kıbrıs'ın iklimi çok sıcak. | Cyprus's climate is very hot.
+kirlilik | pollution | n s | Hava kirliliği artıyor. | Air pollution is increasing.
+geri dönüşüm | recycling | n cmp | Geri dönüşüm kutusu nerede? | Where's the recycling bin?
+plastik | plastic | n s | Plastik poşet kullanmıyorum. | I don't use plastic bags.
+güneş paneli | solar panel | n cmp | Çatıda güneş panelleri var. | There are solar panels on the roof.
+kuraklık | drought | n s | Bu yaz kuraklık oldu. | There was a drought this summer.
+su kesintisi | water cut | n cmp | Bugün su kesintisi var. | There's a water cut today.
+elektrik kesintisi | power cut | n cmp | Dün akşam elektrik kesintisi oldu. | There was a power cut last night.
+yangın | fire | n | Dağda yangın çıktı. | A fire broke out on the mountain.
+sahil | coast / shore | n | Sahilde yürüyelim mi? | Shall we walk on the shore?
+kumsal | beach (sandy) | n | Kumsal çok temiz. | The beach is very clean.
+kirletmek | to pollute | v kirletir | Denizi kirletmeyin. | Don't pollute the sea.
+tasarruf etmek | to save (energy, money) | v eder s | Su tasarrufu yapmalıyız. | We should save water.
+ısınmak | to warm up | v ısınır | Dünya ısınıyor. | The world is warming up.
+sel | flood | n | Geçen kış sel oldu. | There was a flood last winter.
+toz | dust | n | Her yer toz içinde. | Everything is covered in dust.
+atık | waste | n s | Atıkları ayırıyoruz. | We separate the waste.
+sürdürülebilir | sustainable | adj | Sürdürülebilir turizm önemli. | Sustainable tourism is important.
+küresel ısınma | global warming | n cmp | Küresel ısınma hepimizi etkiliyor. | Global warming affects us all.
+deprem | earthquake | n | Dün gece küçük bir deprem oldu. | There was a small earthquake last night.
+yenilenebilir | renewable | adj | Yenilenebilir enerji kullanmalıyız. | We should use renewable energy.
+ağaç dikmek | to plant a tree | v diker | Okulda ağaç diktik. | We planted trees at school.
+sulamak | to water (plants) | v sular | Çiçekleri suladın mı? | Did you water the flowers?
+toprak | soil / earth | n s | Toprak çok kuru. | The soil is very dry.
+nesli tükenmek | to become extinct | v tükenir x | Bu hayvanın nesli tükeniyor. | This animal is becoming extinct.
+
+@ 63 | Arts, music & film | Sanat, müzik ve sinema
+sanatçı | artist | n | O ünlü bir sanatçı. | She's a famous artist.
+ressam | painter | n | Ressam portremi çizdi. | The painter drew my portrait.
+sergi | exhibition | n | Yeni sergiye gittin mi? | Did you go to the new exhibition?
+şarkıcı | singer | n | Şarkıcının sesi çok güzel. | The singer's voice is lovely.
+çalgı | musical instrument | n | Hangi çalgıyı çalıyorsun? | Which instrument do you play?
+çalmak | to play (an instrument) / to ring / to steal | v çalar | Telefon çalıyor. | The phone is ringing.
+yönetmen | director | n | Filmin yönetmeni Türk. | The film's director is Turkish.
+sahne | stage / scene | n | Sahnede kim var? | Who's on stage?
+roman | novel | n | Güzel bir roman okuyorum. | I'm reading a good novel.
+şiir | poem / poetry | n | Bir şiir ezberledim. | I memorised a poem.
+fotoğraf çekmek | to take a photo | v çeker | Burada fotoğraf çekebilir miyiz? | Can we take photos here?
+seyirci | audience / spectator | n | Seyirciler çok mutluydu. | The audience was very happy.
+alkışlamak | to applaud | v alkışlar | Herkes uzun uzun alkışladı. | Everyone applauded for a long time.
+heykel | sculpture / statue | n | Meydanda bir heykel var. | There's a statue in the square.
+tablo | painting / table (chart) | n | Bu tablo çok eski. | This painting is very old.
+galeri | gallery | n | Galeride yeni bir sergi açıldı. | A new exhibition opened at the gallery.
+senaryo | script / screenplay | n | Senaryoyu kim yazdı? | Who wrote the screenplay?
+davul | drum | n | Düğünde davul çaldılar. | They played the drum at the wedding.
+keman | violin | n | Kızım keman çalıyor. | My daughter plays the violin.
+piyano | piano | n | Piyano dersi alıyorum. | I'm taking piano lessons.
+melodi | melody / tune | n | Bu melodi aklımdan çıkmıyor. | I can't get this tune out of my head.
+koro | choir | n | Korolarda şarkı söylüyor. | She sings in choirs.
+ödül | award / prize | n | Film büyük bir ödül kazandı. | The film won a big award.
+eser | work (of art) | n | Bu, ünlü bir eser. | This is a famous work.
+nota | musical note | n | Nota okumayı bilmiyorum. | I can't read music.
+
+@ 64 | Meetings & projects | Toplantı ve projeler
+teklif | offer / proposal | n | Teklifinizi aldık. | We received your offer.
+katılımcı | participant | n | Kaç katılımcı var? | How many participants are there?
+sorumluluk | responsibility | n s | Bu benim sorumluluğum. | This is my responsibility.
+son tarih | deadline | n cmp | Son tarih ne zaman? | When's the deadline?
+ekip | team | n s | Ekibimiz çok iyi. | Our team is very good.
+yönetici | manager | n | Yöneticiyle konuştum. | I spoke with the manager.
+geri bildirim | feedback | n cmp | Geri bildiriminiz için teşekkürler. | Thanks for your feedback.
+öncelik | priority | n s | Önceliğimiz müşteri memnuniyeti. | Our priority is customer satisfaction.
+strateji | strategy | n | Yeni bir strateji lazım. | We need a new strategy.
+verimli | efficient / productive | adj | Bugün çok verimli bir gündü. | Today was a very productive day.
+onaylamak | to approve / to confirm | v onaylar | Müdür planı onayladı. | The director approved the plan.
+iş birliği | cooperation | n cmp | İş birliğiniz için teşekkürler. | Thank you for your cooperation.
+istifa etmek | to resign | v eder s | Geçen ay istifa etti. | He resigned last month.
+işe almak | to hire | v alır | Yeni bir yazılımcı işe aldık. | We hired a new developer.
+fazla mesai | overtime | n cmp | Bu hafta fazla mesai yaptım. | I did overtime this week.
+işveren | employer | n | İşverenim çok anlayışlı. | My employer is very understanding.
+verim | efficiency / yield | n | Verimimiz bu ay arttı. | Our efficiency went up this month.
+izin günü | day off | n cmp | Yarın izin günüm. | Tomorrow is my day off.
+tutanak | minutes (of a meeting) / official report | n s | Toplantı tutanağını sen yaz. | You write the meeting minutes.
+zaman çizelgesi | schedule / timeline | n cmp | Zaman çizelgesine bakalım. | Let's look at the schedule.
+yatırımcı | investor | n | Yeni yatırımcılar bulduk. | We found new investors.
+kovmak | to fire / to kick out | v kovar | Onu işten kovdular. | They fired him.
+maaş zammı | pay rise | n cmp | Bu yıl maaş zammı aldık. | We got a pay rise this year.
+staj | internship | n | Yazın staj yapacağım. | I'll do an internship in summer.
+stajyer | intern | n | Yeni stajyer çok çalışkan. | The new intern is very hard-working.
+
+@ 65 | Feelings & relationships 2 | Duygular ve ilişkiler 2
+kıskanmak | to be jealous (of) | v kıskanır | Kardeşini kıskanıyor. | He's jealous of his brother.
+gururlu | proud | adj | Seninle gurur duyuyorum. | I'm proud of you.
+pişman olmak | to regret | v olur | Hiç pişman olmadım. | I never regretted it.
+yalnızlık | loneliness | n s | Yalnızlık zor bir duygu. | Loneliness is a hard feeling.
+nişanlanmak | to get engaged | v nişanlanır | Geçen ay nişanlandılar. | They got engaged last month.
+barışmak | to make up (after a fight) | v barışır | Sonunda barıştık. | We finally made up.
+affetmek | to forgive | v affeder s | Beni affet, lütfen. | Forgive me, please.
+desteklemek | to support | v destekler | Ailem beni hep destekliyor. | My family always supports me.
+ilgilenmek | to be interested (in) / to look after | v ilgilenir | Tarihle çok ilgileniyorum. | I'm very interested in history.
+duygusal | emotional | adj | Çok duygusal bir filmdi. | It was a very emotional film.
+rahatlamak | to relax / to feel relieved | v rahatlar | Haberi duyunca rahatladım. | I felt relieved when I heard the news.
+kırgın | hurt / offended | adj | Bana biraz kırgın. | She's a bit hurt with me.
+küsmek | to stop speaking to someone (sulk) | v küser | Bana küstü, konuşmuyor. | He's sulking with me and not talking.
+mutsuz | unhappy | adj | Neden mutsuzsun? | Why are you unhappy?
+kaygı | anxiety / concern | n | Sınav kaygısı yaşıyorum. | I have exam anxiety.
+huzur | peace (of mind) | n | Burada çok huzur var. | There's so much peace here.
+huzurlu | peaceful | adj | Köyde huzurlu bir hayat. | A peaceful life in the village.
+hayal kırıklığı | disappointment | n cmp | Büyük bir hayal kırıklığı yaşadım. | I was very disappointed.
+minnettar | grateful | adj | Size çok minnettarım. | I'm very grateful to you.
+sadık | loyal | adj s | Köpekler çok sadık. | Dogs are very loyal.
+sevecen | affectionate / caring | adj | Çok sevecen bir anne. | She's a very caring mother.
+anlayışlı | understanding | adj | Patronum çok anlayışlı. | My boss is very understanding.
+bıkmak | to be fed up | v bıkar | Bu sıcaktan bıktım! | I'm fed up with this heat!
+teselli etmek | to console | v eder s | Arkadaşını teselli etti. | She consoled her friend.
+yalvarmak | to beg | v yalvarır | Gitmemesi için yalvardım. | I begged him not to go.
+
+@ 66 | Law, government & society | Hukuk, yönetim ve toplum
+oy vermek | to vote | v verir | Seçimde oy verdin mi? | Did you vote in the election?
+mahkeme | court | n | Dava mahkemede. | The case is in court.
+avukat tutmak | to hire a lawyer | v tutar | Bir avukat tutmamız lazım. | We need to hire a lawyer.
+ceza | penalty / fine | n | Park cezası aldım. | I got a parking fine.
+eşitlik | equality | n s | Eşitlik için çalışıyorlar. | They're working for equality.
+nüfus | population | n | Lefkoşa'nın nüfusu ne kadar? | What's the population of Nicosia?
+göçmen | immigrant | n | Burada birçok göçmen yaşıyor. | Many immigrants live here.
+belge | document | n | Hangi belgeler gerekli? | Which documents are needed?
+yasak | forbidden / ban | adj s | Burada sigara içmek yasak. | Smoking is forbidden here.
+zorunlu | compulsory | adj | Kemer takmak zorunlu. | Wearing a seat belt is compulsory.
+güvenlik | security / safety | n s | Güvenlik için kamera var. | There's a camera for security.
+şikâyet etmek | to complain | v eder s | Gürültüden şikâyet ettik. | We complained about the noise.
+cumhurbaşkanı | president | n cmp | Cumhurbaşkanı bugün konuştu. | The president spoke today.
+başbakan | prime minister | n | Başbakan yeni bakanları açıkladı. | The prime minister announced the new ministers.
+bakan | minister | n | Sağlık bakanı hastaneyi ziyaret etti. | The health minister visited the hospital.
+milletvekili | member of parliament | n | Milletvekilleri mecliste tartıştı. | MPs debated in parliament.
+meclis | parliament / assembly | n | Meclis bugün toplandı. | Parliament met today.
+anayasa | constitution | n | Anayasa değişikliği tartışılıyor. | A constitutional change is being discussed.
+dava | lawsuit / case | n | Davayı kazandık. | We won the case.
+hâkim | judge | n | Hâkim kararını verdi. | The judge gave his verdict.
+tanık | witness | n s | Kazanın tanığı benim. | I'm the witness to the accident.
+suç | crime | n s | Bu bir suç! | This is a crime!
+hırsız | thief | n | Polis hırsızı yakaladı. | The police caught the thief.
+tutuklamak | to arrest | v tutuklar | Polis iki kişiyi tutukladı. | The police arrested two people.
+grev | strike (work) | n | Öğretmenler greve gitti. | The teachers went on strike.
+
+@ 67 | Idioms & sayings | Deyimler ve sözler
+kafayı yemek | to go crazy (idiom) | v yer x | Bu trafikte kafayı yiyeceğim! | I'm going to go crazy in this traffic!
+canı sıkılmak | to be bored / annoyed | v sıkılır x | Canım sıkılıyor. | I'm bored.
+aklına gelmek | to come to mind | v gelir x | Aklıma güzel bir fikir geldi. | A good idea came to my mind.
+göz atmak | to have a look | v atar x | Bu rapora bir göz atar mısın? | Could you have a look at this report?
+el ele vermek | to join forces | v verir x | El ele verirsek başarırız. | If we join forces, we'll succeed.
+kulak vermek | to listen carefully | v verir x | Bana kulak ver. | Listen to me carefully.
+ağzı sıkı | discreet (keeps secrets) | adj x | Merak etme, ağzı sıkıdır. | Don't worry, she's discreet.
+eli açık | generous | adj x | Dedem çok eli açık bir insan. | My grandad is a very generous person.
+gözü kara | fearless | adj x | Çok gözü kara bir şoför. | He's a very fearless driver.
+burnu havada | stuck-up | adj x | Biraz burnu havada. | She's a bit stuck-up.
+dili dolaşmak | to get tongue-tied | v dolaşır x | Heyecandan dilim dolaştı. | I got tongue-tied from excitement.
+iki dirhem bir çekirdek | dressed to the nines | phrase x | Düğüne iki dirhem bir çekirdek geldi. | He came to the wedding dressed to the nines.
+damlaya damlaya göl olur | every little helps | phrase | Her gün biraz biriktir; damlaya damlaya göl olur. | Save a little every day; every little helps.
+acele işe şeytan karışır | haste makes waste | phrase | Yavaş ol, acele işe şeytan karışır. | Slow down, haste makes waste.
+sabreden derviş muradına ermiş | good things come to those who wait | phrase | Biraz bekle; sabreden derviş muradına ermiş. | Wait a little; good things come to those who wait.
+ne ekersen onu biçersin | you reap what you sow | phrase | Çalışmazsan geçemezsin; ne ekersen onu biçersin. | If you don't study you won't pass; you reap what you sow.
+bir taşla iki kuş | two birds with one stone | phrase | Bir taşla iki kuş vurduk. | We killed two birds with one stone.
+şeytanın bacağını kırmak | to finally get going | v kırar x | Sonunda şeytanın bacağını kırdık ve başladık. | We finally got going and started.
+havadan sudan konuşmak | to make small talk | v konuşur x | Havadan sudan konuştuk. | We made small talk.
+ayıp | shameful / rude | adj ns | Bunu söylemek ayıp. | It's rude to say that.
+güle güle kullan | enjoy using it (something new) | phrase | Yeni araban güzel, güle güle kullan! | Your new car is lovely, enjoy it!
+iyi ki varsın | I'm so glad you're in my life | phrase | Teşekkürler, iyi ki varsın! | Thank you, I'm so glad you're here!
+ağzına sağlık | well said | phrase | Ağzına sağlık, çok doğru söyledin. | Well said, that's very true.
+pireyi deve yapmak | to make a mountain out of a molehill | v yapar x | Pireyi deve yapma, önemli değil. | Don't make a mountain out of a molehill, it's not important.
+etekleri zil çalmak | to be overjoyed | v çalar x | Haberi duyunca etekleri zil çaldı. | She was overjoyed when she heard the news.
+
+@ 68 | Travel 2 & emergencies | Yolculuk ve acil durumlar
+acil durum | emergency | n cmp | Acil durumda 112'yi ara. | In an emergency, call 112.
+yardım | help | n | Yardıma ihtiyacım var. | I need help.
+kaza | accident | n | Yolda bir kaza oldu. | There was an accident on the road.
+yaralı | injured | adj | Kimse yaralı değil. | Nobody is injured.
+kaybolmak | to get lost | v kaybolur | Şehirde kayboldum. | I got lost in the city.
+çalınmak | to be stolen | v çalınır | Cüzdanım çalındı. | My wallet was stolen.
+bagaj | luggage / boot (of car) | n | Bagajım kayboldu. | My luggage got lost.
+rötar | delay (flight) | n | Uçağın iki saat rötarı var. | The plane is two hours late.
+aktarma | transfer / connection | n | İstanbul'da aktarma yapacağım. | I'll change planes in Istanbul.
+pasaport kontrolü | passport control | n cmp | Pasaport kontrolünde uzun kuyruk var. | There's a long queue at passport control.
+gümrük | customs | n s | Gümrükten geçtik. | We went through customs.
+kiralık araba | rental car | n cmp | Havalimanında kiralık araba aldık. | We got a rental car at the airport.
+lastik | tyre | n s | Lastiğimiz patladı. | We got a flat tyre.
+arıza | breakdown / fault | n | Arabada bir arıza var. | There's a fault with the car.
+çekici | tow truck | n | Bir çekici çağırdık. | We called a tow truck.
+konaklamak | to stay (overnight) | v konaklar | Girne'de iki gece konakladık. | We stayed two nights in Girne.
+rezervasyon yapmak | to make a reservation | v yapar | Otelde rezervasyon yaptım. | I made a reservation at the hotel.
+ilk yardım | first aid | n cmp | İlk yardım çantası nerede? | Where's the first aid kit?
+yangın söndürücü | fire extinguisher | n cmp | Mutfakta yangın söndürücü var. | There's a fire extinguisher in the kitchen.
+kurtarmak | to rescue / to save | v kurtarır | Cankurtaran çocuğu kurtardı. | The lifeguard rescued the child.
+acil çıkış | emergency exit | n cmp | Acil çıkış bu tarafta. | The emergency exit is this way.
+kayıp eşya | lost property | n cmp | Kayıp eşya bürosu nerede? | Where's the lost property office?
+elçilik | embassy | n s | İngiliz elçiliğine gittim. | I went to the British embassy.
+konsolosluk | consulate | n s | Konsolosluktan randevu aldım. | I got an appointment at the consulate.
+biniş kartı | boarding pass | n cmp | Biniş kartınızı görebilir miyim? | May I see your boarding pass?

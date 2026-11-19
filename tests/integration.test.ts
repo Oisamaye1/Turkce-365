@@ -30,7 +30,17 @@ beforeEach(async () => {
 }, 30_000);
 
 describe("database seed", () => {
-  it("loads the 1,500-word deck and offers 15 new cards per day", async () => {
+  it("tops up an older deck with words added later, keeping its history", async () => {
+    const { getDb } = await import("@/lib/db");
+    const { addMissingSeedWords } = await import("@/lib/db/seed");
+    const db = await getDb();
+    await db.run("DELETE FROM cards WHERE source = 'seed' AND seq > 1500");
+    expect(await addMissingSeedWords(db)).toBe(200);
+    const n = await db.one<{ n: number }>("SELECT COUNT(*)::int AS n FROM cards WHERE source = 'seed'");
+    expect(Number(n?.n)).toBe(1700);
+    expect(await addMissingSeedWords(db)).toBe(0);
+  });
+  it("loads the word deck and offers 15 new cards per day", async () => {
     const s = await getReviewSession(at("2026-11-11T06:00:00Z"));
     expect(s.due.length).toBe(0);
     expect(s.fresh.length).toBe(15);

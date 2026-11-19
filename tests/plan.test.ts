@@ -15,7 +15,7 @@ describe("plan curriculum", () => {
     expect(next).toBe(53);
   });
 
-  it("introduces every one of the 16 suffix steps exactly once", () => {
+  it("introduces every suffix step exactly once", () => {
     expect([...STEP_ORDER].sort((a, b) => a - b)).toEqual(GRAMMAR_STEPS.map((s) => s.id));
     expect(STEP_ORDER[0]).toBe(1);
   });
@@ -53,7 +53,7 @@ describe("plan days", () => {
     expect(position(364)).toEqual({ week: 52, index: 6 });
   });
 
-  it("spreads the 1,500 words over the year, lighter at the start", () => {
+  it("spreads every word over the year, lighter at the start", () => {
     expect(wordsThrough(0)).toBe(0);
     expect(wordsThrough(PLAN_DAYS)).toBe(TOTAL_WORDS);
     let prev = 0;
@@ -68,7 +68,7 @@ describe("plan days", () => {
 
   it("opens suffix steps as the weeks introduce them", () => {
     expect(stepsIntroducedBy(1)).toEqual([1]);
-    expect(stepsIntroducedBy(PLAN_DAYS)).toHaveLength(16);
+    expect(stepsIntroducedBy(PLAN_DAYS)).toHaveLength(GRAMMAR_STEPS.length);
     // The drill day always drills an opened step.
     for (let d = 1; d <= PLAN_DAYS; d++) expect(stepsIntroducedBy(d)).toContain(planDay(d).step);
   });

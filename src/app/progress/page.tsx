@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CountUp } from "@/components/count-up";
-import { STEP_ORDER } from "@/lib/plan/build";
+import { STEP_ORDER, TOTAL_WORDS } from "@/lib/plan/build";
 import { BuildReportButton } from "@/components/build-report";
 import { IconFlame } from "@/components/icons";
 import { ReportView } from "@/components/lesson/report-view";
@@ -30,7 +30,7 @@ export default async function ProgressPage() {
   ]);
 
   const figures = [
-    { label: "words met", hint: `${Math.round((t.introduced / 1500) * 100)}% of the 1,500`, value: t.introduced },
+    { label: "words met", hint: `${Math.round((t.introduced / TOTAL_WORDS) * 100)}% of the ${TOTAL_WORDS.toLocaleString("en-GB")}`, value: t.introduced },
     { label: "recall this week", hint: `over ${ret.reviews} reviews`, value: ret.reviews ? `${Math.round(ret.rate * 100)}%` : "–" },
     { label: "day streak", hint: `best ${st.best}`, value: st.current },
     { label: "lessons done", hint: `${t.mature} words well learned`, value: t.lessonsDone },

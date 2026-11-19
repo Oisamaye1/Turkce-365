@@ -94,7 +94,7 @@ async function generate(date: string, opts: GenerateOptions): Promise<GenerateRe
         .join("\n");
     }
     const step = getStep(stepId);
-    const known = await knownWords(1500);
+    const known = await knownWords(5000);
     const warmup = (await recentMistakeCards(7, 5)).map((c) => c.id);
     if (warmup.length < 5) {
       // Top up with the weakest known cards.

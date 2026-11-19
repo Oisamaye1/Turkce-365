@@ -4,8 +4,10 @@
  * exactly as correct as the (unit-tested) engine.
  */
 import {
+  QUESTION_TENSES,
   conjugate,
   copula,
+  personsFor,
   inflectNoun,
   possessiveCompound,
   questionParticle,
@@ -319,11 +321,11 @@ const varYokGen: Gen = (rng, lex) => {
 function verbGen(tense: Tense, opts: { neg: number; q: number }): Gen {
   return (rng, lex) => {
     const v = pick(rng, lex.verbs);
-    const p = pick(rng, PERSONS);
+    const p = pick(rng, personsFor(tense));
     const negative = chance(rng, opts.neg);
-    const question = chance(rng, opts.q);
+    const question = QUESTION_TENSES.includes(tense) && chance(rng, opts.q);
     const r = conjugate(verbEntry(v), tense, p, { negative, question });
-    const tags = [SUBJECT_EN[p], TENSE_LABEL[tense]];
+    const tags = [tense === "imperative" ? (p === "2sg" ? "to one friend" : "polite / several people") : SUBJECT_EN[p], TENSE_LABEL[tense]];
     if (negative) tags.push("negative");
     if (question) tags.push("question");
     return {
@@ -340,6 +342,12 @@ function verbGen(tense: Tense, opts: { neg: number; q: number }): Gen {
 }
 
 export const TENSE_LABEL: Record<Tense, string> = {
+  imperative: "command",
+  want: "want to",
+  necessity: "must",
+  evidential: "apparently (-mış)",
+  conditional: "if (-sa)",
+  pastcont: "was doing (-yordu)",
   present: "present continuous",
   past: "past",
   future: "future",
@@ -382,6 +390,12 @@ const GENERATORS: Record<number, Gen> = {
   14: verbGen("aorist", { neg: 0.25, q: 0.2 }),
   15: verbGen("ability", { neg: 0.25, q: 0.2 }),
   16: stackingGen,
+  17: verbGen("imperative", { neg: 0.35, q: 0 }),
+  18: verbGen("want", { neg: 0.25, q: 0.2 }),
+  19: verbGen("necessity", { neg: 0.25, q: 0.2 }),
+  20: verbGen("evidential", { neg: 0.2, q: 0.15 }),
+  21: verbGen("conditional", { neg: 0.3, q: 0 }),
+  22: verbGen("pastcont", { neg: 0.25, q: 0 }),
 };
 
 /** Generate `count` distinct drills for a grammar step. */

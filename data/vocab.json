@@ -12857,5 +12857,1767 @@
   "unit": 60,
   "exTr": "Selimiye Camii Lefkoşa'nın simgesi.",
   "exEn": "The Selimiye Mosque is the symbol of Nicosia."
+ },
+ {
+  "tr": "itiraz etmek",
+  "en": "to object",
+  "pos": "verb",
+  "unit": 61,
+  "exTr": "Kimse itiraz etmedi.",
+  "exEn": "Nobody objected.",
+  "stem": "itiraz et",
+  "aorist": "itiraz eder",
+  "irregular": "itiraz et → itiraz ed- before vowels"
+ },
+ {
+  "tr": "ikna etmek",
+  "en": "to persuade",
+  "pos": "verb",
+  "unit": 61,
+  "exTr": "Onu ikna edemedim.",
+  "exEn": "I couldn't persuade him.",
+  "stem": "ikna et",
+  "aorist": "ikna eder",
+  "irregular": "ikna et → ikna ed- before vowels"
+ },
+ {
+  "tr": "iddia",
+  "en": "claim",
+  "pos": "noun",
+  "unit": 61,
+  "exTr": "Bu iddia doğru değil.",
+  "exEn": "This claim isn't true."
+ },
+ {
+  "tr": "kanıt",
+  "en": "proof / evidence",
+  "pos": "noun",
+  "unit": 61,
+  "exTr": "Kanıtın var mı?",
+  "exEn": "Do you have proof?",
+  "softens": false
+ },
+ {
+  "tr": "neden olmak",
+  "en": "to cause",
+  "pos": "verb",
+  "unit": 61,
+  "exTr": "Yağmur trafiğe neden oldu.",
+  "exEn": "The rain caused traffic.",
+  "stem": "neden ol",
+  "aorist": "neden olur"
+ },
+ {
+  "tr": "avantaj",
+  "en": "advantage",
+  "pos": "noun",
+  "unit": 61,
+  "exTr": "Bunun birçok avantajı var.",
+  "exEn": "This has many advantages."
+ },
+ {
+  "tr": "dezavantaj",
+  "en": "disadvantage",
+  "pos": "noun",
+  "unit": 61,
+  "exTr": "Tek dezavantajı fiyatı.",
+  "exEn": "Its only disadvantage is the price."
+ },
+ {
+  "tr": "açıkçası",
+  "en": "frankly",
+  "pos": "adv",
+  "unit": 61,
+  "exTr": "Açıkçası bu fikri sevmedim.",
+  "exEn": "Frankly, I didn't like this idea."
+ },
+ {
+  "tr": "bence de",
+  "en": "I think so too",
+  "pos": "phrase",
+  "unit": 61,
+  "exTr": "Bence de çok güzel.",
+  "exEn": "I think so too, it's lovely."
+ },
+ {
+  "tr": "bilakis",
+  "en": "on the contrary",
+  "pos": "adv",
+  "unit": 61,
+  "exTr": "Yorgun değilim, bilakis çok enerjiliyim.",
+  "exEn": "I'm not tired; on the contrary, I'm very energetic."
+ },
+ {
+  "tr": "öte yandan",
+  "en": "on the other hand",
+  "pos": "phrase",
+  "unit": 61,
+  "exTr": "Öte yandan, çok pahalı.",
+  "exEn": "On the other hand, it's very expensive."
+ },
+ {
+  "tr": "mantıklı",
+  "en": "logical / sensible",
+  "pos": "adj",
+  "unit": 61,
+  "exTr": "Bu çok mantıklı bir plan.",
+  "exEn": "This is a very sensible plan."
+ },
+ {
+  "tr": "saçma",
+  "en": "nonsense / absurd",
+  "pos": "adj",
+  "unit": 61,
+  "exTr": "Bu saçma bir fikir.",
+  "exEn": "This is an absurd idea."
+ },
+ {
+  "tr": "haklı olmak",
+  "en": "to be right",
+  "pos": "verb",
+  "unit": 61,
+  "exTr": "Haklı olabilirsin.",
+  "exEn": "You might be right.",
+  "stem": "haklı ol",
+  "aorist": "haklı olur"
+ },
+ {
+  "tr": "haksız",
+  "en": "unfair / wrong",
+  "pos": "adj",
+  "unit": 61,
+  "exTr": "Bu karar çok haksız.",
+  "exEn": "This decision is very unfair."
+ },
+ {
+  "tr": "genel olarak",
+  "en": "in general",
+  "pos": "phrase",
+  "unit": 61,
+  "exTr": "Genel olarak memnunum.",
+  "exEn": "In general, I'm satisfied."
+ },
+ {
+  "tr": "katılıyorum",
+  "en": "I agree",
+  "pos": "phrase",
+  "unit": 61,
+  "exTr": "Haklısın, katılıyorum.",
+  "exEn": "You're right, I agree."
+ },
+ {
+  "tr": "aynı fikirde olmak",
+  "en": "to agree / to be of the same opinion",
+  "pos": "verb",
+  "unit": 61,
+  "exTr": "Bu konuda aynı fikirdeyiz.",
+  "exEn": "We agree on this.",
+  "stem": "aynı fikirde ol",
+  "aorist": "aynı fikirde olur"
+ },
+ {
+  "tr": "eleştirmek",
+  "en": "to criticise",
+  "pos": "verb",
+  "unit": 61,
+  "exTr": "Filmi çok eleştirdiler.",
+  "exEn": "They criticised the film a lot.",
+  "stem": "eleştir",
+  "aorist": "eleştirir"
+ },
+ {
+  "tr": "övmek",
+  "en": "to praise",
+  "pos": "verb",
+  "unit": 61,
+  "exTr": "Öğretmen onu çok övdü.",
+  "exEn": "The teacher praised her a lot.",
+  "stem": "öv",
+  "aorist": "över"
+ },
+ {
+  "tr": "abartmak",
+  "en": "to exaggerate",
+  "pos": "verb",
+  "unit": 61,
+  "exTr": "Biraz abartıyorsun.",
+  "exEn": "You're exaggerating a bit.",
+  "stem": "abart",
+  "aorist": "abartır"
+ },
+ {
+  "tr": "gerçekçi",
+  "en": "realistic",
+  "pos": "adj",
+  "unit": 61,
+  "exTr": "Gerçekçi bir plan yapalım.",
+  "exEn": "Let's make a realistic plan."
+ },
+ {
+  "tr": "tarafsız",
+  "en": "neutral / impartial",
+  "pos": "adj",
+  "unit": 61,
+  "exTr": "Tarafsız olmaya çalışıyorum.",
+  "exEn": "I'm trying to be neutral."
+ },
+ {
+  "tr": "önyargı",
+  "en": "prejudice",
+  "pos": "noun",
+  "unit": 61,
+  "exTr": "Önyargılı olmayalım.",
+  "exEn": "Let's not be prejudiced."
+ },
+ {
+  "tr": "tartışmalı",
+  "en": "controversial",
+  "pos": "adj",
+  "unit": 61,
+  "exTr": "Çok tartışmalı bir konu.",
+  "exEn": "It's a very controversial topic."
+ },
+ {
+  "tr": "iklim",
+  "en": "climate",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Kıbrıs'ın iklimi çok sıcak.",
+  "exEn": "Cyprus's climate is very hot."
+ },
+ {
+  "tr": "kirlilik",
+  "en": "pollution",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Hava kirliliği artıyor.",
+  "exEn": "Air pollution is increasing.",
+  "softens": true
+ },
+ {
+  "tr": "geri dönüşüm",
+  "en": "recycling",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Geri dönüşüm kutusu nerede?",
+  "exEn": "Where's the recycling bin?",
+  "compound": true
+ },
+ {
+  "tr": "plastik",
+  "en": "plastic",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Plastik poşet kullanmıyorum.",
+  "exEn": "I don't use plastic bags.",
+  "softens": true
+ },
+ {
+  "tr": "güneş paneli",
+  "en": "solar panel",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Çatıda güneş panelleri var.",
+  "exEn": "There are solar panels on the roof.",
+  "compound": true
+ },
+ {
+  "tr": "kuraklık",
+  "en": "drought",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Bu yaz kuraklık oldu.",
+  "exEn": "There was a drought this summer.",
+  "softens": true
+ },
+ {
+  "tr": "su kesintisi",
+  "en": "water cut",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Bugün su kesintisi var.",
+  "exEn": "There's a water cut today.",
+  "compound": true
+ },
+ {
+  "tr": "elektrik kesintisi",
+  "en": "power cut",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Dün akşam elektrik kesintisi oldu.",
+  "exEn": "There was a power cut last night.",
+  "compound": true
+ },
+ {
+  "tr": "yangın",
+  "en": "fire",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Dağda yangın çıktı.",
+  "exEn": "A fire broke out on the mountain."
+ },
+ {
+  "tr": "sahil",
+  "en": "coast / shore",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Sahilde yürüyelim mi?",
+  "exEn": "Shall we walk on the shore?"
+ },
+ {
+  "tr": "kumsal",
+  "en": "beach (sandy)",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Kumsal çok temiz.",
+  "exEn": "The beach is very clean."
+ },
+ {
+  "tr": "kirletmek",
+  "en": "to pollute",
+  "pos": "verb",
+  "unit": 62,
+  "exTr": "Denizi kirletmeyin.",
+  "exEn": "Don't pollute the sea.",
+  "stem": "kirlet",
+  "aorist": "kirletir"
+ },
+ {
+  "tr": "tasarruf etmek",
+  "en": "to save (energy, money)",
+  "pos": "verb",
+  "unit": 62,
+  "exTr": "Su tasarrufu yapmalıyız.",
+  "exEn": "We should save water.",
+  "stem": "tasarruf et",
+  "aorist": "tasarruf eder",
+  "irregular": "tasarruf et → tasarruf ed- before vowels"
+ },
+ {
+  "tr": "ısınmak",
+  "en": "to warm up",
+  "pos": "verb",
+  "unit": 62,
+  "exTr": "Dünya ısınıyor.",
+  "exEn": "The world is warming up.",
+  "stem": "ısın",
+  "aorist": "ısınır"
+ },
+ {
+  "tr": "sel",
+  "en": "flood",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Geçen kış sel oldu.",
+  "exEn": "There was a flood last winter."
+ },
+ {
+  "tr": "toz",
+  "en": "dust",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Her yer toz içinde.",
+  "exEn": "Everything is covered in dust."
+ },
+ {
+  "tr": "atık",
+  "en": "waste",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Atıkları ayırıyoruz.",
+  "exEn": "We separate the waste.",
+  "softens": true
+ },
+ {
+  "tr": "sürdürülebilir",
+  "en": "sustainable",
+  "pos": "adj",
+  "unit": 62,
+  "exTr": "Sürdürülebilir turizm önemli.",
+  "exEn": "Sustainable tourism is important."
+ },
+ {
+  "tr": "küresel ısınma",
+  "en": "global warming",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Küresel ısınma hepimizi etkiliyor.",
+  "exEn": "Global warming affects us all.",
+  "compound": true
+ },
+ {
+  "tr": "deprem",
+  "en": "earthquake",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Dün gece küçük bir deprem oldu.",
+  "exEn": "There was a small earthquake last night."
+ },
+ {
+  "tr": "yenilenebilir",
+  "en": "renewable",
+  "pos": "adj",
+  "unit": 62,
+  "exTr": "Yenilenebilir enerji kullanmalıyız.",
+  "exEn": "We should use renewable energy."
+ },
+ {
+  "tr": "ağaç dikmek",
+  "en": "to plant a tree",
+  "pos": "verb",
+  "unit": 62,
+  "exTr": "Okulda ağaç diktik.",
+  "exEn": "We planted trees at school.",
+  "stem": "ağaç dik",
+  "aorist": "ağaç diker"
+ },
+ {
+  "tr": "sulamak",
+  "en": "to water (plants)",
+  "pos": "verb",
+  "unit": 62,
+  "exTr": "Çiçekleri suladın mı?",
+  "exEn": "Did you water the flowers?",
+  "stem": "sula",
+  "aorist": "sular"
+ },
+ {
+  "tr": "toprak",
+  "en": "soil / earth",
+  "pos": "noun",
+  "unit": 62,
+  "exTr": "Toprak çok kuru.",
+  "exEn": "The soil is very dry.",
+  "softens": true
+ },
+ {
+  "tr": "nesli tükenmek",
+  "en": "to become extinct",
+  "pos": "verb",
+  "unit": 62,
+  "exTr": "Bu hayvanın nesli tükeniyor.",
+  "exEn": "This animal is becoming extinct.",
+  "stem": "nesli tüken",
+  "aorist": "nesli tükenir"
+ },
+ {
+  "tr": "sanatçı",
+  "en": "artist",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "O ünlü bir sanatçı.",
+  "exEn": "She's a famous artist."
+ },
+ {
+  "tr": "ressam",
+  "en": "painter",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Ressam portremi çizdi.",
+  "exEn": "The painter drew my portrait."
+ },
+ {
+  "tr": "sergi",
+  "en": "exhibition",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Yeni sergiye gittin mi?",
+  "exEn": "Did you go to the new exhibition?"
+ },
+ {
+  "tr": "şarkıcı",
+  "en": "singer",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Şarkıcının sesi çok güzel.",
+  "exEn": "The singer's voice is lovely."
+ },
+ {
+  "tr": "çalgı",
+  "en": "musical instrument",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Hangi çalgıyı çalıyorsun?",
+  "exEn": "Which instrument do you play?"
+ },
+ {
+  "tr": "çalmak",
+  "en": "to play (an instrument) / to ring / to steal",
+  "pos": "verb",
+  "unit": 63,
+  "exTr": "Telefon çalıyor.",
+  "exEn": "The phone is ringing.",
+  "stem": "çal",
+  "aorist": "çalar"
+ },
+ {
+  "tr": "yönetmen",
+  "en": "director",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Filmin yönetmeni Türk.",
+  "exEn": "The film's director is Turkish."
+ },
+ {
+  "tr": "sahne",
+  "en": "stage / scene",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Sahnede kim var?",
+  "exEn": "Who's on stage?"
+ },
+ {
+  "tr": "roman",
+  "en": "novel",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Güzel bir roman okuyorum.",
+  "exEn": "I'm reading a good novel."
+ },
+ {
+  "tr": "şiir",
+  "en": "poem / poetry",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Bir şiir ezberledim.",
+  "exEn": "I memorised a poem."
+ },
+ {
+  "tr": "fotoğraf çekmek",
+  "en": "to take a photo",
+  "pos": "verb",
+  "unit": 63,
+  "exTr": "Burada fotoğraf çekebilir miyiz?",
+  "exEn": "Can we take photos here?",
+  "stem": "fotoğraf çek",
+  "aorist": "fotoğraf çeker"
+ },
+ {
+  "tr": "seyirci",
+  "en": "audience / spectator",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Seyirciler çok mutluydu.",
+  "exEn": "The audience was very happy."
+ },
+ {
+  "tr": "alkışlamak",
+  "en": "to applaud",
+  "pos": "verb",
+  "unit": 63,
+  "exTr": "Herkes uzun uzun alkışladı.",
+  "exEn": "Everyone applauded for a long time.",
+  "stem": "alkışla",
+  "aorist": "alkışlar"
+ },
+ {
+  "tr": "heykel",
+  "en": "sculpture / statue",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Meydanda bir heykel var.",
+  "exEn": "There's a statue in the square."
+ },
+ {
+  "tr": "tablo",
+  "en": "painting / table (chart)",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Bu tablo çok eski.",
+  "exEn": "This painting is very old."
+ },
+ {
+  "tr": "galeri",
+  "en": "gallery",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Galeride yeni bir sergi açıldı.",
+  "exEn": "A new exhibition opened at the gallery."
+ },
+ {
+  "tr": "senaryo",
+  "en": "script / screenplay",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Senaryoyu kim yazdı?",
+  "exEn": "Who wrote the screenplay?"
+ },
+ {
+  "tr": "davul",
+  "en": "drum",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Düğünde davul çaldılar.",
+  "exEn": "They played the drum at the wedding."
+ },
+ {
+  "tr": "keman",
+  "en": "violin",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Kızım keman çalıyor.",
+  "exEn": "My daughter plays the violin."
+ },
+ {
+  "tr": "piyano",
+  "en": "piano",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Piyano dersi alıyorum.",
+  "exEn": "I'm taking piano lessons."
+ },
+ {
+  "tr": "melodi",
+  "en": "melody / tune",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Bu melodi aklımdan çıkmıyor.",
+  "exEn": "I can't get this tune out of my head."
+ },
+ {
+  "tr": "koro",
+  "en": "choir",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Korolarda şarkı söylüyor.",
+  "exEn": "She sings in choirs."
+ },
+ {
+  "tr": "ödül",
+  "en": "award / prize",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Film büyük bir ödül kazandı.",
+  "exEn": "The film won a big award."
+ },
+ {
+  "tr": "eser",
+  "en": "work (of art)",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Bu, ünlü bir eser.",
+  "exEn": "This is a famous work."
+ },
+ {
+  "tr": "nota",
+  "en": "musical note",
+  "pos": "noun",
+  "unit": 63,
+  "exTr": "Nota okumayı bilmiyorum.",
+  "exEn": "I can't read music."
+ },
+ {
+  "tr": "teklif",
+  "en": "offer / proposal",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Teklifinizi aldık.",
+  "exEn": "We received your offer."
+ },
+ {
+  "tr": "katılımcı",
+  "en": "participant",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Kaç katılımcı var?",
+  "exEn": "How many participants are there?"
+ },
+ {
+  "tr": "sorumluluk",
+  "en": "responsibility",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Bu benim sorumluluğum.",
+  "exEn": "This is my responsibility.",
+  "softens": true
+ },
+ {
+  "tr": "son tarih",
+  "en": "deadline",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Son tarih ne zaman?",
+  "exEn": "When's the deadline?",
+  "compound": true
+ },
+ {
+  "tr": "ekip",
+  "en": "team",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Ekibimiz çok iyi.",
+  "exEn": "Our team is very good.",
+  "softens": true
+ },
+ {
+  "tr": "yönetici",
+  "en": "manager",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Yöneticiyle konuştum.",
+  "exEn": "I spoke with the manager."
+ },
+ {
+  "tr": "geri bildirim",
+  "en": "feedback",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Geri bildiriminiz için teşekkürler.",
+  "exEn": "Thanks for your feedback.",
+  "compound": true
+ },
+ {
+  "tr": "öncelik",
+  "en": "priority",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Önceliğimiz müşteri memnuniyeti.",
+  "exEn": "Our priority is customer satisfaction.",
+  "softens": true
+ },
+ {
+  "tr": "strateji",
+  "en": "strategy",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Yeni bir strateji lazım.",
+  "exEn": "We need a new strategy."
+ },
+ {
+  "tr": "verimli",
+  "en": "efficient / productive",
+  "pos": "adj",
+  "unit": 64,
+  "exTr": "Bugün çok verimli bir gündü.",
+  "exEn": "Today was a very productive day."
+ },
+ {
+  "tr": "onaylamak",
+  "en": "to approve / to confirm",
+  "pos": "verb",
+  "unit": 64,
+  "exTr": "Müdür planı onayladı.",
+  "exEn": "The director approved the plan.",
+  "stem": "onayla",
+  "aorist": "onaylar"
+ },
+ {
+  "tr": "iş birliği",
+  "en": "cooperation",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "İş birliğiniz için teşekkürler.",
+  "exEn": "Thank you for your cooperation.",
+  "compound": true
+ },
+ {
+  "tr": "istifa etmek",
+  "en": "to resign",
+  "pos": "verb",
+  "unit": 64,
+  "exTr": "Geçen ay istifa etti.",
+  "exEn": "He resigned last month.",
+  "stem": "istifa et",
+  "aorist": "istifa eder",
+  "irregular": "istifa et → istifa ed- before vowels"
+ },
+ {
+  "tr": "işe almak",
+  "en": "to hire",
+  "pos": "verb",
+  "unit": 64,
+  "exTr": "Yeni bir yazılımcı işe aldık.",
+  "exEn": "We hired a new developer.",
+  "stem": "işe al",
+  "aorist": "işe alır"
+ },
+ {
+  "tr": "fazla mesai",
+  "en": "overtime",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Bu hafta fazla mesai yaptım.",
+  "exEn": "I did overtime this week.",
+  "compound": true
+ },
+ {
+  "tr": "işveren",
+  "en": "employer",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "İşverenim çok anlayışlı.",
+  "exEn": "My employer is very understanding."
+ },
+ {
+  "tr": "verim",
+  "en": "efficiency / yield",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Verimimiz bu ay arttı.",
+  "exEn": "Our efficiency went up this month."
+ },
+ {
+  "tr": "izin günü",
+  "en": "day off",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Yarın izin günüm.",
+  "exEn": "Tomorrow is my day off.",
+  "compound": true
+ },
+ {
+  "tr": "tutanak",
+  "en": "minutes (of a meeting) / official report",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Toplantı tutanağını sen yaz.",
+  "exEn": "You write the meeting minutes.",
+  "softens": true
+ },
+ {
+  "tr": "zaman çizelgesi",
+  "en": "schedule / timeline",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Zaman çizelgesine bakalım.",
+  "exEn": "Let's look at the schedule.",
+  "compound": true
+ },
+ {
+  "tr": "yatırımcı",
+  "en": "investor",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Yeni yatırımcılar bulduk.",
+  "exEn": "We found new investors."
+ },
+ {
+  "tr": "kovmak",
+  "en": "to fire / to kick out",
+  "pos": "verb",
+  "unit": 64,
+  "exTr": "Onu işten kovdular.",
+  "exEn": "They fired him.",
+  "stem": "kov",
+  "aorist": "kovar"
+ },
+ {
+  "tr": "maaş zammı",
+  "en": "pay rise",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Bu yıl maaş zammı aldık.",
+  "exEn": "We got a pay rise this year.",
+  "compound": true
+ },
+ {
+  "tr": "staj",
+  "en": "internship",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Yazın staj yapacağım.",
+  "exEn": "I'll do an internship in summer."
+ },
+ {
+  "tr": "stajyer",
+  "en": "intern",
+  "pos": "noun",
+  "unit": 64,
+  "exTr": "Yeni stajyer çok çalışkan.",
+  "exEn": "The new intern is very hard-working."
+ },
+ {
+  "tr": "kıskanmak",
+  "en": "to be jealous (of)",
+  "pos": "verb",
+  "unit": 65,
+  "exTr": "Kardeşini kıskanıyor.",
+  "exEn": "He's jealous of his brother.",
+  "stem": "kıskan",
+  "aorist": "kıskanır"
+ },
+ {
+  "tr": "gururlu",
+  "en": "proud",
+  "pos": "adj",
+  "unit": 65,
+  "exTr": "Seninle gurur duyuyorum.",
+  "exEn": "I'm proud of you."
+ },
+ {
+  "tr": "pişman olmak",
+  "en": "to regret",
+  "pos": "verb",
+  "unit": 65,
+  "exTr": "Hiç pişman olmadım.",
+  "exEn": "I never regretted it.",
+  "stem": "pişman ol",
+  "aorist": "pişman olur"
+ },
+ {
+  "tr": "yalnızlık",
+  "en": "loneliness",
+  "pos": "noun",
+  "unit": 65,
+  "exTr": "Yalnızlık zor bir duygu.",
+  "exEn": "Loneliness is a hard feeling.",
+  "softens": true
+ },
+ {
+  "tr": "nişanlanmak",
+  "en": "to get engaged",
+  "pos": "verb",
+  "unit": 65,
+  "exTr": "Geçen ay nişanlandılar.",
+  "exEn": "They got engaged last month.",
+  "stem": "nişanlan",
+  "aorist": "nişanlanır"
+ },
+ {
+  "tr": "barışmak",
+  "en": "to make up (after a fight)",
+  "pos": "verb",
+  "unit": 65,
+  "exTr": "Sonunda barıştık.",
+  "exEn": "We finally made up.",
+  "stem": "barış",
+  "aorist": "barışır"
+ },
+ {
+  "tr": "affetmek",
+  "en": "to forgive",
+  "pos": "verb",
+  "unit": 65,
+  "exTr": "Beni affet, lütfen.",
+  "exEn": "Forgive me, please.",
+  "stem": "affet",
+  "aorist": "affeder",
+  "irregular": "affet → affed- before vowels"
+ },
+ {
+  "tr": "desteklemek",
+  "en": "to support",
+  "pos": "verb",
+  "unit": 65,
+  "exTr": "Ailem beni hep destekliyor.",
+  "exEn": "My family always supports me.",
+  "stem": "destekle",
+  "aorist": "destekler"
+ },
+ {
+  "tr": "ilgilenmek",
+  "en": "to be interested (in) / to look after",
+  "pos": "verb",
+  "unit": 65,
+  "exTr": "Tarihle çok ilgileniyorum.",
+  "exEn": "I'm very interested in history.",
+  "stem": "ilgilen",
+  "aorist": "ilgilenir"
+ },
+ {
+  "tr": "duygusal",
+  "en": "emotional",
+  "pos": "adj",
+  "unit": 65,
+  "exTr": "Çok duygusal bir filmdi.",
+  "exEn": "It was a very emotional film."
+ },
+ {
+  "tr": "rahatlamak",
+  "en": "to relax / to feel relieved",
+  "pos": "verb",
+  "unit": 65,
+  "exTr": "Haberi duyunca rahatladım.",
+  "exEn": "I felt relieved when I heard the news.",
+  "stem": "rahatla",
+  "aorist": "rahatlar"
+ },
+ {
+  "tr": "kırgın",
+  "en": "hurt / offended",
+  "pos": "adj",
+  "unit": 65,
+  "exTr": "Bana biraz kırgın.",
+  "exEn": "She's a bit hurt with me."
+ },
+ {
+  "tr": "küsmek",
+  "en": "to stop speaking to someone (sulk)",
+  "pos": "verb",
+  "unit": 65,
+  "exTr": "Bana küstü, konuşmuyor.",
+  "exEn": "He's sulking with me and not talking.",
+  "stem": "küs",
+  "aorist": "küser"
+ },
+ {
+  "tr": "mutsuz",
+  "en": "unhappy",
+  "pos": "adj",
+  "unit": 65,
+  "exTr": "Neden mutsuzsun?",
+  "exEn": "Why are you unhappy?"
+ },
+ {
+  "tr": "kaygı",
+  "en": "anxiety / concern",
+  "pos": "noun",
+  "unit": 65,
+  "exTr": "Sınav kaygısı yaşıyorum.",
+  "exEn": "I have exam anxiety."
+ },
+ {
+  "tr": "huzur",
+  "en": "peace (of mind)",
+  "pos": "noun",
+  "unit": 65,
+  "exTr": "Burada çok huzur var.",
+  "exEn": "There's so much peace here."
+ },
+ {
+  "tr": "huzurlu",
+  "en": "peaceful",
+  "pos": "adj",
+  "unit": 65,
+  "exTr": "Köyde huzurlu bir hayat.",
+  "exEn": "A peaceful life in the village."
+ },
+ {
+  "tr": "hayal kırıklığı",
+  "en": "disappointment",
+  "pos": "noun",
+  "unit": 65,
+  "exTr": "Büyük bir hayal kırıklığı yaşadım.",
+  "exEn": "I was very disappointed.",
+  "compound": true
+ },
+ {
+  "tr": "minnettar",
+  "en": "grateful",
+  "pos": "adj",
+  "unit": 65,
+  "exTr": "Size çok minnettarım.",
+  "exEn": "I'm very grateful to you."
+ },
+ {
+  "tr": "sadık",
+  "en": "loyal",
+  "pos": "adj",
+  "unit": 65,
+  "exTr": "Köpekler çok sadık.",
+  "exEn": "Dogs are very loyal.",
+  "softens": true
+ },
+ {
+  "tr": "sevecen",
+  "en": "affectionate / caring",
+  "pos": "adj",
+  "unit": 65,
+  "exTr": "Çok sevecen bir anne.",
+  "exEn": "She's a very caring mother."
+ },
+ {
+  "tr": "anlayışlı",
+  "en": "understanding",
+  "pos": "adj",
+  "unit": 65,
+  "exTr": "Patronum çok anlayışlı.",
+  "exEn": "My boss is very understanding."
+ },
+ {
+  "tr": "bıkmak",
+  "en": "to be fed up",
+  "pos": "verb",
+  "unit": 65,
+  "exTr": "Bu sıcaktan bıktım!",
+  "exEn": "I'm fed up with this heat!",
+  "stem": "bık",
+  "aorist": "bıkar"
+ },
+ {
+  "tr": "teselli etmek",
+  "en": "to console",
+  "pos": "verb",
+  "unit": 65,
+  "exTr": "Arkadaşını teselli etti.",
+  "exEn": "She consoled her friend.",
+  "stem": "teselli et",
+  "aorist": "teselli eder",
+  "irregular": "teselli et → teselli ed- before vowels"
+ },
+ {
+  "tr": "yalvarmak",
+  "en": "to beg",
+  "pos": "verb",
+  "unit": 65,
+  "exTr": "Gitmemesi için yalvardım.",
+  "exEn": "I begged him not to go.",
+  "stem": "yalvar",
+  "aorist": "yalvarır"
+ },
+ {
+  "tr": "oy vermek",
+  "en": "to vote",
+  "pos": "verb",
+  "unit": 66,
+  "exTr": "Seçimde oy verdin mi?",
+  "exEn": "Did you vote in the election?",
+  "stem": "oy ver",
+  "aorist": "oy verir"
+ },
+ {
+  "tr": "mahkeme",
+  "en": "court",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Dava mahkemede.",
+  "exEn": "The case is in court."
+ },
+ {
+  "tr": "avukat tutmak",
+  "en": "to hire a lawyer",
+  "pos": "verb",
+  "unit": 66,
+  "exTr": "Bir avukat tutmamız lazım.",
+  "exEn": "We need to hire a lawyer.",
+  "stem": "avukat tut",
+  "aorist": "avukat tutar"
+ },
+ {
+  "tr": "ceza",
+  "en": "penalty / fine",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Park cezası aldım.",
+  "exEn": "I got a parking fine."
+ },
+ {
+  "tr": "eşitlik",
+  "en": "equality",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Eşitlik için çalışıyorlar.",
+  "exEn": "They're working for equality.",
+  "softens": true
+ },
+ {
+  "tr": "nüfus",
+  "en": "population",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Lefkoşa'nın nüfusu ne kadar?",
+  "exEn": "What's the population of Nicosia?"
+ },
+ {
+  "tr": "göçmen",
+  "en": "immigrant",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Burada birçok göçmen yaşıyor.",
+  "exEn": "Many immigrants live here."
+ },
+ {
+  "tr": "belge",
+  "en": "document",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Hangi belgeler gerekli?",
+  "exEn": "Which documents are needed?"
+ },
+ {
+  "tr": "yasak",
+  "en": "forbidden / ban",
+  "pos": "adj",
+  "unit": 66,
+  "exTr": "Burada sigara içmek yasak.",
+  "exEn": "Smoking is forbidden here.",
+  "softens": true
+ },
+ {
+  "tr": "zorunlu",
+  "en": "compulsory",
+  "pos": "adj",
+  "unit": 66,
+  "exTr": "Kemer takmak zorunlu.",
+  "exEn": "Wearing a seat belt is compulsory."
+ },
+ {
+  "tr": "güvenlik",
+  "en": "security / safety",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Güvenlik için kamera var.",
+  "exEn": "There's a camera for security.",
+  "softens": true
+ },
+ {
+  "tr": "şikâyet etmek",
+  "en": "to complain",
+  "pos": "verb",
+  "unit": 66,
+  "exTr": "Gürültüden şikâyet ettik.",
+  "exEn": "We complained about the noise.",
+  "stem": "şikâyet et",
+  "aorist": "şikâyet eder",
+  "irregular": "şikâyet et → şikâyet ed- before vowels"
+ },
+ {
+  "tr": "cumhurbaşkanı",
+  "en": "president",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Cumhurbaşkanı bugün konuştu.",
+  "exEn": "The president spoke today.",
+  "compound": true
+ },
+ {
+  "tr": "başbakan",
+  "en": "prime minister",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Başbakan yeni bakanları açıkladı.",
+  "exEn": "The prime minister announced the new ministers."
+ },
+ {
+  "tr": "bakan",
+  "en": "minister",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Sağlık bakanı hastaneyi ziyaret etti.",
+  "exEn": "The health minister visited the hospital."
+ },
+ {
+  "tr": "milletvekili",
+  "en": "member of parliament",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Milletvekilleri mecliste tartıştı.",
+  "exEn": "MPs debated in parliament."
+ },
+ {
+  "tr": "meclis",
+  "en": "parliament / assembly",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Meclis bugün toplandı.",
+  "exEn": "Parliament met today."
+ },
+ {
+  "tr": "anayasa",
+  "en": "constitution",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Anayasa değişikliği tartışılıyor.",
+  "exEn": "A constitutional change is being discussed."
+ },
+ {
+  "tr": "dava",
+  "en": "lawsuit / case",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Davayı kazandık.",
+  "exEn": "We won the case."
+ },
+ {
+  "tr": "hâkim",
+  "en": "judge",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Hâkim kararını verdi.",
+  "exEn": "The judge gave his verdict."
+ },
+ {
+  "tr": "tanık",
+  "en": "witness",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Kazanın tanığı benim.",
+  "exEn": "I'm the witness to the accident.",
+  "softens": true
+ },
+ {
+  "tr": "suç",
+  "en": "crime",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Bu bir suç!",
+  "exEn": "This is a crime!",
+  "softens": true
+ },
+ {
+  "tr": "hırsız",
+  "en": "thief",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Polis hırsızı yakaladı.",
+  "exEn": "The police caught the thief."
+ },
+ {
+  "tr": "tutuklamak",
+  "en": "to arrest",
+  "pos": "verb",
+  "unit": 66,
+  "exTr": "Polis iki kişiyi tutukladı.",
+  "exEn": "The police arrested two people.",
+  "stem": "tutukla",
+  "aorist": "tutuklar"
+ },
+ {
+  "tr": "grev",
+  "en": "strike (work)",
+  "pos": "noun",
+  "unit": 66,
+  "exTr": "Öğretmenler greve gitti.",
+  "exEn": "The teachers went on strike."
+ },
+ {
+  "tr": "kafayı yemek",
+  "en": "to go crazy (idiom)",
+  "pos": "verb",
+  "unit": 67,
+  "exTr": "Bu trafikte kafayı yiyeceğim!",
+  "exEn": "I'm going to go crazy in this traffic!",
+  "stem": "kafayı ye",
+  "aorist": "kafayı yer"
+ },
+ {
+  "tr": "canı sıkılmak",
+  "en": "to be bored / annoyed",
+  "pos": "verb",
+  "unit": 67,
+  "exTr": "Canım sıkılıyor.",
+  "exEn": "I'm bored.",
+  "stem": "canı sıkıl",
+  "aorist": "canı sıkılır"
+ },
+ {
+  "tr": "aklına gelmek",
+  "en": "to come to mind",
+  "pos": "verb",
+  "unit": 67,
+  "exTr": "Aklıma güzel bir fikir geldi.",
+  "exEn": "A good idea came to my mind.",
+  "stem": "aklına gel",
+  "aorist": "aklına gelir"
+ },
+ {
+  "tr": "göz atmak",
+  "en": "to have a look",
+  "pos": "verb",
+  "unit": 67,
+  "exTr": "Bu rapora bir göz atar mısın?",
+  "exEn": "Could you have a look at this report?",
+  "stem": "göz at",
+  "aorist": "göz atar"
+ },
+ {
+  "tr": "el ele vermek",
+  "en": "to join forces",
+  "pos": "verb",
+  "unit": 67,
+  "exTr": "El ele verirsek başarırız.",
+  "exEn": "If we join forces, we'll succeed.",
+  "stem": "el ele ver",
+  "aorist": "el ele verir"
+ },
+ {
+  "tr": "kulak vermek",
+  "en": "to listen carefully",
+  "pos": "verb",
+  "unit": 67,
+  "exTr": "Bana kulak ver.",
+  "exEn": "Listen to me carefully.",
+  "stem": "kulak ver",
+  "aorist": "kulak verir"
+ },
+ {
+  "tr": "ağzı sıkı",
+  "en": "discreet (keeps secrets)",
+  "pos": "adj",
+  "unit": 67,
+  "exTr": "Merak etme, ağzı sıkıdır.",
+  "exEn": "Don't worry, she's discreet.",
+  "noDrill": true
+ },
+ {
+  "tr": "eli açık",
+  "en": "generous",
+  "pos": "adj",
+  "unit": 67,
+  "exTr": "Dedem çok eli açık bir insan.",
+  "exEn": "My grandad is a very generous person.",
+  "noDrill": true
+ },
+ {
+  "tr": "gözü kara",
+  "en": "fearless",
+  "pos": "adj",
+  "unit": 67,
+  "exTr": "Çok gözü kara bir şoför.",
+  "exEn": "He's a very fearless driver.",
+  "noDrill": true
+ },
+ {
+  "tr": "burnu havada",
+  "en": "stuck-up",
+  "pos": "adj",
+  "unit": 67,
+  "exTr": "Biraz burnu havada.",
+  "exEn": "She's a bit stuck-up.",
+  "noDrill": true
+ },
+ {
+  "tr": "dili dolaşmak",
+  "en": "to get tongue-tied",
+  "pos": "verb",
+  "unit": 67,
+  "exTr": "Heyecandan dilim dolaştı.",
+  "exEn": "I got tongue-tied from excitement.",
+  "stem": "dili dolaş",
+  "aorist": "dili dolaşır"
+ },
+ {
+  "tr": "iki dirhem bir çekirdek",
+  "en": "dressed to the nines",
+  "pos": "phrase",
+  "unit": 67,
+  "exTr": "Düğüne iki dirhem bir çekirdek geldi.",
+  "exEn": "He came to the wedding dressed to the nines.",
+  "noDrill": true
+ },
+ {
+  "tr": "damlaya damlaya göl olur",
+  "en": "every little helps",
+  "pos": "phrase",
+  "unit": 67,
+  "exTr": "Her gün biraz biriktir; damlaya damlaya göl olur.",
+  "exEn": "Save a little every day; every little helps."
+ },
+ {
+  "tr": "acele işe şeytan karışır",
+  "en": "haste makes waste",
+  "pos": "phrase",
+  "unit": 67,
+  "exTr": "Yavaş ol, acele işe şeytan karışır.",
+  "exEn": "Slow down, haste makes waste."
+ },
+ {
+  "tr": "sabreden derviş muradına ermiş",
+  "en": "good things come to those who wait",
+  "pos": "phrase",
+  "unit": 67,
+  "exTr": "Biraz bekle; sabreden derviş muradına ermiş.",
+  "exEn": "Wait a little; good things come to those who wait."
+ },
+ {
+  "tr": "ne ekersen onu biçersin",
+  "en": "you reap what you sow",
+  "pos": "phrase",
+  "unit": 67,
+  "exTr": "Çalışmazsan geçemezsin; ne ekersen onu biçersin.",
+  "exEn": "If you don't study you won't pass; you reap what you sow."
+ },
+ {
+  "tr": "bir taşla iki kuş",
+  "en": "two birds with one stone",
+  "pos": "phrase",
+  "unit": 67,
+  "exTr": "Bir taşla iki kuş vurduk.",
+  "exEn": "We killed two birds with one stone."
+ },
+ {
+  "tr": "şeytanın bacağını kırmak",
+  "en": "to finally get going",
+  "pos": "verb",
+  "unit": 67,
+  "exTr": "Sonunda şeytanın bacağını kırdık ve başladık.",
+  "exEn": "We finally got going and started.",
+  "stem": "şeytanın bacağını kır",
+  "aorist": "şeytanın bacağını kırar"
+ },
+ {
+  "tr": "havadan sudan konuşmak",
+  "en": "to make small talk",
+  "pos": "verb",
+  "unit": 67,
+  "exTr": "Havadan sudan konuştuk.",
+  "exEn": "We made small talk.",
+  "stem": "havadan sudan konuş",
+  "aorist": "havadan sudan konuşur"
+ },
+ {
+  "tr": "ayıp",
+  "en": "shameful / rude",
+  "pos": "adj",
+  "unit": 67,
+  "exTr": "Bunu söylemek ayıp.",
+  "exEn": "It's rude to say that.",
+  "softens": false
+ },
+ {
+  "tr": "güle güle kullan",
+  "en": "enjoy using it (something new)",
+  "pos": "phrase",
+  "unit": 67,
+  "exTr": "Yeni araban güzel, güle güle kullan!",
+  "exEn": "Your new car is lovely, enjoy it!"
+ },
+ {
+  "tr": "iyi ki varsın",
+  "en": "I'm so glad you're in my life",
+  "pos": "phrase",
+  "unit": 67,
+  "exTr": "Teşekkürler, iyi ki varsın!",
+  "exEn": "Thank you, I'm so glad you're here!"
+ },
+ {
+  "tr": "ağzına sağlık",
+  "en": "well said",
+  "pos": "phrase",
+  "unit": 67,
+  "exTr": "Ağzına sağlık, çok doğru söyledin.",
+  "exEn": "Well said, that's very true."
+ },
+ {
+  "tr": "pireyi deve yapmak",
+  "en": "to make a mountain out of a molehill",
+  "pos": "verb",
+  "unit": 67,
+  "exTr": "Pireyi deve yapma, önemli değil.",
+  "exEn": "Don't make a mountain out of a molehill, it's not important.",
+  "stem": "pireyi deve yap",
+  "aorist": "pireyi deve yapar"
+ },
+ {
+  "tr": "etekleri zil çalmak",
+  "en": "to be overjoyed",
+  "pos": "verb",
+  "unit": 67,
+  "exTr": "Haberi duyunca etekleri zil çaldı.",
+  "exEn": "She was overjoyed when she heard the news.",
+  "stem": "etekleri zil çal",
+  "aorist": "etekleri zil çalar"
+ },
+ {
+  "tr": "acil durum",
+  "en": "emergency",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Acil durumda 112'yi ara.",
+  "exEn": "In an emergency, call 112.",
+  "compound": true
+ },
+ {
+  "tr": "yardım",
+  "en": "help",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Yardıma ihtiyacım var.",
+  "exEn": "I need help."
+ },
+ {
+  "tr": "kaza",
+  "en": "accident",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Yolda bir kaza oldu.",
+  "exEn": "There was an accident on the road."
+ },
+ {
+  "tr": "yaralı",
+  "en": "injured",
+  "pos": "adj",
+  "unit": 68,
+  "exTr": "Kimse yaralı değil.",
+  "exEn": "Nobody is injured."
+ },
+ {
+  "tr": "kaybolmak",
+  "en": "to get lost",
+  "pos": "verb",
+  "unit": 68,
+  "exTr": "Şehirde kayboldum.",
+  "exEn": "I got lost in the city.",
+  "stem": "kaybol",
+  "aorist": "kaybolur"
+ },
+ {
+  "tr": "çalınmak",
+  "en": "to be stolen",
+  "pos": "verb",
+  "unit": 68,
+  "exTr": "Cüzdanım çalındı.",
+  "exEn": "My wallet was stolen.",
+  "stem": "çalın",
+  "aorist": "çalınır"
+ },
+ {
+  "tr": "bagaj",
+  "en": "luggage / boot (of car)",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Bagajım kayboldu.",
+  "exEn": "My luggage got lost."
+ },
+ {
+  "tr": "rötar",
+  "en": "delay (flight)",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Uçağın iki saat rötarı var.",
+  "exEn": "The plane is two hours late."
+ },
+ {
+  "tr": "aktarma",
+  "en": "transfer / connection",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "İstanbul'da aktarma yapacağım.",
+  "exEn": "I'll change planes in Istanbul."
+ },
+ {
+  "tr": "pasaport kontrolü",
+  "en": "passport control",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Pasaport kontrolünde uzun kuyruk var.",
+  "exEn": "There's a long queue at passport control.",
+  "compound": true
+ },
+ {
+  "tr": "gümrük",
+  "en": "customs",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Gümrükten geçtik.",
+  "exEn": "We went through customs.",
+  "softens": true
+ },
+ {
+  "tr": "kiralık araba",
+  "en": "rental car",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Havalimanında kiralık araba aldık.",
+  "exEn": "We got a rental car at the airport.",
+  "compound": true
+ },
+ {
+  "tr": "lastik",
+  "en": "tyre",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Lastiğimiz patladı.",
+  "exEn": "We got a flat tyre.",
+  "softens": true
+ },
+ {
+  "tr": "arıza",
+  "en": "breakdown / fault",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Arabada bir arıza var.",
+  "exEn": "There's a fault with the car."
+ },
+ {
+  "tr": "çekici",
+  "en": "tow truck",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Bir çekici çağırdık.",
+  "exEn": "We called a tow truck."
+ },
+ {
+  "tr": "konaklamak",
+  "en": "to stay (overnight)",
+  "pos": "verb",
+  "unit": 68,
+  "exTr": "Girne'de iki gece konakladık.",
+  "exEn": "We stayed two nights in Girne.",
+  "stem": "konakla",
+  "aorist": "konaklar"
+ },
+ {
+  "tr": "rezervasyon yapmak",
+  "en": "to make a reservation",
+  "pos": "verb",
+  "unit": 68,
+  "exTr": "Otelde rezervasyon yaptım.",
+  "exEn": "I made a reservation at the hotel.",
+  "stem": "rezervasyon yap",
+  "aorist": "rezervasyon yapar"
+ },
+ {
+  "tr": "ilk yardım",
+  "en": "first aid",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "İlk yardım çantası nerede?",
+  "exEn": "Where's the first aid kit?",
+  "compound": true
+ },
+ {
+  "tr": "yangın söndürücü",
+  "en": "fire extinguisher",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Mutfakta yangın söndürücü var.",
+  "exEn": "There's a fire extinguisher in the kitchen.",
+  "compound": true
+ },
+ {
+  "tr": "kurtarmak",
+  "en": "to rescue / to save",
+  "pos": "verb",
+  "unit": 68,
+  "exTr": "Cankurtaran çocuğu kurtardı.",
+  "exEn": "The lifeguard rescued the child.",
+  "stem": "kurtar",
+  "aorist": "kurtarır"
+ },
+ {
+  "tr": "acil çıkış",
+  "en": "emergency exit",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Acil çıkış bu tarafta.",
+  "exEn": "The emergency exit is this way.",
+  "compound": true
+ },
+ {
+  "tr": "kayıp eşya",
+  "en": "lost property",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Kayıp eşya bürosu nerede?",
+  "exEn": "Where's the lost property office?",
+  "compound": true
+ },
+ {
+  "tr": "elçilik",
+  "en": "embassy",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "İngiliz elçiliğine gittim.",
+  "exEn": "I went to the British embassy.",
+  "softens": true
+ },
+ {
+  "tr": "konsolosluk",
+  "en": "consulate",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Konsolosluktan randevu aldım.",
+  "exEn": "I got an appointment at the consulate.",
+  "softens": true
+ },
+ {
+  "tr": "biniş kartı",
+  "en": "boarding pass",
+  "pos": "noun",
+  "unit": 68,
+  "exTr": "Biniş kartınızı görebilir miyim?",
+  "exEn": "May I see your boarding pass?",
+  "compound": true
  }
 ]

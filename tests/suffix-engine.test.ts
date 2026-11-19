@@ -572,3 +572,38 @@ describe("applyTemplate", () => {
     expect(applyTemplate("saat", "lAr", "front")).toBe("ler");
   });
 });
+
+describe("more verb forms (steps 17–22)", () => {
+  const gel = { infinitive: "gelmek", aorist: "gelir" };
+  const basla = { infinitive: "başlamak", aorist: "başlar" };
+  const git = { infinitive: "gitmek", aorist: "gider", softens: true };
+  const oku = { infinitive: "okumak", aorist: "okur" };
+  const ye = { infinitive: "yemek", aorist: "yer" };
+  const f = (v: Parameters<typeof conjugate>[0], t: Parameters<typeof conjugate>[1], p: Parameters<typeof conjugate>[2], o = {}) => conjugate(v, t, p, o).form;
+  it("commands", () => {
+    expect([f(gel, "imperative", "2sg"), f(gel, "imperative", "2pl"), f(basla, "imperative", "2pl"), f(git, "imperative", "2pl"), f(ye, "imperative", "2pl")]).toEqual(["gel", "gelin", "başlayın", "gidin", "yiyin"]);
+    expect([f(gel, "imperative", "2sg", { negative: true }), f(oku, "imperative", "2pl", { negative: true })]).toEqual(["gelme", "okumayın"]);
+  });
+  it("want to", () => {
+    expect(f(git, "want", "1sg")).toBe("gitmek istiyorum");
+    expect(f(gel, "want", "1sg", { negative: true })).toBe("gelmek istemiyorum");
+    expect(f(basla, "want", "2sg", { question: true })).toBe("başlamak istiyor musun");
+  });
+  it("must", () => {
+    expect([f(gel, "necessity", "1sg"), f(oku, "necessity", "2sg"), f(git, "necessity", "3pl")]).toEqual(["gelmeliyim", "okumalısın", "gitmeliler"]);
+    expect(f(gel, "necessity", "1sg", { negative: true })).toBe("gelmemeliyim");
+    expect(f(gel, "necessity", "1sg", { question: true })).toBe("gelmeli miyim");
+  });
+  it("apparently", () => {
+    expect([f(gel, "evidential", "3sg"), f(oku, "evidential", "1sg"), f(git, "evidential", "3pl")]).toEqual(["gelmiş", "okumuşum", "gitmişler"]);
+    expect(f(oku, "evidential", "3sg", { question: true })).toBe("okumuş mu");
+  });
+  it("if", () => {
+    expect([f(gel, "conditional", "1sg"), f(basla, "conditional", "3sg"), f(git, "conditional", "1pl"), f(gel, "conditional", "3pl")]).toEqual(["gelirsem", "başlarsa", "gidersek", "gelirlerse"]);
+    expect(f(gel, "conditional", "1sg", { negative: true })).toBe("gelmezsem");
+  });
+  it("was doing", () => {
+    expect([f(gel, "pastcont", "1sg"), f(ye, "pastcont", "3sg"), f(oku, "pastcont", "3pl")]).toEqual(["geliyordum", "yiyordu", "okuyorlardı"]);
+    expect(f(basla, "pastcont", "1pl", { negative: true })).toBe("başlamıyorduk");
+  });
+});
